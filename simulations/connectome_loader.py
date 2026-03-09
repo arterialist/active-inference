@@ -100,7 +100,7 @@ def build_paula_network(
     sensory_params: NeuronParameters | None = None,
     motor_params: NeuronParameters | None = None,
     interneuron_params: NeuronParameters | None = None,
-    weight_scale: float = 0.1,
+    weight_max: float = 5.0,
     log_level: str = "WARNING",
 ) -> tuple[NeuronNetwork, dict[str, int]]:
     """
@@ -112,8 +112,9 @@ def build_paula_network(
         sensory_params:      Override params for sensory neurons.
         motor_params:        Override params for motor neurons.
         interneuron_params:  Override params for interneurons.
-        weight_scale:        Scale factor applied to raw synapse counts to
-                             produce initial u_i.info values.
+        weight_max:          The heaviest biological synapse maps to this
+                             PAULA u_i.info value.  Lighter synapses scale
+                             proportionally, preserving the natural ratio.
         log_level:           Log verbosity for individual PAULA neurons.
 
     Returns:
@@ -135,6 +136,21 @@ def build_paula_network(
         f"{connectome.n_neurons} neurons, "
         f"{len(connectome.chemical_edges)} chemical synapses, "
         f"{len(connectome.gap_junction_edges)} gap junctions"
+    )
+
+    # Derive proportional weight_scale from the heaviest *chemical* synapse
+    # so the ratio is preserved.  Chemical and gap-junction weights are
+    # scaled independently: they have different biophysics.
+    chem_weights = [e.weight for e in connectome.chemical_edges if e.weight > 0]
+    gap_weights = [e.weight for e in connectome.gap_junction_edges if e.weight > 0]
+    max_chem = max(chem_weights) if chem_weights else 1.0
+    max_gap = max(gap_weights) if gap_weights else 1.0
+    weight_scale = weight_max / max_chem
+    gap_scale = weight_max / max_gap
+    logger.info(
+        f"Weight scaling: max chem={max_chem}, max gap={max_gap} → "
+        f"PAULA weight_max={weight_max:.2f}  "
+        f"(chem_scale={weight_scale:.4f}, gap_scale={gap_scale:.4f})"
     )
 
     # ---- 1. Assign PAULA IDs and compute degree counts ----------------
@@ -186,6 +202,7 @@ def build_paula_network(
         post_name: str,
         weight: float,
         synapse_type: str,
+        scale: float,
     ) -> None:
         if pre_name not in name_to_id or post_name not in name_to_id:
             return
@@ -195,30 +212,29 @@ def build_paula_network(
         pre_neuron = neurons[pre_id]
         post_neuron = neurons[post_id]
 
-        # Allocate terminal slot on pre-synaptic neuron
         t_slot = next_terminal_slot[pre_id]
         if t_slot >= PAULA_SYNAPSE_LIMIT:
-            return  # PAULA terminal limit
+            return
         next_terminal_slot[pre_id] += 1
 
-        # Allocate synapse slot on post-synaptic neuron
         s_slot = next_synapse_slot[post_id]
         if s_slot >= post_neuron.params.num_inputs:
-            return  # Exceeds allocated input slots
+            return
         next_synapse_slot[post_id] += 1
 
-        # Add axon terminal and postsynaptic point
         pre_neuron.add_axon_terminal(
             terminal_id=t_slot, distance_from_hillock=DEFAULT_SYNAPSE_DISTANCE
         )
         post_neuron.add_synapse(
             synapse_id=s_slot, distance_to_hillock=DEFAULT_SYNAPSE_DISTANCE
         )
-        # Scale initial synaptic weight by raw count
-        scaled_weight = float(np.clip(weight * weight_scale, 0.01, 2.0))
+        scaled_weight = max(float(weight * scale), 0.01)
         post_neuron.postsynaptic_points[s_slot].u_i.info = scaled_weight
+        # Deterministic baseline plasticity.  PAULA's V_local =
+        # info_val * (u_i.info + u_i.plast), so plast = 1.0 ensures
+        # even weak synapses conduct while preserving the weight ratio.
+        post_neuron.postsynaptic_points[s_slot].u_i.plast = 1.0
 
-        # Register source for retrograde signaling
         post_neuron.register_source(
             synapse_id=s_slot,
             source_neuron_id=pre_id,
@@ -228,14 +244,15 @@ def build_paula_network(
 
         connection_list.append((pre_id, t_slot, post_id, s_slot))
 
-    # Chemical synapses (directed)
     for edge in connectome.chemical_edges:
-        _add_edge(edge.pre_name, edge.post_name, edge.weight, "chemical")
+        _add_edge(edge.pre_name, edge.post_name, edge.weight, "chemical",
+                  scale=weight_scale)
 
-    # Gap junctions (bidirectional = two directed edges)
     for edge in connectome.gap_junction_edges:
-        _add_edge(edge.pre_name, edge.post_name, edge.weight, "gap_junction")
-        _add_edge(edge.post_name, edge.pre_name, edge.weight, "gap_junction")
+        _add_edge(edge.pre_name, edge.post_name, edge.weight, "gap_junction",
+                  scale=gap_scale)
+        _add_edge(edge.post_name, edge.pre_name, edge.weight, "gap_junction",
+                  scale=gap_scale)
 
     # ---- 4. Assemble NeuronNetwork ------------------------------------
     network = _assemble_network(neurons, connection_list)

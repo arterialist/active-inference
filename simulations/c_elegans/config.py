@@ -32,7 +32,7 @@ CONTROL_DECIMATION = 5       # Physics steps per control step
 # -----------------------------------------------------------------------
 # Neural simulation
 # -----------------------------------------------------------------------
-NEURAL_TICKS_PER_PHYSICS_STEP = 2
+NEURAL_TICKS_PER_PHYSICS_STEP = 1
 
 # Neuron names for key sensory cells (chemosensation)
 CHEMOSENSORY_NEURONS = [

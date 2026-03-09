@@ -191,6 +191,16 @@ class CElegansBody(BaseBody):
             return None
 
     @property
+    def model(self) -> mujoco.MjModel:
+        """MuJoCo model (for viewer, etc.)."""
+        return self._model
+
+    @property
+    def data(self) -> mujoco.MjData:
+        """MuJoCo data (for viewer, etc.)."""
+        return self._data
+
+    @property
     def dt(self) -> float:
         return float(self._model.opt.timestep)
 

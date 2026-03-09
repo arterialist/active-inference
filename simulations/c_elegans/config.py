@@ -96,5 +96,5 @@ MUSCLE_MAX_TORQUE_NM = 2e-12   # pico-Newton-metres range
 # Environment
 # -----------------------------------------------------------------------
 ENV_PLATE_RADIUS_M = 0.05        # 5 cm agar plate
-FOOD_SOURCE_POSITION = (0.03, 0.0, 0.0)    # food at (x=3cm, y=0)
+FOOD_SOURCE_POSITION = (0.005, 0.0, 0.0)    # food at x=5mm (ahead of head)
 FOOD_GRADIENT_DECAY = 100.0      # exponential decay constant (1/m)

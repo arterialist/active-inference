@@ -51,6 +51,8 @@ def parse_args() -> argparse.Namespace:
                    help="Number of physics steps (default: 500)")
     p.add_argument("--food-x", type=float, default=0.005,
                    help="Food source x position in metres (default: 0.005)")
+    p.add_argument("--food-z", type=float, default=0.0,
+                   help="Food source z position in metres (default: 0)")
     p.add_argument("--save-plot", action="store_true",
                    help="Save locomotion trajectory and motor pattern plot")
     p.add_argument("--save-log", action="store_true",
@@ -75,7 +77,7 @@ def main() -> None:
     # ---- Build simulation ----
     engine, loop = build_c_elegans_simulation(
         use_connectome_cache=not args.no_cache,
-        food_position=(args.food_x, 0.0, 0.0),
+        food_position=(args.food_x, 0.0, args.food_z),
         log_level=log_level,
     )
 
@@ -104,8 +106,8 @@ def main() -> None:
     print("Simulation complete")
     print("=" * 60)
     print(f"Steps run         : {len(results)}")
-    print(f"Start position    : ({start_pos[0]*1000:.2f}, {start_pos[1]*1000:.2f}) mm")
-    print(f"End position      : ({end_pos[0]*1000:.2f}, {end_pos[1]*1000:.2f}) mm")
+    print(f"Start position    : ({start_pos[0]*1000:.2f}, {start_pos[1]*1000:.2f}) mm (x, y)")
+    print(f"End position      : ({end_pos[0]*1000:.2f}, {end_pos[1]*1000:.2f}) mm (x, y)")
     print(f"Total displacement: {displacement*1000:.3f} mm")
     print(f"Mean motor act.   : {mean_motor:.4f}")
     print(
@@ -123,7 +125,7 @@ def main() -> None:
         log_dir = Path(args.log_dir) if args.log_dir else default_log_dir()
         config = RunConfig(
             steps=args.steps,
-            food_position=(args.food_x, 0.0, 0.0),
+            food_position=(args.food_x, 0.0, args.food_z),
             use_connectome_cache=not args.no_cache,
             log_level="INFO" if args.verbose else "WARNING",
         )
@@ -181,19 +183,18 @@ def _save_plot(results, positions, motor_activations) -> None:
 
         fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-        # Panel 1: Trajectory (positions in biological metres)
+        # Panel 1: Trajectory in locomotion plane (yaw bends in XY, floor plane)
         ax = axes[0]
-        xs = positions[:, 0] * 1000  # mm
-        ys = positions[:, 1] * 1000  # mm
+        xs = positions[:, 0] * 1000  # mm (forward progress along body axis)
+        ys = positions[:, 1] * 1000  # mm (lateral undulation)
         ax.plot(xs, ys, "b-", linewidth=2, alpha=0.8)
         ax.plot(xs[0], ys[0], "go", markersize=10, label="Start")
         ax.plot(xs[-1], ys[-1], "r^", markersize=10, label="End")
         ax.set_xlabel("x (mm)")
         ax.set_ylabel("y (mm)")
-        ax.set_title("Worm trajectory (head position)")
+        ax.set_title("Worm trajectory (head, floor plane)")
         ax.legend()
         ax.grid(True, alpha=0.3)
-        # Ensure visible axis even when trajectory is tiny
         x_range = float(np.ptp(xs)) if len(xs) > 1 else 0
         y_range = float(np.ptp(ys)) if len(ys) > 1 else 0
         min_span = 0.5  # mm

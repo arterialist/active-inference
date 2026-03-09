@@ -99,9 +99,26 @@ class CElegansBody(BaseBody):
     # BaseBody interface
     # ------------------------------------------------------------------
 
+    _SETTLE_STEPS = 2000
+
     def reset(self) -> BodyState:
-        """Reset to default pose (straight worm along x-axis)."""
+        """Reset to default pose, then let gravity settle onto the floor.
+
+        The body starts slightly above the floor to avoid
+        interpenetration-kick artifacts, then runs zero-ctrl physics
+        steps until the body rests on the substrate with zero velocity.
+        """
         mujoco.mj_resetData(self._model, self._data)
+        # Start above the floor so initial contact is clean
+        self._data.qpos[2] = 0.045
+        self._data.qvel[:] = 0.0
+        mujoco.mj_forward(self._model, self._data)
+        # Settle onto substrate under gravity
+        for _ in range(self._SETTLE_STEPS):
+            self._data.ctrl[:] = 0.0
+            mujoco.mj_step(self._model, self._data)
+        # Zero residual velocity from settling
+        self._data.qvel[:] = 0.0
         mujoco.mj_forward(self._model, self._data)
         return self.get_state()
 

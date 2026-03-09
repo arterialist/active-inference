@@ -12,8 +12,6 @@ generic PAULA build pipeline, adding:
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -21,25 +19,16 @@ from loguru import logger
 
 from simulations.base_nervous_system import BaseNervousSystem
 from simulations.connectome_loader import ConnectomeData, build_paula_network
+from simulations.paula_loader import ensure_paula_available
 from simulations.c_elegans.config import (
-    CHEMOSENSORY_NEURONS,
-    TOUCH_NEURONS,
-    VENTRAL_CORD_MOTOR_NEURONS,
-    LOCOMOTION_INTERNEURONS,
-    NEURAL_TICKS_PER_PHYSICS_STEP,
-    SPIKE_RATE_TO_ACTIVATION,
     MUSCLE_FILTER_ALPHA,
-    MUSCLE_MAX_TORQUE_NM,
     N_BODY_SEGMENTS,
     MUSCLE_QUADRANTS,
 )
 
-_PAULA_PATH = Path(__file__).resolve().parents[4] / "neuron-model"
-if str(_PAULA_PATH) not in sys.path:
-    sys.path.insert(0, str(_PAULA_PATH))
-
+ensure_paula_available()
 from neuron.neuron import NeuronParameters  # noqa: E402
-from neuron.network import NeuronNetwork    # noqa: E402
+from neuron.network import NeuronNetwork  # noqa: E402
 
 
 class CElegansNervousSystem(BaseNervousSystem):

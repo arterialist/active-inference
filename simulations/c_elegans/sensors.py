@@ -145,15 +145,11 @@ class SensorEncoder:
         result: dict[str, float] = {}
 
         # Build a list of pitch angles (dorsal/ventral bending) for all joints
-        pitch_angles = []
-        joint_order = [
-            f"j0{i}{i+1}_pitch" if i < 9 else None  # name pattern fallback
-            for i in range(N_BODY_SEGMENTS - 1)
+        pitch_angles = [
+            angle
+            for jname, angle in body_state.joint_angles.items()
+            if "pitch" in jname
         ]
-        # Use whatever joints appear in body_state (more robust)
-        for jname, angle in body_state.joint_angles.items():
-            if "pitch" in jname:
-                pitch_angles.append(angle)
 
         if not pitch_angles:
             for neuron, _ in self.PROPRIO_NEURONS:

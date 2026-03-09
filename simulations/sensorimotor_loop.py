@@ -16,16 +16,14 @@ logging free energy proxies.
 
 from __future__ import annotations
 
-import numpy as np
 from dataclasses import dataclass, field
-from typing import Any, Callable
+from typing import Any
 
+import numpy as np
 from loguru import logger
 
 from simulations.engine import SimulationEngine, SimulationStep
-from simulations.base_body import BaseBody
-from simulations.base_environment import BaseEnvironment
-from simulations.base_nervous_system import BaseNervousSystem
+from simulations.types import StepCallbackWithLoop
 
 
 @dataclass
@@ -87,27 +85,25 @@ class SensorimotorLoop:
         self,
         engine: SimulationEngine,
         log_free_energy: bool = True,
-        on_step: Callable[[SimulationStep, "SensorimotorLoop"], None] | None = None,
+        on_step: StepCallbackWithLoop | None = None,
     ):
         self.engine = engine
         self.log_free_energy = log_free_energy
         self._on_step = on_step
         self.free_energy_trace = FreeEnergyTrace()
 
-        # Wrap engine's on_step
-        original_on_step = engine.on_step
+        # Wrap engine's on_step to add free energy tracing
+        self._original_on_step = engine.on_step
         engine.on_step = self._handle_step
-
-        self._original_on_step = original_on_step
 
     def _handle_step(self, step: SimulationStep) -> None:
         if self.log_free_energy:
             self.free_energy_trace.record(
                 step.tick, step.neural_states, step.motor_outputs
             )
-        if self._original_on_step:
+        if self._original_on_step is not None:
             self._original_on_step(step)
-        if self._on_step:
+        if self._on_step is not None:
             self._on_step(step, self)
 
     def reset(self) -> SimulationStep:

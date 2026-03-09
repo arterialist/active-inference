@@ -5,8 +5,10 @@ One-shot script to download and cache the C. elegans connectome.
 Run this before starting simulations to pre-populate the cache:
 
     cd active-inference/
-    python scripts/download_connectome.py
+    uv run python scripts/download_connectome.py
 """
+
+from __future__ import annotations
 
 import sys
 from pathlib import Path

@@ -8,17 +8,8 @@ PAULA units whose synaptic plasticity implements active inference.
 
 from __future__ import annotations
 
-import sys
 from abc import ABC, abstractmethod
-from pathlib import Path
 from typing import Any
-
-import numpy as np
-
-# Allow importing the PAULA neuron model from the sibling repo
-_PAULA_PATH = Path(__file__).resolve().parents[2] / "neuron-model"
-if str(_PAULA_PATH) not in sys.path:
-    sys.path.insert(0, str(_PAULA_PATH))
 
 
 class BaseNervousSystem(ABC):

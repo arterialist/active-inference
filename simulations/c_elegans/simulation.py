@@ -1,23 +1,22 @@
 """
 C. elegans full simulation: wires all subsystems together.
 
-CElegansSimulation is the primary entry point for running the
-complete sensorimotor loop.  It subclasses SimulationEngine and
-overrides _observation_to_sensory_inputs() to use the biologically
-correct SensorEncoder.
+CElegansEngine subclasses SimulationEngine and overrides
+_observation_to_sensory_inputs() to use the biologically correct SensorEncoder.
 """
 
 from __future__ import annotations
 
-from typing import Any, Callable
+import time
+from typing import Any
 
-import numpy as np
 from loguru import logger
 
 from simulations.engine import SimulationEngine, SimulationStep
 from simulations.sensorimotor_loop import SensorimotorLoop
 from simulations.base_body import BodyState
 from simulations.base_environment import EnvironmentObservation
+from simulations.types import SensorEncoderProtocol, StepCallback
 
 from simulations.c_elegans.body import CElegansBody
 from simulations.c_elegans.environment import AgarPlateEnvironment
@@ -42,9 +41,9 @@ class CElegansEngine(SimulationEngine):
         body: CElegansBody,
         environment: AgarPlateEnvironment,
         nervous_system: CElegansNervousSystem,
-        sensor_encoder: SensorEncoder,
+        sensor_encoder: SensorEncoderProtocol,
         neural_ticks_per_physics_step: int = NEURAL_TICKS_PER_PHYSICS_STEP,
-        on_step: Callable[[SimulationStep], None] | None = None,
+        on_step: StepCallback | None = None,
     ):
         super().__init__(
             body=body,
@@ -67,8 +66,6 @@ class CElegansEngine(SimulationEngine):
         Override to translate nervous system outputs through
         the NeuromuscularJunction mapper before applying to body.
         """
-        import time
-
         t0 = time.perf_counter_ns()
 
         last_body = self.body.get_state()
@@ -109,9 +106,9 @@ class CElegansEngine(SimulationEngine):
 
 def build_c_elegans_simulation(
     use_connectome_cache: bool = True,
-    food_position: tuple = (0.03, 0.0, 0.0),
+    food_position: tuple[float, float, float] = (0.03, 0.0, 0.0),
     log_level: str = "WARNING",
-    on_step: Callable[[SimulationStep], None] | None = None,
+    on_step: StepCallback | None = None,
 ) -> tuple[CElegansEngine, SensorimotorLoop]:
     """
     Factory: load connectome, build all subsystems, return engine + loop.

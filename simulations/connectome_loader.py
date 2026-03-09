@@ -12,26 +12,27 @@ Key design choices
 - Gap junctions become two anti-parallel directed connections so PAULA's
   retrograde signaling can flow both ways.
 - The number of PAULA postsynaptic_points per neuron is set to the
-  in-degree of that neuron in the connectome (cap at 4095 per PAULA limit).
+  in-degree of that neuron in the connectome (cap at PAULA_SYNAPSE_LIMIT).
 """
 
 from __future__ import annotations
 
-import sys
-from dataclasses import dataclass
-from pathlib import Path
+from collections import defaultdict, deque
+from dataclasses import dataclass, field
 from typing import Any
 
 import numpy as np
 from loguru import logger
 
-# ---- PAULA path --------------------------------------------------------
-_PAULA_PATH = Path(__file__).resolve().parents[2] / "neuron-model"
-if str(_PAULA_PATH) not in sys.path:
-    sys.path.insert(0, str(_PAULA_PATH))
+from simulations.paula_loader import ensure_paula_available
 
+ensure_paula_available()
 from neuron.neuron import Neuron, NeuronParameters  # noqa: E402
 from neuron.network import NeuronNetwork  # noqa: E402
+
+# PAULA model limits (12-bit synapse/terminal IDs)
+PAULA_SYNAPSE_LIMIT = 4095
+DEFAULT_SYNAPSE_DISTANCE = 2
 
 
 # -----------------------------------------------------------------------
@@ -74,9 +75,7 @@ class ConnectomeData:
     neurons: list[NeuronInfo]
     chemical_edges: list[SynapticEdge]
     gap_junction_edges: list[SynapticEdge]
-
-    # Lookup helpers (populated by __post_init__)
-    name_to_info: dict[str, NeuronInfo] = None  # type: ignore
+    name_to_info: dict[str, NeuronInfo] = field(init=False)
 
     def __post_init__(self) -> None:
         self.name_to_info = {n.name: n for n in self.neurons}
@@ -157,9 +156,9 @@ def build_paula_network(
             interneuron_params,
         )
         # num_inputs must match the actual number of postsynaptic_points
-        # we will add below.  Cap at PAULA's 12-bit limit (4095).
+        # we will add below.  Cap at PAULA's synapse limit.
         in_degree = min(
-            info.in_degree_chem + info.in_degree_gap, 4095
+            info.in_degree_chem + info.in_degree_gap, PAULA_SYNAPSE_LIMIT
         )
         # Always give at least 1 input slot so the neuron can receive background
         in_degree = max(in_degree, 1)
@@ -198,7 +197,7 @@ def build_paula_network(
 
         # Allocate terminal slot on pre-synaptic neuron
         t_slot = next_terminal_slot[pre_id]
-        if t_slot >= 4095:
+        if t_slot >= PAULA_SYNAPSE_LIMIT:
             return  # PAULA terminal limit
         next_terminal_slot[pre_id] += 1
 
@@ -210,10 +209,10 @@ def build_paula_network(
 
         # Add axon terminal and postsynaptic point
         pre_neuron.add_axon_terminal(
-            terminal_id=t_slot, distance_from_hillock=2
+            terminal_id=t_slot, distance_from_hillock=DEFAULT_SYNAPSE_DISTANCE
         )
         post_neuron.add_synapse(
-            synapse_id=s_slot, distance_to_hillock=2
+            synapse_id=s_slot, distance_to_hillock=DEFAULT_SYNAPSE_DISTANCE
         )
         # Scale initial synaptic weight by raw count
         scaled_weight = float(np.clip(weight * weight_scale, 0.01, 2.0))
@@ -296,13 +295,13 @@ def _select_params(
     motor: NeuronParameters,
     interneuron: NeuronParameters,
 ) -> NeuronParameters:
-    if neuron_type == "sensory":
-        return sensory
-    if neuron_type == "motor":
-        return motor
-    if neuron_type == "interneuron":
-        return interneuron
-    return base
+    """Select NeuronParameters by neuron type. Falls back to base for unknown types."""
+    param_map = {
+        "sensory": sensory,
+        "motor": motor,
+        "interneuron": interneuron,
+    }
+    return param_map.get(neuron_type, base)
 
 
 def _copy_params_with_inputs(
@@ -338,8 +337,6 @@ def _assemble_network(
     We bypass NetworkTopology._create_network() (which creates random
     connections) by directly injecting the neurons and wiring.
     """
-    from collections import defaultdict, deque
-    from neuron.network import NeuronNetwork
 
     # Build a minimal topology container that duck-types NetworkTopology
     topology = _EmptyTopology(neurons, connections)
@@ -407,10 +404,9 @@ class _EmptyTopology:
                 )
 
     def set_external_input(
-        self, input_key: tuple, info: float, mod=None
+        self, input_key: tuple[int, int], info: float, mod: np.ndarray | None = None
     ) -> None:
         """Set external input for a specific synapse (duck-type of NetworkTopology)."""
-        import numpy as np
         if input_key not in self.external_inputs:
             self.external_inputs[input_key] = {
                 "info": 0.0,

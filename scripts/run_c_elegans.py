@@ -5,7 +5,7 @@ C. elegans active inference simulation – entry point.
 Usage
 -----
     cd active-inference/
-    python scripts/run_c_elegans.py [--steps N] [--save-plot]
+    uv run python scripts/run_c_elegans.py [--steps N] [--save-plot]
 
 The script:
   1. Loads the Cook et al. 2019 connectome (cached after first run)
@@ -15,12 +15,15 @@ The script:
   5. Prints a summary and optionally saves a locomotion plot
 """
 
+from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
 
 import numpy as np
 
+# Ensure project root is on path when run as script
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from loguru import logger

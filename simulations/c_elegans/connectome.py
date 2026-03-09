@@ -15,9 +15,9 @@ Neuron classification follows Cook et al. 2019:
 from __future__ import annotations
 
 import json
+from collections import Counter
 from pathlib import Path
 
-import numpy as np
 from loguru import logger
 
 from simulations.connectome_loader import ConnectomeData, NeuronInfo, SynapticEdge
@@ -206,8 +206,11 @@ def _save_to_cache(data: ConnectomeData, path: Path) -> None:
 
 
 def _load_from_cache(path: Path) -> ConnectomeData:
-    with open(path) as f:
-        payload = json.load(f)
+    try:
+        with open(path) as f:
+            payload = json.load(f)
+    except (OSError, json.JSONDecodeError) as e:
+        raise RuntimeError(f"Failed to load connectome cache from {path}") from e
 
     neurons = [
         NeuronInfo(
@@ -249,9 +252,7 @@ def _load_from_cache(path: Path) -> ConnectomeData:
 
 def print_connectome_summary(data: ConnectomeData) -> None:
     """Print a human-readable summary of the connectome."""
-    type_counts = {}
-    for n in data.neurons:
-        type_counts[n.neuron_type] = type_counts.get(n.neuron_type, 0) + 1
+    type_counts = Counter(n.neuron_type for n in data.neurons)
 
     print(f"\n{'='*50}")
     print(f"C. elegans Connectome Summary (Cook et al. 2019)")
@@ -265,8 +266,8 @@ def print_connectome_summary(data: ConnectomeData) -> None:
 
     weights = [e.weight for e in data.chemical_edges]
     if weights:
-        import numpy as np
+        mean_weight = sum(weights) / len(weights)
         print(f"Chem weight stats   : min={min(weights):.0f}, "
               f"max={max(weights):.0f}, "
-              f"mean={np.mean(weights):.1f}")
+              f"mean={mean_weight:.1f}")
     print(f"{'='*50}\n")

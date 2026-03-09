@@ -10,30 +10,21 @@ multiplying by 1e-3.
 
 from __future__ import annotations
 
+from contextlib import contextmanager
 from pathlib import Path
-from typing import Optional
+from typing import Generator
 
 import mujoco
 import numpy as np
 from loguru import logger
 
 from simulations.base_body import BaseBody, BodyState
-from simulations.c_elegans.config import (
-    MUSCLE_MAX_TORQUE_NM,
-    N_BODY_SEGMENTS,
-    MUSCLE_QUADRANTS,
-    PHYSICS_TIMESTEP_S,
-)
+from simulations.c_elegans.config import N_BODY_SEGMENTS, MUSCLE_QUADRANTS
 
 _MODEL_XML = Path(__file__).parent / "body_model.xml"
 
 # 1000x scale factor: model units → biological metres
 _SCALE_MODEL_TO_BIO = 1e-3
-
-# Corresponding torque scale: model N*m → bio N*m
-# Forces scale as F ~ m*a ~ k^1 for dynamics to be correct; torques T = F*r scale as k^2.
-# We accept this as a virtual (rescaled) system.
-_MUSCLE_TORQUE_SCALE = MUSCLE_MAX_TORQUE_NM / 0.001  # normalise against 1 mN*m
 
 
 class CElegansBody(BaseBody):
@@ -61,7 +52,7 @@ class CElegansBody(BaseBody):
 
         self._render_width = render_width
         self._render_height = render_height
-        self._renderer: Optional[mujoco.Renderer] = None
+        self._renderer: mujoco.Renderer | None = None
 
         # Cache actuator name -> index map
         self._actuator_index: dict[str, int] = {}
@@ -187,7 +178,7 @@ class CElegansBody(BaseBody):
         )
 
     def render(self, camera: str = "top") -> np.ndarray | None:
-        """Render the scene.  Returns (H, W, 3) uint8 RGB or None."""
+        """Render the scene. Returns (H, W, 3) uint8 RGB or None if headless."""
         try:
             if self._renderer is None:
                 self._renderer = mujoco.Renderer(
@@ -195,8 +186,8 @@ class CElegansBody(BaseBody):
                 )
             self._renderer.update_scene(self._data)
             return self._renderer.render()
-        except Exception as e:
-            logger.debug(f"Render failed (headless mode?): {e}")
+        except (RuntimeError, OSError) as e:
+            logger.debug("Render failed (headless mode?): %s", e)
             return None
 
     @property
@@ -232,3 +223,11 @@ class CElegansBody(BaseBody):
         if self._renderer is not None:
             del self._renderer
             self._renderer = None
+
+    @contextmanager
+    def render_context(self) -> Generator[CElegansBody, None, None]:
+        """Context manager that ensures renderer is closed on exit."""
+        try:
+            yield self
+        finally:
+            self.close()

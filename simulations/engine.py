@@ -8,14 +8,16 @@ nervous system) and exposes a clean step / run interface.
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass, field
-from typing import Any, Callable
+from dataclasses import dataclass
+from typing import Any
 
+import numpy as np
 from loguru import logger
 
 from simulations.base_body import BaseBody, BodyState
 from simulations.base_environment import BaseEnvironment, EnvironmentObservation
 from simulations.base_nervous_system import BaseNervousSystem
+from simulations.types import StepCallback
 
 
 @dataclass
@@ -54,7 +56,7 @@ class SimulationEngine:
         environment: BaseEnvironment,
         nervous_system: BaseNervousSystem,
         neural_ticks_per_physics_step: int = 2,
-        on_step: Callable[[SimulationStep], None] | None = None,
+        on_step: StepCallback | None = None,
     ):
         self.body = body
         self.environment = environment

@@ -70,6 +70,12 @@ class CElegansNervousSystem(BaseNervousSystem):
         # Previous sensory inputs for computing temporal surprise (M0)
         self._prev_sensory: dict[str, float] = {}
 
+        # EMA-smoothed chemosensory signals for dC/dt computation.
+        # Filters out undulation-frequency noise so M0/M1 reflects the
+        # true gradient, not head oscillation artifacts.
+        self._chem_ema: dict[str, float] = {}
+        self._prev_chem_ema: dict[str, float] = {}
+
         # Global neuromodulatory state for volume transmission
         self._global_m0: float = 0.0
         self._global_m1: float = 0.0
@@ -86,6 +92,8 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._build()
         self._init_muscles()
         self._prev_sensory.clear()
+        self._chem_ema.clear()
+        self._prev_chem_ema.clear()
         self._global_m0 = 0.0
         self._global_m1 = 0.0
 
@@ -181,21 +189,26 @@ class CElegansNervousSystem(BaseNervousSystem):
                 self._muscle_activations[f"seg{seg}_{quad}"] = 0.0
 
     # Gain for synapse-level mod injection into sensory neurons.
-    _K_STRESS_SYN: float = 5000.0
-    _K_REWARD_SYN: float = 3000.0
+    # Strengthened for multi-food chemotaxis.
+    _K_STRESS_SYN: float = 10000.0
+    _K_REWARD_SYN: float = 8000.0
 
-    _K_VOL_STRESS: float = 1500.0
-    _K_VOL_REWARD: float = 800.0
+    _K_VOL_STRESS: float = 3000.0
+    _K_VOL_REWARD: float = 2000.0
 
     _CHEMOSENSORY_NAMES: set[str] = {"ASEL", "ASER", "AWCL", "AWCR"}
+
+    # EMA smoothing for chemosensory dC/dt. Alpha=0.02 → ~50-tick time
+    # constant (100ms at 2ms timestep), matching ASE temporal integration.
+    _CHEM_EMA_ALPHA: float = 0.02
 
     # Tonic forward drive: injected into AVB and B-type motor neurons each
     # tick to model the AVB↔B-type gap junction coupling that biases C. elegans
     # toward forward locomotion (~80% of time). The Cook et al. connectome
     # over-represents chemical synapses onto AVA, under-representing the
     # electrical coupling that maintains the forward state.
-    _TONIC_FWD_CMD: float = 0.15
-    _TONIC_FWD_MOTOR: float = 0.06
+    _TONIC_FWD_CMD: float = 0.25
+    _TONIC_FWD_MOTOR: float = 0.11
     _FWD_CMD_NAMES: set[str] = {"AVBL", "AVBR"}
     _FWD_MOTOR_PREFIXES: tuple[str, ...] = ("DB", "VB")
 
@@ -228,13 +241,21 @@ class CElegansNervousSystem(BaseNervousSystem):
                 continue
 
             clamped = float(np.clip(intensity, 0.0, 2.0))
-            prev = self._prev_sensory.get(neuron_name, clamped)
-            delta_c = clamped - prev
 
-            # Accumulate dC/dt from chemosensory neurons for global signal
+            # For chemosensory neurons, compute delta_c from EMA-smoothed
+            # signals to filter out undulation-frequency head oscillations.
             if neuron_name in self._CHEMOSENSORY_NAMES:
+                ema = self._chem_ema.get(neuron_name, clamped)
+                ema = self._CHEM_EMA_ALPHA * clamped + (1 - self._CHEM_EMA_ALPHA) * ema
+                self._chem_ema[neuron_name] = ema
+                prev_ema = self._prev_chem_ema.get(neuron_name, ema)
+                delta_c = ema - prev_ema
+                self._prev_chem_ema[neuron_name] = ema
                 delta_accum += delta_c
                 n_chem += 1
+            else:
+                prev = self._prev_sensory.get(neuron_name, clamped)
+                delta_c = clamped - prev
 
             if self._neuromodulation:
                 if delta_c < 0:

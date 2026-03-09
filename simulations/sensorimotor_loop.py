@@ -26,7 +26,7 @@ from loguru import logger
 from simulations.engine import SimulationEngine, SimulationStep
 from simulations.types import StepCallbackWithLoop
 
-_FE_MAXLEN = 2000
+_FE_MAXLEN = 50_000  # capture full 10k–30k runs for convergence checks
 
 
 @dataclass

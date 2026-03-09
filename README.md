@@ -42,6 +42,12 @@ The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two si
 - 2-nonanone aversive odour (AWB circuit)
 - Nociceptive region (ASH circuit)
 
+## Demo
+
+![C. elegans simulation output](c_elegans_run.png)
+
+*Left:* Worm trajectory (head position) on the floor plane with food sources (purple stars). *Right:* Motor wave (dorsal–ventral activation) across body segments over time.
+
 ## Quick Start
 
 ```bash

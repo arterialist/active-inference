@@ -32,7 +32,8 @@ from neuron.network import NeuronNetwork  # noqa: E402
 
 # PAULA model limits (12-bit synapse/terminal IDs)
 PAULA_SYNAPSE_LIMIT = 4095
-DEFAULT_SYNAPSE_DISTANCE = 2
+CHEMICAL_SYNAPSE_DISTANCE = 2
+GAP_JUNCTION_DISTANCE = 1
 
 
 # -----------------------------------------------------------------------
@@ -102,6 +103,7 @@ def build_paula_network(
     interneuron_params: NeuronParameters | None = None,
     weight_max: float = 5.0,
     log_level: str = "WARNING",
+    param_overrides: dict[str, NeuronParameters] | None = None,
 ) -> tuple[NeuronNetwork, dict[str, int]]:
     """
     Build a PAULA NeuronNetwork from a ConnectomeData object.
@@ -116,6 +118,10 @@ def build_paula_network(
                              PAULA u_i.info value.  Lighter synapses scale
                              proportionally, preserving the natural ratio.
         log_level:           Log verbosity for individual PAULA neurons.
+        param_overrides:     Per-neuron-name parameter overrides (highest
+                             priority, used for sub-class specialisation
+                             like GABAergic motor neurons or command
+                             interneurons).
 
     Returns:
         Tuple of:
@@ -163,14 +169,20 @@ def build_paula_network(
     # ---- 2. Create Neuron instances -----------------------------------
     neurons: dict[int, Neuron] = {}
 
+    if param_overrides is None:
+        param_overrides = {}
+
     for info in connectome.neurons:
-        params = _select_params(
-            info.neuron_type,
-            base_params,
-            sensory_params,
-            motor_params,
-            interneuron_params,
-        )
+        if info.name in param_overrides:
+            params = param_overrides[info.name]
+        else:
+            params = _select_params(
+                info.neuron_type,
+                base_params,
+                sensory_params,
+                motor_params,
+                interneuron_params,
+            )
         # num_inputs must match the actual number of postsynaptic_points
         # we will add below.  Cap at PAULA's synapse limit.
         in_degree = min(
@@ -222,11 +234,14 @@ def build_paula_network(
             return
         next_synapse_slot[post_id] += 1
 
+        distance = (GAP_JUNCTION_DISTANCE if synapse_type == "gap_junction"
+                    else CHEMICAL_SYNAPSE_DISTANCE)
+
         pre_neuron.add_axon_terminal(
-            terminal_id=t_slot, distance_from_hillock=DEFAULT_SYNAPSE_DISTANCE
+            terminal_id=t_slot, distance_from_hillock=distance
         )
         post_neuron.add_synapse(
-            synapse_id=s_slot, distance_to_hillock=DEFAULT_SYNAPSE_DISTANCE
+            synapse_id=s_slot, distance_to_hillock=distance
         )
         scaled_weight = max(float(weight * scale), 0.01)
         post_neuron.postsynaptic_points[s_slot].u_i.info = scaled_weight

@@ -24,6 +24,7 @@ from simulations.c_elegans.config import (
     MUSCLE_FILTER_ALPHA,
     N_BODY_SEGMENTS,
     MUSCLE_QUADRANTS,
+    MOTOR_NEURON_POSITIONS,
 )
 
 ensure_paula_available()
@@ -50,9 +51,15 @@ class CElegansNervousSystem(BaseNervousSystem):
     AS-type neurons contribute to dorsal muscle excitation.
     """
 
-    def __init__(self, connectome: ConnectomeData, log_level: str = "WARNING"):
+    def __init__(
+        self,
+        connectome: ConnectomeData,
+        log_level: str = "WARNING",
+        neuromodulation: bool = True,
+    ):
         self._connectome = connectome
         self._log_level = log_level
+        self._neuromodulation = neuromodulation
         self._network: NeuronNetwork | None = None
         self._name_to_id: dict[str, int] = {}
 
@@ -75,6 +82,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # ------------------------------------------------------------------
 
     def reset(self) -> None:
+        CElegansNervousSystem._seg_map = None
         self._build()
         self._init_muscles()
         self._prev_sensory.clear()
@@ -106,7 +114,8 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._network.run_tick()
 
         # --- volume transmission: broadcast M0/M1 to all neurons ---
-        self._volume_broadcast()
+        if self._neuromodulation:
+            self._volume_broadcast()
 
         # --- decode motor outputs ---
         return self._decode_motor_outputs(current_tick)
@@ -155,6 +164,7 @@ class CElegansNervousSystem(BaseNervousSystem):
             interneuron_params=_interneuron_params(),
             weight_max=5.0,
             log_level=self._log_level,
+            param_overrides=_neuron_param_overrides(),
         )
         self._network = network
         self._name_to_id = name_to_id
@@ -174,14 +184,20 @@ class CElegansNervousSystem(BaseNervousSystem):
     _K_STRESS_SYN: float = 5000.0
     _K_REWARD_SYN: float = 3000.0
 
-    # Gain for volume transmission (directly into M_vector of all neurons).
-    # dC/dt ≈ 0.0006/tick → volume_target = dC * K_VOL → each tick we add
-    # volume_target * (1-gamma) to M_vector so it reaches volume_target at
-    # steady state.
     _K_VOL_STRESS: float = 1500.0
     _K_VOL_REWARD: float = 800.0
 
     _CHEMOSENSORY_NAMES: set[str] = {"ASEL", "ASER", "AWCL", "AWCR"}
+
+    # Tonic forward drive: injected into AVB and B-type motor neurons each
+    # tick to model the AVB↔B-type gap junction coupling that biases C. elegans
+    # toward forward locomotion (~80% of time). The Cook et al. connectome
+    # over-represents chemical synapses onto AVA, under-representing the
+    # electrical coupling that maintains the forward state.
+    _TONIC_FWD_CMD: float = 0.15
+    _TONIC_FWD_MOTOR: float = 0.06
+    _FWD_CMD_NAMES: set[str] = {"AVBL", "AVBR"}
+    _FWD_MOTOR_PREFIXES: tuple[str, ...] = ("DB", "VB")
 
     def _inject_sensory(
         self, sensory_inputs: dict[str, float], current_tick: int
@@ -220,41 +236,70 @@ class CElegansNervousSystem(BaseNervousSystem):
                 delta_accum += delta_c
                 n_chem += 1
 
-            # Synapse-level mod for this sensory neuron
-            if delta_c < 0:
-                m0 = float(np.clip(abs(delta_c) * self._K_STRESS_SYN, 0.0, 5.0))
-                m1 = 0.0
-            elif delta_c > 0:
-                m0 = 0.0
-                m1 = float(np.clip(delta_c * self._K_REWARD_SYN, 0.0, 5.0))
+            if self._neuromodulation:
+                if delta_c < 0:
+                    m0 = float(np.clip(abs(delta_c) * self._K_STRESS_SYN, 0.0, 5.0))
+                    m1 = 0.0
+                elif delta_c > 0:
+                    m0 = 0.0
+                    m1 = float(np.clip(delta_c * self._K_REWARD_SYN, 0.0, 5.0))
+                else:
+                    m0 = 0.0
+                    m1 = 0.0
+                mod = np.array([m0, m1])
             else:
-                m0 = 0.0
-                m1 = 0.0
+                mod = np.zeros(2)
 
             self._network.set_external_input(
                 neuron_id=nid,
                 synapse_id=synapse_id,
                 info=clamped,
-                mod=np.array([m0, m1]),
+                mod=mod,
             )
 
         self._prev_sensory = dict(sensory_inputs)
 
-        # Compute global neuromodulatory drive from aggregate dC/dt
-        avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
-        if avg_delta < 0:
-            self._global_m0 = float(np.clip(
-                abs(avg_delta) * self._K_VOL_STRESS, 0.0, 2.0
-            ))
-            self._global_m1 = 0.0
-        elif avg_delta > 0:
-            self._global_m0 = 0.0
-            self._global_m1 = float(np.clip(
-                avg_delta * self._K_VOL_REWARD, 0.0, 2.0
-            ))
-        else:
-            self._global_m0 = 0.0
-            self._global_m1 = 0.0
+        self._inject_tonic_forward()
+
+        if self._neuromodulation:
+            avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
+            if avg_delta < 0:
+                self._global_m0 = float(np.clip(
+                    abs(avg_delta) * self._K_VOL_STRESS, 0.0, 2.0
+                ))
+                self._global_m1 = 0.0
+            elif avg_delta > 0:
+                self._global_m0 = 0.0
+                self._global_m1 = float(np.clip(
+                    avg_delta * self._K_VOL_REWARD, 0.0, 2.0
+                ))
+            else:
+                self._global_m0 = 0.0
+                self._global_m1 = 0.0
+
+    def _inject_tonic_forward(self) -> None:
+        """Inject tonic depolarizing current into forward-circuit neurons.
+
+        Models the AVB↔B-motor gap junction coupling that maintains
+        forward locomotion as the default behavioral state.  The injected
+        current is additive to whatever synaptic input the neuron receives.
+        """
+        if self._network is None:
+            return
+        for name in self._FWD_CMD_NAMES:
+            nid = self._name_to_id.get(name)
+            if nid is None:
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is not None:
+                n.S += self._TONIC_FWD_CMD
+
+        for name, nid in self._name_to_id.items():
+            prefix = name.rstrip("0123456789")
+            if prefix in self._FWD_MOTOR_PREFIXES:
+                n = self._network.network.neurons.get(nid)
+                if n is not None:
+                    n.S += self._TONIC_FWD_MOTOR
 
     def _volume_broadcast(self) -> None:
         """ALERM volume transmission: inject global M0/M1 into all neurons.
@@ -274,33 +319,62 @@ class CElegansNervousSystem(BaseNervousSystem):
             if self._global_m1 > 1e-8:
                 neuron.M_vector[1] += (1.0 - gamma[1]) * self._global_m1
 
-    # Graded output normalization for motor neurons.
+    # Graded output normalization.
     # C. elegans motor neurons transmit via graded potentials, not spikes.
-    # S / _S_NORM maps typical motor neuron S values (~0.05-0.15) into a
-    # usable [0, 1] range.  Inhibitory D-type weight is reduced because
-    # GABAergic NMJs produce smaller postsynaptic currents than cholinergic.
     _S_NORM: float = 0.25
     _INHIB_WEIGHT: float = 0.3
     _RECIP_INHIB: float = 0.5
+    _FWD_WEIGHT: float = 1.0
+    _BKW_WEIGHT: float = 0.3
+
+    # Precomputed once: which motor neurons contribute to which segments.
+    # Built lazily on first call via _build_segment_map().
+    _seg_map: dict[str, list[tuple[str, float]]] | None = None
+
+    @classmethod
+    def _build_segment_map(cls) -> dict[str, list[tuple[str, float]]]:
+        """Map each motor neuron to its anatomically nearest segment(s).
+
+        Gaussian spillover (sigma=0.8 segments) avoids hard boundaries
+        and lets neurons with positions between two segments drive both
+        proportionally.
+
+        Note: the MuJoCo body chain extends in -x (seg0=head at +x,
+        seg12=tail at -x).  The worm's natural locomotion direction is
+        -x.  Biological forward = model -x direction.
+        """
+        sigma = 0.8
+        seg_map: dict[str, list[tuple[str, float]]] = {
+            f"seg{s}": [] for s in range(N_BODY_SEGMENTS)
+        }
+        for name, frac in MOTOR_NEURON_POSITIONS.items():
+            center_seg = frac * (N_BODY_SEGMENTS - 1)
+            for seg in range(N_BODY_SEGMENTS):
+                dist = abs(seg - center_seg)
+                if dist > 3.0:
+                    continue
+                w = float(np.exp(-0.5 * (dist / sigma) ** 2))
+                if w > 0.01:
+                    seg_map[f"seg{seg}"].append((name, w))
+        return seg_map
 
     def _decode_motor_outputs(self, current_tick: int) -> dict[str, float]:
         """
         Convert motor neuron membrane potentials to muscle activations.
 
-        Uses graded (non-spiking) readout of motor neuron S values.
-        B-type (DB, VB) excite their respective muscle side; D-type
-        inhibit the side they innervate (DD -> dorsal, VD -> ventral).
-        No artificial phase-lag buffer: the traveling wave must emerge
-        from PAULA network dynamics and connectome topology.
+        Uses graded (non-spiking) readout of motor neuron S values with
+        anatomically accurate segment mapping from MOTOR_NEURON_POSITIONS.
+
+        Motor neuron roles (White et al. 1986):
+          DB/DA + AS → dorsal excitation (B=forward, A=backward)
+          VB/VA      → ventral excitation (B=forward, A=backward)
+          DD         → dorsal GABAergic inhibition
+          VD         → ventral GABAergic inhibition
         """
-        db_neurons = [f"DB{i}" for i in range(1, 8)]    # 7 dorsal B-type
-        vb_neurons = [f"VB{i}" for i in range(1, 12)]   # 11 ventral B-type
-        dd_neurons = [f"DD{i}" for i in range(1, 7)]    # 6 dorsal D-type
-        vd_neurons = [f"VD{i}" for i in range(1, 14)]   # 13 ventral D-type
-        as_neurons = [f"AS{i}" for i in range(1, 12)]   # 11 A-type
+        if self._seg_map is None:
+            CElegansNervousSystem._seg_map = self._build_segment_map()
 
         def _graded(name: str) -> float:
-            """Graded motor output proportional to membrane depolarization."""
             n = self.get_neuron_by_name(name)
             if n is None:
                 return 0.0
@@ -310,30 +384,36 @@ class CElegansNervousSystem(BaseNervousSystem):
         ventral_excit = np.zeros(N_BODY_SEGMENTS)
 
         for seg in range(N_BODY_SEGMENTS):
-            db_idx = min(int(seg * len(db_neurons) / N_BODY_SEGMENTS), len(db_neurons) - 1)
-            dorsal_excit[seg] += _graded(db_neurons[db_idx])
+            contributors = self._seg_map[f"seg{seg}"]
+            d_exc = 0.0
+            v_exc = 0.0
+            d_inh = 0.0
+            v_inh = 0.0
+            for name, w in contributors:
+                g = _graded(name) * w
+                prefix = name.rstrip("0123456789")
+                if prefix == "DB":
+                    d_exc += g * self._FWD_WEIGHT
+                elif prefix == "DA":
+                    d_exc += g * self._BKW_WEIGHT
+                elif prefix == "AS":
+                    d_exc += g * 0.5
+                elif prefix == "VB":
+                    v_exc += g * self._FWD_WEIGHT
+                elif prefix == "VA":
+                    v_exc += g * self._BKW_WEIGHT
+                elif prefix == "DD":
+                    d_inh += g
+                elif prefix == "VD":
+                    v_inh += g
 
-            as_idx = min(int(seg * len(as_neurons) / N_BODY_SEGMENTS), len(as_neurons) - 1)
-            dorsal_excit[seg] += _graded(as_neurons[as_idx]) * 0.5
-
-            vb_idx = min(int(seg * len(vb_neurons) / N_BODY_SEGMENTS), len(vb_neurons) - 1)
-            ventral_excit[seg] += _graded(vb_neurons[vb_idx])
-
-            # DD innervates DORSAL body-wall muscles (GABAergic inhibition)
-            dd_idx = min(int(seg * len(dd_neurons) / N_BODY_SEGMENTS), len(dd_neurons) - 1)
-            dorsal_excit[seg] -= _graded(dd_neurons[dd_idx]) * self._INHIB_WEIGHT
-
-            # VD innervates VENTRAL body-wall muscles (GABAergic inhibition)
-            vd_idx = min(int(seg * len(vd_neurons) / N_BODY_SEGMENTS), len(vd_neurons) - 1)
-            ventral_excit[seg] -= _graded(vd_neurons[vd_idx]) * self._INHIB_WEIGHT
+            dorsal_excit[seg] = d_exc - d_inh * self._INHIB_WEIGHT
+            ventral_excit[seg] = v_exc - v_inh * self._INHIB_WEIGHT
 
         dorsal_excit = np.clip(dorsal_excit, 0.0, 1.0)
         ventral_excit = np.clip(ventral_excit, 0.0, 1.0)
 
-        # Reciprocal inhibition: dorsal and ventral body-wall muscles are
-        # mechanical antagonists.  Whichever side has stronger neural drive
-        # suppresses the other, creating the D-V alternation needed for
-        # bending.  This supplements the DD/VD cross-inhibition pathway.
+        # Reciprocal inhibition (mechanical antagonism of body-wall muscles)
         d_push = dorsal_excit - ventral_excit * self._RECIP_INHIB
         v_push = ventral_excit - dorsal_excit * self._RECIP_INHIB
         dorsal_excit = np.clip(d_push, 0.0, 1.0)
@@ -393,12 +473,10 @@ def _sensory_params() -> NeuronParameters:
 
 
 def _motor_params() -> NeuronParameters:
-    """Motor neurons: low threshold, fast integration.
+    """Default motor neurons (excitatory B/A-type cholinergic).
 
-    In the real worm, body motor neurons fire readily from sparse
-    command interneuron input + gap-junction coupling along the
-    ventral nerve cord.  Motor neurons are highly sensitive to
-    neuromodulatory volume transmission (tyramine/octopamine).
+    Low threshold so they fire readily from command interneuron drive.
+    High neuromodulatory sensitivity (tyramine/octopamine in vivo).
     """
     return NeuronParameters(
         r_base=0.2,
@@ -416,8 +494,31 @@ def _motor_params() -> NeuronParameters:
     )
 
 
+def _motor_inhib_params() -> NeuronParameters:
+    """GABAergic inhibitory motor neurons (DD, VD).
+
+    Lower threshold and shorter time constant than excitatory motor
+    neurons: cross-inhibition must respond quickly to track the
+    excitatory drive and produce D-V alternation.
+    """
+    return NeuronParameters(
+        r_base=0.15,
+        b_base=0.25,
+        c=3,
+        lambda_param=4.0,
+        p=1.0,
+        eta_post=0.002,
+        eta_retro=0.002,
+        num_neuromodulators=2,
+        gamma=np.array([0.99, 0.995]),
+        w_r=np.array([-0.2, 0.05]),
+        w_b=np.array([-0.2, 0.05]),
+        w_tref=np.array([20.0, -10.0]),
+    )
+
+
 def _interneuron_params() -> NeuronParameters:
-    """Interneurons: moderate threshold, faster integration to relay sensory drive."""
+    """Local interneurons: moderate threshold, relay and integrate."""
     return NeuronParameters(
         r_base=0.6,
         b_base=0.85,
@@ -432,3 +533,67 @@ def _interneuron_params() -> NeuronParameters:
         w_b=np.array([-0.15, 0.04]),
         w_tref=np.array([15.0, -8.0]),
     )
+
+
+def _command_fwd_params() -> NeuronParameters:
+    """Forward command interneurons (AVB, PVC).
+
+    Lower threshold than backward commands: C. elegans spends ~80% of
+    its time in forward locomotion (Zhao et al. 2003).  AVB/PVC
+    should be tonically active at baseline.
+    """
+    return NeuronParameters(
+        r_base=0.4,
+        b_base=0.6,
+        c=8,
+        lambda_param=10.0,
+        p=1.0,
+        eta_post=0.001,
+        eta_retro=0.001,
+        num_neuromodulators=2,
+        gamma=np.array([0.995, 0.998]),
+        w_r=np.array([-0.1, 0.03]),
+        w_b=np.array([-0.1, 0.03]),
+        w_tref=np.array([12.0, -6.0]),
+    )
+
+
+def _command_bkw_params() -> NeuronParameters:
+    """Backward command interneurons (AVA, AVD).
+
+    Higher threshold: only activated by nociceptive or strong aversive
+    stimuli, then briefly dominates forward circuit.
+    """
+    return NeuronParameters(
+        r_base=0.85,
+        b_base=1.1,
+        c=12,
+        lambda_param=16.0,
+        p=1.0,
+        eta_post=0.001,
+        eta_retro=0.001,
+        num_neuromodulators=2,
+        gamma=np.array([0.995, 0.998]),
+        w_r=np.array([-0.1, 0.03]),
+        w_b=np.array([-0.1, 0.03]),
+        w_tref=np.array([12.0, -6.0]),
+    )
+
+
+def _neuron_param_overrides() -> dict[str, NeuronParameters]:
+    """Per-neuron-name parameter overrides for biologically distinct sub-classes."""
+    overrides: dict[str, NeuronParameters] = {}
+
+    inhib = _motor_inhib_params()
+    for name in [f"DD{i}" for i in range(1, 7)] + [f"VD{i}" for i in range(1, 14)]:
+        overrides[name] = inhib
+
+    fwd = _command_fwd_params()
+    for name in ["AVBL", "AVBR", "PVCL", "PVCR"]:
+        overrides[name] = fwd
+
+    bkw = _command_bkw_params()
+    for name in ["AVAL", "AVAR", "AVDL", "AVDR"]:
+        overrides[name] = bkw
+
+    return overrides

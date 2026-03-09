@@ -50,7 +50,8 @@ class AgarPlateEnvironment(BaseEnvironment):
     Circular agar plate environment.
 
     Args:
-        food_position:   (x, y, z) of food source in biological metres.
+        food_position:   (x, y, z) of single food source in biological metres.
+        food_positions:  List of (x, y, z) food sources. Overrides food_position if given.
         plate_radius:    Plate radius in metres.
         add_nociceptive: Whether to include a nociceptive (hot) region.
         noci_center:     Centre of nociceptive region.
@@ -60,6 +61,7 @@ class AgarPlateEnvironment(BaseEnvironment):
     def __init__(
         self,
         food_position: tuple[float, float, float] = FOOD_SOURCE_POSITION,
+        food_positions: list[tuple[float, float, float]] | None = None,
         plate_radius: float = ENV_PLATE_RADIUS_M,
         add_nociceptive: bool = True,
         noci_center: tuple[float, float, float] = (-0.02, 0.0, 0.0),
@@ -69,33 +71,43 @@ class AgarPlateEnvironment(BaseEnvironment):
         self._noci_center = np.array(noci_center)
         self._noci_radius = noci_radius
 
+        positions = (
+            food_positions
+            if food_positions is not None
+            else [food_position]
+        )
+
         # Chemical sources on the plate
-        self._sources: list[ChemSource] = [
-            # NaCl gradient — ASE neurons
-            ChemSource(
-                molecule="NaCl",
-                position=np.array(food_position),
-                max_concentration=1.0,
-                decay_constant=FOOD_GRADIENT_DECAY,
-                valence="attractive",
-            ),
-            # Butanone — AWC neurons (attractive food odour)
-            ChemSource(
-                molecule="butanone",
-                position=np.array(food_position),
-                max_concentration=0.8,
-                decay_constant=FOOD_GRADIENT_DECAY * 0.7,
-                valence="attractive",
-            ),
-            # 2-nonanone — AWB neurons (aversive odour, near edge)
+        self._sources: list[ChemSource] = []
+        for pos in positions:
+            pos_arr = np.array(pos)
+            self._sources.append(
+                ChemSource(
+                    molecule="NaCl",
+                    position=pos_arr,
+                    max_concentration=1.0,
+                    decay_constant=FOOD_GRADIENT_DECAY,
+                    valence="attractive",
+                )
+            )
+            self._sources.append(
+                ChemSource(
+                    molecule="butanone",
+                    position=pos_arr,
+                    max_concentration=0.8,
+                    decay_constant=FOOD_GRADIENT_DECAY * 0.7,
+                    valence="attractive",
+                )
+            )
+        self._sources.append(
             ChemSource(
                 molecule="2-nonanone",
                 position=np.array([-0.035, 0.02, 0.0]),
                 max_concentration=0.6,
                 decay_constant=FOOD_GRADIENT_DECAY * 1.5,
                 valence="aversive",
-            ),
-        ]
+            )
+        )
 
         self._add_nociceptive = add_nociceptive
         self._current_head_pos = np.zeros(3)

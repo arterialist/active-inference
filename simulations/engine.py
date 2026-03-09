@@ -57,15 +57,18 @@ class SimulationEngine:
         nervous_system: BaseNervousSystem,
         neural_ticks_per_physics_step: int = 2,
         on_step: StepCallback | None = None,
+        record_neural_states: bool = True,
     ):
         self.body = body
         self.environment = environment
         self.nervous_system = nervous_system
         self.neural_ticks_per_physics_step = neural_ticks_per_physics_step
         self.on_step = on_step
+        self.record_neural_states = record_neural_states
 
         self._tick: int = 0
         self._history: list[SimulationStep] = []
+        self._max_history: int = 200
 
     # ------------------------------------------------------------------
     # Public API
@@ -120,10 +123,13 @@ class SimulationEngine:
             body_state=body_state,
             observation=obs,
             motor_outputs=motor_outputs,
-            neural_states=self.nervous_system.get_neuron_states(),
+            neural_states=(self.nervous_system.get_neuron_states()
+                           if self.record_neural_states else {}),
             elapsed_ms=elapsed,
         )
         self._history.append(step)
+        if len(self._history) > self._max_history:
+            self._history = self._history[-self._max_history:]
 
         if self.on_step is not None:
             self.on_step(step)

@@ -3,7 +3,7 @@
   C. elegans worm body model for MuJoCo 3.x
 
   Scaling note
-  ------------
+  ‾‾‾‾‾‾‾‾‾‾‾‾
   To stay above MuJoCo's internal precision floor (mjMINVAL ≈ 1e-15),
   all lengths are scaled by 1000x from biological:
     biological 1 mm  →  model 1.0 m
@@ -14,9 +14,12 @@
   unaffected by this uniform rescaling.
 
   Body chain: 13 cylindrical segments (seg0 = head, seg12 = tail)
+  The chain extends in +x from the head: seg0 at origin, seg12 at ~+1m.
+  Forward locomotion (head-to-tail wave) propels the worm in +x.
+
   Joint axes:
-    pitch (y-axis): dorsal/ventral bending  ← main locomotion plane
-    yaw   (z-axis): left/right bending
+    pitch (y-axis): dorsal/ventral bending
+    yaw   (z-axis): left/right bending  ← main locomotion plane
 -->
 <mujoco model="c_elegans">
 
@@ -27,12 +30,7 @@
   </option>
 
   <default>
-    <!-- Friction: tangent1 (along capsule axis) LOW for forward sliding,
-         tangent2 (perpendicular to axis) HIGH for lateral thrust.
-         This anisotropy is what converts undulation into locomotion. -->
     <geom condim="3" friction="0.01 0.8 0.001" solimp="0.9 0.95 0.001" solref="0.005 1"/>
-    <!-- Yaw damping: forcerange/damping = 0.2/0.05 = 4 rad/s peak.
-         Pitch damping is set high per-joint to prevent vertical wobble. -->
     <joint damping="0.05" armature="0.0001" limited="true"/>
     <general forcelimited="true" forcerange="-0.2 0.2"/>
   </default>
@@ -46,94 +44,94 @@
   </asset>
 
   <worldbody>
-    <!-- Agar surface (represented as a plane with moderate friction) -->
     <geom name="floor" type="plane" size="50 50 0.1" material="floor_mat"
-          pos="0 0 -0.04" condim="3" friction="0.6 0.005 0.001"/>
+          pos="0 0 -0.04" condim="3" friction="0.005 0.8 0.001"/>
 
-    <!-- Head segment (seg0) anchored by a free joint so the whole body can translate -->
+    <!-- Head segment (seg0) at origin; nose points in -x (forward). -->
     <body name="seg0" pos="0 0 0">
       <freejoint name="root"/>
       <geom name="seg0_geom" type="capsule"
             size="0.04 0.038"
-            pos="-0.038 0 0"
+            pos="0.038 0 0"
             material="worm_head"
             mass="0.023"/>
-      <site name="nose"           pos=" 0.038 0 0"    size="0.005"/>
-      <site name="touch_anterior" pos=" 0.030 0 0"    size="0.005"/>
+      <site name="nose"           pos="-0.038 0 0" size="0.005"/>
+      <site name="touch_anterior" pos="-0.030 0 0" size="0.005"/>
 
-      <body name="seg1" pos="-0.077 0 0">
+      <!-- Body extends in +x (tail direction) -->
+      <body name="seg1" pos="0.077 0 0">
         <joint name="j01_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
         <joint name="j01_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-        <geom name="seg1_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+        <geom name="seg1_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
               material="worm_body" mass="0.023"/>
 
-        <body name="seg2" pos="-0.077 0 0">
+        <body name="seg2" pos="0.077 0 0">
           <joint name="j12_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
           <joint name="j12_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-          <geom name="seg2_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+          <geom name="seg2_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                 material="worm_body" mass="0.023"/>
 
-          <body name="seg3" pos="-0.077 0 0">
+          <body name="seg3" pos="0.077 0 0">
             <joint name="j23_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
             <joint name="j23_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-            <geom name="seg3_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+            <geom name="seg3_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                   material="worm_body" mass="0.023"/>
 
-            <body name="seg4" pos="-0.077 0 0">
+            <body name="seg4" pos="0.077 0 0">
               <joint name="j34_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
               <joint name="j34_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-              <geom name="seg4_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+              <geom name="seg4_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                     material="worm_body" mass="0.023"/>
 
-              <body name="seg5" pos="-0.077 0 0">
+              <body name="seg5" pos="0.077 0 0">
                 <joint name="j45_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                 <joint name="j45_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                <geom name="seg5_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                <geom name="seg5_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                       material="worm_body" mass="0.023"/>
 
-                <body name="seg6" pos="-0.077 0 0">
+                <body name="seg6" pos="0.077 0 0">
                   <joint name="j56_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                   <joint name="j56_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                  <geom name="seg6_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                  <geom name="seg6_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                         material="worm_body" mass="0.023"/>
 
-                  <body name="seg7" pos="-0.077 0 0">
+                  <body name="seg7" pos="0.077 0 0">
                     <joint name="j67_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                     <joint name="j67_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                    <geom name="seg7_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                    <geom name="seg7_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                           material="worm_body" mass="0.023"/>
 
-                    <body name="seg8" pos="-0.077 0 0">
+                    <body name="seg8" pos="0.077 0 0">
                       <joint name="j78_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                       <joint name="j78_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                      <geom name="seg8_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                      <geom name="seg8_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                             material="worm_body" mass="0.023"/>
 
-                      <body name="seg9" pos="-0.077 0 0">
+                      <body name="seg9" pos="0.077 0 0">
                         <joint name="j89_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                         <joint name="j89_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                        <geom name="seg9_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                        <geom name="seg9_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                               material="worm_body" mass="0.023"/>
 
-                        <body name="seg10" pos="-0.077 0 0">
+                        <body name="seg10" pos="0.077 0 0">
                           <joint name="j9a_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                           <joint name="j9a_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                          <geom name="seg10_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                          <geom name="seg10_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                                 material="worm_body" mass="0.023"/>
 
-                          <body name="seg11" pos="-0.077 0 0">
+                          <body name="seg11" pos="0.077 0 0">
                             <joint name="jab_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                             <joint name="jab_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                            <geom name="seg11_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                            <geom name="seg11_geom" type="capsule" size="0.04 0.038" pos="0.038 0 0"
                                   material="worm_body" mass="0.023"/>
 
                             <!-- Tail: slightly tapered -->
-                            <body name="seg12" pos="-0.077 0 0">
+                            <body name="seg12" pos="0.077 0 0">
                               <joint name="jbc_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2" damping="2.0"/>
                               <joint name="jbc_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
-                              <geom name="seg12_geom" type="capsule" size="0.032 0.035" pos="-0.035 0 0"
+                              <geom name="seg12_geom" type="capsule" size="0.032 0.035" pos="0.035 0 0"
                                     material="worm_body" mass="0.018"/>
-                              <site name="touch_posterior" pos="-0.070 0 0" size="0.005"/>
+                              <site name="touch_posterior" pos="0.070 0 0" size="0.005"/>
                             </body>
 
                           </body>
@@ -151,12 +149,26 @@
 
   </worldbody>
 
-  <!--
-    Actuators — one per muscle quadrant per inter-segment joint.
-    DL/DR apply positive torque on pitch → dorsal bending.
-    VL/VR apply negative torque on pitch → ventral bending.
-    Lateral yaw is currently not independently driven (set to 0).
-  -->
+  <!-- Anisotropic friction via explicit contact pairs (condim=6).
+       friction="tangent1 tangent2 torsion rolling1 rolling2"
+       tangent1 (along capsule axis): LOW  → axial sliding
+       tangent2 (perpendicular):      HIGH → lateral thrust for undulation -->
+  <contact>
+    <pair geom1="seg0_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg1_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg2_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg3_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg4_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg5_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg6_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg7_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg8_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg9_geom"  geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg10_geom" geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg11_geom" geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+    <pair geom1="seg12_geom" geom2="floor" condim="6" friction="0.01 1.2 0.005 0.001 0.001"/>
+  </contact>
+
   <!--
     Actuators — one per muscle quadrant per inter-segment joint.
     Driven on YAW joints (Z-axis): lateral bending in the substrate
@@ -227,7 +239,6 @@
   </actuator>
 
   <sensor>
-    <!-- Proprioception: joint angles -->
     <jointpos name="prop_j01_pitch" joint="j01_pitch"/>
     <jointpos name="prop_j12_pitch" joint="j12_pitch"/>
     <jointpos name="prop_j23_pitch" joint="j23_pitch"/>
@@ -240,18 +251,15 @@
     <jointpos name="prop_j9a_pitch" joint="j9a_pitch"/>
     <jointpos name="prop_jab_pitch" joint="jab_pitch"/>
     <jointpos name="prop_jbc_pitch" joint="jbc_pitch"/>
-    <!-- Joint angular velocities -->
     <jointvel name="vel_j01_pitch" joint="j01_pitch"/>
     <jointvel name="vel_j12_pitch" joint="j12_pitch"/>
     <jointvel name="vel_j23_pitch" joint="j23_pitch"/>
     <jointvel name="vel_j34_pitch" joint="j34_pitch"/>
     <jointvel name="vel_j45_pitch" joint="j45_pitch"/>
     <jointvel name="vel_j56_pitch" joint="j56_pitch"/>
-    <!-- Touch sensors -->
     <touch name="touch_nose_sensor" site="nose"/>
     <touch name="touch_ant_sensor"  site="touch_anterior"/>
     <touch name="touch_post_sensor" site="touch_posterior"/>
-    <!-- Head position and orientation -->
     <framepos   name="head_pos"   objtype="site" objname="nose"/>
     <framexaxis name="head_xaxis" objtype="site" objname="nose"/>
   </sensor>

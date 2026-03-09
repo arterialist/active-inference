@@ -16,6 +16,7 @@ logging free energy proxies.
 
 from __future__ import annotations
 
+from collections import deque
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -24,6 +25,8 @@ from loguru import logger
 
 from simulations.engine import SimulationEngine, SimulationStep
 from simulations.types import StepCallbackWithLoop
+
+_FE_MAXLEN = 2000
 
 
 @dataclass
@@ -35,12 +38,14 @@ class FreeEnergyTrace:
       - Prediction error magnitude (surprise / accuracy term)
       - Negative entropy proxy via average firing rate deviation
 
-    These are cheap to compute from PAULA's existing state variables.
+    Uses bounded deques to avoid O(n) memory growth on long runs.
     """
 
-    ticks: list[int] = field(default_factory=list)
-    prediction_error: list[float] = field(default_factory=list)
-    motor_entropy: list[float] = field(default_factory=list)
+    ticks: deque[int] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
+    prediction_error: deque[float] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
+    motor_entropy: deque[float] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
+    _pe_sum: float = 0.0
+    _pe_count: int = 0
 
     def record(
         self,
@@ -51,19 +56,24 @@ class FreeEnergyTrace:
         """Extract proxy metrics from neural states and motor outputs."""
         self.ticks.append(tick)
 
-        # Prediction error proxy: mean absolute weight-change signal across neurons
         errors = [
             abs(v) for k, v in neural_states.items() if k.endswith("_S")
         ]
-        self.prediction_error.append(float(np.mean(errors)) if errors else 0.0)
+        if errors:
+            pe = float(np.mean(errors))
+        else:
+            vals = list(motor_outputs.values())
+            pe = float(np.mean(np.abs(vals))) if vals else 0.0
+        self.prediction_error.append(pe)
+        self._pe_sum += pe
+        self._pe_count += 1
 
-        # Motor entropy proxy: variance of motor activations (high variance = uncertain action)
         vals = list(motor_outputs.values())
         self.motor_entropy.append(float(np.var(vals)) if vals else 0.0)
 
     @property
     def mean_prediction_error(self) -> float:
-        return float(np.mean(self.prediction_error)) if self.prediction_error else 0.0
+        return self._pe_sum / self._pe_count if self._pe_count > 0 else 0.0
 
 
 class SensorimotorLoop:
@@ -116,6 +126,8 @@ class SensorimotorLoop:
         progress: bool = True,
         converge_threshold: float | None = None,
         converge_window: int = 100,
+        keep_results: bool = True,
+        on_step_raw: StepCallbackWithLoop | None = None,
     ) -> list[SimulationStep]:
         """
         Run the active inference loop for n_steps.
@@ -127,22 +139,38 @@ class SensorimotorLoop:
                                 over the last converge_window steps falls below
                                 this value.
             converge_window:    Window size for convergence check.
+            keep_results:       Whether to accumulate all steps in-memory.
+                                Set False for long runs when streaming to disk.
+            on_step_raw:        Additional per-step callback for streaming.
 
         Returns:
-            List of SimulationStep records.
+            List of SimulationStep records (empty if keep_results=False).
         """
         results: list[SimulationStep] = []
+        log_interval = max(1, n_steps // 20)
 
         for i in range(n_steps):
             step = self.engine.step()
-            results.append(step)
 
-            # Convergence check
+            if keep_results:
+                results.append(step)
+
+            if on_step_raw is not None:
+                on_step_raw(step, self)
+
+            if progress and i % log_interval == 0:
+                pos = step.body_state.position
+                logger.info(
+                    f"Step {i + 1}/{n_steps} | "
+                    f"pos=({pos[0]:.4f}, {pos[1]:.4f}) | "
+                    f"{step.elapsed_ms:.1f} ms/step"
+                )
+
             if (
                 converge_threshold is not None
                 and len(self.free_energy_trace.prediction_error) >= converge_window
             ):
-                recent = self.free_energy_trace.prediction_error[-converge_window:]
+                recent = list(self.free_energy_trace.prediction_error)[-converge_window:]
                 if float(np.mean(recent)) < converge_threshold:
                     logger.info(
                         f"Converged at step {step.tick} "
@@ -152,7 +180,7 @@ class SensorimotorLoop:
 
         if progress:
             logger.info(
-                f"Loop complete: {len(results)} steps | "
+                f"Loop complete: {n_steps} steps | "
                 f"mean PE={self.free_energy_trace.mean_prediction_error:.4f}"
             )
 

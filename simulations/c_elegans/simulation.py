@@ -44,6 +44,7 @@ class CElegansEngine(SimulationEngine):
         sensor_encoder: SensorEncoderProtocol,
         neural_ticks_per_physics_step: int = NEURAL_TICKS_PER_PHYSICS_STEP,
         on_step: StepCallback | None = None,
+        record_neural_states: bool = True,
     ):
         super().__init__(
             body=body,
@@ -51,6 +52,7 @@ class CElegansEngine(SimulationEngine):
             nervous_system=nervous_system,
             neural_ticks_per_physics_step=neural_ticks_per_physics_step,
             on_step=on_step,
+            record_neural_states=record_neural_states,
         )
         self._sensor_encoder = sensor_encoder
 
@@ -93,10 +95,13 @@ class CElegansEngine(SimulationEngine):
             body_state=body_state,
             observation=obs,
             motor_outputs=motor_outputs,
-            neural_states=self.nervous_system.get_neuron_states(),
+            neural_states=(self.nervous_system.get_neuron_states()
+                           if self.record_neural_states else {}),
             elapsed_ms=elapsed,
         )
         self._history.append(step)
+        if len(self._history) > self._max_history:
+            self._history = self._history[-self._max_history:]
 
         if self.on_step is not None:
             self.on_step(step)
@@ -107,8 +112,11 @@ class CElegansEngine(SimulationEngine):
 def build_c_elegans_simulation(
     use_connectome_cache: bool = True,
     food_position: tuple[float, float, float] = (0.03, 0.0, 0.0),
+    food_positions: list[tuple[float, float, float]] | None = None,
     log_level: str = "WARNING",
     on_step: StepCallback | None = None,
+    record_neural_states: bool = True,
+    neuromodulation: bool = True,
 ) -> tuple[CElegansEngine, SensorimotorLoop]:
     """
     Factory: load connectome, build all subsystems, return engine + loop.
@@ -129,7 +137,9 @@ def build_c_elegans_simulation(
 
     # 2. Nervous system (302 PAULA neurons)
     logger.info("Building PAULA nervous system …")
-    nervous_system = CElegansNervousSystem(connectome, log_level=log_level)
+    nervous_system = CElegansNervousSystem(
+        connectome, log_level=log_level, neuromodulation=neuromodulation,
+    )
 
     # 3. Body (MuJoCo)
     logger.info("Initialising MuJoCo body …")
@@ -137,7 +147,10 @@ def build_c_elegans_simulation(
 
     # 4. Environment
     logger.info("Initialising agar plate environment …")
-    environment = AgarPlateEnvironment(food_position=food_position)
+    environment = AgarPlateEnvironment(
+        food_position=food_position,
+        food_positions=food_positions,
+    )
 
     # 5. Sensor encoder
     sensor_encoder = SensorEncoder()
@@ -149,6 +162,7 @@ def build_c_elegans_simulation(
         nervous_system=nervous_system,
         sensor_encoder=sensor_encoder,
         on_step=on_step,
+        record_neural_states=record_neural_states,
     )
 
     # 7. Active inference loop wrapper

@@ -44,7 +44,7 @@ The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two si
 
 ## Demo
 
-![C. elegans simulation output](c_elegans_run.png)
+![C. elegans simulation output](c_elegans_run.webp)
 
 *Left:* Worm trajectory (head position) on the floor plane with food sources (purple stars). *Right:* Motor wave (dorsal–ventral activation) across body segments over time.
 

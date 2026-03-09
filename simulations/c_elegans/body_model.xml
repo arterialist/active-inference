@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  C. elegans worm body model for MuJoCo 3.x
+
+  Scaling note
+  ------------
+  To stay above MuJoCo's internal precision floor (mjMINVAL ≈ 1e-15),
+  all lengths are scaled by 1000x from biological:
+    biological 1 mm  →  model 1.0 m
+    biological 40 µm →  model 0.04 m
+  Masses are set so that inertia eigenvalues >> 1e-15.
+  Actuator forces are correspondingly scaled (see body.py).
+  The dimensionless locomotion dynamics (shape waves, frequency) are
+  unaffected by this uniform rescaling.
+
+  Body chain: 13 cylindrical segments (seg0 = head, seg12 = tail)
+  Joint axes:
+    pitch (y-axis): dorsal/ventral bending  ← main locomotion plane
+    yaw   (z-axis): left/right bending
+-->
+<mujoco model="c_elegans">
+
+  <compiler angle="radian" autolimits="true"/>
+
+  <option timestep="0.002" gravity="0 0 0" integrator="implicitfast">
+    <flag contact="enable" energy="disable"/>
+  </option>
+
+  <default>
+    <geom condim="3" friction="0.6 0.005 0.001" solimp="0.9 0.95 0.001" solref="0.005 1"/>
+    <joint damping="0.2" armature="0.0001" limited="true"/>
+    <general forcelimited="true" forcerange="-0.001 0.001"/>
+  </default>
+
+  <asset>
+    <texture type="2d" name="floor_tex" builtin="checker"
+             rgb1="0.82 0.9 0.82" rgb2="0.68 0.78 0.68" width="128" height="128"/>
+    <material name="floor_mat" texture="floor_tex" texrepeat="5 5"/>
+    <material name="worm_body" rgba="0.9 0.85 0.6 1"/>
+    <material name="worm_head" rgba="0.65 0.5 0.35 1"/>
+  </asset>
+
+  <worldbody>
+    <!-- Agar surface (represented as a plane with moderate friction) -->
+    <geom name="floor" type="plane" size="50 50 0.1" material="floor_mat"
+          pos="0 0 -0.04" condim="3" friction="0.6 0.005 0.001"/>
+
+    <!-- Head segment (seg0) anchored by a free joint so the whole body can translate -->
+    <body name="seg0" pos="0 0 0">
+      <freejoint name="root"/>
+      <geom name="seg0_geom" type="capsule"
+            size="0.04 0.038"
+            pos="-0.038 0 0"
+            material="worm_head"
+            mass="0.023"/>
+      <site name="nose"           pos=" 0.038 0 0"    size="0.005"/>
+      <site name="touch_anterior" pos=" 0.030 0 0"    size="0.005"/>
+
+      <body name="seg1" pos="-0.077 0 0">
+        <joint name="j01_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+        <joint name="j01_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+        <geom name="seg1_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+              material="worm_body" mass="0.023"/>
+
+        <body name="seg2" pos="-0.077 0 0">
+          <joint name="j12_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+          <joint name="j12_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+          <geom name="seg2_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                material="worm_body" mass="0.023"/>
+
+          <body name="seg3" pos="-0.077 0 0">
+            <joint name="j23_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+            <joint name="j23_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+            <geom name="seg3_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                  material="worm_body" mass="0.023"/>
+
+            <body name="seg4" pos="-0.077 0 0">
+              <joint name="j34_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+              <joint name="j34_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+              <geom name="seg4_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                    material="worm_body" mass="0.023"/>
+
+              <body name="seg5" pos="-0.077 0 0">
+                <joint name="j45_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                <joint name="j45_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                <geom name="seg5_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                      material="worm_body" mass="0.023"/>
+
+                <body name="seg6" pos="-0.077 0 0">
+                  <joint name="j56_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                  <joint name="j56_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                  <geom name="seg6_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                        material="worm_body" mass="0.023"/>
+
+                  <body name="seg7" pos="-0.077 0 0">
+                    <joint name="j67_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                    <joint name="j67_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                    <geom name="seg7_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                          material="worm_body" mass="0.023"/>
+
+                    <body name="seg8" pos="-0.077 0 0">
+                      <joint name="j78_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                      <joint name="j78_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                      <geom name="seg8_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                            material="worm_body" mass="0.023"/>
+
+                      <body name="seg9" pos="-0.077 0 0">
+                        <joint name="j89_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                        <joint name="j89_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                        <geom name="seg9_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                              material="worm_body" mass="0.023"/>
+
+                        <body name="seg10" pos="-0.077 0 0">
+                          <joint name="j9a_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                          <joint name="j9a_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                          <geom name="seg10_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                                material="worm_body" mass="0.023"/>
+
+                          <body name="seg11" pos="-0.077 0 0">
+                            <joint name="jab_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                            <joint name="jab_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                            <geom name="seg11_geom" type="capsule" size="0.04 0.038" pos="-0.038 0 0"
+                                  material="worm_body" mass="0.023"/>
+
+                            <!-- Tail: slightly tapered -->
+                            <body name="seg12" pos="-0.077 0 0">
+                              <joint name="jbc_pitch" type="hinge" axis="0 1 0" range="-1.2 1.2"/>
+                              <joint name="jbc_yaw"   type="hinge" axis="0 0 1" range="-1.2 1.2"/>
+                              <geom name="seg12_geom" type="capsule" size="0.032 0.035" pos="-0.035 0 0"
+                                    material="worm_body" mass="0.018"/>
+                              <site name="touch_posterior" pos="-0.070 0 0" size="0.005"/>
+                            </body>
+
+                          </body>
+                        </body>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body><!-- seg0 -->
+
+  </worldbody>
+
+  <!--
+    Actuators — one per muscle quadrant per inter-segment joint.
+    DL/DR apply positive torque on pitch → dorsal bending.
+    VL/VR apply negative torque on pitch → ventral bending.
+    Lateral yaw is currently not independently driven (set to 0).
+  -->
+  <actuator>
+    <general name="muscle_seg1_DL"  joint="j01_pitch" gear="1"/>
+    <general name="muscle_seg1_DR"  joint="j01_pitch" gear="1"/>
+    <general name="muscle_seg1_VL"  joint="j01_pitch" gear="-1"/>
+    <general name="muscle_seg1_VR"  joint="j01_pitch" gear="-1"/>
+
+    <general name="muscle_seg2_DL"  joint="j12_pitch" gear="1"/>
+    <general name="muscle_seg2_DR"  joint="j12_pitch" gear="1"/>
+    <general name="muscle_seg2_VL"  joint="j12_pitch" gear="-1"/>
+    <general name="muscle_seg2_VR"  joint="j12_pitch" gear="-1"/>
+
+    <general name="muscle_seg3_DL"  joint="j23_pitch" gear="1"/>
+    <general name="muscle_seg3_DR"  joint="j23_pitch" gear="1"/>
+    <general name="muscle_seg3_VL"  joint="j23_pitch" gear="-1"/>
+    <general name="muscle_seg3_VR"  joint="j23_pitch" gear="-1"/>
+
+    <general name="muscle_seg4_DL"  joint="j34_pitch" gear="1"/>
+    <general name="muscle_seg4_DR"  joint="j34_pitch" gear="1"/>
+    <general name="muscle_seg4_VL"  joint="j34_pitch" gear="-1"/>
+    <general name="muscle_seg4_VR"  joint="j34_pitch" gear="-1"/>
+
+    <general name="muscle_seg5_DL"  joint="j45_pitch" gear="1"/>
+    <general name="muscle_seg5_DR"  joint="j45_pitch" gear="1"/>
+    <general name="muscle_seg5_VL"  joint="j45_pitch" gear="-1"/>
+    <general name="muscle_seg5_VR"  joint="j45_pitch" gear="-1"/>
+
+    <general name="muscle_seg6_DL"  joint="j56_pitch" gear="1"/>
+    <general name="muscle_seg6_DR"  joint="j56_pitch" gear="1"/>
+    <general name="muscle_seg6_VL"  joint="j56_pitch" gear="-1"/>
+    <general name="muscle_seg6_VR"  joint="j56_pitch" gear="-1"/>
+
+    <general name="muscle_seg7_DL"  joint="j67_pitch" gear="1"/>
+    <general name="muscle_seg7_DR"  joint="j67_pitch" gear="1"/>
+    <general name="muscle_seg7_VL"  joint="j67_pitch" gear="-1"/>
+    <general name="muscle_seg7_VR"  joint="j67_pitch" gear="-1"/>
+
+    <general name="muscle_seg8_DL"  joint="j78_pitch" gear="1"/>
+    <general name="muscle_seg8_DR"  joint="j78_pitch" gear="1"/>
+    <general name="muscle_seg8_VL"  joint="j78_pitch" gear="-1"/>
+    <general name="muscle_seg8_VR"  joint="j78_pitch" gear="-1"/>
+
+    <general name="muscle_seg9_DL"  joint="j89_pitch" gear="1"/>
+    <general name="muscle_seg9_DR"  joint="j89_pitch" gear="1"/>
+    <general name="muscle_seg9_VL"  joint="j89_pitch" gear="-1"/>
+    <general name="muscle_seg9_VR"  joint="j89_pitch" gear="-1"/>
+
+    <general name="muscle_seg10_DL" joint="j9a_pitch" gear="1"/>
+    <general name="muscle_seg10_DR" joint="j9a_pitch" gear="1"/>
+    <general name="muscle_seg10_VL" joint="j9a_pitch" gear="-1"/>
+    <general name="muscle_seg10_VR" joint="j9a_pitch" gear="-1"/>
+
+    <general name="muscle_seg11_DL" joint="jab_pitch" gear="1"/>
+    <general name="muscle_seg11_DR" joint="jab_pitch" gear="1"/>
+    <general name="muscle_seg11_VL" joint="jab_pitch" gear="-1"/>
+    <general name="muscle_seg11_VR" joint="jab_pitch" gear="-1"/>
+
+    <general name="muscle_seg12_DL" joint="jbc_pitch" gear="1"/>
+    <general name="muscle_seg12_DR" joint="jbc_pitch" gear="1"/>
+    <general name="muscle_seg12_VL" joint="jbc_pitch" gear="-1"/>
+    <general name="muscle_seg12_VR" joint="jbc_pitch" gear="-1"/>
+  </actuator>
+
+  <sensor>
+    <!-- Proprioception: joint angles -->
+    <jointpos name="prop_j01_pitch" joint="j01_pitch"/>
+    <jointpos name="prop_j12_pitch" joint="j12_pitch"/>
+    <jointpos name="prop_j23_pitch" joint="j23_pitch"/>
+    <jointpos name="prop_j34_pitch" joint="j34_pitch"/>
+    <jointpos name="prop_j45_pitch" joint="j45_pitch"/>
+    <jointpos name="prop_j56_pitch" joint="j56_pitch"/>
+    <jointpos name="prop_j67_pitch" joint="j67_pitch"/>
+    <jointpos name="prop_j78_pitch" joint="j78_pitch"/>
+    <jointpos name="prop_j89_pitch" joint="j89_pitch"/>
+    <jointpos name="prop_j9a_pitch" joint="j9a_pitch"/>
+    <jointpos name="prop_jab_pitch" joint="jab_pitch"/>
+    <jointpos name="prop_jbc_pitch" joint="jbc_pitch"/>
+    <!-- Joint angular velocities -->
+    <jointvel name="vel_j01_pitch" joint="j01_pitch"/>
+    <jointvel name="vel_j12_pitch" joint="j12_pitch"/>
+    <jointvel name="vel_j23_pitch" joint="j23_pitch"/>
+    <jointvel name="vel_j34_pitch" joint="j34_pitch"/>
+    <jointvel name="vel_j45_pitch" joint="j45_pitch"/>
+    <jointvel name="vel_j56_pitch" joint="j56_pitch"/>
+    <!-- Touch sensors -->
+    <touch name="touch_nose_sensor" site="nose"/>
+    <touch name="touch_ant_sensor"  site="touch_anterior"/>
+    <touch name="touch_post_sensor" site="touch_posterior"/>
+    <!-- Head position and orientation -->
+    <framepos   name="head_pos"   objtype="site" objname="nose"/>
+    <framexaxis name="head_xaxis" objtype="site" objname="nose"/>
+  </sensor>
+
+</mujoco>

@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+*.env
+data/c_elegans/*.csv
+data/c_elegans/*.xlsx
+data/c_elegans/*.json
+!data/c_elegans/.gitkeep
+*.log
+.DS_Store

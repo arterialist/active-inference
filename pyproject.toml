@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "active-inference"
+version = "0.1.0"
+description = "C. elegans active inference sensorimotor simulation using PAULA neurons"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "mujoco>=3.2",
+    "loguru>=0.7",
+    "networkx>=3.3",
+    "pandas>=2.2",
+    "scipy>=1.13",
+    "matplotlib>=3.9",
+    "tqdm>=4.66",
+    "pyOpenWorm>=0.14",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "ipython",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["simulations*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

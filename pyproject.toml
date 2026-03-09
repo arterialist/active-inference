@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "active-inference"
@@ -16,19 +16,26 @@ dependencies = [
     "scipy>=1.13",
     "matplotlib>=3.9",
     "tqdm>=4.66",
-    "pyOpenWorm>=0.14",
+    # OpenWorm ConnectomeToolbox (cect) — installed from GitHub
+    "cect @ git+https://github.com/openworm/ConnectomeToolbox.git",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
-    "ipython",
+    "ipython>=8.0",
 ]
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["simulations*"]
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["simulations"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.uv]
+# Require Python 3.11+ for the virtual environment
+required-version = ">=0.5"

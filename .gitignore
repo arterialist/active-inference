@@ -11,3 +11,6 @@ data/c_elegans/*.json
 !data/c_elegans/.gitkeep
 *.log
 .DS_Store
+
+# uv.lock is intentionally committed to reproduce exact environments
+# .venv/ is excluded (regenerated with `uv sync`)

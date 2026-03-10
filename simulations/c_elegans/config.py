@@ -137,4 +137,4 @@ MUSCLE_MAX_TORQUE_NM = 2e-12   # pico-Newton-metres range
 ENV_PLATE_RADIUS_M = 0.05        # 5 cm agar plate
 FOOD_SOURCE_POSITION = (0.0005, 0.0, 0.0)   # food at x=0.5mm (ahead of head)
 FOOD_GRADIENT_DECAY = 1800.0     # steep gradient at mm scale for stronger chemotaxis
-FOOD_CONSUMPTION_RADIUS_M = 0.00015  # head within 0.15mm (≈2× head width) = consumed
+FOOD_CONSUMPTION_RADIUS_M = 0.0001  # head within 0.1mm (≈1.5× head width) = consumed

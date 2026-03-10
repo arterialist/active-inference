@@ -15,8 +15,10 @@ Logging
 
 Visualization
 ------------
-  2D:  --save-plot       saves a trajectory plot + motor wave heatmap to c_elegans_run.png
-       --save-animation  saves an animated GIF (c_elegans_run.gif) from the same data
+  2D:  --save-plot       saves a trajectory plot + motor wave heatmap
+       --save-animation  saves an animated GIF
+       --plot-output     output path for plot (default: c_elegans_run.png)
+       --animation-output  output path for GIF (default: c_elegans_run.gif)
   3D:  --viewer          launches interactive MuJoCo viewer (requires display)
        On macOS:  uv run mjpython scripts/run_c_elegans.py --viewer --steps 500
 
@@ -194,6 +196,10 @@ def parse_args() -> argparse.Namespace:
                    help="Save locomotion trajectory and motor pattern plot")
     p.add_argument("--save-animation", action="store_true",
                    help="Save animated trajectory + motor wave (GIF)")
+    p.add_argument("--plot-output", type=str, default="c_elegans_run.png",
+                   help="Output path for plot (default: c_elegans_run.png)")
+    p.add_argument("--animation-output", type=str, default="c_elegans_run.gif",
+                   help="Output path for animation GIF (default: c_elegans_run.gif)")
     p.add_argument("--animation-fps", type=int, default=15,
                    help="Animation frames per second (default: 15)")
     p.add_argument("--animation-frames", type=int, default=300,
@@ -302,6 +308,7 @@ def main() -> None:
             loop,
             initial_food_positions=initial_food,
             active_food_positions=active_food,
+            output_path=args.plot_output,
         )
 
     if args.save_animation:
@@ -318,6 +325,7 @@ def main() -> None:
             active_food_positions=active_food,
             fps=args.animation_fps,
             max_frames=args.animation_frames,
+            output_path=args.animation_output,
         )
 
     if args.save_log:
@@ -474,6 +482,7 @@ def _save_plot(
     loop: Any,
     initial_food_positions: list[tuple[float, float, float]] | None = None,
     active_food_positions: list[tuple[float, float, float]] | None = None,
+    output_path: str | Path = "c_elegans_run.png",
 ) -> None:
     """Save a 3-panel plot: trajectory + motor wave + prediction error & free energy.
 
@@ -483,6 +492,9 @@ def _save_plot(
         import matplotlib
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
+        from matplotlib.patches import Circle
+
+        CONSUMPTION_RADIUS_MM = FOOD_CONSUMPTION_RADIUS_M * 1000
 
         fig, axes = plt.subplots(1, 3, figsize=(18, 5))
         n = collector.n_recorded
@@ -493,7 +505,8 @@ def _save_plot(
         ax = axes[0]
         ax.plot(xs, ys, "b-", linewidth=2, alpha=0.8)
         ax.plot(xs[0], ys[0], "go", markersize=10, label="Start")
-        ax.plot(xs[-1], ys[-1], "r^", markersize=10, label="End")
+        head_circle = Circle((xs[-1], ys[-1]), CONSUMPTION_RADIUS_MM, color="red", fill=True, alpha=0.8, label="End", zorder=4)
+        ax.add_patch(head_circle)
 
         ax.set_xlabel("x (mm)")
         ax.set_ylabel("y (mm)")
@@ -577,7 +590,7 @@ def _save_plot(
         ax.grid(True, alpha=0.3)
 
         plt.tight_layout()
-        out_path = Path("c_elegans_run.png")
+        out_path = Path(output_path)
         plt.savefig(out_path, dpi=120)
         print(f"\nPlot saved to {out_path.resolve()}")
         plt.close()
@@ -595,6 +608,7 @@ def _save_animation(
     active_food_positions: list[tuple[float, float, float]] | None = None,
     fps: int = 15,
     max_frames: int = 300,
+    output_path: str | Path = "c_elegans_run.gif",
 ) -> None:
     """Save animated trajectory + motor wave + prediction error as GIF.
 
@@ -606,6 +620,9 @@ def _save_animation(
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation, PillowWriter
+        from matplotlib.patches import Circle
+
+        CONSUMPTION_RADIUS_MM = FOOD_CONSUMPTION_RADIUS_M * 1000
 
         n = collector.n_recorded
         if n == 0:
@@ -654,7 +671,8 @@ def _save_animation(
         ax_traj = axes[0]
         line_traj, = ax_traj.plot([], [], "b-", linewidth=2, alpha=0.8)
         pt_start = ax_traj.plot(xs[0], ys[0], "go", markersize=10, label="Start")[0]
-        pt_head, = ax_traj.plot([], [], "ro", markersize=8, label="Head")
+        head_circle = Circle((xs[0], ys[0]), CONSUMPTION_RADIUS_MM, color="red", fill=True, alpha=0.8, label="Head", zorder=4)
+        ax_traj.add_patch(head_circle)
         food_artists: list[Any] = []
         for _ in food_positions:
             food_artists.append(ax_traj.plot([], [], "m*", markersize=18, markeredgecolor="k",
@@ -703,7 +721,7 @@ def _save_animation(
         def _update(frame_idx: int) -> tuple[Any, ...]:
             idx = int(frame_idx)
             line_traj.set_data(xs[: idx + 1], ys[: idx + 1])
-            pt_head.set_data([xs[idx]], [ys[idx]])
+            head_circle.center = (xs[idx], ys[idx])
 
             for i, pos in enumerate(food_positions):
                 fx, fy = pos[0] * 1000, pos[1] * 1000
@@ -730,12 +748,12 @@ def _save_animation(
                 line_pe.set_data([], [])
                 line_me.set_data([], [])
 
-            return (line_traj, pt_head, im, line_pe, line_me) + tuple(food_artists)
+            return (line_traj, head_circle, im, line_pe, line_me) + tuple(food_artists)
 
         anim = FuncAnimation(
             fig, _update, frames=frame_indices, interval=1000 // fps, blit=False,
         )
-        out_path = Path("c_elegans_run.gif")
+        out_path = Path(output_path)
         writer = PillowWriter(fps=fps)
         anim.save(out_path, writer=writer)
         plt.close()

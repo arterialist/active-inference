@@ -120,6 +120,7 @@ class CElegansBody(BaseBody):
         # Zero residual velocity from settling
         self._data.qvel[:] = 0.0
         mujoco.mj_forward(self._model, self._data)
+
         return self.get_state()
 
     def step(self, muscle_activations: dict[str, float]) -> BodyState:
@@ -139,6 +140,7 @@ class CElegansBody(BaseBody):
                 self._data.ctrl[idx] = float(np.clip(activation, 0.0, 1.0)) * force_max
 
         mujoco.mj_step(self._model, self._data)
+
         return self.get_state()
 
     def get_state(self) -> BodyState:

@@ -22,6 +22,7 @@ from typing import Any
 
 import numpy as np
 from loguru import logger
+from tqdm import tqdm
 
 from simulations.engine import SimulationEngine, SimulationStep
 from simulations.types import StepCallbackWithLoop
@@ -147,9 +148,9 @@ class SensorimotorLoop:
             List of SimulationStep records (empty if keep_results=False).
         """
         results: list[SimulationStep] = []
-        log_interval = max(1, n_steps // 20)
+        iterator = tqdm(range(n_steps), unit="tick", desc="Simulation", disable=not progress)
 
-        for i in range(n_steps):
+        for i in iterator:
             step = self.engine.step()
 
             if keep_results:
@@ -157,14 +158,6 @@ class SensorimotorLoop:
 
             if on_step_raw is not None:
                 on_step_raw(step, self)
-
-            if progress and i % log_interval == 0:
-                pos = step.body_state.position
-                logger.info(
-                    f"Step {i + 1}/{n_steps} | "
-                    f"pos=({pos[0]:.4f}, {pos[1]:.4f}) | "
-                    f"{step.elapsed_ms:.1f} ms/step"
-                )
 
             if (
                 converge_threshold is not None

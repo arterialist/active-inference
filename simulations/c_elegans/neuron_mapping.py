@@ -189,12 +189,17 @@ class CElegansNervousSystem(BaseNervousSystem):
                 self._muscle_activations[f"seg{seg}_{quad}"] = 0.0
 
     # Gain for synapse-level mod injection into sensory neurons.
-    # Strengthened for multi-food chemotaxis.
-    _K_STRESS_SYN: float = 10000.0
+    # K_STRESS reduced so worm gently steers back on course instead of
+    # shattering motor rhythm and looping backward.
+    _K_STRESS_SYN: float = 5000.0
     _K_REWARD_SYN: float = 8000.0
 
-    _K_VOL_STRESS: float = 3000.0
+    _K_VOL_STRESS: float = 1500.0
     _K_VOL_REWARD: float = 2000.0
+
+    # Deadzone: only spike M0 when chemical drops by a significant amount.
+    # Tiny dips during head swings are ignored to avoid over-triggering pirouettes.
+    _STRESS_DEADZONE: float = 0.015
 
     _CHEMOSENSORY_NAMES: set[str] = {"ASEL", "ASER", "AWCL", "AWCR"}
 
@@ -258,8 +263,10 @@ class CElegansNervousSystem(BaseNervousSystem):
                 delta_c = clamped - prev
 
             if self._neuromodulation:
-                if delta_c < 0:
-                    m0 = float(np.clip(abs(delta_c) * self._K_STRESS_SYN, 0.0, 5.0))
+                if delta_c < -self._STRESS_DEADZONE:
+                    # Only spike M0 for significant drops; excess beyond deadzone
+                    excess = abs(delta_c) - self._STRESS_DEADZONE
+                    m0 = float(np.clip(excess * self._K_STRESS_SYN, 0.0, 5.0))
                     m1 = 0.0
                 elif delta_c > 0:
                     m0 = 0.0
@@ -284,9 +291,10 @@ class CElegansNervousSystem(BaseNervousSystem):
 
         if self._neuromodulation:
             avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
-            if avg_delta < 0:
+            if avg_delta < -self._STRESS_DEADZONE:
+                excess = abs(avg_delta) - self._STRESS_DEADZONE
                 self._global_m0 = float(np.clip(
-                    abs(avg_delta) * self._K_VOL_STRESS, 0.0, 2.0
+                    excess * self._K_VOL_STRESS, 0.0, 2.0
                 ))
                 self._global_m1 = 0.0
             elif avg_delta > 0:

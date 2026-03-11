@@ -25,6 +25,15 @@ Visualization
   Interactive:  --interactive  2D real-time viewer; click to add food, right-click to remove
                 No logging or recording. Run until window closed.
 
+Modulators
+----------
+  --no-M0       Disable M0 (stress, dC/dt<0)
+  --no-M1       Disable M1 (reward, dC/dt>0)
+
+Food
+----
+  No food by default. Use --food-positions "x1,y1 x2,y2" to add sources.
+
 The script:
   1. Loads the Cook et al. 2019 connectome (cached after first run)
   2. Builds 302 PAULA neurons wired by the connectome
@@ -217,8 +226,10 @@ def parse_args() -> argparse.Namespace:
                    help="2D real-time viewer; click to add/remove food. No logging.")
     p.add_argument("--no-cache", action="store_true",
                    help="Force fresh connectome download (ignore cache)")
-    p.add_argument("--no-neuromod", action="store_true",
-                   help="Disable neuromodulation (M0/M1) for isolation experiments")
+    p.add_argument("--no-M0", action="store_true",
+                   help="Disable M0 modulator (stress, dC/dt<0)")
+    p.add_argument("--no-M1", action="store_true",
+                   help="Disable M1 modulator (reward, dC/dt>0)")
     p.add_argument("--verbose", action="store_true",
                    help="Enable PAULA neuron INFO logging")
     return p.parse_args()
@@ -245,7 +256,8 @@ def _run_interactive(args: argparse.Namespace, log_level: str) -> None:
         food_positions=food_positions,
         log_level=log_level,
         record_neural_states=False,
-        neuromodulation=not args.no_neuromod,
+        enable_m0=not args.no_M0,
+        enable_m1=not args.no_M1,
     )
 
     viewer = CElegansInteractiveViewer()
@@ -262,8 +274,10 @@ def main() -> None:
         return
 
     logger.info(f"Starting C. elegans simulation: {args.steps} steps")
-    if args.no_neuromod:
-        logger.info("Neuromodulation DISABLED (M0/M1 = 0)")
+    if args.no_M0:
+        logger.info("M0 modulator DISABLED")
+    if args.no_M1:
+        logger.info("M1 modulator DISABLED")
 
     if args.food_positions:
         food_positions = []
@@ -276,7 +290,8 @@ def main() -> None:
             food_positions.append((x_val * 0.1 * scale, y_val * 0.1 * scale, 0.0))
         logger.info(f"Food sources: {len(food_positions)} at {[(p[0]*100, p[1]*100) for p in food_positions]} cm (scale={args.food_scale})")
     else:
-        food_positions = None
+        food_positions = []  # No food by default
+        logger.warning("No food placed. Use --food-positions to add food sources.")
 
     record_neural = args.save_log
     collector = StreamingCollector(args.steps, record_neural=record_neural)
@@ -287,7 +302,8 @@ def main() -> None:
         food_positions=food_positions,
         log_level=log_level,
         record_neural_states=record_neural,
-        neuromodulation=not args.no_neuromod,
+        enable_m0=not args.no_M0,
+        enable_m1=not args.no_M1,
     )
 
     loop.reset()
@@ -330,16 +346,17 @@ def main() -> None:
         f"Mean free energy  : "
         f"{loop.free_energy_trace.mean_prediction_error:.6f}"
     )
-    if args.no_neuromod:
-        print("Neuromodulation   : DISABLED")
+    if args.no_M0 or args.no_M1:
+        mods = []
+        if args.no_M0:
+            mods.append("M0")
+        if args.no_M1:
+            mods.append("M1")
+        print(f"Modulators disabled: {', '.join(mods)}")
     print("=" * 60)
 
     if args.save_plot:
-        initial_food = (
-            food_positions
-            if food_positions is not None
-            else [(args.food_x, 0.0, args.food_z)]
-        )
+        initial_food = food_positions
         active_food = engine.environment.get_active_food_positions()
         _save_plot(
             collector,
@@ -350,11 +367,7 @@ def main() -> None:
         )
 
     if args.save_animation:
-        initial_food = (
-            food_positions
-            if food_positions is not None
-            else [(args.food_x, 0.0, args.food_z)]
-        )
+        initial_food = food_positions
         active_food = engine.environment.get_active_food_positions()
         _save_animation(
             collector,
@@ -383,19 +396,15 @@ def _save_streaming_log(
     log_dir.mkdir(parents=True, exist_ok=True)
 
     trace = loop.free_energy_trace
-    food_cfg = (
-        [[p[0], p[1], p[2]] for p in food_positions]
-        if food_positions
-        else [[args.food_x, 0.0, args.food_z]]
-    )
+    food_cfg = [[p[0], p[1], p[2]] for p in food_positions]
     config_data: dict[str, Any] = {
         "config": {
             "steps": args.steps,
-            "food_position": food_cfg[0],
             "food_positions": food_cfg,
             "use_connectome_cache": not args.no_cache,
             "log_level": "INFO" if args.verbose else "WARNING",
-            "neuromodulation": not args.no_neuromod,
+            "enable_m0": not args.no_M0,
+            "enable_m1": not args.no_M1,
         },
         "summary": {
             "steps_run": collector.n_recorded,

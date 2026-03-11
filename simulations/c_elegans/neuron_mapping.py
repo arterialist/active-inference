@@ -55,11 +55,13 @@ class CElegansNervousSystem(BaseNervousSystem):
         self,
         connectome: ConnectomeData,
         log_level: str = "WARNING",
-        neuromodulation: bool = True,
+        enable_m0: bool = True,
+        enable_m1: bool = True,
     ):
         self._connectome = connectome
         self._log_level = log_level
-        self._neuromodulation = neuromodulation
+        self._enable_m0 = enable_m0
+        self._enable_m1 = enable_m1
         self._network: NeuronNetwork | None = None
         self._name_to_id: dict[str, int] = {}
 
@@ -122,7 +124,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._network.run_tick()
 
         # --- volume transmission: broadcast M0/M1 to all neurons ---
-        if self._neuromodulation:
+        if self._enable_m0 or self._enable_m1:
             self._volume_broadcast()
 
         # --- decode motor outputs ---
@@ -262,21 +264,17 @@ class CElegansNervousSystem(BaseNervousSystem):
                 prev = self._prev_sensory.get(neuron_name, clamped)
                 delta_c = clamped - prev
 
-            if self._neuromodulation:
-                if delta_c < -self._STRESS_DEADZONE:
-                    # Only spike M0 for significant drops; excess beyond deadzone
-                    excess = abs(delta_c) - self._STRESS_DEADZONE
-                    m0 = float(np.clip(excess * self._K_STRESS_SYN, 0.0, 5.0))
-                    m1 = 0.0
-                elif delta_c > 0:
-                    m0 = 0.0
-                    m1 = float(np.clip(delta_c * self._K_REWARD_SYN, 0.0, 5.0))
-                else:
-                    m0 = 0.0
-                    m1 = 0.0
-                mod = np.array([m0, m1])
+            if delta_c < -self._STRESS_DEADZONE:
+                excess = abs(delta_c) - self._STRESS_DEADZONE
+                m0 = float(np.clip(excess * self._K_STRESS_SYN, 0.0, 5.0)) if self._enable_m0 else 0.0
+                m1 = 0.0
+            elif delta_c > 0:
+                m0 = 0.0
+                m1 = float(np.clip(delta_c * self._K_REWARD_SYN, 0.0, 5.0)) if self._enable_m1 else 0.0
             else:
-                mod = np.zeros(2)
+                m0 = 0.0
+                m1 = 0.0
+            mod = np.array([m0, m1])
 
             self._network.set_external_input(
                 neuron_id=nid,
@@ -289,22 +287,21 @@ class CElegansNervousSystem(BaseNervousSystem):
 
         self._inject_tonic_forward()
 
-        if self._neuromodulation:
-            avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
-            if avg_delta < -self._STRESS_DEADZONE:
-                excess = abs(avg_delta) - self._STRESS_DEADZONE
-                self._global_m0 = float(np.clip(
-                    excess * self._K_VOL_STRESS, 0.0, 2.0
-                ))
-                self._global_m1 = 0.0
-            elif avg_delta > 0:
-                self._global_m0 = 0.0
-                self._global_m1 = float(np.clip(
-                    avg_delta * self._K_VOL_REWARD, 0.0, 2.0
-                ))
-            else:
-                self._global_m0 = 0.0
-                self._global_m1 = 0.0
+        avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
+        if avg_delta < -self._STRESS_DEADZONE:
+            excess = abs(avg_delta) - self._STRESS_DEADZONE
+            self._global_m0 = float(np.clip(
+                excess * self._K_VOL_STRESS, 0.0, 2.0
+            )) if self._enable_m0 else 0.0
+            self._global_m1 = 0.0
+        elif avg_delta > 0:
+            self._global_m0 = 0.0
+            self._global_m1 = float(np.clip(
+                avg_delta * self._K_VOL_REWARD, 0.0, 2.0
+            )) if self._enable_m1 else 0.0
+        else:
+            self._global_m0 = 0.0
+            self._global_m1 = 0.0
 
     def _inject_tonic_forward(self) -> None:
         """Inject tonic depolarizing current into forward-circuit neurons.
@@ -343,9 +340,9 @@ class CElegansNervousSystem(BaseNervousSystem):
             return
         for neuron in self._network.network.neurons.values():
             gamma = neuron.params.gamma
-            if self._global_m0 > 1e-8:
+            if self._enable_m0 and self._global_m0 > 1e-8:
                 neuron.M_vector[0] += (1.0 - gamma[0]) * self._global_m0
-            if self._global_m1 > 1e-8:
+            if self._enable_m1 and self._global_m1 > 1e-8:
                 neuron.M_vector[1] += (1.0 - gamma[1]) * self._global_m1
 
     # Graded output normalization.

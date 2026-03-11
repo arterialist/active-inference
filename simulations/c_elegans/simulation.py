@@ -116,7 +116,8 @@ def build_c_elegans_simulation(
     log_level: str = "WARNING",
     on_step: StepCallback | None = None,
     record_neural_states: bool = True,
-    neuromodulation: bool = True,
+    enable_m0: bool = True,
+    enable_m1: bool = True,
 ) -> tuple[CElegansEngine, SensorimotorLoop]:
     """
     Factory: load connectome, build all subsystems, return engine + loop.
@@ -138,7 +139,7 @@ def build_c_elegans_simulation(
     # 2. Nervous system (302 PAULA neurons)
     logger.info("Building PAULA nervous system …")
     nervous_system = CElegansNervousSystem(
-        connectome, log_level=log_level, neuromodulation=neuromodulation,
+        connectome, log_level=log_level, enable_m0=enable_m0, enable_m1=enable_m1,
     )
 
     # 3. Body (MuJoCo)

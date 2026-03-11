@@ -22,6 +22,9 @@ Visualization
   3D:  --viewer          launches interactive MuJoCo viewer (requires display)
        On macOS:  uv run mjpython scripts/run_c_elegans.py --viewer --steps 500
 
+  Interactive:  --interactive  2D real-time viewer; click to add food, right-click to remove
+                No logging or recording. Run until window closed.
+
 The script:
   1. Loads the Cook et al. 2019 connectome (cached after first run)
   2. Builds 302 PAULA neurons wired by the connectome
@@ -210,6 +213,8 @@ def parse_args() -> argparse.Namespace:
                    help="Log directory when using --save-log (default: logs/run_<timestamp>)")
     p.add_argument("--viewer", action="store_true",
                    help="Launch interactive 3D MuJoCo viewer (requires display)")
+    p.add_argument("--interactive", action="store_true",
+                   help="2D real-time viewer; click to add/remove food. No logging.")
     p.add_argument("--no-cache", action="store_true",
                    help="Force fresh connectome download (ignore cache)")
     p.add_argument("--no-neuromod", action="store_true",
@@ -219,9 +224,42 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+def _run_interactive(args: argparse.Namespace, log_level: str) -> None:
+    """Run interactive 2D viewer; no logging or recording."""
+    from simulations.c_elegans.interactive_viewer import CElegansInteractiveViewer
+
+    if args.food_positions:
+        food_positions = []
+        for pair in args.food_positions.split():
+            parts = pair.split(",")
+            x_val = float(parts[0])
+            y_val = float(parts[1]) if len(parts) > 1 else 0.0
+            scale = args.food_scale
+            food_positions.append((x_val * 0.1 * scale, y_val * 0.1 * scale, 0.0))
+    else:
+        food_positions = []  # No food by default in interactive mode
+
+    engine, loop = build_c_elegans_simulation(
+        use_connectome_cache=not args.no_cache,
+        food_position=(args.food_x, 0.0, args.food_z),
+        food_positions=food_positions,
+        log_level=log_level,
+        record_neural_states=False,
+        neuromodulation=not args.no_neuromod,
+    )
+
+    viewer = CElegansInteractiveViewer()
+    logger.info("Interactive viewer: left-click add food, right-click remove. Close window to exit.")
+    viewer.run(engine, loop)
+
+
 def main() -> None:
     args = parse_args()
     log_level = "INFO" if args.verbose else "WARNING"
+
+    if args.interactive:
+        _run_interactive(args, log_level)
+        return
 
     logger.info(f"Starting C. elegans simulation: {args.steps} steps")
     if args.no_neuromod:

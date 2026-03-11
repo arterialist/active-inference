@@ -215,6 +215,50 @@ class AgarPlateEnvironment(BaseEnvironment):
         """Return positions of food sources that have not yet been consumed."""
         return [tuple(p.tolist()) for p, _ in self._food_items]
 
+    def add_food(self, position: tuple[float, float, float]) -> None:
+        """Add a food source at the given position (x, y, z) in metres."""
+        pos_arr = np.array(position)
+        sources = [
+            ChemSource(
+                molecule="NaCl",
+                position=pos_arr.copy(),
+                max_concentration=1.0,
+                decay_constant=FOOD_GRADIENT_DECAY,
+                valence="attractive",
+            ),
+            ChemSource(
+                molecule="butanone",
+                position=pos_arr.copy(),
+                max_concentration=0.8,
+                decay_constant=FOOD_GRADIENT_DECAY * 0.7,
+                valence="attractive",
+            ),
+        ]
+        self._food_items.append((pos_arr, sources))
+
+    def remove_food_near(
+        self,
+        position: tuple[float, float, float],
+        radius: float = FOOD_CONSUMPTION_RADIUS_M * 3,
+    ) -> bool:
+        """
+        Remove the food source nearest to the given position if within radius.
+
+        Returns True if a food source was removed.
+        """
+        pos_arr = np.array(position)
+        best_idx: int | None = None
+        best_dist = radius
+        for i, (fpos, _) in enumerate(self._food_items):
+            d = float(np.linalg.norm(pos_arr - fpos))
+            if d < best_dist:
+                best_dist = d
+                best_idx = i
+        if best_idx is not None:
+            self._food_items.pop(best_idx)
+            return True
+        return False
+
     # ------------------------------------------------------------------
     # Private
     # ------------------------------------------------------------------

@@ -15,6 +15,7 @@ from simulations.c_elegans.config import (
     FOOD_CONSUMPTION_RADIUS_M,
 )
 from simulations.c_elegans.environment import AgarPlateEnvironment
+from simulations.c_elegans.neuron_mapping import CElegansNervousSystem
 from simulations.interactive.base import BaseInteractiveViewer
 
 if TYPE_CHECKING:
@@ -105,7 +106,7 @@ class CElegansInteractiveViewer(BaseInteractiveViewer):
         # Metrics panel
         ax_metrics.set_xlabel("Step")
         ax_metrics.set_ylabel("Magnitude")
-        ax_metrics.set_title("Prediction error & free energy proxy")
+        ax_metrics.set_title("Prediction error, free energy proxy & neuromodulators")
         ax_metrics.grid(True, alpha=0.3)
 
         # Artists
@@ -124,7 +125,12 @@ class CElegansInteractiveViewer(BaseInteractiveViewer):
         food_artists: list[Any] = []
         line_pe, = ax_metrics.plot([], [], "b-", alpha=0.8, label="Prediction error")
         line_me, = ax_metrics.plot([], [], "orange", alpha=0.8, label="Motor entropy (FE proxy)")
+        line_m0, = ax_metrics.plot([], [], "r-", alpha=0.8, label="M0 (stress)")
+        line_m1, = ax_metrics.plot([], [], "g-", alpha=0.8, label="M1 (reward)")
         ax_metrics.legend(loc="upper right")
+
+        m0_history: deque[float] = deque(maxlen=self._metrics_maxlen)
+        m1_history: deque[float] = deque(maxlen=self._metrics_maxlen)
 
         def _update_food_display() -> None:
             for a in food_artists:
@@ -175,7 +181,7 @@ class CElegansInteractiveViewer(BaseInteractiveViewer):
                     pt_start.set_data([self._trajectory_x[0]], [self._trajectory_y[0]])
                 head_circle.center = (head[0] * M_TO_MM, head[1] * M_TO_MM)
 
-                # Update prediction error & free energy
+                # Update prediction error, free energy & neuromodulators
                 trace = loop.free_energy_trace
                 n_metrics = min(len(trace.ticks), self._metrics_maxlen)
                 if n_metrics > 0:
@@ -184,6 +190,16 @@ class CElegansInteractiveViewer(BaseInteractiveViewer):
                     me = list(trace.motor_entropy)[-n_metrics:]
                     line_pe.set_data(ticks, pe)
                     line_me.set_data(ticks, me)
+
+                if isinstance(engine.nervous_system, CElegansNervousSystem):
+                    m0, m1 = engine.nervous_system.neuromod_levels
+                    m0_history.append(m0)
+                    m1_history.append(m1)
+                    tick_list = list(trace.ticks)[-len(m0_history):]
+                    line_m0.set_data(tick_list, list(m0_history))
+                    line_m1.set_data(tick_list, list(m1_history))
+
+                if n_metrics > 0:
                     ax_metrics.relim()
                     ax_metrics.autoscale_view()
 

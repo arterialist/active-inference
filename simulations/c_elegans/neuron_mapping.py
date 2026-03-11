@@ -145,6 +145,11 @@ class CElegansNervousSystem(BaseNervousSystem):
     def n_neurons(self) -> int:
         return len(self._name_to_id)
 
+    @property
+    def neuromod_levels(self) -> tuple[float, float]:
+        """Return current global neuromodulator levels (M0, M1)."""
+        return (self._global_m0, self._global_m1)
+
     # ------------------------------------------------------------------
     # Public helpers
     # ------------------------------------------------------------------

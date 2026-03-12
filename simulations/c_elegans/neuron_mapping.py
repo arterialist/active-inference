@@ -12,6 +12,7 @@ generic PAULA build pipeline, adding:
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any
 
 import numpy as np
@@ -57,11 +58,21 @@ class CElegansNervousSystem(BaseNervousSystem):
         log_level: str = "WARNING",
         enable_m0: bool = True,
         enable_m1: bool = True,
+        evol_config: dict[str, Any] | None = None,
     ):
         self._connectome = connectome
         self._log_level = log_level
         self._enable_m0 = enable_m0
         self._enable_m1 = enable_m1
+        self._evol_config = evol_config or {}
+
+        # Apply neuromod config overrides (instance attrs override class defaults)
+        for key in (
+            "K_STRESS_SYN", "K_REWARD_SYN", "K_VOL_STRESS", "K_VOL_REWARD",
+            "STRESS_DEADZONE", "CHEM_EMA_ALPHA", "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
+        ):
+            if key in self._evol_config:
+                setattr(self, f"_{key}", self._evol_config[key])
         self._network: NeuronNetwork | None = None
         self._name_to_id: dict[str, int] = {}
 
@@ -169,17 +180,48 @@ class CElegansNervousSystem(BaseNervousSystem):
     # Private methods
     # ------------------------------------------------------------------
 
+    def _apply_evol_params(
+        self,
+        params: NeuronParameters,
+        name: str,
+    ) -> NeuronParameters:
+        """Apply evol_config overrides to neuron params."""
+        overrides = self._evol_config.get("neuron_params", {}).get(name)
+        if not overrides:
+            return params
+        kwargs = {}
+        for k, v in overrides.items():
+            if hasattr(params, k):
+                kwargs[k] = np.array(v) if k in ("gamma", "w_r", "w_b", "w_tref") and isinstance(v, (list, tuple)) else v
+        return replace(params, **kwargs) if kwargs else params
+
     def _build(self) -> None:
         """(Re)build the PAULA NeuronNetwork from the connectome."""
+        base = self._apply_evol_params(_base_params(), "base")
+        sensory = self._apply_evol_params(_sensory_params(), "sensory")
+        motor = self._apply_evol_params(_motor_params(), "motor")
+        interneuron = self._apply_evol_params(_interneuron_params(), "interneuron")
+        def _evol_key(name: str) -> str:
+            if name.startswith(("DD", "VD")):
+                return "motor_inhib"
+            if name in ("AVBL", "AVBR", "PVCL", "PVCR"):
+                return "command_fwd"
+            return "command_bkw"
+
+        overrides_raw = _neuron_param_overrides()
+        overrides = {
+            k: self._apply_evol_params(v, _evol_key(k))
+            for k, v in overrides_raw.items()
+        }
         network, name_to_id = build_paula_network(
             self._connectome,
-            base_params=_base_params(),
-            sensory_params=_sensory_params(),
-            motor_params=_motor_params(),
-            interneuron_params=_interneuron_params(),
+            base_params=base,
+            sensory_params=sensory,
+            motor_params=motor,
+            interneuron_params=interneuron,
             weight_max=5.0,
             log_level=self._log_level,
-            param_overrides=_neuron_param_overrides(),
+            param_overrides=overrides,
         )
         self._network = network
         self._name_to_id = name_to_id
@@ -198,21 +240,21 @@ class CElegansNervousSystem(BaseNervousSystem):
     # Gain for synapse-level mod injection into sensory neurons.
     # K_STRESS reduced so worm gently steers back on course instead of
     # shattering motor rhythm and looping backward.
-    _K_STRESS_SYN: float = 5000.0
-    _K_REWARD_SYN: float = 8000.0
+    _K_STRESS_SYN: float = 4000.0
+    _K_REWARD_SYN: float = 4000.0
 
-    _K_VOL_STRESS: float = 1500.0
+    _K_VOL_STRESS: float = 2000.0
     _K_VOL_REWARD: float = 2000.0
 
     # Deadzone: only spike M0 when chemical drops by a significant amount.
     # Tiny dips during head swings are ignored to avoid over-triggering pirouettes.
-    _STRESS_DEADZONE: float = 0.015
+    _STRESS_DEADZONE: float = 0.00005
 
     _CHEMOSENSORY_NAMES: set[str] = {"ASEL", "ASER", "AWCL", "AWCR"}
 
     # EMA smoothing for chemosensory dC/dt. Alpha=0.02 → ~50-tick time
     # constant (100ms at 2ms timestep), matching ASE temporal integration.
-    _CHEM_EMA_ALPHA: float = 0.02
+    _CHEM_EMA_ALPHA: float = 0.01
 
     # Tonic forward drive: injected into AVB and B-type motor neurons each
     # tick to model the AVB↔B-type gap junction coupling that biases C. elegans

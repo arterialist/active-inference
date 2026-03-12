@@ -1,0 +1,261 @@
+#!/usr/bin/env python3
+"""
+Evolutionary optimization of neuromodulation and neuron params for food-seeking.
+
+Robustness protocol: each genome is tested against 4 distinct food positions
+to prevent directional overfitting ("lucky torpedo"). Fitness = average of
+min_distance achieved per environment (or worst-case with --robust).
+Uses min_distance over the run, not final tick, to avoid "final tick trap".
+
+Usage:
+  cd active-inference/
+  uv run python scripts/evolve_food_seeking.py [--generations N] [--population M]
+"""
+
+from __future__ import annotations
+
+import argparse
+import sys
+import time
+from pathlib import Path
+
+import numpy as np
+from tqdm import tqdm
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+# Suppress simulation logging during evolution
+import loguru
+loguru.logger.remove()
+loguru.logger.add(sys.stderr, level="ERROR")
+
+N_TICKS = 50_000
+EAT_RADIUS_M = 0.0001  # Early exit if worm gets this close (0.1 mm)
+
+# 4 distinct targets to prevent directional overfitting ("lucky torpedo")
+TEST_ENVIRONMENTS = [
+    (0.002, 0.002, 0.0),   # Top-right
+    (-0.002, 0.002, 0.0),  # Top-left
+    (0.002, -0.002, 0.0),  # Bottom-right
+    (0.0, 0.003, 0.0),     # Straight ahead
+]
+
+
+def x_to_config(x: np.ndarray) -> dict:
+    """Map normalized [0,1]^d vector to evol_config."""
+    # Bounds for each parameter
+    # 0: K_STRESS_SYN [1000, 8000]
+    # 1: K_REWARD_SYN [1000, 8000]
+    # 2: K_VOL_STRESS [500, 4000]
+    # 3: K_VOL_REWARD [500, 4000]
+    # 4: STRESS_DEADZONE log [1e-6, 0.01]
+    # 5: CHEM_EMA_ALPHA [0.01, 0.99] — temporal filter, critical for phase lag
+    # 6: TONIC_FWD_CMD [0.1, 0.5]
+    # 7: TONIC_FWD_MOTOR [0.05, 0.2]
+    # 8: motor w_tref M0 [15, 45]
+    # 9: motor w_tref M1 [-25, -5]
+    # 10: sensory w_tref M0 [8, 25]
+    # 11: sensory w_tref M1 [-12, -3]
+    cfg: dict = {
+        "K_STRESS_SYN": 1000 + 7000 * x[0],
+        "K_REWARD_SYN": 1000 + 7000 * x[1],
+        "K_VOL_STRESS": 500 + 3500 * x[2],
+        "K_VOL_REWARD": 500 + 3500 * x[3],
+        "STRESS_DEADZONE": 1e-6 * (0.01 / 1e-6) ** x[4],
+        "CHEM_EMA_ALPHA": 0.01 + 0.98 * x[5],
+        "TONIC_FWD_CMD": 0.1 + 0.4 * x[6],
+        "TONIC_FWD_MOTOR": 0.05 + 0.15 * x[7],
+    }
+    cfg["neuron_params"] = {
+        "motor": {"w_tref": [15 + 30 * x[8], -5 - 20 * x[9]]},
+        "sensory": {"w_tref": [8 + 17 * x[10], -3 - 9 * x[11]]},
+    }
+    return cfg
+
+
+def evaluate(
+    x: np.ndarray,
+    n_ticks: int = N_TICKS,
+    eval_counter: list[int] | None = None,
+    show_sim_progress: bool = False,
+    use_worst: bool = False,
+) -> float:
+    """
+    Run simulation against 4 distinct food positions. Return average (or worst)
+    of min_distance achieved in each run. DE minimizes this (lower = better).
+    """
+    from simulations.c_elegans.simulation import build_c_elegans_simulation
+
+    evol_config = x_to_config(np.clip(x, 0, 1))
+    min_distances: list[float] = []
+
+    for env_idx, food_pos in enumerate(TEST_ENVIRONMENTS):
+        try:
+            engine, loop = build_c_elegans_simulation(
+                use_connectome_cache=True,
+                food_positions=[food_pos],
+                log_level="ERROR",
+                record_neural_states=False,
+                evol_config=evol_config,
+            )
+        except Exception:
+            return 1e6  # Penalize failed builds (large distance)
+
+        loop.reset()
+        food = np.array(food_pos)
+        min_dist = float("inf")
+
+        tick_range = range(n_ticks - 1)
+        if show_sim_progress:
+            tick_range = tqdm(
+                tick_range,
+                unit="tick",
+                desc=f"Sim env{env_idx+1}",
+                position=1,
+                leave=False,
+                bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}]",
+            )
+        for _ in tick_range:
+            step = engine.step()
+            head = step.body_state.head_position
+            d = float(np.linalg.norm(head - food))
+            min_dist = min(min_dist, d)
+            if min_dist < EAT_RADIUS_M:
+                break  # Successfully reached food
+        min_distances.append(min_dist)
+
+    if eval_counter is not None:
+        eval_counter[0] += 1
+
+    # Average across environments (or worst-case for robustness)
+    return float(np.max(min_distances) if use_worst else np.mean(min_distances))
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Evolve neuromod params for food-seeking")
+    parser.add_argument("--generations", type=int, default=30)
+    parser.add_argument("--population", type=int, default=20)
+    parser.add_argument("--ticks", type=int, default=N_TICKS)
+    parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--verbose", action="store_true", help="Scipy DE verbose output")
+    parser.add_argument("--quiet", action="store_true", help="Suppress progress logging")
+    parser.add_argument(
+        "--robust",
+        action="store_true",
+        help="Score on worst environment (max min_dist) instead of average",
+    )
+    args = parser.parse_args()
+
+    np.random.seed(args.seed)
+    n_dim = 12
+    eval_counter: list[int] = [0]
+    gen_counter: list[int] = [0]
+    start_time = time.perf_counter()
+
+    if not args.quiet:
+        print("=" * 60)
+        print("Evolution: food-seeking optimization (robustness protocol)")
+        print("=" * 60)
+        print(f"  generations={args.generations}  population={args.population}  ticks={args.ticks}")
+        print(f"  {len(TEST_ENVIRONMENTS)} targets: avg min_dist" + (" (worst)" if args.robust else ""))
+        print("-" * 60)
+
+    # Approximate total evals: DE does ~popsize + generations*popsize, use 2x buffer
+    total_evals = args.population * (args.generations + 1) * 2
+    pbar = tqdm(
+        total=total_evals,
+        disable=args.quiet,
+        unit="eval",
+        desc="Evolution",
+        position=0,
+        bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}] {postfix}",
+    )
+
+    # Wrap to capture best (lowest) distance; DE minimizes directly
+    class EvalWrapper:
+        def __init__(self):
+            self.best_dist = np.inf
+            self.best_x = None
+
+        def __call__(self, x):
+            dist = evaluate(
+                x,
+                n_ticks=args.ticks,
+                eval_counter=eval_counter,
+                show_sim_progress=not args.quiet,
+                use_worst=args.robust,
+            )
+            if dist < self.best_dist:
+                self.best_dist = dist
+                self.best_x = x.copy()
+            if not args.quiet:
+                pbar.update(1)
+                pbar.set_postfix(best_dist=f"{self.best_dist*1000:.2f}mm")
+            return dist  # DE minimizes distance directly
+
+    wrapper = EvalWrapper()
+
+    def _progress_callback(xk, convergence):
+        gen_counter[0] += 1
+        if args.quiet:
+            return
+        elapsed = time.perf_counter() - start_time
+        n_evals = eval_counter[0]
+        best_d = wrapper.best_dist if wrapper.best_x is not None else float("nan")
+        evals_per_sec = n_evals / elapsed if elapsed > 0 else 0
+        tqdm.write(
+            f"  gen {gen_counter[0]:3d}/{args.generations} | "
+            f"evals {n_evals:5d} | best {best_d*1000:.2f}mm | "
+            f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s"
+        )
+
+    # Differential evolution (scipy)
+    from scipy.optimize import differential_evolution
+
+    bounds = [(0.0, 1.0)] * n_dim
+    result = differential_evolution(
+        wrapper,
+        bounds,
+        strategy="best1bin",
+        maxiter=args.generations,
+        popsize=args.population,
+        seed=args.seed,
+        disp=args.verbose,
+        polish=False,
+        atol=0,
+        tol=0,
+        callback=_progress_callback,
+    )
+
+    if not args.quiet:
+        pbar.close()
+
+    best_x = np.clip(result.x, 0, 1)
+    best_config = x_to_config(best_x)
+    best_distance = result.fun  # DE minimized distance
+    total_time = time.perf_counter() - start_time
+
+    print("\n" + "=" * 60)
+    print("Evolution complete")
+    print("=" * 60)
+    print(f"Best avg min_dist: {best_distance*1000:.2f} mm")
+    print(f"Total evals: {eval_counter[0]}, time: {total_time/60:.1f} min")
+    print("\nBest neuromod config:")
+    for k, v in best_config.items():
+        if k != "neuron_params":
+            print(f"  {k}: {v}")
+    print("\nBest neuron_params:")
+    for k, v in best_config.get("neuron_params", {}).items():
+        print(f"  {k}: {v}")
+    print("=" * 60)
+
+    # Write best config to file for easy application
+    import json
+    out_path = Path(__file__).parent.parent / "evolved_food_seeking_config.json"
+    with open(out_path, "w") as f:
+        json.dump(best_config, f, indent=2)
+    print(f"\nConfig saved to {out_path}")
+
+
+if __name__ == "__main__":
+    main()

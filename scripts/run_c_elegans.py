@@ -232,12 +232,25 @@ def parse_args() -> argparse.Namespace:
                    help="Disable M1 modulator (reward, dC/dt>0)")
     p.add_argument("--verbose", action="store_true",
                    help="Enable PAULA neuron INFO logging")
+    p.add_argument("--evol-config", type=str, default=None,
+                   help="Path to evolved config JSON (from evolve_food_seeking.py)")
     return p.parse_args()
+
+
+def _load_evol_config(path: str | None) -> dict | None:
+    """Load evolved config from JSON file."""
+    if not path:
+        return None
+    import json
+    with open(path) as f:
+        return json.load(f)
 
 
 def _run_interactive(args: argparse.Namespace, log_level: str) -> None:
     """Run interactive 2D viewer; no logging or recording."""
     from simulations.c_elegans.interactive_viewer import CElegansInteractiveViewer
+
+    evol_config = _load_evol_config(args.evol_config)
 
     if args.food_positions:
         food_positions = []
@@ -258,6 +271,7 @@ def _run_interactive(args: argparse.Namespace, log_level: str) -> None:
         record_neural_states=False,
         enable_m0=not args.no_M0,
         enable_m1=not args.no_M1,
+        evol_config=evol_config,
     )
 
     viewer = CElegansInteractiveViewer()
@@ -295,6 +309,7 @@ def main() -> None:
 
     record_neural = args.save_log
     collector = StreamingCollector(args.steps, record_neural=record_neural)
+    evol_config = _load_evol_config(args.evol_config)
 
     engine, loop = build_c_elegans_simulation(
         use_connectome_cache=not args.no_cache,
@@ -304,6 +319,7 @@ def main() -> None:
         record_neural_states=record_neural,
         enable_m0=not args.no_M0,
         enable_m1=not args.no_M1,
+        evol_config=evol_config,
     )
 
     loop.reset()

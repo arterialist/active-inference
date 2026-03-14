@@ -26,6 +26,9 @@ from simulations.connectome_loader import ConnectomeData, NeuronInfo, SynapticEd
 # Cache file so we don't hit the Excel reader on every run
 _CACHE_PATH = Path(__file__).resolve().parents[3] / "data" / "c_elegans" / "connectome_cache.json"
 
+# In-memory cache: avoids repeated loads during evolution (keeps RAM flat)
+_connectome_memory_cache: ConnectomeData | None = None
+
 
 def load_connectome(use_cache: bool = True) -> ConnectomeData:
     """
@@ -38,9 +41,13 @@ def load_connectome(use_cache: bool = True) -> ConnectomeData:
     Returns:
         ConnectomeData with 302 neurons, chemical synapses, and gap junctions.
     """
+    global _connectome_memory_cache
     if use_cache and _CACHE_PATH.exists():
+        if _connectome_memory_cache is not None:
+            return _connectome_memory_cache
         logger.info(f"Loading connectome from cache: {_CACHE_PATH}")
-        return _load_from_cache(_CACHE_PATH)
+        _connectome_memory_cache = _load_from_cache(_CACHE_PATH)
+        return _connectome_memory_cache
 
     logger.info("Parsing connectome from cect Cook2019HermReader …")
     data = _parse_from_cect()

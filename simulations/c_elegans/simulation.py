@@ -45,6 +45,7 @@ class CElegansEngine(SimulationEngine):
         neural_ticks_per_physics_step: int = NEURAL_TICKS_PER_PHYSICS_STEP,
         on_step: StepCallback | None = None,
         record_neural_states: bool = True,
+        max_history: int = 200,
     ):
         super().__init__(
             body=body,
@@ -53,6 +54,7 @@ class CElegansEngine(SimulationEngine):
             neural_ticks_per_physics_step=neural_ticks_per_physics_step,
             on_step=on_step,
             record_neural_states=record_neural_states,
+            max_history=max_history,
         )
         self._sensor_encoder = sensor_encoder
 
@@ -119,6 +121,8 @@ def build_c_elegans_simulation(
     enable_m0: bool = True,
     enable_m1: bool = True,
     evol_config: dict[str, Any] | None = None,
+    max_history: int = 200,
+    suppress_connectome_summary: bool = False,
 ) -> tuple[CElegansEngine, SensorimotorLoop]:
     """
     Factory: load connectome, build all subsystems, return engine + loop.
@@ -135,7 +139,8 @@ def build_c_elegans_simulation(
     # 1. Connectome
     logger.info("Loading C. elegans connectome …")
     connectome = load_connectome(use_cache=use_connectome_cache)
-    print_connectome_summary(connectome)
+    if not suppress_connectome_summary:
+        print_connectome_summary(connectome)
 
     # 2. Nervous system (302 PAULA neurons)
     logger.info("Building PAULA nervous system …")
@@ -169,6 +174,7 @@ def build_c_elegans_simulation(
         sensor_encoder=sensor_encoder,
         on_step=on_step,
         record_neural_states=record_neural_states,
+        max_history=max_history,
     )
 
     # 7. Active inference loop wrapper

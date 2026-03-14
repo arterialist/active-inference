@@ -58,6 +58,7 @@ class SimulationEngine:
         neural_ticks_per_physics_step: int = 2,
         on_step: StepCallback | None = None,
         record_neural_states: bool = True,
+        max_history: int = 200,
     ):
         self.body = body
         self.environment = environment
@@ -68,7 +69,7 @@ class SimulationEngine:
 
         self._tick: int = 0
         self._history: list[SimulationStep] = []
-        self._max_history: int = 200
+        self._max_history: int = max_history
 
     # ------------------------------------------------------------------
     # Public API

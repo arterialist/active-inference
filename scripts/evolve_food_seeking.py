@@ -10,6 +10,7 @@ Uses min_distance over the run, not final tick, to avoid "final tick trap".
 Usage:
   cd active-inference/
   uv run python scripts/evolve_food_seeking.py [--generations N] [--population M]
+  uv run python scripts/evolve_food_seeking.py --low-memory   # Raspberry Pi / 8GB RAM
 
 Checkpointing:
   Best config is saved every N generations (--checkpoint-every) and on Ctrl+C.
@@ -21,7 +22,9 @@ Checkpointing:
 from __future__ import annotations
 
 import argparse
+import gc
 import json
+import resource
 import signal
 import sys
 import time
@@ -39,6 +42,13 @@ loguru.logger.add(sys.stderr, level="ERROR")
 
 N_TICKS = 50_000
 EAT_RADIUS_M = 0.0001  # Early exit if worm gets this close (0.1 mm)
+
+
+def _rss_mb() -> float:
+    """Peak resident set size in MB (Unix). macOS: bytes, Linux: KB."""
+    r = resource.getrusage(resource.RUSAGE_SELF)
+    rss = r.ru_maxrss
+    return (rss / 1024 / 1024) if sys.platform == "darwin" else (rss / 1024)
 
 # 4 distinct targets to prevent directional overfitting ("lucky torpedo")
 TEST_ENVIRONMENTS = [
@@ -122,6 +132,7 @@ def evaluate(
     eval_counter: list[int] | None = None,
     show_sim_progress: bool = False,
     use_worst: bool = False,
+    low_memory: bool = False,
 ) -> float:
     """
     Run simulation against 4 distinct food positions. Return average (or worst)
@@ -140,6 +151,8 @@ def evaluate(
                 log_level="ERROR",
                 record_neural_states=False,
                 evol_config=evol_config,
+                max_history=1 if low_memory else 200,
+                suppress_connectome_summary=low_memory,
             )
         except Exception:
             return 1e6  # Penalize failed builds (large distance)
@@ -167,8 +180,15 @@ def evaluate(
                 break  # Successfully reached food
         min_distances.append(min_dist)
 
+        if low_memory:
+            del engine, loop
+            gc.collect()
+
     if eval_counter is not None:
         eval_counter[0] += 1
+
+    if low_memory:
+        gc.collect()
 
     # Average across environments (or worst-case for robustness)
     return float(np.max(min_distances) if use_worst else np.mean(min_distances))
@@ -199,6 +219,16 @@ def main() -> None:
         default=1,
         help="Save checkpoint every N generations (default: 1)",
     )
+    parser.add_argument(
+        "--low-memory",
+        action="store_true",
+        help="Keep RAM flat for Raspberry Pi / 8GB: no sim progress bars, gc after each eval, min history",
+    )
+    parser.add_argument(
+        "--measure-memory",
+        action="store_true",
+        help="Print peak RSS (MB) each generation",
+    )
     args = parser.parse_args()
 
     checkpoint_path = Path(args.checkpoint)
@@ -218,6 +248,8 @@ def main() -> None:
         print(f"  generations={args.generations}  population={args.population}  ticks={args.ticks}")
         print(f"  {len(TEST_ENVIRONMENTS)} targets: avg min_dist" + (" (worst)" if args.robust else ""))
         print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} gen)")
+        if args.low_memory:
+            print("  low-memory: enabled (flat RAM for Pi/8GB)")
         print("-" * 60)
 
     # Approximate total evals: DE does ~popsize + generations*popsize, use 2x buffer
@@ -242,15 +274,19 @@ def main() -> None:
                 x,
                 n_ticks=args.ticks,
                 eval_counter=eval_counter,
-                show_sim_progress=not args.quiet,
+                show_sim_progress=not args.quiet and not args.low_memory,
                 use_worst=args.robust,
+                low_memory=args.low_memory,
             )
             if dist < self.best_dist:
                 self.best_dist = dist
                 self.best_x = x.copy()
             if not args.quiet:
                 pbar.update(1)
-                pbar.set_postfix(best_dist=f"{self.best_dist*1000:.2f}mm")
+                postfix = {"best_dist": f"{self.best_dist*1000:.2f}mm"}
+                if args.measure_memory:
+                    postfix["RSS"] = f"{_rss_mb():.0f}MB"
+                pbar.set_postfix(postfix)
             return dist  # DE minimizes distance directly
 
     wrapper = EvalWrapper()
@@ -301,10 +337,11 @@ def main() -> None:
         n_evals = eval_counter[0]
         best_d = wrapper.best_dist if wrapper.best_x is not None else float("nan")
         evals_per_sec = n_evals / elapsed if elapsed > 0 else 0
+        mem = f" | peak {_rss_mb():.0f}MB" if args.measure_memory else ""
         tqdm.write(
             f"  gen {gen_counter[0]:3d}/{args.generations} | "
             f"evals {n_evals:5d} | best {best_d*1000:.2f}mm | "
-            f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s"
+            f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s{mem}"
         )
 
     # Differential evolution (scipy)
@@ -338,6 +375,8 @@ def main() -> None:
     print("=" * 60)
     print(f"Best avg min_dist: {best_distance*1000:.2f} mm")
     print(f"Total evals: {eval_counter[0]}, time: {total_time/60:.1f} min")
+    if args.measure_memory:
+        print(f"Peak RSS: {_rss_mb():.0f} MB")
     print("\nBest neuromod config:")
     for k, v in best_config.items():
         if k != "neuron_params":

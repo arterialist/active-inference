@@ -33,7 +33,9 @@ def main() -> None:
         sys.exit(1)
 
     with open(args.config) as f:
-        cfg = json.load(f)
+        data = json.load(f)
+    # Support checkpoint format (from evolve_food_seeking --checkpoint)
+    cfg = data.get("best_config", data)
 
     text = NM_PATH.read_text()
 

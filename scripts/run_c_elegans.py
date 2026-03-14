@@ -45,6 +45,7 @@ The script:
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 import time
 from pathlib import Path
@@ -238,12 +239,13 @@ def parse_args() -> argparse.Namespace:
 
 
 def _load_evol_config(path: str | None) -> dict | None:
-    """Load evolved config from JSON file."""
+    """Load evolved config from JSON file. Supports checkpoint format (config/best_config)."""
     if not path:
         return None
-    import json
     with open(path) as f:
-        return json.load(f)
+        data = json.load(f)
+    # Checkpoint format: use config or best_config; else treat as flat config
+    return data.get("config", data.get("best_config", data))
 
 
 def _run_interactive(args: argparse.Namespace, log_level: str) -> None:

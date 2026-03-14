@@ -10,11 +10,19 @@ Uses min_distance over the run, not final tick, to avoid "final tick trap".
 Usage:
   cd active-inference/
   uv run python scripts/evolve_food_seeking.py [--generations N] [--population M]
+
+Checkpointing:
+  Best config is saved every N generations (--checkpoint-every) and on Ctrl+C.
+  Use the checkpoint for simulation at any time (even while evolution runs):
+    uv run python scripts/run_c_elegans.py --evol-config evolved_food_seeking_checkpoint.json --viewer
+  On crash, recover with: uv run python scripts/apply_evolved_config.py --config evolved_food_seeking_checkpoint.json
 """
 
 from __future__ import annotations
 
 import argparse
+import json
+import signal
 import sys
 import time
 from pathlib import Path
@@ -71,6 +79,41 @@ def x_to_config(x: np.ndarray) -> dict:
         "sensory": {"w_tref": [8 + 17 * x[10], -3 - 9 * x[11]]},
     }
     return cfg
+
+
+def _save_checkpoint(
+    best_x: np.ndarray | None,
+    best_dist: float,
+    gen: int,
+    n_evals: int,
+    elapsed: float,
+    out_path: Path,
+    evol_args: dict | None = None,
+) -> None:
+    """Atomically save best config + metadata. Safe to call on crash/signal.
+
+    Saves full simulation-ready config so you can run with --evol-config at any time:
+      uv run python scripts/run_c_elegans.py --evol-config evolved_food_seeking_checkpoint.json --viewer
+    """
+    if best_x is None:
+        return
+    best_config = x_to_config(np.clip(best_x, 0, 1))
+    payload = {
+        # Simulation-ready: use this file directly with --evol-config
+        "config": best_config,
+        "best_config": best_config,
+        "best_x": best_x.tolist(),
+        "best_dist_mm": float(best_dist * 1000),
+        "generation": gen,
+        "n_evals": n_evals,
+        "elapsed_min": elapsed / 60,
+    }
+    if evol_args is not None:
+        payload["evol_args"] = evol_args
+    tmp = out_path.with_suffix(out_path.suffix + ".tmp")
+    with open(tmp, "w") as f:
+        json.dump(payload, f, indent=2)
+    tmp.rename(out_path)
 
 
 def evaluate(
@@ -144,7 +187,23 @@ def main() -> None:
         action="store_true",
         help="Score on worst environment (max min_dist) instead of average",
     )
+    parser.add_argument(
+        "--checkpoint",
+        type=str,
+        default="evolved_food_seeking_checkpoint.json",
+        help="Path for periodic checkpoints (default: evolved_food_seeking_checkpoint.json)",
+    )
+    parser.add_argument(
+        "--checkpoint-every",
+        type=int,
+        default=1,
+        help="Save checkpoint every N generations (default: 1)",
+    )
     args = parser.parse_args()
+
+    checkpoint_path = Path(args.checkpoint)
+    if not checkpoint_path.is_absolute():
+        checkpoint_path = Path(__file__).parent.parent / checkpoint_path
 
     np.random.seed(args.seed)
     n_dim = 12
@@ -158,6 +217,7 @@ def main() -> None:
         print("=" * 60)
         print(f"  generations={args.generations}  population={args.population}  ticks={args.ticks}")
         print(f"  {len(TEST_ENVIRONMENTS)} targets: avg min_dist" + (" (worst)" if args.robust else ""))
+        print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} gen)")
         print("-" * 60)
 
     # Approximate total evals: DE does ~popsize + generations*popsize, use 2x buffer
@@ -194,9 +254,47 @@ def main() -> None:
             return dist  # DE minimizes distance directly
 
     wrapper = EvalWrapper()
+    _abort_requested = [False]  # Mutable for signal handler
+    evol_args = {
+        "generations": args.generations,
+        "population": args.population,
+        "ticks": args.ticks,
+        "robust": args.robust,
+        "seed": args.seed,
+    }
+
+    def _on_sigint(signum, frame):
+        _abort_requested[0] = True
+        if wrapper.best_x is not None:
+            elapsed = time.perf_counter() - start_time
+            _save_checkpoint(
+                wrapper.best_x,
+                wrapper.best_dist,
+                gen_counter[0],
+                eval_counter[0],
+                elapsed,
+                checkpoint_path,
+                evol_args=evol_args,
+            )
+            tqdm.write(f"\n[Ctrl+C] Checkpoint saved to {checkpoint_path}")
+        sys.exit(130)
+
+    signal.signal(signal.SIGINT, _on_sigint)
 
     def _progress_callback(xk, convergence):
         gen_counter[0] += 1
+        # Checkpoint every N generations
+        if wrapper.best_x is not None and gen_counter[0] % args.checkpoint_every == 0:
+            elapsed = time.perf_counter() - start_time
+            _save_checkpoint(
+                wrapper.best_x,
+                wrapper.best_dist,
+                gen_counter[0],
+                eval_counter[0],
+                elapsed,
+                checkpoint_path,
+                evol_args=evol_args,
+            )
         if args.quiet:
             return
         elapsed = time.perf_counter() - start_time
@@ -250,7 +348,6 @@ def main() -> None:
     print("=" * 60)
 
     # Write best config to file for easy application
-    import json
     out_path = Path(__file__).parent.parent / "evolved_food_seeking_config.json"
     with open(out_path, "w") as f:
         json.dump(best_config, f, indent=2)

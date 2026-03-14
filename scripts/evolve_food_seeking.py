@@ -222,7 +222,7 @@ def main() -> None:
     parser.add_argument(
         "--low-memory",
         action="store_true",
-        help="Keep RAM flat for Raspberry Pi / 8GB: no sim progress bars, gc after each eval, min history",
+        help="Keep RAM flat for Raspberry Pi / 8GB: gc after each eval, min history",
     )
     parser.add_argument(
         "--measure-memory",
@@ -274,7 +274,7 @@ def main() -> None:
                 x,
                 n_ticks=args.ticks,
                 eval_counter=eval_counter,
-                show_sim_progress=not args.quiet and not args.low_memory,
+                show_sim_progress=not args.quiet,
                 use_worst=args.robust,
                 low_memory=args.low_memory,
             )

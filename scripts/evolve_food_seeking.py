@@ -13,7 +13,7 @@ Usage:
   uv run python scripts/evolve_food_seeking.py --low-memory   # Raspberry Pi / 8GB RAM
 
 Checkpointing:
-  Best config is saved every N generations (--checkpoint-every) and on Ctrl+C.
+  Best config is saved after every eval, at generation boundaries, and on Ctrl+C.
   Use the checkpoint for simulation at any time (even while evolution runs):
     uv run python scripts/run_c_elegans.py --evol-config evolved_food_seeking_checkpoint.json --viewer
   On crash, recover with: uv run python scripts/apply_evolved_config.py --config evolved_food_seeking_checkpoint.json
@@ -217,7 +217,7 @@ def main() -> None:
         "--checkpoint-every",
         type=int,
         default=1,
-        help="Save checkpoint every N generations (default: 1)",
+        help="Save checkpoint every N evals (default: 1 = every eval)",
     )
     parser.add_argument(
         "--low-memory",
@@ -247,7 +247,7 @@ def main() -> None:
         print("=" * 60)
         print(f"  generations={args.generations}  population={args.population}  ticks={args.ticks}")
         print(f"  {len(TEST_ENVIRONMENTS)} targets: avg min_dist" + (" (worst)" if args.robust else ""))
-        print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} gen)")
+        print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} eval)")
         if args.low_memory:
             print("  low-memory: enabled (flat RAM for Pi/8GB)")
         print("-" * 60)
@@ -281,6 +281,17 @@ def main() -> None:
             if dist < self.best_dist:
                 self.best_dist = dist
                 self.best_x = x.copy()
+            if self.best_x is not None and eval_counter[0] % args.checkpoint_every == 0:
+                elapsed = time.perf_counter() - start_time
+                _save_checkpoint(
+                    self.best_x,
+                    self.best_dist,
+                    gen_counter[0],
+                    eval_counter[0],
+                    elapsed,
+                    checkpoint_path,
+                    evol_args=evol_args,
+                )
             if not args.quiet:
                 pbar.update(1)
                 postfix = {"best_dist": f"{self.best_dist*1000:.2f}mm"}
@@ -319,18 +330,6 @@ def main() -> None:
 
     def _progress_callback(xk, convergence):
         gen_counter[0] += 1
-        # Checkpoint every N generations
-        if wrapper.best_x is not None and gen_counter[0] % args.checkpoint_every == 0:
-            elapsed = time.perf_counter() - start_time
-            _save_checkpoint(
-                wrapper.best_x,
-                wrapper.best_dist,
-                gen_counter[0],
-                eval_counter[0],
-                elapsed,
-                checkpoint_path,
-                evol_args=evol_args,
-            )
         if args.quiet:
             return
         elapsed = time.perf_counter() - start_time

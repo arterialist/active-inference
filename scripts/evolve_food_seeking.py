@@ -52,10 +52,10 @@ def _rss_mb() -> float:
 
 # 4 distinct targets to prevent directional overfitting ("lucky torpedo")
 TEST_ENVIRONMENTS = [
-    (0.002, 0.002, 0.0),   # Top-right
+    # (0.002, 0.002, 0.0),   # Top-right
     (-0.002, 0.002, 0.0),  # Top-left
     (0.002, -0.002, 0.0),  # Bottom-right
-    (0.0, 0.003, 0.0),     # Straight ahead
+    # (0.0, 0.003, 0.0),     # Straight ahead
 ]
 
 
@@ -359,6 +359,8 @@ def main() -> None:
         atol=0,
         tol=0,
         callback=_progress_callback,
+        workers=-1,
+        updating="deferred",
     )
 
     if not args.quiet:

@@ -28,6 +28,7 @@ import resource
 import signal
 import sys
 import time
+from functools import partial
 from pathlib import Path
 
 import numpy as np
@@ -194,6 +195,24 @@ def evaluate(
     return float(np.max(min_distances) if use_worst else np.mean(min_distances))
 
 
+def _objective(
+    x: np.ndarray,
+    n_ticks: int,
+    use_worst: bool,
+    low_memory: bool,
+) -> float:
+    """
+    Picklable objective for differential_evolution workers.
+    Must be module-level for multiprocessing.
+    """
+    return evaluate(
+        x,
+        n_ticks=n_ticks,
+        use_worst=use_worst,
+        low_memory=low_memory,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evolve neuromod params for food-seeking")
     parser.add_argument("--generations", type=int, default=30)
@@ -263,44 +282,16 @@ def main() -> None:
         bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [{elapsed}<{remaining}, {rate_fmt}] {postfix}",
     )
 
-    # Wrap to capture best (lowest) distance; DE minimizes directly
-    class EvalWrapper:
-        def __init__(self):
-            self.best_dist = np.inf
-            self.best_x = None
+    # Picklable objective for workers (module-level function + partial)
+    objective = partial(
+        _objective,
+        n_ticks=args.ticks,
+        use_worst=args.robust,
+        low_memory=args.low_memory,
+    )
 
-        def __call__(self, x):
-            dist = evaluate(
-                x,
-                n_ticks=args.ticks,
-                eval_counter=eval_counter,
-                show_sim_progress=not args.quiet,
-                use_worst=args.robust,
-                low_memory=args.low_memory,
-            )
-            if dist < self.best_dist:
-                self.best_dist = dist
-                self.best_x = x.copy()
-            if self.best_x is not None and eval_counter[0] % args.checkpoint_every == 0:
-                elapsed = time.perf_counter() - start_time
-                _save_checkpoint(
-                    self.best_x,
-                    self.best_dist,
-                    gen_counter[0],
-                    eval_counter[0],
-                    elapsed,
-                    checkpoint_path,
-                    evol_args=evol_args,
-                )
-            if not args.quiet:
-                pbar.update(1)
-                postfix = {"best_dist": f"{self.best_dist*1000:.2f}mm"}
-                if args.measure_memory:
-                    postfix["RSS"] = f"{_rss_mb():.0f}MB"
-                pbar.set_postfix(postfix)
-            return dist  # DE minimizes distance directly
-
-    wrapper = EvalWrapper()
+    # Mutable state for callback (runs in main process)
+    best_state: dict = {"best_dist": np.inf, "best_x": None}
     _abort_requested = [False]  # Mutable for signal handler
     evol_args = {
         "generations": args.generations,
@@ -312,11 +303,11 @@ def main() -> None:
 
     def _on_sigint(signum, frame):
         _abort_requested[0] = True
-        if wrapper.best_x is not None:
+        if best_state["best_x"] is not None:
             elapsed = time.perf_counter() - start_time
             _save_checkpoint(
-                wrapper.best_x,
-                wrapper.best_dist,
+                best_state["best_x"],
+                best_state["best_dist"],
                 gen_counter[0],
                 eval_counter[0],
                 elapsed,
@@ -330,25 +321,47 @@ def main() -> None:
 
     def _progress_callback(xk, convergence):
         gen_counter[0] += 1
-        if args.quiet:
-            return
-        elapsed = time.perf_counter() - start_time
-        n_evals = eval_counter[0]
-        best_d = wrapper.best_dist if wrapper.best_x is not None else float("nan")
-        evals_per_sec = n_evals / elapsed if elapsed > 0 else 0
-        mem = f" | peak {_rss_mb():.0f}MB" if args.measure_memory else ""
-        tqdm.write(
-            f"  gen {gen_counter[0]:3d}/{args.generations} | "
-            f"evals {n_evals:5d} | best {best_d*1000:.2f}mm | "
-            f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s{mem}"
-        )
+        # Update best from current generation (callback runs in main process)
+        dist = objective(xk)
+        if dist < best_state["best_dist"]:
+            best_state["best_dist"] = dist
+            best_state["best_x"] = np.array(xk)
+        eval_counter[0] += args.population  # Approximate evals per gen
+        # Checkpoint every generation when using workers
+        if best_state["best_x"] is not None:
+            elapsed = time.perf_counter() - start_time
+            _save_checkpoint(
+                best_state["best_x"],
+                best_state["best_dist"],
+                gen_counter[0],
+                eval_counter[0],
+                elapsed,
+                checkpoint_path,
+                evol_args=evol_args,
+            )
+        if not args.quiet:
+            pbar.update(args.population)
+            postfix = {"best_dist": f"{best_state['best_dist']*1000:.2f}mm"}
+            if args.measure_memory:
+                postfix["RSS"] = f"{_rss_mb():.0f}MB"
+            pbar.set_postfix(postfix)
+            elapsed = time.perf_counter() - start_time
+            n_evals = eval_counter[0]
+            best_d = best_state["best_dist"]
+            evals_per_sec = n_evals / elapsed if elapsed > 0 else 0
+            mem = f" | peak {_rss_mb():.0f}MB" if args.measure_memory else ""
+            tqdm.write(
+                f"  gen {gen_counter[0]:3d}/{args.generations} | "
+                f"evals {n_evals:5d} | best {best_d*1000:.2f}mm | "
+                f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s{mem}"
+            )
 
     # Differential evolution (scipy)
     from scipy.optimize import differential_evolution
 
     bounds = [(0.0, 1.0)] * n_dim
     result = differential_evolution(
-        wrapper,
+        objective,
         bounds,
         strategy="best1bin",
         maxiter=args.generations,

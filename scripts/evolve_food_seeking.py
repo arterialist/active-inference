@@ -319,13 +319,13 @@ def main() -> None:
 
     signal.signal(signal.SIGINT, _on_sigint)
 
-    def _progress_callback(xk, convergence):
+    def _progress_callback(intermediate_result):
         gen_counter[0] += 1
-        # Update best from current generation (callback runs in main process)
-        dist = objective(xk)
+        # intermediate_result provides .x, .fun, .convergence directly
+        dist = intermediate_result.fun
         if dist < best_state["best_dist"]:
             best_state["best_dist"] = dist
-            best_state["best_x"] = np.array(xk)
+            best_state["best_x"] = np.array(intermediate_result.x)
         eval_counter[0] += args.population  # Approximate evals per gen
         # Checkpoint every generation when using workers
         if best_state["best_x"] is not None:
@@ -345,6 +345,7 @@ def main() -> None:
             if args.measure_memory:
                 postfix["RSS"] = f"{_rss_mb():.0f}MB"
             pbar.set_postfix(postfix)
+            convergence = intermediate_result.convergence
             elapsed = time.perf_counter() - start_time
             n_evals = eval_counter[0]
             best_d = best_state["best_dist"]

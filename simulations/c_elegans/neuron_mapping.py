@@ -69,10 +69,15 @@ class CElegansNervousSystem(BaseNervousSystem):
         # Apply neuromod config overrides (instance attrs override class defaults)
         for key in (
             "K_STRESS_SYN", "K_REWARD_SYN", "K_VOL_STRESS", "K_VOL_REWARD",
-            "STRESS_DEADZONE", "CHEM_EMA_ALPHA", "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
+            "STRESS_DEADZONE", "CHEM_EMA_ALPHA_FAST", "CHEM_EMA_ALPHA_SLOW",
+            "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
+            "K_OFF_SUPPRESS", "TONIC_OFF_CELL", "PROPRIO_MOTOR_GAIN",
         ):
             if key in self._evol_config:
                 setattr(self, f"_{key}", self._evol_config[key])
+        # Backward compat: legacy single CHEM_EMA_ALPHA maps to slow filter
+        if "CHEM_EMA_ALPHA" in self._evol_config and "CHEM_EMA_ALPHA_SLOW" not in self._evol_config:
+            self._CHEM_EMA_ALPHA_SLOW = self._evol_config["CHEM_EMA_ALPHA"]
         self._network: NeuronNetwork | None = None
         self._name_to_id: dict[str, int] = {}
 
@@ -83,11 +88,11 @@ class CElegansNervousSystem(BaseNervousSystem):
         # Previous sensory inputs for computing temporal surprise (M0)
         self._prev_sensory: dict[str, float] = {}
 
-        # EMA-smoothed chemosensory signals for dC/dt computation.
-        # Filters out undulation-frequency noise so M0/M1 reflects the
-        # true gradient, not head oscillation artifacts.
-        self._chem_ema: dict[str, float] = {}
-        self._prev_chem_ema: dict[str, float] = {}
+        # Dual-EMA bandpass filter state for chemosensory dC/dt.
+        # Fast EMA tracks head-sweep; slow EMA tracks environmental gradient.
+        # delta_c = fast - slow cancels undulation noise.
+        self._chem_ema_fast: dict[str, float] = {}
+        self._chem_ema_slow: dict[str, float] = {}
 
         # Global neuromodulatory state for volume transmission
         self._global_m0: float = 0.0
@@ -105,8 +110,8 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._build()
         self._init_muscles()
         self._prev_sensory.clear()
-        self._chem_ema.clear()
-        self._prev_chem_ema.clear()
+        self._chem_ema_fast.clear()
+        self._chem_ema_slow.clear()
         self._global_m0 = 0.0
         self._global_m1 = 0.0
 
@@ -206,6 +211,8 @@ class CElegansNervousSystem(BaseNervousSystem):
                 return "motor_inhib"
             if name in ("AVBL", "AVBR", "PVCL", "PVCR"):
                 return "command_fwd"
+            if name in self._OFF_CELL_NAMES:
+                return "off_cell"
             return "command_bkw"
 
         overrides_raw = _neuron_param_overrides()
@@ -252,9 +259,17 @@ class CElegansNervousSystem(BaseNervousSystem):
 
     _CHEMOSENSORY_NAMES: set[str] = {"ASEL", "ASER", "AWCL", "AWCR"}
 
-    # EMA smoothing for chemosensory dC/dt. Alpha=0.02 → ~50-tick time
-    # constant (100ms at 2ms timestep), matching ASE temporal integration.
-    _CHEM_EMA_ALPHA: float = 0.01
+    # Dual-EMA bandpass filter for chemosensory dC/dt.
+    # Biological basis: AWC/ASE interneurons act as bandpass filters,
+    # using two temporal integration loops to subtract head-swing noise
+    # from the environmental gradient signal.
+    #
+    # Fast EMA tracks immediate head-sweep (~10 ticks, alpha~0.2).
+    # Slow EMA tracks long-term environmental gradient (~40+ ticks).
+    # delta_c = tanh(fast - slow) cancels undulation-frequency oscillations,
+    # leaving only the true navigational gradient.
+    _CHEM_EMA_ALPHA_FAST: float = 0.2
+    _CHEM_EMA_ALPHA_SLOW: float = 0.01
 
     # Tonic forward drive: injected into AVB and B-type motor neurons each
     # tick to model the AVB↔B-type gap junction coupling that biases C. elegans
@@ -262,9 +277,18 @@ class CElegansNervousSystem(BaseNervousSystem):
     # over-represents chemical synapses onto AVA, under-representing the
     # electrical coupling that maintains the forward state.
     _TONIC_FWD_CMD: float = 0.25
-    _TONIC_FWD_MOTOR: float = 0.11
+    _TONIC_FWD_MOTOR: float = 0.0
     _FWD_CMD_NAMES: set[str] = {"AVBL", "AVBR"}
     _FWD_MOTOR_PREFIXES: tuple[str, ...] = ("DB", "VB")
+
+    # OFF-cell neurons (AWC, ASER): tonically active, suppressed during
+    # stimulus, burst on removal (Chalasani et al. 2007, Suzuki et al. 2008).
+    _OFF_CELL_NAMES: set[str] = {"AWCL", "AWCR", "ASER"}
+    _K_OFF_SUPPRESS: float = 5.0        # gain: absolute concentration → M1
+    _TONIC_OFF_CELL: float = 0.15      # tonic S baseline for OFF-cell firing
+
+    # B-type motor neuron proprioception gain (Wen et al. 2012).
+    _PROPRIO_MOTOR_GAIN: float = 0.08
 
     def _inject_sensory(
         self, sensory_inputs: dict[str, float], current_tick: int
@@ -296,22 +320,43 @@ class CElegansNervousSystem(BaseNervousSystem):
 
             clamped = float(np.clip(intensity, 0.0, 2.0))
 
-            # For chemosensory neurons, compute delta_c from EMA-smoothed
-            # signals to filter out undulation-frequency head oscillations.
+            # For chemosensory neurons, compute delta_c via dual-EMA bandpass
+            # filter. Fast EMA tracks head-sweep, slow EMA tracks the
+            # environmental gradient. Their difference cancels undulation
+            # noise while preserving the true navigational signal.
+            # tanh() saturates the output so the motor limit cycle isn't
+            # destroyed when the worm reaches high-concentration zones.
             if neuron_name in self._CHEMOSENSORY_NAMES:
-                ema = self._chem_ema.get(neuron_name, clamped)
-                ema = self._CHEM_EMA_ALPHA * clamped + (1 - self._CHEM_EMA_ALPHA) * ema
-                self._chem_ema[neuron_name] = ema
-                prev_ema = self._prev_chem_ema.get(neuron_name, ema)
-                delta_c = ema - prev_ema
-                self._prev_chem_ema[neuron_name] = ema
+                af = self._CHEM_EMA_ALPHA_FAST
+                a_s = self._CHEM_EMA_ALPHA_SLOW
+                fast = self._chem_ema_fast.get(neuron_name, clamped)
+                slow = self._chem_ema_slow.get(neuron_name, clamped)
+                fast = af * clamped + (1.0 - af) * fast
+                slow = a_s * clamped + (1.0 - a_s) * slow
+                self._chem_ema_fast[neuron_name] = fast
+                self._chem_ema_slow[neuron_name] = slow
+                delta_c = float(np.tanh(fast - slow))
                 delta_accum += delta_c
                 n_chem += 1
             else:
                 prev = self._prev_sensory.get(neuron_name, clamped)
                 delta_c = clamped - prev
 
-            if delta_c < -self._STRESS_DEADZONE:
+            if neuron_name in self._OFF_CELL_NAMES:
+                # OFF-cell: M1 from absolute concentration level (receptor-
+                # mediated suppression), M0 from concentration decrease
+                # (burst facilitation on stimulus removal).
+                m1 = float(np.clip(
+                    clamped * self._K_OFF_SUPPRESS, 0.0, 5.0
+                )) if self._enable_m1 else 0.0
+                if delta_c < -self._STRESS_DEADZONE:
+                    excess = abs(delta_c) - self._STRESS_DEADZONE
+                    m0 = float(np.clip(
+                        excess * self._K_STRESS_SYN, 0.0, 5.0
+                    )) if self._enable_m0 else 0.0
+                else:
+                    m0 = 0.0
+            elif delta_c < -self._STRESS_DEADZONE:
                 excess = abs(delta_c) - self._STRESS_DEADZONE
                 m0 = float(np.clip(excess * self._K_STRESS_SYN, 0.0, 5.0)) if self._enable_m0 else 0.0
                 m1 = 0.0
@@ -332,6 +377,8 @@ class CElegansNervousSystem(BaseNervousSystem):
 
         self._prev_sensory = dict(sensory_inputs)
 
+        self._inject_off_cell_tonic()
+        self._inject_motor_proprioception(sensory_inputs)
         self._inject_tonic_forward()
 
         avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
@@ -373,6 +420,43 @@ class CElegansNervousSystem(BaseNervousSystem):
                 n = self._network.network.neurons.get(nid)
                 if n is not None:
                     n.S += self._TONIC_FWD_MOTOR
+
+    def _inject_off_cell_tonic(self) -> None:
+        """Tonic baseline for OFF-cell sensory neurons.
+
+        Models constitutive activity of AWC/ASER at rest — these neurons
+        fire tonically in the absence of stimulus (Chalasani et al. 2007).
+        """
+        if self._network is None:
+            return
+        for name in self._OFF_CELL_NAMES:
+            nid = self._name_to_id.get(name)
+            if nid is None:
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is not None:
+                n.S += self._TONIC_OFF_CELL
+
+    def _inject_motor_proprioception(
+        self, sensory_inputs: dict[str, float]
+    ) -> None:
+        """Proprioceptive drive for B-type motor neurons (Wen et al. 2012).
+
+        Direct S injection models intrinsic mechanosensitivity of motor
+        neuron processes, not synaptic input.  Each VB/DB neuron senses
+        bending in the anterior segment, propagating the locomotion wave.
+        """
+        prefix = "_mpr_"
+        for key, val in sensory_inputs.items():
+            if not key.startswith(prefix):
+                continue
+            motor_name = key[len(prefix):]
+            nid = self._name_to_id.get(motor_name)
+            if nid is None:
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is not None:
+                n.S += val * self._PROPRIO_MOTOR_GAIN
 
     def _volume_broadcast(self) -> None:
         """ALERM volume transmission: inject global M0/M1 into all neurons.
@@ -545,6 +629,31 @@ def _sensory_params() -> NeuronParameters:
     )
 
 
+def _off_cell_sensory_params() -> NeuronParameters:
+    """OFF-cell sensory neurons (AWC, ASER).
+
+    Low r_base: tonic firing from background + explicit tonic S input.
+    Large positive w_r[1]: M1 strongly elevates threshold → suppression.
+    Fast gamma[1]: threshold drops quickly on stimulus removal → burst.
+    Large lambda: S decays slowly → overlaps with dropping threshold.
+    w_tref[1]=0: M1 controls threshold only, not the learning window.
+    """
+    return NeuronParameters(
+        r_base=0.25,
+        b_base=0.35,
+        c=4,
+        lambda_param=20.0,
+        p=1.0,
+        eta_post=0.002,
+        eta_retro=0.001,
+        num_neuromodulators=2,
+        gamma=np.array([0.98, 0.90]),
+        w_r=np.array([-0.2, 1.2]),
+        w_b=np.array([-0.2, 1.0]),
+        w_tref=np.array([12.0, 0.0]),
+    )
+
+
 def _motor_params() -> NeuronParameters:
     """Default motor neurons (excitatory B/A-type cholinergic).
 
@@ -668,5 +777,9 @@ def _neuron_param_overrides() -> dict[str, NeuronParameters]:
     bkw = _command_bkw_params()
     for name in ["AVAL", "AVAR", "AVDL", "AVDR"]:
         overrides[name] = bkw
+
+    off_cell = _off_cell_sensory_params()
+    for name in ["AWCL", "AWCR", "ASER"]:
+        overrides[name] = off_cell
 
     return overrides

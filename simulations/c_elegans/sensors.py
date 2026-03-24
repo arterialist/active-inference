@@ -23,6 +23,7 @@ from simulations.c_elegans.config import (
     TOUCH_NEURONS,
     CHEM_CONCENTRATION_MAX,
     JOINT_ANGLE_MAX_RAD,
+    MOTOR_NEURON_POSITIONS,
     N_BODY_SEGMENTS,
 )
 
@@ -76,6 +77,17 @@ class SensorEncoder:
         ("DVA",   6),   # DVA integrates mid-body curvature
     ]
 
+    # B-type motor neuron proprioception (Wen et al. 2012).
+    # Each VB/DB neuron senses curvature of the joint anterior to its
+    # body position, enabling posterior wave propagation.
+    # Built from MOTOR_NEURON_POSITIONS: fractional position → segment → anterior joint.
+    MOTOR_PROPRIO: dict[str, int] = {}
+    for _name, _frac in MOTOR_NEURON_POSITIONS.items():
+        _prefix = _name.rstrip("0123456789")
+        if _prefix in ("DB", "VB"):
+            _seg = int(_frac * (N_BODY_SEGMENTS - 1))
+            MOTOR_PROPRIO[_name] = max(0, _seg - 1)
+
     def encode(
         self,
         observation: EnvironmentObservation,
@@ -101,6 +113,9 @@ class SensorEncoder:
 
         # --- Proprioception ---
         inputs.update(self._encode_proprioception(body_state))
+
+        # --- Motor proprioception (B-type wave propagation) ---
+        inputs.update(self._encode_motor_proprioception(body_state))
 
         return inputs
 
@@ -172,4 +187,30 @@ class SensorEncoder:
             )
             result[neuron] = normalised
 
+        return result
+
+    def _encode_motor_proprioception(
+        self, body_state: BodyState
+    ) -> dict[str, float]:
+        """B-type motor neuron proprioception (Wen et al. 2012).
+
+        Each VB/DB neuron senses curvature of the anterior segment.
+        Prefixed '_mpr_' to distinguish from sensory neuron inputs —
+        these are picked up by _inject_motor_proprioception() in
+        CElegansNervousSystem, not the main sensory loop.
+        """
+        result: dict[str, float] = {}
+        pitch_angles = [
+            angle
+            for jname, angle in body_state.joint_angles.items()
+            if "pitch" in jname
+        ]
+        if not pitch_angles:
+            return result
+        for neuron_name, joint_idx in self.MOTOR_PROPRIO.items():
+            if joint_idx < len(pitch_angles):
+                curvature = abs(pitch_angles[joint_idx])
+                result[f"_mpr_{neuron_name}"] = float(
+                    np.clip(curvature / JOINT_ANGLE_MAX_RAD, 0.0, 1.0)
+                )
         return result

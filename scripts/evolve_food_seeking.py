@@ -68,26 +68,28 @@ def x_to_config(x: np.ndarray) -> dict:
     # 2: K_VOL_STRESS [500, 4000]
     # 3: K_VOL_REWARD [500, 4000]
     # 4: STRESS_DEADZONE log [1e-6, 0.01]
-    # 5: CHEM_EMA_ALPHA [0.01, 0.99] — temporal filter, critical for phase lag
-    # 6: TONIC_FWD_CMD [0.1, 0.5]
-    # 7: TONIC_FWD_MOTOR [0.05, 0.2]
-    # 8: motor w_tref M0 [15, 45]
-    # 9: motor w_tref M1 [-25, -5]
-    # 10: sensory w_tref M0 [8, 25]
-    # 11: sensory w_tref M1 [-12, -3]
+    # 5: CHEM_EMA_ALPHA_SLOW [0.01, 0.10] — slow filter (environmental gradient)
+    # 6: CHEM_EMA_ALPHA_FAST [0.05, 0.40] — fast filter (head-sweep tracking)
+    # 7: TONIC_FWD_CMD [0.1, 0.5]
+    # 8: TONIC_FWD_MOTOR [0.05, 0.2]
+    # 9: motor w_tref M0 [15, 45]
+    # 10: motor w_tref M1 [-25, -5]
+    # 11: sensory w_tref M0 [8, 25]
+    # 12: sensory w_tref M1 [-12, -3]
     cfg: dict = {
         "K_STRESS_SYN": 1000 + 7000 * x[0],
         "K_REWARD_SYN": 1000 + 7000 * x[1],
         "K_VOL_STRESS": 500 + 3500 * x[2],
         "K_VOL_REWARD": 500 + 3500 * x[3],
         "STRESS_DEADZONE": 1e-6 * (0.01 / 1e-6) ** x[4],
-        "CHEM_EMA_ALPHA": 0.01 + 0.98 * x[5],
-        "TONIC_FWD_CMD": 0.1 + 0.4 * x[6],
-        "TONIC_FWD_MOTOR": 0.05 + 0.15 * x[7],
+        "CHEM_EMA_ALPHA_SLOW": 0.01 + 0.09 * x[5],
+        "CHEM_EMA_ALPHA_FAST": 0.05 + 0.35 * x[6],
+        "TONIC_FWD_CMD": 0.1 + 0.4 * x[7],
+        "TONIC_FWD_MOTOR": 0.05 + 0.15 * x[8],
     }
     cfg["neuron_params"] = {
-        "motor": {"w_tref": [15 + 30 * x[8], -5 - 20 * x[9]]},
-        "sensory": {"w_tref": [8 + 17 * x[10], -3 - 9 * x[11]]},
+        "motor": {"w_tref": [15 + 30 * x[9], -5 - 20 * x[10]]},
+        "sensory": {"w_tref": [8 + 17 * x[11], -3 - 9 * x[12]]},
     }
     return cfg
 
@@ -255,7 +257,7 @@ def main() -> None:
         checkpoint_path = Path(__file__).parent.parent / checkpoint_path
 
     np.random.seed(args.seed)
-    n_dim = 12
+    n_dim = 13
     eval_counter: list[int] = [0]
     gen_counter: list[int] = [0]
     start_time = time.perf_counter()

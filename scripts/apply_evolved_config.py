@@ -18,7 +18,8 @@ NM_PATH = Path(__file__).parent.parent / "simulations" / "c_elegans" / "neuron_m
 
 NEUROMOD_ATTRS = [
     "K_STRESS_SYN", "K_REWARD_SYN", "K_VOL_STRESS", "K_VOL_REWARD",
-    "STRESS_DEADZONE", "CHEM_EMA_ALPHA", "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
+    "STRESS_DEADZONE", "CHEM_EMA_ALPHA_FAST", "CHEM_EMA_ALPHA_SLOW",
+    "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
 ]
 
 

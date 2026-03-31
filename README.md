@@ -1,5 +1,9 @@
 # Active Inference Sensorimotor Simulations
 
+> **PAULA Paper:** [PAULA: A Computational Substrate for Self-Organizing Biologically-Plausible AI](https://al.arteriali.st/blog/paula-paper)
+> **ALERM Framework:** [The ALERM Framework: A Unified Theory of Biological Intelligence](https://al.arteriali.st/blog/alerm-framework)
+> **Neuron implementation:** [arterialist/neuron-model](https://github.com/arterialist/neuron-model)
+
 A framework for simulating artificial life through active inference, where organisms are built from PAULA neurons wired by biological connectomes and embodied in MuJoCo physics environments.
 
 ## Architecture
@@ -21,6 +25,7 @@ Environment ──sensory stimuli──► Sensory Neurons (PAULA)
 ```
 
 The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two simultaneous processes:
+
 - **Perception**: synaptic plasticity (`η_post × E_dir`) refines the generative model
 - **Action**: motor neuron spikes drive muscles, moving the body to reduce future surprise
 
@@ -29,15 +34,18 @@ The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two si
 ### C. elegans (`simulations/c_elegans/`)
 
 **Connectome**: Cook et al. 2019 hermaphrodite (302 neurons)
+
 - 83 sensory / 89 interneurons / 123 motor neurons
 - 3,709 chemical synapses + 1,092 gap junctions
 
 **Body**: MuJoCo articulated chain
+
 - 13 rigid segments connected by hinge joints
 - 48 actuators (4 muscle quadrants × 12 inter-segment joints)
 - Contact dynamics for agar surface crawling
 
 **Environment**: Circular agar plate
+
 - NaCl and butanone attractant gradients (ASE/AWC chemosensory circuit)
 - 2-nonanone aversive odour (AWB circuit)
 - Nociceptive region (ASH circuit)
@@ -46,7 +54,7 @@ The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two si
 
 ![C. elegans simulation output](c_elegans_run.webp)
 
-*Left:* Worm trajectory (head position) on the floor plane with food sources (purple stars). *Right:* Motor wave (dorsal–ventral activation) across body segments over time.
+_Left:_ Worm trajectory (head position) on the floor plane with food sources (purple stars). _Right:_ Motor wave (dorsal–ventral activation) across body segments over time.
 
 ## Quick Start
 
@@ -122,6 +130,6 @@ Active inference framing: `E_dir = input − u_i.info` is the prediction error. 
 
 ## References
 
-- Cook et al. 2019, *Nature* — C. elegans hermaphrodite connectome
-- Wang-Chen et al. 2024, *Nature Methods* — NeuroMechFly v2 (Drosophila)
-- BAAIWorm 2024, *Nature Computational Science* — brain-body-environment model
+- Cook et al. 2019, _Nature_ — C. elegans hermaphrodite connectome
+- Wang-Chen et al. 2024, _Nature Methods_ — NeuroMechFly v2 (Drosophila)
+- BAAIWorm 2024, _Nature Computational Science_ — brain-body-environment model

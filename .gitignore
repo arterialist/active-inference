@@ -16,3 +16,6 @@ c_elegans_run.png
 
 # uv.lock is intentionally committed to reproduce exact environments
 # .venv/ is excluded (regenerated with `uv sync`)
+
+*.gif
+*.png

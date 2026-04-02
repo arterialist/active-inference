@@ -1,7 +1,9 @@
 # Active Inference Sensorimotor Simulations
 
 > **PAULA Paper:** [PAULA: A Computational Substrate for Self-Organizing Biologically-Plausible AI](https://al.arteriali.st/blog/paula-paper)
+>
 > **ALERM Framework:** [The ALERM Framework: A Unified Theory of Biological Intelligence](https://al.arteriali.st/blog/alerm-framework)
+>
 > **Neuron implementation:** [arterialist/neuron-model](https://github.com/arterialist/neuron-model)
 
 A framework for simulating artificial life through active inference, where organisms are built from PAULA neurons wired by biological connectomes and embodied in MuJoCo physics environments.

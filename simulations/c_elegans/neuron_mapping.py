@@ -68,15 +68,26 @@ class CElegansNervousSystem(BaseNervousSystem):
 
         # Apply neuromod config overrides (instance attrs override class defaults)
         for key in (
-            "K_STRESS_SYN", "K_REWARD_SYN", "K_VOL_STRESS", "K_VOL_REWARD",
-            "STRESS_DEADZONE", "CHEM_EMA_ALPHA_FAST", "CHEM_EMA_ALPHA_SLOW",
-            "TONIC_FWD_CMD", "TONIC_FWD_MOTOR",
-            "K_OFF_SUPPRESS", "TONIC_OFF_CELL", "PROPRIO_MOTOR_GAIN",
+            "K_STRESS_SYN",
+            "K_REWARD_SYN",
+            "K_VOL_STRESS",
+            "K_VOL_REWARD",
+            "STRESS_DEADZONE",
+            "CHEM_EMA_ALPHA_FAST",
+            "CHEM_EMA_ALPHA_SLOW",
+            "TONIC_FWD_CMD",
+            "TONIC_FWD_MOTOR",
+            "K_OFF_SUPPRESS",
+            "TONIC_OFF_CELL",
+            "PROPRIO_MOTOR_GAIN",
         ):
             if key in self._evol_config:
                 setattr(self, f"_{key}", self._evol_config[key])
         # Backward compat: legacy single CHEM_EMA_ALPHA maps to slow filter
-        if "CHEM_EMA_ALPHA" in self._evol_config and "CHEM_EMA_ALPHA_SLOW" not in self._evol_config:
+        if (
+            "CHEM_EMA_ALPHA" in self._evol_config
+            and "CHEM_EMA_ALPHA_SLOW" not in self._evol_config
+        ):
             self._CHEM_EMA_ALPHA_SLOW = self._evol_config["CHEM_EMA_ALPHA"]
         self._network: NeuronNetwork | None = None
         self._name_to_id: dict[str, int] = {}
@@ -197,7 +208,12 @@ class CElegansNervousSystem(BaseNervousSystem):
         kwargs = {}
         for k, v in overrides.items():
             if hasattr(params, k):
-                kwargs[k] = np.array(v) if k in ("gamma", "w_r", "w_b", "w_tref") and isinstance(v, (list, tuple)) else v
+                kwargs[k] = (
+                    np.array(v)
+                    if k in ("gamma", "w_r", "w_b", "w_tref")
+                    and isinstance(v, (list, tuple))
+                    else v
+                )
         return replace(params, **kwargs) if kwargs else params
 
     def _build(self) -> None:
@@ -206,6 +222,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         sensory = self._apply_evol_params(_sensory_params(), "sensory")
         motor = self._apply_evol_params(_motor_params(), "motor")
         interneuron = self._apply_evol_params(_interneuron_params(), "interneuron")
+
         def _evol_key(name: str) -> str:
             if name.startswith(("DD", "VD")):
                 return "motor_inhib"
@@ -233,8 +250,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._network = network
         self._name_to_id = name_to_id
         logger.info(
-            f"CElegansNervousSystem ready: "
-            f"{len(name_to_id)} neurons in PAULA network"
+            f"CElegansNervousSystem ready: {len(name_to_id)} neurons in PAULA network"
         )
 
     def _init_muscles(self) -> None:
@@ -266,7 +282,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     #
     # Fast EMA tracks immediate head-sweep (~10 ticks, alpha~0.2).
     # Slow EMA tracks long-term environmental gradient (~40+ ticks).
-    # delta_c = tanh(fast - slow) cancels undulation-frequency oscillations,
+    # delta_c = fast - slow cancels undulation-frequency oscillations,
     # leaving only the true navigational gradient.
     _CHEM_EMA_ALPHA_FAST: float = 0.2
     _CHEM_EMA_ALPHA_SLOW: float = 0.01
@@ -284,8 +300,8 @@ class CElegansNervousSystem(BaseNervousSystem):
     # OFF-cell neurons (AWC, ASER): tonically active, suppressed during
     # stimulus, burst on removal (Chalasani et al. 2007, Suzuki et al. 2008).
     _OFF_CELL_NAMES: set[str] = {"AWCL", "AWCR", "ASER"}
-    _K_OFF_SUPPRESS: float = 5.0        # gain: absolute concentration → M1
-    _TONIC_OFF_CELL: float = 0.15      # tonic S baseline for OFF-cell firing
+    _K_OFF_SUPPRESS: float = 5.0  # gain: absolute concentration → M1
+    _TONIC_OFF_CELL: float = 0.15  # tonic S baseline for OFF-cell firing
 
     # B-type motor neuron proprioception gain (Wen et al. 2012).
     _PROPRIO_MOTOR_GAIN: float = 0.08
@@ -324,8 +340,9 @@ class CElegansNervousSystem(BaseNervousSystem):
             # filter. Fast EMA tracks head-sweep, slow EMA tracks the
             # environmental gradient. Their difference cancels undulation
             # noise while preserving the true navigational signal.
-            # tanh() saturates the output so the motor limit cycle isn't
-            # destroyed when the worm reaches high-concentration zones.
+            # Saturation is applied downstream (tanh soft-cap on the
+            # amplified m0/m1) so the motor limit cycle isn't destroyed
+            # when the worm reaches high-concentration zones.
             if neuron_name in self._CHEMOSENSORY_NAMES:
                 af = self._CHEM_EMA_ALPHA_FAST
                 a_s = self._CHEM_EMA_ALPHA_SLOW
@@ -335,7 +352,7 @@ class CElegansNervousSystem(BaseNervousSystem):
                 slow = a_s * clamped + (1.0 - a_s) * slow
                 self._chem_ema_fast[neuron_name] = fast
                 self._chem_ema_slow[neuron_name] = slow
-                delta_c = float(np.tanh(fast - slow))
+                delta_c = float(fast - slow)
                 delta_accum += delta_c
                 n_chem += 1
             else:
@@ -346,23 +363,35 @@ class CElegansNervousSystem(BaseNervousSystem):
                 # OFF-cell: M1 from absolute concentration level (receptor-
                 # mediated suppression), M0 from concentration decrease
                 # (burst facilitation on stimulus removal).
-                m1 = float(np.clip(
-                    clamped * self._K_OFF_SUPPRESS, 0.0, 5.0
-                )) if self._enable_m1 else 0.0
+                m1 = (
+                    float(np.tanh(clamped * self._K_OFF_SUPPRESS / 5.0) * 5.0)
+                    if self._enable_m1
+                    else 0.0
+                )
                 if delta_c < -self._STRESS_DEADZONE:
                     excess = abs(delta_c) - self._STRESS_DEADZONE
-                    m0 = float(np.clip(
-                        excess * self._K_STRESS_SYN, 0.0, 5.0
-                    )) if self._enable_m0 else 0.0
+                    m0 = (
+                        float(np.tanh(excess * self._K_STRESS_SYN / 5.0) * 5.0)
+                        if self._enable_m0
+                        else 0.0
+                    )
                 else:
                     m0 = 0.0
             elif delta_c < -self._STRESS_DEADZONE:
                 excess = abs(delta_c) - self._STRESS_DEADZONE
-                m0 = float(np.clip(excess * self._K_STRESS_SYN, 0.0, 5.0)) if self._enable_m0 else 0.0
+                m0 = (
+                    float(np.tanh(excess * self._K_STRESS_SYN / 5.0) * 5.0)
+                    if self._enable_m0
+                    else 0.0
+                )
                 m1 = 0.0
             elif delta_c > 0:
                 m0 = 0.0
-                m1 = float(np.clip(delta_c * self._K_REWARD_SYN, 0.0, 5.0)) if self._enable_m1 else 0.0
+                m1 = (
+                    float(np.tanh(delta_c * self._K_REWARD_SYN / 5.0) * 5.0)
+                    if self._enable_m1
+                    else 0.0
+                )
             else:
                 m0 = 0.0
                 m1 = 0.0
@@ -384,15 +413,19 @@ class CElegansNervousSystem(BaseNervousSystem):
         avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
         if avg_delta < -self._STRESS_DEADZONE:
             excess = abs(avg_delta) - self._STRESS_DEADZONE
-            self._global_m0 = float(np.clip(
-                excess * self._K_VOL_STRESS, 0.0, 2.0
-            )) if self._enable_m0 else 0.0
+            self._global_m0 = (
+                float(np.tanh(excess * self._K_VOL_STRESS / 2.0) * 2.0)
+                if self._enable_m0
+                else 0.0
+            )
             self._global_m1 = 0.0
         elif avg_delta > 0:
             self._global_m0 = 0.0
-            self._global_m1 = float(np.clip(
-                avg_delta * self._K_VOL_REWARD, 0.0, 2.0
-            )) if self._enable_m1 else 0.0
+            self._global_m1 = (
+                float(np.tanh(avg_delta * self._K_VOL_REWARD / 2.0) * 2.0)
+                if self._enable_m1
+                else 0.0
+            )
         else:
             self._global_m0 = 0.0
             self._global_m1 = 0.0
@@ -437,9 +470,7 @@ class CElegansNervousSystem(BaseNervousSystem):
             if n is not None:
                 n.S += self._TONIC_OFF_CELL
 
-    def _inject_motor_proprioception(
-        self, sensory_inputs: dict[str, float]
-    ) -> None:
+    def _inject_motor_proprioception(self, sensory_inputs: dict[str, float]) -> None:
         """Proprioceptive drive for B-type motor neurons (Wen et al. 2012).
 
         Direct S injection models intrinsic mechanosensitivity of motor
@@ -450,7 +481,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         for key, val in sensory_inputs.items():
             if not key.startswith(prefix):
                 continue
-            motor_name = key[len(prefix):]
+            motor_name = key[len(prefix) :]
             nid = self._name_to_id.get(motor_name)
             if nid is None:
                 continue
@@ -579,7 +610,11 @@ class CElegansNervousSystem(BaseNervousSystem):
         for seg in range(N_BODY_SEGMENTS):
             for quad in MUSCLE_QUADRANTS:
                 key = f"seg{seg}_{quad}"
-                target = float(dorsal_excit[seg]) if "D" in quad else float(ventral_excit[seg])
+                target = (
+                    float(dorsal_excit[seg])
+                    if "D" in quad
+                    else float(ventral_excit[seg])
+                )
                 self._muscle_activations[key] = (
                     MUSCLE_FILTER_ALPHA * target
                     + (1 - MUSCLE_FILTER_ALPHA) * self._muscle_activations[key]

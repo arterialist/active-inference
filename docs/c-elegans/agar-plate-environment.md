@@ -40,9 +40,9 @@ C(p) = max_concentration × exp(−decay_constant × ‖p − source‖)
 
 ## Observation Construction (`_build_observation`)
 
-- **Chemicals:** sum of all source concentrations at head position, keyed by molecule name
-- **Touch:** reads body contact force sensors
-- **Proprioception:** joint angles from body
+- **Chemicals:** max (strongest) concentration per molecule at the head position, keyed by molecule name
+- **Touch:** generates `"nociceptive"` and `"wall"` contact-force entries based on worm position relative to nociceptive zone and plate boundary
+- **Proprioception:** empty dict (joint-angle data is available via `BodyState`, not the environment observation)
 
 ## See Also
 

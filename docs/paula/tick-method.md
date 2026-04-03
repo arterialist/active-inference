@@ -96,7 +96,12 @@ if S ≥ threshold  and  (current_tick − t_last_fire) ≥ c:
     O = p        # emit spike
     S = 0        # reset
     t_last_fire = current_tick
-    → generate PresynapticReleaseEvent for each axon terminal
+    → emit tuple (source_id, terminal_id, info_value) for each axon terminal
+```
+
+Additional details:
+- If `S < 0.005` (near-zero resting state), threshold resets to `r` regardless of refractory status.
+- `S` is clamped to `[−20.0, 20.0]` each tick for numerical stability; NaN/infinity triggers a warning.
 ```
 
 ---
@@ -130,8 +135,8 @@ u_i.info  = clip(u_i.info + Δu_i.info, 0.01, 2.0)
 **E.4 Retrograde signaling:**
 
 ```
-terminal.u_o.info += η_retro × E_dir[0]
-terminal.u_o.mod  += η_retro × E_dir[2:]
+terminal.u_o.info += η_retro × E_dir[0] × direction
+terminal.u_o.mod  += η_retro × E_dir[2:] × direction
 ```
 
 Both clipped to bounds. Creates a bi-directional learning loop: postsynaptic refines receptive field, then tells presynaptic to adjust output.

@@ -23,7 +23,7 @@
 
 ## Checkpoint Format
 
-Adds metadata to the above:
+Nests the config under a `"config"` key and adds metadata at the top level:
 
 | Field | Description |
 |-------|-------------|
@@ -39,9 +39,9 @@ Adds metadata to the above:
 | File | Description |
 |------|-------------|
 | `evolved_food_seeking_config.json` | Best parameters from primary run |
-| `evolved_food_seeking_config_2.json` | Alternative run |
+| `evolved_food_seeking_config_2.json` | Alternative run (manually created, not auto-generated) |
 | `evolved_food_seeking_checkpoint.json` | Latest checkpoint with metadata |
-| `*.bak` | Backup copies |
+| `*.bak` | Backup copies (manually created) |
 
 ## See Also
 

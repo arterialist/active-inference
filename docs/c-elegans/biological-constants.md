@@ -42,10 +42,10 @@
 
 | List | Contents |
 |------|---------|
-| `CHEMOSENSORY_NEURONS` | 16 neurons (ASEL/R, AWCL/R, AWBL/R, AFDL/R, ASHL/R, ASJL/R, AIZL/R) |
+| `CHEMOSENSORY_NEURONS` | 14 neurons (ASEL/R, AWCL/R, AWBL/R, AFDL/R, ASHL/R, ASJL/R, AIZL/R) |
 | `TOUCH_NEURONS` | 6 neurons (PLML/R, ALML/R, AVM, PVM) |
-| `VENTRAL_CORD_MOTOR_NEURONS` | 57 neurons (DB, VB, DA, VA, DD, VD, AS classes) |
+| `VENTRAL_CORD_MOTOR_NEURONS` | 69 neurons (DB, VB, DA, VA, DD, VD, AS classes) |
 | `MOTOR_NEURON_POSITIONS` | dict mapping each motor neuron → fractional body position [0=head, 1=tail] |
 | `COMMAND_INTERNEURONS_FORWARD` | AVBL, AVBR, PVCL, PVCR |
 | `COMMAND_INTERNEURONS_BACKWARD` | AVAL, AVAR, AVDL, AVDR |
-| `LOCOMOTION_INTERNEURONS` | 12 interneurons (RIML/R, RMEL/R, SMDVL/R, SMDDL/R, RIVL/R, RIS, DVA) |
+| `LOCOMOTION_INTERNEURONS` | 12 interneurons (AVAL/R, AVBL/R, AVDL/R, AVEL/R, PVCL/R, AVJL/R) |

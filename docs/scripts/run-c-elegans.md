@@ -36,7 +36,7 @@ uv run python scripts/run_c_elegans.py --no-M0 --no-M1
 | `--steps` | 500 | Number of physics steps |
 | `--food-x` | 0.0005 | Food x-position (metres) |
 | `--food-z` | 0.0 | Food z-position (metres) |
-| `--food-positions` | — | Multiple foods as "x1,z1 x2,z2 ..." |
+| `--food-positions` | — | Multiple foods as "x1,y1 x2,y2 ..." |
 | `--food-scale` | 1.0 | Scale factor for food coordinates |
 | `--save-plot` | false | Save trajectory + motor wave plot |
 | `--plot-output` | c_elegans_run.png | Plot file path |
@@ -58,7 +58,7 @@ uv run python scripts/run_c_elegans.py --no-M0 --no-M1
 
 Pre-allocates numpy arrays and fills them step-by-step to avoid holding full `SimulationStep` dicts in memory.
 
-Arrays collected: `positions`, `head_positions`, `elapsed_ms`, `ticks`, `prediction_error`, `motor_entropy`, `joint_angles`, `motor_outputs`, `chemicals`, `neural_S`, `neural_fired`.
+Arrays collected: `positions`, `head_positions`, `elapsed_ms`, `ticks`, `prediction_error`, `motor_entropy`, `joint_angles`, `motor_outputs`, `chemicals`. Neural arrays (`neural_S`, `neural_fired`) are only collected when `--save-log` is used (`record_neural=True`).
 
 ## Plot Output (3 panels)
 

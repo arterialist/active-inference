@@ -16,22 +16,23 @@ All lengths in the MJCF are **1000× biological**. Biological 1 mm → model 1.0
 - Contact dynamics: low friction floor (`0.005`) models agar surface crawling.
 - Physics: `implicitfast` integrator, gravity −5 m/s² (scaled), fluid density 4000, viscosity 0.1.
 
-## Sensor Sites
+## Sensor Sites and Sensors
 
-| Site | Position | Purpose |
-|------|----------|---------|
-| `nose` | Front of seg0 | Head position tracking |
-| `touch_anterior` | Near nose | Anterior touch detection |
-| `touch_posterior` | Rear of seg12 | Posterior touch detection |
-| `touch_ant_sensor` | Gyro at anterior | Contact force sensor |
-| `touch_post_sensor` | Gyro at posterior | Contact force sensor |
+| Name | Type | Position | Purpose |
+|------|------|----------|---------|
+| `nose` | Site | Front of seg0 | Head position tracking |
+| `touch_anterior` | Site | Near nose | Anterior touch detection |
+| `touch_posterior` | Site | Rear of seg12 | Posterior touch detection |
+| `touch_ant_sensor` | Touch sensor | References `touch_anterior` | Contact force sensor |
+| `touch_post_sensor` | Touch sensor | References `touch_posterior` | Contact force sensor |
+| `touch_nose_sensor` | Touch sensor | References `nose` | Nose contact force sensor |
 
 ## Key Methods
 
 | Method | Description |
 |--------|-------------|
 | `reset()` | Resets to default pose, runs 2000 settle steps under gravity |
-| `step(muscle_activations)` | Applies actuator controls, steps physics by `CONTROL_DECIMATION` substeps |
+| `step(muscle_activations)` | Applies actuator controls, steps physics once via `mujoco.mj_step` |
 | `get_state()` | Reads position (biological metres via `_SCALE_MODEL_TO_BIO`), orientation, joint angles/velocities, contact forces, head position |
 | `get_body_shape()` | Returns (13, 3) array of segment centres in biological metres |
 | `render(camera)` | Returns RGB frame from named camera |

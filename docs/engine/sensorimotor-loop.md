@@ -21,8 +21,8 @@ Records per-tick:
 
 | Metric | Description |
 |--------|-------------|
-| **Prediction error** | Mean absolute `E_dir` across all neurons (from `neural_states`). This is the raw surprise signal. |
-| **Motor entropy** | Shannon entropy of the motor output distribution. Low entropy = stereotyped behaviour; high entropy = disorganised. |
+| **Prediction error** | Mean absolute membrane potential (`S`) across all neurons (from `neural_states`). This is the raw surprise proxy. |
+| **Motor entropy** | Variance of the motor output distribution. Low variance = stereotyped behaviour; high variance = disorganised. |
 
 ## Convergence Monitoring
 

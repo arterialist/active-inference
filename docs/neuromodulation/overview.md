@@ -2,7 +2,7 @@
 
 ← [Index](../INDEX.md) | **File:** `simulations/c_elegans/neuron_mapping.py` (class `CElegansNervousSystem`)
 
-Implements ALERM Eq. 4–5. Two modulators (M0 and M1) are computed from the temporal derivative of chemosensory concentration and delivered through two pathways.
+Implements ALERM Eq. 3–4. Two modulators (M0 and M1) are computed from the temporal derivative of chemosensory concentration and delivered through two pathways.
 
 ## Delivery Pathways
 

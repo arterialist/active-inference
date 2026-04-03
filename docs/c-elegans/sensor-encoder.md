@@ -20,10 +20,10 @@
 
 | Neuron | Body site | Encoding |
 |--------|-----------|----------|
-| PLML, PLMR | touch_post_sensor | ‖force‖ / 10 |
-| ALML, ALMR | touch_ant_sensor | ‖force‖ / 10 |
-| AVM | touch_ant_sensor | ‖force‖ / 10 |
-| PVM | touch_post_sensor | ‖force‖ / 10 |
+| PLML, PLMR | touch_post_sensor | `magnitude / (magnitude + 1e-9)` (saturating) |
+| ALML, ALMR | touch_ant_sensor | `magnitude / (magnitude + 1e-9)` (saturating) |
+| AVM | touch_ant_sensor | `magnitude / (magnitude + 1e-9)` (saturating) |
+| PVM | touch_post_sensor | `magnitude / (magnitude + 1e-9)` (saturating) |
 
 ## Proprioceptive Encoding
 

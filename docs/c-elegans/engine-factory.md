@@ -14,11 +14,13 @@ def build_c_elegans_simulation(
     food_position:  tuple[float, float, float] = (0.03, 0.0, 0.0),
     food_positions: list[tuple[float, float, float]] | None = None,
     log_level:      str = "WARNING",
+    on_step:        StepCallback | None = None,
+    record_neural_states: bool = True,
     enable_m0:      bool = True,
     enable_m1:      bool = True,
     evol_config:    dict[str, Any] | None = None,
     max_history:    int = 200,
-    ...
+    suppress_connectome_summary: bool = False,
 ) -> tuple[CElegansEngine, SensorimotorLoop]
 ```
 

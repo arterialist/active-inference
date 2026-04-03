@@ -21,7 +21,7 @@ Eight preset functions define PAULA parameters for distinct neuron classes withi
 
 **Sensory neurons** (`r_base=0.5`, `λ=6`): Low threshold, fast time constant — must respond quickly to environmental stimuli.
 
-**OFF-cell neurons** (`r_base=0.25`, `w_b[1]=1.2`, fast `gamma[1]=0.90`): Extremely low threshold for tonic firing; strong M1-mediated suppression; threshold drops quickly on stimulus removal to generate the OFF burst (Chalasani et al. 2007).
+**OFF-cell neurons** (`r_base=0.25`, `w_r[1]=1.2`, fast `gamma[1]=0.90`): Extremely low threshold for tonic firing; strong M1-mediated suppression; threshold drops quickly on stimulus removal to generate the OFF burst (Chalasani et al. 2007).
 
 **Excitatory motor neurons** (`r_base=0.2`, `w_tref=[30,-15]`): Low threshold, strong t_ref modulation — neuromodulators dramatically alter learning dynamics.
 

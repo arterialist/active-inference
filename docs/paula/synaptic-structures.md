@@ -6,20 +6,22 @@
 
 The receiving end of a synapse on the dendrite.
 
-| Field | Type | Init | Description |
-|-------|------|------|-------------|
-| `info` | `float` | U(0.5, 1.5) | Synaptic efficacy for information |
-| `plast` | `float` | U(0.5, 1.5) | Synaptic efficacy for plasticity signal |
-| `adapt` | `ndarray` | U(0.1, 0.5) | Receptor sensitivity to each neuromodulator |
+| Field | Type | Class default | Runtime init | Description |
+|-------|------|---------------|--------------|-------------|
+| `info` | `float` | U(0.5, 1.5) | U(0.5, 1.5) | Synaptic efficacy for information |
+| `plast` | `float` | U(0.5, 1.5) | U(0.5, 1.5) | Synaptic efficacy for plasticity signal |
+| `adapt` | `ndarray` | zeros(2) | U(0.1, 0.5) | Receptor sensitivity to each neuromodulator |
 
 ## PresynapticOutputVector (`u_o`)
 
 The releasing end at the axon terminal.
 
-| Field | Type | Init | Description |
-|-------|------|------|-------------|
-| `info` | `float` | p (1.0) | Spike amplitude transmitted |
-| `mod` | `ndarray` | U(0.1, 0.5) | Neuromodulator release profile |
+| Field | Type | Class default | Runtime init | Description |
+|-------|------|---------------|--------------|-------------|
+| `info` | `float` | U(0.5, 1.5) | p (1.0) | Spike amplitude transmitted |
+| `mod` | `ndarray` | zeros(2) | U(0.1, 0.5) | Neuromodulator release profile |
+
+> **Note:** Class-level `default_factory` values differ from runtime initialization for `adapt`, `u_o.info`, and `u_o.mod`. The runtime constructors in `add_synapse()` and `add_axon_terminal()` override these defaults to the values shown in the "Runtime init" column.
 
 ## Wrapper Types
 

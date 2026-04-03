@@ -88,7 +88,7 @@ active-inference/
 │       ├── connectome.py           Cook 2019 connectome loader + cache
 │       ├── neuron_mapping.py       CElegansNervousSystem (302 neurons)
 │       ├── body.py                 CElegansBody (MuJoCo wrapper)
-│       ├── body_model.xml          MJCF model (13 segments, 48 actuators)
+│       ├── body_model.xml          MJCF model (13 segments, 12 actuated joints, 48 actuators)
 │       ├── environment.py          AgarPlateEnvironment
 │       ├── sensors.py              SensorEncoder
 │       ├── muscles.py              NeuromuscularJunction
@@ -115,7 +115,7 @@ active-inference/
 
 The simulation frames each organism as an active inference agent. At every tick, two processes run simultaneously:
 
-- **Perception (plasticity):** Each PAULA synapse computes a prediction error `E_dir = received_input − u_i.info`. The postsynaptic learning rule `Δu_i = η × direction × |E_dir|` adjusts synaptic weights to minimise future surprise. Over time, the network's weights encode a generative model of the sensory statistics the organism encounters.
+- **Perception (plasticity):** Each PAULA synapse computes a prediction error `E_dir = received_input − u_i.info`. The postsynaptic learning rule `Δu_i = η × direction × |E_dir| × u_i.info` adjusts synaptic weights to minimise future surprise. Over time, the network's weights encode a generative model of the sensory statistics the organism encounters.
 
 - **Action (motor output):** Motor neuron spikes drive muscle activations, physically moving the body. Movement changes the sensory stream, closing the perception–action loop. The organism's behaviour implicitly minimises prediction error (free energy) by seeking out predictable sensory states.
 
@@ -185,9 +185,9 @@ Each `step()` call:
 
 1. Reads body state and environment observation.
 2. Flattens observation to `dict[str, float]` via `_observation_to_sensory_inputs`.
-3. Runs `neural_ticks_per_physics_step` neural ticks, collecting the last motor output.
-4. Steps the body with the motor output.
-5. Steps the environment with the new body state.
+3. Steps the environment with the previous body state.
+4. Runs `neural_ticks_per_physics_step` neural ticks, collecting the last motor output.
+5. Steps the body with the motor output.
 6. Records timing and neural states into a `SimulationStep` dataclass.
 
 **SimulationStep** (dataclass):
@@ -218,8 +218,8 @@ class SensorimotorLoop:
 
 **FreeEnergyTrace** records per-tick:
 
-- **Prediction error:** Mean absolute `E_dir` across all neurons (from `neural_states`). This is the raw surprise signal.
-- **Motor entropy:** Shannon entropy of the motor output distribution. Low entropy = stereotyped behaviour; high entropy = disorganised.
+- **Prediction error:** Mean absolute membrane potential (`S`) across all neurons (from `neural_states`). This is the raw surprise proxy.
+- **Motor entropy:** Variance of the motor output distribution. Low variance = stereotyped behaviour; high variance = disorganised.
 
 The `run()` method supports optional **convergence monitoring**: if the mean prediction error over a rolling window drops below a threshold, the simulation stops early.
 
@@ -652,13 +652,13 @@ Result: **302 neurons**, **~3,709 chemical synapses**, **~1,092 gap junctions**.
 
 **Neuron name lists:**
 
-- `CHEMOSENSORY_NEURONS` — 16 neurons (ASEL/R, AWCL/R, AWBL/R, AFDL/R, ASHL/R, ASJL/R, AIZL/R)
+- `CHEMOSENSORY_NEURONS` — 14 neurons (ASEL/R, AWCL/R, AWBL/R, AFDL/R, ASHL/R, ASJL/R, AIZL/R)
 - `TOUCH_NEURONS` — 6 neurons (PLML/R, ALML/R, AVM, PVM)
-- `VENTRAL_CORD_MOTOR_NEURONS` — 57 neurons (DB, VB, DA, VA, DD, VD, AS classes)
+- `VENTRAL_CORD_MOTOR_NEURONS` — 69 neurons (DB, VB, DA, VA, DD, VD, AS classes)
 - `MOTOR_NEURON_POSITIONS` — dict mapping each motor neuron name to a fractional body position `[0=head, 1=tail]`
 - `COMMAND_INTERNEURONS_FORWARD` — AVBL, AVBR, PVCL, PVCR
 - `COMMAND_INTERNEURONS_BACKWARD` — AVAL, AVAR, AVDL, AVDR
-- `LOCOMOTION_INTERNEURONS` — 12 interneurons (RIML/R, RMEL/R, SMDVL/R, SMDDL/R, RIVL/R, RIS, DVA)
+- `LOCOMOTION_INTERNEURONS` — 12 interneurons (AVAL/R, AVBL/R, AVDL/R, AVEL/R, PVCL/R, AVJL/R)
 
 ### 6.2 MuJoCo Body
 

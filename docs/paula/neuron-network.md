@@ -22,7 +22,7 @@ Uses a pair of **calendar-queue wheels** (circular buffers of size `max_delay + 
 
 | Technique | Benefit |
 |-----------|---------|
-| Pre-allocated `input_buffer` numpy arrays (shape `(num_inputs, 2 + num_neuromodulators)`) | Avoids per-tick allocation |
+| Pre-allocated `input_buffer` numpy arrays (shape `(num_inputs, 4)`, hardcoded) | Avoids per-tick allocation |
 | `fast_connection_cache` stores direct numpy array references | Signal delivery is a single indexed addition |
 | Tuple events `(source_id, terminal_id, info_value)` | Avoids object allocation |
 | Calendar-queue wheels | O(1) insertion/retrieval vs priority queues |

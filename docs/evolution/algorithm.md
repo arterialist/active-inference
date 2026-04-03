@@ -27,10 +27,9 @@ uv run python scripts/evolve_food_seeking.py --generations 100 --population 40 -
 
 # Low-memory mode (Raspberry Pi / 8 GB machines)
 uv run python scripts/evolve_food_seeking.py --low-memory --measure-memory
-
-# Resume from checkpoint
-uv run python scripts/evolve_food_seeking.py --checkpoint my_checkpoint.json
 ```
+
+> **Note:** The `--checkpoint` flag specifies the output file for saving checkpoints. The script does not currently support resuming from an existing checkpoint — it only saves them.
 
 ## Memory Management
 

@@ -57,6 +57,7 @@ class FreeEnergyTrace:
         """Extract proxy metrics from neural states and motor outputs."""
         self.ticks.append(tick)
 
+        # TODO: Get error from E_dir instead of S
         errors = [
             abs(v) for k, v in neural_states.items() if k.endswith("_S")
         ]

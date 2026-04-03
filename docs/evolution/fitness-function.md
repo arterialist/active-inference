@@ -4,19 +4,18 @@
 
 ## Fitness Function
 
-Each genome is evaluated against **3 distinct food positions** to prevent directional overfitting:
+Each genome is evaluated against **2 distinct food positions** to prevent directional overfitting:
 
 ```python
 TEST_ENVIRONMENTS = [
     (-0.002,  0.002, 0.0),   # Top-left
     ( 0.002, -0.002, 0.0),   # Bottom-right
-    ...
 ]
 ```
 
 **Fitness** = mean (or worst with `--robust`) minimum distance to food across environments. **Lower is better** (DE minimises).
 
-**Early exit:** if the worm reaches within `EAT_RADIUS_M = 0.0001` (0.1 mm), that environment scores 0.
+**Early exit:** if the worm reaches within `EAT_RADIUS_M = 0.0001` (0.1 mm), that environment's simulation loop breaks early. The score recorded is the actual minimum distance reached (not zero).
 
 ## Robustness Protocol
 

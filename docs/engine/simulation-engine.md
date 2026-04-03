@@ -31,9 +31,9 @@ class SimulationEngine:
 
 1. Read body state and environment observation.
 2. Flatten observation to `dict[str, float]` via `_observation_to_sensory_inputs`.
-3. Run `neural_ticks_per_physics_step` neural ticks, collecting last motor output.
-4. Step the body with motor output.
-5. Step the environment with new body state.
+3. Step the environment with the previous body state.
+4. Run `neural_ticks_per_physics_step` neural ticks, collecting last motor output.
+5. Step the body with motor output.
 6. Record timing and neural states into `SimulationStep`.
 
 ## SimulationStep Dataclass

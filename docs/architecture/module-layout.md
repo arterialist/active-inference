@@ -22,7 +22,7 @@ active-inference/
 │       ├── connectome.py           Cook 2019 connectome loader + cache
 │       ├── neuron_mapping.py       CElegansNervousSystem (302 neurons)
 │       ├── body.py                 CElegansBody (MuJoCo wrapper)
-│       ├── body_model.xml          MJCF model (13 segments, 48 actuators)
+│       ├── body_model.xml          MJCF model (13 segments, 12 actuated joints, 48 actuators)
 │       ├── environment.py          AgarPlateEnvironment
 │       ├── sensors.py              SensorEncoder
 │       ├── muscles.py              NeuromuscularJunction

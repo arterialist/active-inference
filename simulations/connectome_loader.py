@@ -17,6 +17,7 @@ Key design choices
 
 from __future__ import annotations
 
+import os
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
 from typing import Any
@@ -398,6 +399,14 @@ def _assemble_network(
         ),
         "network_activity": deque(maxlen=network.max_history),
     }
+
+    # Default off (matches NeuronNetwork.__init__). Set PAULA_RECORD_HISTORY=1 to
+    # benchmark or debug with per-tick PAULA deques enabled.
+    network.record_history = os.environ.get("PAULA_RECORD_HISTORY", "").strip().lower() in (
+        "1",
+        "true",
+        "yes",
+    )
 
     return network
 

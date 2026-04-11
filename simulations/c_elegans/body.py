@@ -35,13 +35,17 @@ class CElegansBody(BaseBody):
         timestep:       Physics timestep (seconds).  Overrides XML value if set.
         render_width:   Width of rendered frames in pixels.
         render_height:  Height of rendered frames in pixels.
+        settle_steps:   MuJoCo steps for gravity settle on reset (default 2000).
     """
+
+    _SETTLE_STEPS_DEFAULT = 2000
 
     def __init__(
         self,
         timestep: float | None = None,
         render_width: int = 640,
         render_height: int = 480,
+        settle_steps: int | None = None,
     ):
         logger.info(f"Loading MuJoCo model from {_MODEL_XML}")
         self._model = mujoco.MjModel.from_xml_path(str(_MODEL_XML))
@@ -88,18 +92,19 @@ class CElegansBody(BaseBody):
             if name and "root" not in name:
                 self._joint_names_list.append(name)
 
+        self._settle_steps = int(settle_steps) if settle_steps is not None else self._SETTLE_STEPS_DEFAULT
+
         logger.info(
             f"CElegansBody ready: "
             f"{self._model.nu} actuators, "
             f"{len(self._joint_names_list)} joints, "
             f"dt={self._model.opt.timestep:.4f}s"
+            f", settle_steps={self._settle_steps}"
         )
 
     # ------------------------------------------------------------------
     # BaseBody interface
     # ------------------------------------------------------------------
-
-    _SETTLE_STEPS = 2000
 
     def reset(self) -> BodyState:
         """Reset to default pose, then let gravity settle onto the floor.
@@ -108,18 +113,21 @@ class CElegansBody(BaseBody):
         interpenetration-kick artifacts, then runs zero-ctrl physics
         steps until the body rests on the substrate with zero velocity.
         """
-        mujoco.mj_resetData(self._model, self._data)
-        # Start above the floor so initial contact is clean
-        self._data.qpos[2] = 0.045
-        self._data.qvel[:] = 0.0
-        mujoco.mj_forward(self._model, self._data)
-        # Settle onto substrate under gravity
-        for _ in range(self._SETTLE_STEPS):
-            self._data.ctrl[:] = 0.0
-            mujoco.mj_step(self._model, self._data)
-        # Zero residual velocity from settling
-        self._data.qvel[:] = 0.0
-        mujoco.mj_forward(self._model, self._data)
+        from simulations import evol_trace
+
+        with evol_trace.span("reset_body_prep"):
+            mujoco.mj_resetData(self._model, self._data)
+            # Start above the floor so initial contact is clean
+            self._data.qpos[2] = 0.045
+            self._data.qvel[:] = 0.0
+            mujoco.mj_forward(self._model, self._data)
+        with evol_trace.span("reset_body_settle"):
+            for _ in range(self._settle_steps):
+                self._data.ctrl[:] = 0.0
+                mujoco.mj_step(self._model, self._data)
+        with evol_trace.span("reset_body_finalize"):
+            self._data.qvel[:] = 0.0
+            mujoco.mj_forward(self._model, self._data)
 
         return self.get_state()
 

@@ -44,6 +44,9 @@ loguru.logger.add(sys.stderr, level="ERROR")
 N_TICKS = 50_000
 EAT_RADIUS_M = 0.0001  # Early exit if worm gets this close (0.1 mm)
 
+# MuJoCo gravity settle steps (full interactive default is 2000 in CElegansBody).
+EVOLUTION_BODY_SETTLE_STEPS = 600
+
 
 def _rss_mb() -> float:
     """Peak resident set size in MB (Unix). macOS: bytes, Linux: KB."""
@@ -136,31 +139,39 @@ def evaluate(
     show_sim_progress: bool = False,
     use_worst: bool = False,
     low_memory: bool = False,
+    body_settle_steps: int | None = EVOLUTION_BODY_SETTLE_STEPS,
 ) -> float:
     """
     Run simulation against 4 distinct food positions. Return average (or worst)
     of min_distance achieved in each run. DE minimizes this (lower = better).
     """
+    from simulations import evol_trace
     from simulations.c_elegans.simulation import build_c_elegans_simulation
+
+    if evol_trace.is_enabled():
+        evol_trace.reset_accumulators()
 
     evol_config = x_to_config(np.clip(x, 0, 1))
     min_distances: list[float] = []
 
     for env_idx, food_pos in enumerate(TEST_ENVIRONMENTS):
         try:
-            engine, loop = build_c_elegans_simulation(
-                use_connectome_cache=True,
-                food_positions=[food_pos],
-                log_level="ERROR",
-                record_neural_states=False,
-                evol_config=evol_config,
-                max_history=1 if low_memory else 200,
-                suppress_connectome_summary=low_memory,
-            )
+            with evol_trace.span("eval_build_sim"):
+                engine, loop = build_c_elegans_simulation(
+                    use_connectome_cache=True,
+                    food_positions=[food_pos],
+                    log_level="ERROR",
+                    record_neural_states=False,
+                    evol_config=evol_config,
+                    max_history=1 if low_memory else 200,
+                    suppress_connectome_summary=low_memory,
+                    body_settle_steps=body_settle_steps,
+                )
         except Exception:
             return 1e6  # Penalize failed builds (large distance)
 
-        loop.reset()
+        with evol_trace.span("eval_reset"):
+            loop.reset(nervous_rebuild=False)
         food = np.array(food_pos)
         min_dist = float("inf")
 
@@ -193,6 +204,15 @@ def evaluate(
     if low_memory:
         gc.collect()
 
+    if evol_trace.is_enabled():
+        evol_trace.flush_json_line(
+            {
+                "n_envs": len(TEST_ENVIRONMENTS),
+                "n_ticks_requested": n_ticks,
+                "body_settle_steps": body_settle_steps,
+            }
+        )
+
     # Average across environments (or worst-case for robustness)
     return float(np.max(min_distances) if use_worst else np.mean(min_distances))
 
@@ -202,6 +222,7 @@ def _objective(
     n_ticks: int,
     use_worst: bool,
     low_memory: bool,
+    body_settle_steps: int | None,
 ) -> float:
     """
     Picklable objective for differential_evolution workers.
@@ -212,6 +233,7 @@ def _objective(
         n_ticks=n_ticks,
         use_worst=use_worst,
         low_memory=low_memory,
+        body_settle_steps=body_settle_steps,
     )
 
 
@@ -250,6 +272,11 @@ def main() -> None:
         action="store_true",
         help="Print peak RSS (MB) each generation",
     )
+    parser.add_argument(
+        "--full-settle",
+        action="store_true",
+        help="Use full MuJoCo gravity settle (2000 steps) like run_c_elegans; default is faster evolution settle",
+    )
     args = parser.parse_args()
 
     checkpoint_path = Path(args.checkpoint)
@@ -271,6 +298,10 @@ def main() -> None:
         print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} eval)")
         if args.low_memory:
             print("  low-memory: enabled (flat RAM for Pi/8GB)")
+        if args.full_settle:
+            print("  body settle: full (2000 mj_step)")
+        else:
+            print(f"  body settle: evolution ({EVOLUTION_BODY_SETTLE_STEPS} mj_step)")
         print("-" * 60)
 
     # Approximate total evals: DE does ~popsize + generations*popsize, use 2x buffer
@@ -285,11 +316,13 @@ def main() -> None:
     )
 
     # Picklable objective for workers (module-level function + partial)
+    _body_settle = None if args.full_settle else EVOLUTION_BODY_SETTLE_STEPS
     objective = partial(
         _objective,
         n_ticks=args.ticks,
         use_worst=args.robust,
         low_memory=args.low_memory,
+        body_settle_steps=_body_settle,
     )
 
     # Mutable state for callback (runs in main process)

@@ -43,8 +43,12 @@ class FreeEnergyTrace:
     """
 
     ticks: deque[int] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
-    prediction_error: deque[float] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
-    motor_entropy: deque[float] = field(default_factory=lambda: deque(maxlen=_FE_MAXLEN))
+    prediction_error: deque[float] = field(
+        default_factory=lambda: deque(maxlen=_FE_MAXLEN)
+    )
+    motor_entropy: deque[float] = field(
+        default_factory=lambda: deque(maxlen=_FE_MAXLEN)
+    )
     _pe_sum: float = 0.0
     _pe_count: int = 0
 
@@ -58,9 +62,7 @@ class FreeEnergyTrace:
         self.ticks.append(tick)
 
         # TODO: Get error from E_dir instead of S
-        errors = [
-            abs(v) for k, v in neural_states.items() if k.endswith("_S")
-        ]
+        errors = [abs(v) for k, v in neural_states.items() if k.endswith("_S")]
         if errors:
             pe = float(np.mean(errors))
         else:
@@ -118,9 +120,9 @@ class SensorimotorLoop:
         if self._on_step is not None:
             self._on_step(step, self)
 
-    def reset(self) -> SimulationStep:
+    def reset(self, *, nervous_rebuild: bool = True) -> SimulationStep:
         self.free_energy_trace = FreeEnergyTrace()
-        return self.engine.reset()
+        return self.engine.reset(nervous_rebuild=nervous_rebuild)
 
     def run(
         self,
@@ -149,7 +151,9 @@ class SensorimotorLoop:
             List of SimulationStep records (empty if keep_results=False).
         """
         results: list[SimulationStep] = []
-        iterator = tqdm(range(n_steps), unit="tick", desc="Simulation", disable=not progress)
+        iterator = tqdm(
+            range(n_steps), unit="tick", desc="Simulation", disable=not progress
+        )
 
         for i in iterator:
             step = self.engine.step()
@@ -164,7 +168,9 @@ class SensorimotorLoop:
                 converge_threshold is not None
                 and len(self.free_energy_trace.prediction_error) >= converge_window
             ):
-                recent = list(self.free_energy_trace.prediction_error)[-converge_window:]
+                recent = list(self.free_energy_trace.prediction_error)[
+                    -converge_window:
+                ]
                 if float(np.mean(recent)) < converge_threshold:
                     logger.info(
                         f"Converged at step {step.tick} "

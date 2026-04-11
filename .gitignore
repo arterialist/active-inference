@@ -11,6 +11,7 @@ data/c_elegans/*.json
 !data/c_elegans/.gitkeep
 *.log
 logs/
+evol_evaluate.prof
 .DS_Store
 c_elegans_run.png
 
@@ -21,3 +22,13 @@ c_elegans_run.png
 *.png
 
 .obsidian
+
+scripts/misc/
+
+benchmark_results_*.txt
+
+*.bak
+*.csv
+
+evolved_*.json
+evo_*.json

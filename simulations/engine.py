@@ -75,21 +75,33 @@ class SimulationEngine:
     # Public API
     # ------------------------------------------------------------------
 
-    def reset(self) -> SimulationStep:
-        """Reset all subsystems to initial state."""
+    def reset(self, *, nervous_rebuild: bool = True) -> SimulationStep:
+        """Reset all subsystems to initial state.
+
+        Args:
+            nervous_rebuild: Passed to the nervous system (skip full PAULA
+                graph rebuild when False — use after a fresh build with same config).
+        """
+        from simulations import evol_trace
+
         self._tick = 0
         self._history.clear()
 
         body_state = self.body.reset()
-        observation = self.environment.reset()
-        self.nervous_system.reset()
+        with evol_trace.span("reset_environment"):
+            observation = self.environment.reset()
+        self.nervous_system.reset(rebuild_network=nervous_rebuild)
 
         step = SimulationStep(
             tick=0,
             body_state=body_state,
             observation=observation,
             motor_outputs={},
-            neural_states=self.nervous_system.get_neuron_states(),
+            neural_states=(
+                self.nervous_system.get_neuron_states()
+                if self.record_neural_states
+                else {}
+            ),
         )
         self._history.append(step)
         return step
@@ -124,13 +136,16 @@ class SimulationEngine:
             body_state=body_state,
             observation=obs,
             motor_outputs=motor_outputs,
-            neural_states=(self.nervous_system.get_neuron_states()
-                           if self.record_neural_states else {}),
+            neural_states=(
+                self.nervous_system.get_neuron_states()
+                if self.record_neural_states
+                else {}
+            ),
             elapsed_ms=elapsed,
         )
         self._history.append(step)
         if len(self._history) > self._max_history:
-            self._history = self._history[-self._max_history:]
+            self._history = self._history[-self._max_history :]
 
         if self.on_step is not None:
             self.on_step(step)

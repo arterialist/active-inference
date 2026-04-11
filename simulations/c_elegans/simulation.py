@@ -70,24 +70,30 @@ class CElegansEngine(SimulationEngine):
         Override to translate nervous system outputs through
         the NeuromuscularJunction mapper before applying to body.
         """
+        from simulations import evol_trace
+
         t0 = time.perf_counter_ns()
 
         last_body = self.body.get_state()
-        obs = self.environment.step(self._body_state_as_dict(last_body))
-        sensory_inputs = self._observation_to_sensory_inputs(obs, last_body)
+        with evol_trace.span("tick_env"):
+            obs = self.environment.step(self._body_state_as_dict(last_body))
+        with evol_trace.span("tick_sensor_encode"):
+            sensory_inputs = self._observation_to_sensory_inputs(obs, last_body)
 
         motor_outputs: dict[str, float] = {}
-        for sub_tick in range(self.neural_ticks_per_physics_step):
-            motor_outputs = self.nervous_system.tick(
-                sensory_inputs,
-                current_tick=(
-                    self._tick * self.neural_ticks_per_physics_step + sub_tick
-                ),
-            )
+        with evol_trace.span("tick_neural"):
+            for sub_tick in range(self.neural_ticks_per_physics_step):
+                motor_outputs = self.nervous_system.tick(
+                    sensory_inputs,
+                    current_tick=(
+                        self._tick * self.neural_ticks_per_physics_step + sub_tick
+                    ),
+                )
 
         # Translate from nervous-system naming to MuJoCo actuator naming
         ctrl = NeuromuscularJunction.to_ctrl(motor_outputs)
-        body_state = self.body.step(ctrl)
+        with evol_trace.span("tick_mujoco"):
+            body_state = self.body.step(ctrl)
 
         self._tick += 1
         elapsed = (time.perf_counter_ns() - t0) / 1e6
@@ -97,13 +103,16 @@ class CElegansEngine(SimulationEngine):
             body_state=body_state,
             observation=obs,
             motor_outputs=motor_outputs,
-            neural_states=(self.nervous_system.get_neuron_states()
-                           if self.record_neural_states else {}),
+            neural_states=(
+                self.nervous_system.get_neuron_states()
+                if self.record_neural_states
+                else {}
+            ),
             elapsed_ms=elapsed,
         )
         self._history.append(step)
         if len(self._history) > self._max_history:
-            self._history = self._history[-self._max_history:]
+            self._history = self._history[-self._max_history :]
 
         if self.on_step is not None:
             self.on_step(step)
@@ -123,6 +132,7 @@ def build_c_elegans_simulation(
     evol_config: dict[str, Any] | None = None,
     max_history: int = 200,
     suppress_connectome_summary: bool = False,
+    body_settle_steps: int | None = None,
 ) -> tuple[CElegansEngine, SensorimotorLoop]:
     """
     Factory: load connectome, build all subsystems, return engine + loop.
@@ -154,7 +164,7 @@ def build_c_elegans_simulation(
 
     # 3. Body (MuJoCo)
     logger.info("Initialising MuJoCo body …")
-    body = CElegansBody()
+    body = CElegansBody(settle_steps=body_settle_steps)
 
     # 4. Environment
     logger.info("Initialising agar plate environment …")

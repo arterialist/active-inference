@@ -23,8 +23,13 @@ class BaseNervousSystem(ABC):
     """
 
     @abstractmethod
-    def reset(self) -> None:
-        """Reset all neuron states to resting potential."""
+    def reset(self, *, rebuild_network: bool = True) -> None:
+        """Reset all neuron states to resting potential.
+
+        Args:
+            rebuild_network: If False, keep topology and PAULA graph; only
+                reset dynamical state (faster when the network was just built).
+        """
 
     @abstractmethod
     def tick(

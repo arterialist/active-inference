@@ -116,9 +116,17 @@ class CElegansNervousSystem(BaseNervousSystem):
     # BaseNervousSystem interface
     # ------------------------------------------------------------------
 
-    def reset(self) -> None:
+    def reset(self, *, rebuild_network: bool = True) -> None:
+        from simulations import evol_trace
+
         CElegansNervousSystem._seg_map = None
-        self._build()
+        with evol_trace.span("reset_nervous_rebuild" if rebuild_network else "reset_nervous_light"):
+            if rebuild_network:
+                self._build()
+            elif self._network is not None:
+                self._network.reset_simulation()
+            else:
+                self._build()
         self._init_muscles()
         self._prev_sensory.clear()
         self._chem_ema_fast.clear()

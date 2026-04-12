@@ -177,6 +177,39 @@ class CElegansNervousSystem(BaseNervousSystem):
             states[f"{name}_fired"] = float(neuron.O > 0)
         return states
 
+    def get_neuron_names_paula_order(self) -> list[str]:
+        """Biological names ordered by PAULA id (0 .. n-1), matching network dict keys."""
+        if self._network is None:
+            return []
+        neurons = self._network.network.neurons
+        return [
+            str(neurons[i].metadata.get("name", str(i)))
+            for i in sorted(neurons.keys(), key=int)
+        ]
+
+    def get_compact_neural_snapshot(self) -> tuple[list[float], list[int]]:
+        """Lightweight S / fired arrays in paula_id order (no per-name dict).
+
+        Avoids building the large string-key dict used by :meth:`get_neuron_states`
+        when only dense vectors are needed for streaming or logging.
+        """
+        if self._network is None:
+            return [], []
+        neurons = self._network.network.neurons
+        if not neurons:
+            return [], []
+        ids = sorted(neurons.keys(), key=int)
+        n = int(ids[-1]) + 1
+        s_out = [0.0] * n
+        f_out = [0] * n
+        for i in ids:
+            neuron = neurons[i]
+            ii = int(i)
+            if 0 <= ii < n:
+                s_out[ii] = float(neuron.S)
+                f_out[ii] = 1 if float(neuron.O) > 0 else 0
+        return s_out, f_out
+
     @property
     def n_neurons(self) -> int:
         return len(self._name_to_id)

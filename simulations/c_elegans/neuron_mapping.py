@@ -187,28 +187,30 @@ class CElegansNervousSystem(BaseNervousSystem):
             for i in sorted(neurons.keys(), key=int)
         ]
 
-    def get_compact_neural_snapshot(self) -> tuple[list[float], list[int]]:
-        """Lightweight S / fired arrays in paula_id order (no per-name dict).
+    def get_compact_neural_snapshot(self) -> tuple[list[float], list[int], list[float]]:
+        """Lightweight S / fired / primary threshold ``r`` in paula_id order (no per-name dict).
 
         Avoids building the large string-key dict used by :meth:`get_neuron_states`
         when only dense vectors are needed for streaming or logging.
         """
         if self._network is None:
-            return [], []
+            return [], [], []
         neurons = self._network.network.neurons
         if not neurons:
-            return [], []
+            return [], [], []
         ids = sorted(neurons.keys(), key=int)
         n = int(ids[-1]) + 1
         s_out = [0.0] * n
         f_out = [0] * n
+        r_out = [0.0] * n
         for i in ids:
             neuron = neurons[i]
             ii = int(i)
             if 0 <= ii < n:
                 s_out[ii] = float(neuron.S)
                 f_out[ii] = 1 if float(neuron.O) > 0 else 0
-        return s_out, f_out
+                r_out[ii] = float(neuron.r)
+        return s_out, f_out, r_out
 
     @property
     def n_neurons(self) -> int:

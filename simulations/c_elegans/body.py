@@ -255,6 +255,17 @@ class CElegansBody(BaseBody):
                 positions[i] = self._data.xpos[bid] * _SCALE_MODEL_TO_BIO
         return positions
 
+    def export_mujoco_state(self) -> tuple[list[float], list[float]]:
+        """Serialise MuJoCo qpos/qvel for checkpointing (model units)."""
+        mujoco.mj_forward(self._model, self._data)
+        return self._data.qpos.copy().tolist(), self._data.qvel.copy().tolist()
+
+    def import_mujoco_state(self, qpos: list[float], qvel: list[float]) -> None:
+        """Restore MuJoCo qpos/qvel from lists (model units)."""
+        self._data.qpos[:] = np.asarray(qpos, dtype=self._data.qpos.dtype)
+        self._data.qvel[:] = np.asarray(qvel, dtype=self._data.qvel.dtype)
+        mujoco.mj_forward(self._model, self._data)
+
     def close(self) -> None:
         """Release renderer resources."""
         if self._renderer is not None:

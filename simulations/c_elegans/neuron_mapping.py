@@ -12,6 +12,7 @@ generic PAULA build pipeline, adding:
 
 from __future__ import annotations
 
+import heapq
 from dataclasses import replace
 from typing import Any
 
@@ -629,6 +630,84 @@ class CElegansNervousSystem(BaseNervousSystem):
                 )
 
         return dict(self._muscle_activations)
+
+    def export_live_checkpoint(self) -> dict[str, Any]:
+        """Serialise runtime state for live-demo / server restart (not full synapse plasticity)."""
+        if self._network is None:
+            return {}
+        nn = self._network
+        neurons_out: dict[str, dict[str, Any]] = {}
+        for nid, neuron in nn.network.neurons.items():
+            neurons_out[str(nid)] = {
+                "S": float(neuron.S),
+                "O": float(neuron.O),
+                "F_avg": float(neuron.F_avg),
+                "t_last_fire": float(neuron.t_last_fire),
+                "r": float(neuron.r),
+                "b": float(neuron.b),
+                "t_ref": float(neuron.t_ref),
+                "M_vector": neuron.M_vector.tolist(),
+                "pq": [list(row) for row in neuron.propagation_queue],
+            }
+        return {
+            "muscles": dict(self._muscle_activations),
+            "prev_sensory": dict(self._prev_sensory),
+            "chem_fast": dict(self._chem_ema_fast),
+            "chem_slow": dict(self._chem_ema_slow),
+            "m0": float(self._global_m0),
+            "m1": float(self._global_m1),
+            "nn_tick": int(nn.current_tick),
+            "neurons": neurons_out,
+        }
+
+    def import_live_checkpoint(self, data: dict[str, Any]) -> None:
+        """Restore state from :meth:`export_live_checkpoint`. Clears in-flight wheel events."""
+        if self._network is None:
+            return
+        nn = self._network
+        for slot in nn.presynaptic_wheel:
+            slot.clear()
+        for slot in nn.retrograde_wheel:
+            slot.clear()
+        for k, v in data.get("muscles", {}).items():
+            ks = str(k)
+            if ks in self._muscle_activations:
+                self._muscle_activations[ks] = float(v)
+        self._prev_sensory.clear()
+        self._prev_sensory.update(
+            {str(k): float(v) for k, v in data.get("prev_sensory", {}).items()}
+        )
+        self._chem_ema_fast.clear()
+        self._chem_ema_fast.update(
+            {str(k): float(v) for k, v in data.get("chem_fast", {}).items()}
+        )
+        self._chem_ema_slow.clear()
+        self._chem_ema_slow.update(
+            {str(k): float(v) for k, v in data.get("chem_slow", {}).items()}
+        )
+        self._global_m0 = float(data.get("m0", 0.0))
+        self._global_m1 = float(data.get("m1", 0.0))
+        nn.current_tick = int(data.get("nn_tick", 0))
+        for nid_str, ent in data.get("neurons", {}).items():
+            nid = int(nid_str)
+            neuron = nn.network.neurons.get(nid)
+            if neuron is None:
+                continue
+            neuron.S = float(ent["S"])
+            neuron.O = float(ent["O"])
+            neuron.F_avg = float(ent["F_avg"])
+            neuron.t_last_fire = float(ent["t_last_fire"])
+            neuron.r = float(ent["r"])
+            neuron.b = float(ent["b"])
+            neuron.t_ref = float(ent["t_ref"])
+            neuron.M_vector[:] = np.asarray(ent["M_vector"], dtype=float)
+            neuron.propagation_queue.clear()
+            for row in ent.get("pq", []):
+                neuron.propagation_queue.append(
+                    (int(row[0]), str(row[1]), float(row[2]), int(row[3]))
+                )
+            if neuron.propagation_queue:
+                heapq.heapify(neuron.propagation_queue)
 
 
 # -----------------------------------------------------------------------

@@ -236,6 +236,16 @@ class AgarPlateEnvironment(BaseEnvironment):
         ]
         self._food_items.append((pos_arr, sources))
 
+    def replace_food_sources(self, positions: list[tuple[float, float, float]]) -> None:
+        """Replace all food sources with the given list (metres). Used for live-demo restore."""
+        self._food_items.clear()
+        for pos in positions:
+            self.add_food(pos)
+
+    def sync_head_position(self, head_position: np.ndarray) -> None:
+        """Set cached head position without running consumption logic (restore)."""
+        self._current_head_pos = np.asarray(head_position, dtype=float).copy()
+
     def remove_food_near(
         self,
         position: tuple[float, float, float],

@@ -75,6 +75,10 @@ class SimulationEngine:
     # Public API
     # ------------------------------------------------------------------
 
+    def restore_physics_tick(self, tick: int) -> None:
+        """Restore physics step counter after loading a checkpoint (live demo)."""
+        self._tick = int(tick)
+
     def reset(self, *, nervous_rebuild: bool = True) -> SimulationStep:
         """Reset all subsystems to initial state.
 

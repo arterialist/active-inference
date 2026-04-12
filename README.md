@@ -58,7 +58,7 @@ The PAULA neuron's prediction error (`E_dir = input − u_i.info`) drives two si
 
 _Left:_ Worm trajectory (head position) on the floor plane with food sources (purple stars). _Right:_ Motor wave (dorsal–ventral activation) across body segments over time.
 
-**Live browser demo:** [https://jimmy.arteriali.st](https://jimmy.arteriali.st) — WebSocket + canvas viewer for the same C. elegans stack, served from the sibling [`live-c-elegans`](https://github.com/arterialist/live-c-elegans) package (`celegans-demo-server` and `web/`). See that repo’s README for `?ws=` and deployment notes.
+**Live browser demo:** [https://jimmy.arteriali.st](https://jimmy.arteriali.st) — WebSocket + canvas viewer for the same C. elegans stack, served from the sibling [live-c-elegans](https://github.com/arterialist/live-c-elegans) package (`celegans-demo-server` and `web/`). See that repo’s README for `?ws=` and deployment notes.
 
 ## Quick Start
 

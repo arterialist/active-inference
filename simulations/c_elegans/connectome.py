@@ -49,7 +49,7 @@ def load_connectome(use_cache: bool = True) -> ConnectomeData:
         _connectome_memory_cache = _load_from_cache(_CACHE_PATH)
         return _connectome_memory_cache
 
-    logger.info("Parsing connectome from cect Cook2019HermReader …")
+    logger.info("Parsing connectome from cect (Cook2019HermReader) …")
     data = _parse_from_cect()
 
     _CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -66,7 +66,10 @@ def load_connectome(use_cache: bool = True) -> ConnectomeData:
 
 def _parse_from_cect() -> ConnectomeData:
     """Parse connectome from the cect Cook2019HermReader."""
-    import cect.Cook2019HermReader as reader_module
+    try:
+        import cect.readers.Cook2019HermReader as reader_module
+    except ModuleNotFoundError:
+        import cect.Cook2019HermReader as reader_module
     from cect.Cells import (
         PREFERRED_HERM_NEURON_NAMES_COOK,
         SENSORY_NEURONS_COOK,

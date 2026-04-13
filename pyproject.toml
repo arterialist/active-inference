@@ -6,7 +6,8 @@ build-backend = "hatchling.build"
 name = "active-inference"
 version = "0.1.0"
 description = "C. elegans active inference sensorimotor simulation using PAULA neurons"
-requires-python = ">=3.11"
+# MuJoCo PyPI wheels are cp311–cp313 only; 3.14 forces an sdist build that needs MUJOCO_PATH.
+requires-python = ">=3.11,<3.14"
 dependencies = [
     "numpy>=1.26",
     "mujoco>=3.2",

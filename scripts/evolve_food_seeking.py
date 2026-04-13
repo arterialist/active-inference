@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+# pyright: reportMissingTypeStubs=false
+# pyright: reportPrivateUsage=false
+# pyright: reportExplicitAny=false
+# pyright: reportAny=false
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportUnknownArgumentType=false
 """
 Evolutionary optimization of neuromodulation and neuron params for food-seeking.
 
@@ -34,10 +41,14 @@ import resource
 import signal
 import sys
 import time
+import types
 from functools import partial
 from pathlib import Path
+from typing import Any, Callable, cast
 
 import numpy as np
+from scipy.optimize import OptimizeResult
+from scipy.optimize._differentialevolution import DifferentialEvolutionSolver
 from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -46,7 +57,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import loguru
 
 loguru.logger.remove()
-loguru.logger.add(sys.stderr, level="ERROR")
+_ = loguru.logger.add(sys.stderr, level="ERROR")
 
 N_TICKS = 50_000
 EAT_RADIUS_M = 0.0001  # Early exit if worm gets this close (0.1 mm)
@@ -71,7 +82,7 @@ TEST_ENVIRONMENTS = [
 ]
 
 
-def x_to_config(x: np.ndarray) -> dict:
+def x_to_config(x: np.ndarray) -> dict[str, Any]:
     """Map normalized [0,1]^d vector to evol_config."""
     # Bounds for each parameter
     # 0: K_STRESS_SYN [1000, 8000]
@@ -87,7 +98,7 @@ def x_to_config(x: np.ndarray) -> dict:
     # 10: motor w_tref M1 [-25, -5]
     # 11: sensory w_tref M0 [8, 25]
     # 12: sensory w_tref M1 [-12, -3]
-    cfg: dict = {
+    cfg: dict[str, Any] = {
         "K_STRESS_SYN": 1000 + 7000 * x[0],
         "K_REWARD_SYN": 1000 + 7000 * x[1],
         "K_VOL_STRESS": 500 + 3500 * x[2],
@@ -116,38 +127,55 @@ _DE_STATE_VERSION = 1
 _DE_STRATEGY = "best1bin"
 _DE_MUTATION = (0.5, 1.0)
 _DE_RECOMBINATION = 0.7
-_DE_ATOL = 0.0
+_DE_ATOL = 0
 _DE_TOL = 0.0
 _DE_MACHEPS = float(np.finfo(np.float64).eps)
 
 
-def _rng_to_json(rng: object) -> dict:
+def _rng_to_json(rng: np.random.RandomState | np.random.Generator) -> dict[str, Any]:
     """Serialize numpy RNG used by SciPy DE (RandomState or Generator)."""
     if isinstance(rng, np.random.RandomState):
-        st = rng.get_state()
+        raw_state = rng.get_state()
+        st = cast(
+            tuple[str, np.ndarray, int, int, float],
+            cast(object, raw_state),
+        )
         return {
             "kind": "RandomState",
-            "state": [st[0], st[1].tolist(), int(st[2]), int(st[3]), float(st[4])],
+            "state": [
+                st[0],
+                st[1].tolist(),
+                int(st[2]),
+                int(st[3]),
+                float(st[4]),
+            ],
         }
-    if isinstance(rng, np.random.Generator):
-        return {"kind": "Generator", "state": rng.bit_generator.state}
-    raise TypeError(f"Unsupported RNG type: {type(rng)!r}")
+    assert isinstance(rng, np.random.Generator)
+    return {"kind": "Generator", "state": rng.bit_generator.state}
 
 
-def _rng_from_json(data: dict) -> np.random.RandomState | np.random.Generator:
+def _rng_from_json(data: dict[str, Any]) -> np.random.RandomState | np.random.Generator:
     if data.get("kind") == "RandomState":
-        st = data["state"]
+        st = cast(list[Any], data["state"])
         rs = np.random.RandomState()
-        rs.set_state((st[0], np.asarray(st[1], dtype=np.uint32), st[2], st[3], st[4]))
+        rs.set_state(
+            (
+                str(st[0]),
+                np.asarray(st[1], dtype=np.uint32),
+                int(st[2]),
+                int(st[3]),
+                float(st[4]),
+            )
+        )
         return rs
     if data.get("kind") == "Generator":
         g = np.random.Generator(np.random.PCG64())
-        g.bit_generator.state = data["state"]
+        g.bit_generator.state = cast(dict[str, Any], data["state"])
         return g
     raise ValueError(f"Unknown RNG kind in checkpoint: {data.get('kind')!r}")
 
 
-def _de_state_from_solver(solver: object) -> dict:
+def _de_state_from_solver(solver: DifferentialEvolutionSolver) -> dict[str, Any]:
     """Snapshot SciPy DifferentialEvolutionSolver for JSON (population in physical space)."""
     pop_phys = np.asarray(solver._scale_parameters(solver.population), dtype=float)
     return {
@@ -164,7 +192,7 @@ def _de_state_from_solver(solver: object) -> dict:
     }
 
 
-def _validate_de_state(state: dict, *, n_dim: int) -> None:
+def _validate_de_state(state: dict[str, Any], *, n_dim: int) -> None:
     if int(state.get("version", 0)) != _DE_STATE_VERSION:
         raise ValueError(f"Unsupported de_state version (got {state.get('version')!r})")
     if state.get("strategy") != _DE_STRATEGY:
@@ -176,13 +204,15 @@ def _validate_de_state(state: dict, *, n_dim: int) -> None:
         raise ValueError("de_state population has wrong shape")
 
 
-def _apply_de_state_post_init(solver: object, state: dict) -> None:
+def _apply_de_state_post_init(
+    solver: DifferentialEvolutionSolver, state: dict[str, Any]
+) -> None:
     """After DifferentialEvolutionSolver(..., init=population_phys), restore energies/nfev/RNG."""
     energies = np.asarray(state["population_energies"], dtype=float)
     if energies.shape != (solver.num_population_members,):
         raise ValueError(
             f"population_energies length {energies.shape[0]} != "
-            f"solver population {solver.num_population_members}"
+            + f"solver population {solver.num_population_members}"
         )
     solver.population_energies[:] = energies
     solver._nfev = int(state["nfev"])
@@ -198,22 +228,22 @@ def _apply_de_state_post_init(solver: object, state: dict) -> None:
 
 
 def _de_solve_continue(
-    solver: object,
+    solver: DifferentialEvolutionSolver,
     *,
     maxiter: int,
     gen_done: int,
-    callback: object | None,
+    callback: Callable[[OptimizeResult], bool | None] | None,
     disp: bool,
-) -> object:
+) -> OptimizeResult:
     """Run up to maxiter more DE generations (solver already has finite energies)."""
-    from scipy.optimize._optimize import _status_message
+    from scipy.optimize._optimize import _status_message  # type: ignore[reportPrivateUsage]
 
     last_nit = 0
     warning_flag = False
     status_message = "in progress"
     for nit in range(1, maxiter + 1):
         try:
-            next(solver)
+            _ = next(solver)
         except StopIteration:
             warning_flag = True
             if solver._nfev > solver.maxfun:
@@ -258,25 +288,24 @@ def _load_resume_plan(
     resume_path: Path,
     *,
     extra_generations: int | None,
-) -> dict:
+) -> dict[str, Any]:
     """Parse checkpoint and compute resume segment. Returns dict with keys:
     best_x, gen_done, n_evals, elapsed_sec, evol_args, maxiter, initial_best_dist, de_state.
     """
     n_dim = 13
     with open(resume_path) as f:
-        ckpt = json.load(f)
+        ckpt = cast(dict[str, Any], json.load(f))
     if "best_x" not in ckpt:
         raise ValueError(f"Resume file {resume_path} has no 'best_x'")
     best_x = np.clip(np.asarray(ckpt["best_x"], dtype=float), 0.0, 1.0)
     if best_x.shape != (n_dim,):
         raise ValueError(f"best_x must have length {n_dim}, got {best_x.shape}")
-    ea = ckpt.get("evol_args")
-    if not isinstance(ea, dict):
+    ea_raw = ckpt.get("evol_args")
+    if not isinstance(ea_raw, dict):
         raise ValueError(
-            f"Resume file {resume_path} has no 'evol_args' object; "
-            "only checkpoints written by this script can be resumed."
+            f"Resume file {resume_path} has no 'evol_args' object; only checkpoints written by this script can be resumed."
         )
-    ea = dict(ea)
+    ea: dict[str, Any] = dict(cast(dict[str, Any], ea_raw))
     for key in ("generations", "population", "ticks", "seed"):
         if key not in ea:
             raise ValueError(f"evol_args missing required key {key!r}")
@@ -285,9 +314,9 @@ def _load_resume_plan(
     raw_de = ckpt.get("de_state")
     if not isinstance(raw_de, dict):
         raise ValueError(
-            f"Checkpoint {resume_path} has no usable 'de_state' (full DE snapshot). "
-            "Only checkpoints written by this version of evolve_food_seeking.py can be resumed."
+            f"Checkpoint {resume_path} has no usable 'de_state' (full DE snapshot). Only checkpoints written by this version of evolve_food_seeking.py can be resumed."
         )
+    de_state: dict[str, Any] = cast(dict[str, Any], raw_de)
     if gen_done > planned_total:
         raise ValueError(
             f"Checkpoint generation {gen_done} exceeds evol_args.generations {planned_total}"
@@ -302,8 +331,7 @@ def _load_resume_plan(
         maxiter = base_remaining
     if maxiter <= 0:
         raise ValueError(
-            f"No generations left to run (completed {gen_done}/{planned_total}). "
-            "Pass --extra-generations N to run N more generations beyond the original target."
+            f"No generations left to run (completed {gen_done}/{planned_total}). Pass --extra-generations N to run N more generations beyond the original target."
         )
     n_evals = int(ckpt.get("n_evals", 0))
     elapsed_sec = float(ckpt.get("elapsed_min", 0.0)) * 60.0
@@ -317,7 +345,7 @@ def _load_resume_plan(
         "evol_args": ea,
         "maxiter": maxiter,
         "initial_best_dist": initial_best_dist,
-        "de_state": raw_de,
+        "de_state": de_state,
     }
 
 
@@ -328,14 +356,14 @@ def _save_checkpoint(
     n_evals: int,
     elapsed: float,
     out_path: Path,
-    evol_args: dict | None = None,
-    de_state: dict | None = None,
+    evol_args: dict[str, Any] | None = None,
+    de_state: dict[str, Any] | None = None,
 ) -> None:
     """Atomically save best config + metadata + optional full DE state."""
     if best_x is None:
         return
     best_config = x_to_config(np.clip(best_x, 0, 1))
-    payload: dict = {
+    payload: dict[str, Any] = {
         "config": best_config,
         "best_config": best_config,
         "best_x": best_x.tolist(),
@@ -351,7 +379,7 @@ def _save_checkpoint(
     tmp = out_path.with_suffix(out_path.suffix + ".tmp")
     with open(tmp, "w") as f:
         json.dump(payload, f, indent=2)
-    tmp.rename(out_path)
+    _ = tmp.rename(out_path)
 
 
 def evaluate(
@@ -373,7 +401,7 @@ def evaluate(
     if evol_trace.is_enabled():
         evol_trace.reset_accumulators()
 
-    evol_config = x_to_config(np.clip(x, 0, 1))
+    evol_config: dict[str, Any] = x_to_config(np.clip(x, 0, 1))
     min_distances: list[float] = []
 
     for env_idx, food_pos in enumerate(TEST_ENVIRONMENTS):
@@ -393,7 +421,7 @@ def evaluate(
             return 1e6  # Penalize failed builds (large distance)
 
         with evol_trace.span("eval_reset"):
-            loop.reset(nervous_rebuild=False)
+            _ = loop.reset(nervous_rebuild=False)
         food = np.array(food_pos)
         min_dist = float("inf")
 
@@ -418,13 +446,13 @@ def evaluate(
 
         if low_memory:
             del engine, loop
-            gc.collect()
+            _ = gc.collect()
 
     if eval_counter is not None:
         eval_counter[0] += 1
 
     if low_memory:
-        gc.collect()
+        _ = gc.collect()
 
     if evol_trace.is_enabled():
         evol_trace.flush_json_line(
@@ -463,63 +491,62 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="Evolve neuromod params for food-seeking"
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--generations",
         type=int,
         default=None,
         help="Fresh run only: total DE generations (default: 30). Incompatible with --resume.",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--extra-generations",
         type=int,
         default=None,
         metavar="N",
-        help="With --resume only: run N generations beyond the remaining budget "
-        "(extends evol_args.generations).",
+        help="With --resume only: run N generations beyond the remaining budget (extends evol_args.generations).",
     )
-    parser.add_argument("--population", type=int, default=20)
-    parser.add_argument("--ticks", type=int, default=N_TICKS)
-    parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument(
+    _ = parser.add_argument("--population", type=int, default=20)
+    _ = parser.add_argument("--ticks", type=int, default=N_TICKS)
+    _ = parser.add_argument("--seed", type=int, default=42)
+    _ = parser.add_argument(
         "--verbose", action="store_true", help="Scipy DE verbose output"
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--quiet", action="store_true", help="Suppress progress logging"
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--robust",
         action="store_true",
         help="Score on worst environment (max min_dist) instead of average",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--resume",
         type=str,
         default=None,
         help="Resume from checkpoint JSON (must include de_state written by this script).",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--checkpoint",
         type=str,
         default="evolved_food_seeking_checkpoint.json",
         help="Path for periodic checkpoints (default: evolved_food_seeking_checkpoint.json)",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--checkpoint-every",
         type=int,
         default=1,
         help="Save checkpoint every N evals (default: 1 = every eval)",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--low-memory",
         action="store_true",
         help="Keep RAM flat for Raspberry Pi / 8GB: gc after each eval, min history",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--measure-memory",
         action="store_true",
         help="Print peak RSS (MB) each generation",
     )
-    parser.add_argument(
+    _ = parser.add_argument(
         "--full-settle",
         action="store_true",
         help="Use full MuJoCo gravity settle (2000 steps) like run_c_elegans; default is faster evolution settle",
@@ -531,8 +558,7 @@ def main() -> None:
         sys.exit(1)
     if args.resume and args.generations is not None:
         print(
-            "error: do not pass --generations with --resume; "
-            "use --extra-generations to extend the run",
+            "error: do not pass --generations with --resume; use --extra-generations to extend the run",
             file=sys.stderr,
         )
         sys.exit(1)
@@ -540,8 +566,9 @@ def main() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     checkpoint_path = _resolve_project_path(repo_root, args.checkpoint)
 
-    resume_plan: dict | None = None
+    resume_plan: dict[str, Any] | None = None
     de_maxiter: int
+    best_state: dict[str, Any]
 
     if args.resume:
         resume_path = _resolve_project_path(repo_root, args.resume)
@@ -555,7 +582,7 @@ def main() -> None:
         except (OSError, ValueError, json.JSONDecodeError) as e:
             print(f"error: cannot resume from {resume_path}: {e}", file=sys.stderr)
             sys.exit(1)
-        evol_args = resume_plan["evol_args"]
+        evol_args = cast(dict[str, Any], resume_plan["evol_args"])
         de_maxiter = resume_plan["maxiter"]
         loaded_x0 = resume_plan["best_x"]
         args.ticks = int(evol_args["ticks"])
@@ -563,18 +590,18 @@ def main() -> None:
         args.robust = bool(evol_args.get("robust", False))
         args.seed = int(evol_args["seed"])
         args.generations = int(evol_args["generations"])
-        eval_counter: list[int] = [resume_plan["n_evals"]]
-        gen_counter: list[int] = [resume_plan["gen_done"]]
+        eval_counter: list[int] = [int(resume_plan["n_evals"])]
+        gen_counter: list[int] = [int(resume_plan["gen_done"])]
         start_time = time.perf_counter() - resume_plan["elapsed_sec"]
-        best_state: dict = {
-            "best_dist": resume_plan["initial_best_dist"],
+        best_state = {
+            "best_dist": float(resume_plan["initial_best_dist"]),
             "best_x": loaded_x0.copy(),
         }
     else:
         if args.generations is None:
             args.generations = 30
         de_maxiter = args.generations
-        evol_args = {
+        evol_args: dict[str, Any] = {
             "generations": args.generations,
             "population": args.population,
             "ticks": args.ticks,
@@ -584,7 +611,10 @@ def main() -> None:
         eval_counter = [0]
         gen_counter = [0]
         start_time = time.perf_counter()
-        best_state = {"best_dist": np.inf, "best_x": None}
+        best_state = {
+            "best_dist": float(np.inf),
+            "best_x": None,
+        }
 
     np.random.seed(args.seed)
     n_dim = 13
@@ -595,8 +625,7 @@ def main() -> None:
         print("=" * 60)
         if args.resume:
             print(
-                f"  RESUME from gen {gen_counter[0]}/{args.generations} "
-                f"({de_maxiter} generation(s) this segment)"
+                f"  RESUME from gen {gen_counter[0]}/{args.generations} ({de_maxiter} generation(s) this segment)"
             )
         print(
             f"  generations(target)={args.generations}  population={args.population}  ticks={args.ticks}"
@@ -637,9 +666,9 @@ def main() -> None:
 
     # Mutable state for callback (runs in main process)
     _abort_requested = [False]  # Mutable for signal handler
-    solver_holder: list[object | None] = [None]
+    solver_holder: list[DifferentialEvolutionSolver | None] = [None]
 
-    def _on_sigint(signum, frame):
+    def _on_sigint(_signum: int, _frame: types.FrameType | None) -> None:
         _abort_requested[0] = True
         if best_state["best_x"] is not None:
             elapsed = time.perf_counter() - start_time
@@ -662,9 +691,9 @@ def main() -> None:
             tqdm.write(f"\n[Ctrl+C] Checkpoint saved to {checkpoint_path}")
         sys.exit(130)
 
-    signal.signal(signal.SIGINT, _on_sigint)
+    _ = signal.signal(signal.SIGINT, _on_sigint)
 
-    def _progress_callback(intermediate_result):
+    def _progress_callback(intermediate_result: OptimizeResult) -> None:
         gen_counter[0] = int(intermediate_result.nit)
         dist = intermediate_result.fun
         if dist < best_state["best_dist"]:
@@ -691,7 +720,7 @@ def main() -> None:
                 de_state=de_snap,
             )
         if not args.quiet:
-            pbar.update(args.population)
+            _ = pbar.update(args.population)
             postfix = {"best_dist": f"{best_state['best_dist']*1000:.2f}mm"}
             if args.measure_memory:
                 postfix["RSS"] = f"{_rss_mb():.0f}MB"
@@ -703,16 +732,14 @@ def main() -> None:
             evals_per_sec = n_evals / elapsed if elapsed > 0 else 0
             mem = f" | peak {_rss_mb():.0f}MB" if args.measure_memory else ""
             tqdm.write(
-                f"  gen {gen_counter[0]:3d}/{args.generations} | "
-                f"evals {n_evals:5d} | best {best_d*1000:.2f}mm | "
-                f"conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s{mem}"
+                f"  gen {gen_counter[0]:3d}/{args.generations} | evals {n_evals:5d} | best {best_d*1000:.2f}mm | conv {convergence:.3f} | {elapsed/60:.1f}m | {evals_per_sec:.1f} ev/s{mem}"
             )
-
-    from scipy.optimize._differentialevolution import DifferentialEvolutionSolver
 
     bounds = [(0.0, 1.0)] * n_dim
 
-    def _open_solver(*, attach_callback: bool = True, **kw):
+    def _open_solver(
+        *, attach_callback: bool = True, **kw: Any
+    ) -> DifferentialEvolutionSolver:
         return DifferentialEvolutionSolver(
             objective,
             bounds,
@@ -726,7 +753,7 @@ def main() -> None:
             rng=args.seed,
             polish=False,
             callback=_progress_callback if attach_callback else None,
-            disp=args.verbose,
+            disp=bool(args.verbose),
             init=kw.get("init", "latinhypercube"),
             atol=_DE_ATOL,
             updating="deferred",
@@ -735,8 +762,9 @@ def main() -> None:
             x0=kw.get("x0", None),
         )
 
+    result: OptimizeResult
     if resume_plan is not None:
-        st = resume_plan["de_state"]
+        st = cast(dict[str, Any], resume_plan["de_state"])
         _validate_de_state(st, n_dim=n_dim)
         pop_init = np.asarray(st["population"], dtype=np.float64)
         with _open_solver(attach_callback=False, init=pop_init) as solver:
@@ -745,9 +773,9 @@ def main() -> None:
             result = _de_solve_continue(
                 solver,
                 maxiter=de_maxiter,
-                gen_done=resume_plan["gen_done"],
+                gen_done=int(resume_plan["gen_done"]),
                 callback=_progress_callback,
-                disp=args.verbose,
+                disp=bool(args.verbose),
             )
     else:
         with _open_solver() as solver:
@@ -758,9 +786,12 @@ def main() -> None:
     if not args.quiet:
         pbar.close()
 
-    best_x = np.clip(result.x, 0, 1)
+    x_out = np.asarray(cast(object, result.x), dtype=float)
+    best_x = np.clip(x_out, 0.0, 1.0)
     best_config = x_to_config(best_x)
-    best_distance = result.fun  # DE minimized distance
+    best_distance = float(
+        np.asarray(cast(object, result.fun), dtype=float).reshape(-1)[0]
+    )
     total_time = time.perf_counter() - start_time
 
     print("\n" + "=" * 60)

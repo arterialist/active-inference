@@ -60,6 +60,15 @@ class BaseEnvironment(ABC):
         Returns an (H, W, 3) uint8 RGB array or None if headless.
         """
 
+    def post_body_step(self, body_state: dict[str, Any]) -> None:
+        """
+        Called after the body integrates motor outputs for this tick.
+
+        Use for effects that depend on the end-of-step pose (for example food
+        contact) while :meth:`step` still receives the pre-step body state for
+        sensory observations.
+        """
+
     def get_chemical_concentration(
         self, molecule: str, position: np.ndarray
     ) -> float:

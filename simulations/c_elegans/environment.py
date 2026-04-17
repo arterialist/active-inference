@@ -130,15 +130,23 @@ class AgarPlateEnvironment(BaseEnvironment):
         else:
             self._current_head_pos = np.array(head_pos)
 
-        # Remove food when worm head touches it
-        pos = self._current_head_pos
+        return self._build_observation()
+
+    def post_body_step(self, body_state: dict[str, Any]) -> None:
+        """Remove food when the head (end-of-step pose) is within reach on the agar plane."""
+        head_pos = body_state.get("head_position", np.zeros(3))
+        pos = (
+            head_pos.copy()
+            if isinstance(head_pos, np.ndarray)
+            else np.array(head_pos, dtype=float)
+        )
+        # In-plane distance only: food lives on z≈0 and top-down views match xy; using
+        # full 3D norm made grazing misses common when the nose pitches slightly.
         self._food_items = [
             (fpos, srcs)
             for fpos, srcs in self._food_items
-            if float(np.linalg.norm(pos - fpos)) > FOOD_CONSUMPTION_RADIUS_M
+            if float(np.linalg.norm(pos[:2] - fpos[:2])) > FOOD_CONSUMPTION_RADIUS_M
         ]
-
-        return self._build_observation()
 
     def render(self) -> np.ndarray | None:
         """

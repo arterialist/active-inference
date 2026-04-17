@@ -131,6 +131,7 @@ class SimulationEngine:
 
         # --- apply muscle activations to physics body ---
         body_state = self.body.step(motor_outputs)
+        self.environment.post_body_step(self._body_state_as_dict(body_state))
 
         self._tick += 1
         elapsed = (time.perf_counter_ns() - t0) / 1e6

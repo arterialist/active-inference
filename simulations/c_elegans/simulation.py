@@ -94,6 +94,8 @@ class CElegansEngine(SimulationEngine):
         ctrl = NeuromuscularJunction.to_ctrl(motor_outputs)
         with evol_trace.span("tick_mujoco"):
             body_state = self.body.step(ctrl)
+        with evol_trace.span("tick_env_post"):
+            self.environment.post_body_step(self._body_state_as_dict(body_state))
 
         self._tick += 1
         elapsed = (time.perf_counter_ns() - t0) / 1e6

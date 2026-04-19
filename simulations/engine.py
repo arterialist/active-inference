@@ -47,6 +47,9 @@ class SimulationEngine:
                          How many PAULA ticks to run per single physics step.
                          C. elegans neurons operate on ~ms timescales while
                          MuJoCo steps at ~2 ms; a ratio of 1-4 is sensible.
+        real_ms_per_neural_tick:
+                         If > 0, wall-clock milliseconds to sleep after each
+                         neural sub-tick (0 = no added delay).
         on_step:         Optional callback invoked after every step.
     """
 
@@ -59,6 +62,7 @@ class SimulationEngine:
         on_step: StepCallback | None = None,
         record_neural_states: bool = True,
         max_history: int = 200,
+        real_ms_per_neural_tick: float = 0.0,
     ):
         self.body = body
         self.environment = environment
@@ -66,6 +70,7 @@ class SimulationEngine:
         self.neural_ticks_per_physics_step = neural_ticks_per_physics_step
         self.on_step = on_step
         self.record_neural_states = record_neural_states
+        self.real_ms_per_neural_tick = float(real_ms_per_neural_tick)
 
         self._tick: int = 0
         self._history: list[SimulationStep] = []
@@ -128,6 +133,8 @@ class SimulationEngine:
                 sensory_inputs,
                 current_tick=self._tick * self.neural_ticks_per_physics_step + sub_tick,
             )
+            if self.real_ms_per_neural_tick > 0.0:
+                time.sleep(self.real_ms_per_neural_tick / 1000.0)
 
         # --- apply muscle activations to physics body ---
         body_state = self.body.step(motor_outputs)

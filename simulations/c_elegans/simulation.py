@@ -46,6 +46,7 @@ class CElegansEngine(SimulationEngine):
         on_step: StepCallback | None = None,
         record_neural_states: bool = True,
         max_history: int = 200,
+        real_ms_per_neural_tick: float = 0.0,
     ):
         super().__init__(
             body=body,
@@ -55,6 +56,7 @@ class CElegansEngine(SimulationEngine):
             on_step=on_step,
             record_neural_states=record_neural_states,
             max_history=max_history,
+            real_ms_per_neural_tick=real_ms_per_neural_tick,
         )
         self._sensor_encoder = sensor_encoder
 
@@ -89,6 +91,8 @@ class CElegansEngine(SimulationEngine):
                         self._tick * self.neural_ticks_per_physics_step + sub_tick
                     ),
                 )
+                if self.real_ms_per_neural_tick > 0.0:
+                    time.sleep(self.real_ms_per_neural_tick / 1000.0)
 
         # Translate from nervous-system naming to MuJoCo actuator naming
         ctrl = NeuromuscularJunction.to_ctrl(motor_outputs)

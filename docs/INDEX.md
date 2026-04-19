@@ -21,7 +21,7 @@ A framework for simulating artificial life through active inference. Organisms a
 | 3 | [Core Simulation Engine](engine/simulation-engine.md) | SimulationEngine, SensorimotorLoop, interfaces |
 | 4 | [PAULA Neuron Model](paula/neuron-parameters.md) | Parameters, synapses, state, tick(), network, ablation |
 | 5 | [Connectome Pipeline](connectome/connectome-data.md) | ConnectomeData, build_paula_network, C. elegans loader |
-| 6 | [C. elegans Implementation](c-elegans/overview.md) | Body, environment, sensors, muscles, engine, viewer |
+| 6 | [C. elegans Implementation](c-elegans/overview.md) | Body, environment, sensors, muscles, engine, viewer, [lab parity](c-elegans/lab-parity.md) |
 | 7 | [Neuromodulation System](neuromodulation/overview.md) | ALERM M0/M1, dual-EMA, volume transmission, tonic drives |
 | 8 | [Motor Decoding](motor-decoding/overview.md) | Segment map, graded output, E/I, reciprocal inhibition |
 | 9 | [Evolutionary Optimisation](evolution/algorithm.md) | DE algorithm, parameter space, fitness, output |

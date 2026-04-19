@@ -35,8 +35,10 @@
 | Constant | Value | Description |
 |----------|-------|-------------|
 | `CHEM_CONCENTRATION_MAX` | 1.0 | Normalisation ceiling |
-| `JOINT_ANGLE_MAX_RAD` | 1.2 | ~70° max bend |
-| `MUSCLE_FILTER_ALPHA` | 0.3 | Low-pass filter for muscle activation |
+| `JOINT_ANGLE_MAX_RAD` | 0.45 | ~26° — lab-tuned hinge limit; also used to normalise stretch receptors and motor proprioception (`CElegansBody` applies ±this to yaw hinges at init/reset) |
+| `MUSCLE_FILTER_ALPHA` | 0.16 | Low-pass smoothing on muscle activations (lab-tuned; overridable per runtime via `CElegansNervousSystem`) |
+
+These values are tuned together with the virtual lab gait pipeline (`agi-research/tuning/notes.md`). Older literature in this repo may still cite ~1.2 rad (~70°) as a *biological* upper bend; the **simulation** uses the tighter range for stable crawling on the MuJoCo substrate.
 
 ## Neuron Name Lists
 

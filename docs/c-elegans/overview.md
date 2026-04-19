@@ -15,6 +15,7 @@ The first organism: *Caenorhabditis elegans* — 302 neurons, Cook et al. 2019 c
 | Neuromuscular junction | `c_elegans/muscles.py` | [neuromuscular-junction](neuromuscular-junction.md) |
 | Engine & factory | `c_elegans/simulation.py` | [engine-factory](engine-factory.md) |
 | Interactive viewer | `c_elegans/interactive_viewer.py` | [interactive-viewer](interactive-viewer.md) |
+| Lab vs demo parity | — | [lab-parity](lab-parity.md) |
 
 ## Assembly Order
 

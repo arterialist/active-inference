@@ -647,8 +647,8 @@ Result: **302 neurons**, **~3,709 chemical synapses**, **~1,092 gap junctions**.
 | Constant | Value | Description |
 |----------|-------|-------------|
 | `CHEM_CONCENTRATION_MAX` | 1.0 | Normalisation ceiling |
-| `JOINT_ANGLE_MAX_RAD` | 1.2 | ~70° max bend |
-| `MUSCLE_FILTER_ALPHA` | 0.3 | Low-pass filter for muscle activation |
+| `JOINT_ANGLE_MAX_RAD` | 0.45 | ~26° — lab-tuned hinge / normalisation limit |
+| `MUSCLE_FILTER_ALPHA` | 0.16 | Low-pass filter for muscle activation (default on `CElegansNervousSystem`) |
 
 **Neuron name lists:**
 
@@ -673,8 +673,8 @@ Result: **302 neurons**, **~3,709 chemical synapses**, **~1,092 gap junctions**.
 - 13 capsule segments (`seg0` = head at origin, `seg12` = tail at ~+1 m in model space).
 - Each inter-segment joint has two DOF: pitch (y-axis, dorsal-ventral) and yaw (z-axis, left-right).
 - 48 actuators: 4 muscle quadrants × 12 inter-segment joints. Named `muscle_seg{N}_{QUAD}`.
-- Contact dynamics: low friction floor (`0.005`) models agar surface crawling.
-- Physics: `implicitfast` integrator, gravity -5 m/s² (scaled), fluid density 4000, viscosity 0.1.
+- Floor plane uses low default friction; **worm–floor** pairs use **condim=6** anisotropic friction `[0.01, 1.2, …]` for crawling.
+- Physics (`<option>`): `implicitfast`, gravity **(0, 0, −9.8)**, **`density=0`** (no buoyancy), **`viscosity=0.3`**. See [MuJoCo body](c-elegans/mujoco-body.md) and [lab parity](c-elegans/lab-parity.md).
 
 **Sensor sites:**
 
@@ -692,7 +692,7 @@ Result: **302 neurons**, **~3,709 chemical synapses**, **~1,092 gap junctions**.
 |--------|-------------|
 | `reset()` | Resets to default pose, runs 2000 settle steps under gravity |
 | `step(muscle_activations)` | Applies actuator controls, steps physics by `CONTROL_DECIMATION` substeps |
-| `get_state()` | Reads position (biological metres via `_SCALE_MODEL_TO_BIO`), orientation, joint angles/velocities, contact forces, head position |
+| `get_state()` | Reads **mass-weighted COM** as `position` (biological metres via `_SCALE_MODEL_TO_BIO`), orientation, joint angles/velocities, contact forces, segment poses |
 | `get_body_shape()` | Returns (13, 3) array of segment centres in biological metres |
 | `render(camera)` | Returns RGB frame from named camera |
 
@@ -767,7 +767,7 @@ C(p) = max_concentration × exp(−decay_constant × ‖p − source‖)
 **Proprioceptive encoding** — two sources:
 
 1. **Stretch receptors** (PVDL, PVDR at segment 10; DVA at segment 6): `|angle| / JOINT_ANGLE_MAX_RAD`, clipped to [0, 1].
-2. **Motor proprioception** (B-type motor neurons): segment curvature at the neuron's anatomical position, keyed as `_mpr_{neuron_name}`. Based on Wen et al. 2012.
+2. **Motor proprioception** (B-type motor neurons): **signed**, **non-local** yaw curvature (joint several segments anterior; see `SensorEncoder`), keyed `_mpr_{neuron_name}`. Wen et al. 2012-style; tuned with the virtual lab.
 
 ### 6.5 Neuromuscular Junction
 
@@ -926,7 +926,7 @@ Three tonic currents are injected each tick to maintain biologically realistic b
 
 | Target | Parameter | Default | Description |
 |--------|-----------|---------|-------------|
-| AVBL, AVBR | `_TONIC_FWD_CMD` | 0.25 | Depolarising current to command interneurons |
+| AVBL, AVBR | `_TONIC_FWD_CMD` | 0.30 | Depolarising current to command interneurons |
 | DB*, VB* neurons | `_TONIC_FWD_MOTOR` | 0.0 | Depolarising current to B-type motor neurons |
 
 **OFF-cell tonic** (`_inject_off_cell_tonic`): Models spontaneous firing of AWC/ASER in the absence of stimulus.
@@ -935,7 +935,9 @@ Three tonic currents are injected each tick to maintain biologically realistic b
 |--------|-----------|---------|
 | AWCL, AWCR, ASER | `_TONIC_OFF_CELL` | 0.15 |
 
-**Motor proprioception** (`_inject_motor_proprioception`): B-type motor neurons receive curvature feedback from the sensor encoder (keys prefixed `_mpr_`). Gain: `_PROPRIO_MOTOR_GAIN = 0.08`.
+**Motor proprioception** (`_inject_motor_proprioception`): B-type motor neurons receive curvature feedback from the sensor encoder (keys prefixed `_mpr_`). Gain: `_PROPRIO_MOTOR_GAIN` (default **0.10**), scaled along the body by `_PROPRIO_TAIL_DECAY` (default **0.5**).
+
+**Head CPG** (`_inject_head_cpg`): Sinusoidal anti-phase drive on `DB1` / `VB1` at `_HEAD_CPG_FREQ_HZ` (**0.4** Hz) and `_HEAD_CPG_AMP` (**0.08**) to seed undulation when the connectome lacks a full head oscillator circuit (virtual lab exposes these as live parameters).
 
 ### 7.6 Gain Constants
 

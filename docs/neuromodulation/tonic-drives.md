@@ -10,7 +10,7 @@ Models AVB↔B-motor gap junction coupling.
 
 | Target | Parameter | Default | Evolved | Description |
 |--------|-----------|---------|---------|-------------|
-| AVBL, AVBR | `_TONIC_FWD_CMD` | 0.25 | 0.262 | Depolarising current to command interneurons |
+| AVBL, AVBR | `_TONIC_FWD_CMD` | 0.30 | 0.262 | Depolarising current to command interneurons |
 | DB*, VB* neurons | `_TONIC_FWD_MOTOR` | 0.0 | 0.098 | Depolarising current to B-type motor neurons |
 
 The forward command interneurons (AVB) maintain a tonic depolarisation that biases the worm toward forward locomotion, reflecting *C. elegans*' ~80% forward bias.
@@ -31,9 +31,9 @@ B-type motor neurons receive curvature feedback from the sensor encoder (keys pr
 
 | Parameter | Value |
 |-----------|-------|
-| `_PROPRIO_MOTOR_GAIN` | 0.08 |
+| `_PROPRIO_MOTOR_GAIN` | 0.10 (default; scaled by `_PROPRIO_TAIL_DECAY` along the body) |
 
-Implements the Wen et al. 2012 proprioceptive feedback mechanism: body curvature at each motor neuron's anatomical position feeds back to that neuron, creating a distributed body-state signal without dedicated proprioceptor neurons.
+Implements a **Wen et al. 2012-style** proprioceptive loop: **signed** yaw curvature from a joint **anterior** of the motor neuron’s segment (non-local offset in `SensorEncoder`) feeds DB/VB, avoiding local positive-feedback locks. See [sensor encoder](../c-elegans/sensor-encoder.md).
 
 ## See Also
 

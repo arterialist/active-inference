@@ -30,7 +30,7 @@
 Two sources:
 
 1. **Stretch receptors** (PVDL, PVDR at segment 10; DVA at segment 6): `|angle| / JOINT_ANGLE_MAX_RAD`, clipped to [0, 1].
-2. **Motor proprioception** (B-type motor neurons): segment curvature at neuron's anatomical position, keyed as `_mpr_{neuron_name}` (Wen et al. 2012).
+2. **Motor proprioception** (B-type motor neurons DB/VB): **signed** yaw curvature from a joint **several segments anterior** of the motor neuron’s mapped segment (`SensorEncoder._PROPRIO_ANT_OFFSET`, currently **4**), normalised with `tanh` against `JOINT_ANGLE_MAX_RAD`. Keys are `_mpr_{neuron_name}`. This non-local, alternating DB/VB drive matches the Wen et al. 2012-style coupling used in the virtual lab (avoids local positive-feedback locking).
 
 ## See Also
 

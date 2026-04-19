@@ -337,7 +337,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # toward forward locomotion (~80% of time). The Cook et al. connectome
     # over-represents chemical synapses onto AVA, under-representing the
     # electrical coupling that maintains the forward state.
-    _TONIC_FWD_CMD: float = 0.25
+    _TONIC_FWD_CMD: float = 0.30
     _TONIC_FWD_MOTOR: float = 0.0
     _FWD_CMD_NAMES: set[str] = {"AVBL", "AVBR"}
     _FWD_MOTOR_PREFIXES: tuple[str, ...] = ("DB", "VB")
@@ -349,7 +349,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     _TONIC_OFF_CELL: float = 0.15  # tonic S baseline for OFF-cell firing
 
     # B-type motor neuron proprioception gain (Wen et al. 2012).
-    _PROPRIO_MOTOR_GAIN: float = 0.08
+    _PROPRIO_MOTOR_GAIN: float = 0.10
 
     # Anterior→posterior taper on the proprioceptive gain. With a
     # uniform gain every segment amplifies its own bend through the
@@ -359,7 +359,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # posterior passively follows and doesn't lock. 0.0 disables the
     # taper; 1.0 means the last motor neuron receives no
     # proprioceptive drive.
-    _PROPRIO_TAIL_DECAY: float = 0.7
+    _PROPRIO_TAIL_DECAY: float = 0.5
 
     # Head central pattern generator (CPG).
     # Real C. elegans relies on a head rhythm circuit (RIM/RMD/SMD/AVB
@@ -372,10 +372,10 @@ class CElegansNervousSystem(BaseNervousSystem):
     # We inject a sinusoidal current into the anterior-most DB/VB
     # neurons in anti-phase. The rest of the chain picks up this
     # rhythm through the signed proprioceptive stretch reflex
-    # (MOTOR_PROPRIO offset -2), producing a posterior-traveling wave
+    # (MOTOR_PROPRIO anterior offset), producing a posterior-traveling wave
     # without requiring the full rhythm circuit.
-    _HEAD_CPG_FREQ_HZ: float = 0.8
-    _HEAD_CPG_AMP: float = 0.35
+    _HEAD_CPG_FREQ_HZ: float = 0.4
+    _HEAD_CPG_AMP: float = 0.08
     _HEAD_CPG_TARGETS: tuple[str, ...] = ("DB1", "VB1")
     _NEURON_TICK_DT: float = 0.002  # seconds/tick (matches NEURAL_TICKS_PER_PHYSICS_STEP=1 × MuJoCo 2ms)
 

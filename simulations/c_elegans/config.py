@@ -119,13 +119,13 @@ LOCOMOTION_INTERNEURONS = [
 CHEM_CONCENTRATION_MAX = 1.0      # normalisation maximum
 
 # Proprioception: joint angle range in radians
-JOINT_ANGLE_MAX_RAD = 1.2         # ~70° max bend
+JOINT_ANGLE_MAX_RAD = 0.45        # tuned with lab gait (see tuning/notes.md)
 
 # Motor neuron spike rate -> muscle activation
 # A motor neuron firing at 1 spike/tick -> max muscle activation
 SPIKE_RATE_TO_ACTIVATION = 1.0
 # Low-pass filter coefficient for muscle activation smoothing
-MUSCLE_FILTER_ALPHA = 0.3
+MUSCLE_FILTER_ALPHA = 0.16
 
 # Muscle activation -> MuJoCo torque
 # Calibrated so full activation at max torque produces undulatory locomotion

@@ -78,15 +78,31 @@ class SensorEncoder:
     ]
 
     # B-type motor neuron proprioception (Wen et al. 2012).
-    # Each VB/DB neuron senses curvature of the joint anterior to its
-    # body position, enabling posterior wave propagation.
-    # Built from MOTOR_NEURON_POSITIONS: fractional position → segment → anterior joint.
+    #
+    # Real B-motor neurons have processes extending ~2-6 segments
+    # *anteriorly* from the neuron soma and sample stretch non-locally
+    # along that process. The non-locality is architecturally critical:
+    # if DB_N senses joint _at_ segment N, any dorsal bend DB_N produces
+    # feeds right back into DB_N as positive feedback and locks the
+    # segment in a deep curl (the freeze failure mode documented in
+    # tuning/notes.md). Reading a joint 2 segments anterior means DB_N
+    # is driven by the bend of segments N-2/N-1 — which DB_N cannot
+    # directly amplify — so the wave propagates posteriorly without
+    # each segment trapping itself.
+    #
+    # Offset is 4 segments anterior; clipped at 0 for the most anterior
+    # motor neurons so they effectively read the head.  Larger offsets
+    # stretch the emergent wavelength along the body: with offset=2 the
+    # body carried ~2 wavelengths (fragmented wave, lateral slip > 0.6);
+    # offset=4 lengthens the coupling so a single S-wave spans the worm,
+    # matching the ~1 wavelength observed in real C. elegans crawling.
+    _PROPRIO_ANT_OFFSET: int = 4
     MOTOR_PROPRIO: dict[str, int] = {}
     for _name, _frac in MOTOR_NEURON_POSITIONS.items():
         _prefix = _name.rstrip("0123456789")
         if _prefix in ("DB", "VB"):
             _seg = int(_frac * (N_BODY_SEGMENTS - 1))
-            MOTOR_PROPRIO[_name] = max(0, _seg - 1)
+            MOTOR_PROPRIO[_name] = max(0, _seg - _PROPRIO_ANT_OFFSET)
 
     def encode(
         self,
@@ -156,31 +172,39 @@ class SensorEncoder:
     def _encode_proprioception(
         self, body_state: BodyState
     ) -> dict[str, float]:
-        """Encode joint curvature as stretch receptor inputs."""
+        """Encode joint curvature as stretch receptor inputs.
+
+        The MJCF body (see ``body_model.xml``) defines each inter-segment
+        link as a two-axis hinge: ``j{i}{j}_pitch`` (D/V) and
+        ``j{i}{j}_yaw`` (L/R). All 48 body-wall actuators drive **yaw**,
+        so yaw is the locomotion plane. Pitch is heavily damped (2.0 vs
+        0.05) and sits near zero. Reading pitch here gives no feedback;
+        we read yaw so stretch receptors actually see the worm bend.
+
+        This is the ``PROPRIO_MOTOR_GAIN`` path for DVA / PVD interneurons
+        — not the B-type motor loop (see ``_encode_motor_proprioception``).
+        """
         result: dict[str, float] = {}
 
-        # Build a list of pitch angles (dorsal/ventral bending) for all joints
-        pitch_angles = [
+        locomotion_angles = [
             angle
             for jname, angle in body_state.joint_angles.items()
-            if "pitch" in jname
+            if "yaw" in jname
         ]
 
-        if not pitch_angles:
+        if not locomotion_angles:
             for neuron, _ in self.PROPRIO_NEURONS:
                 result[neuron] = 0.0
             return result
 
-        pitch_arr = np.array(pitch_angles)
+        arr = np.array(locomotion_angles)
 
         for neuron, seg_idx in self.PROPRIO_NEURONS:
             if neuron == "DVA":
-                # DVA integrates total body curvature
-                curvature = float(np.mean(np.abs(pitch_arr)))
+                curvature = float(np.mean(np.abs(arr)))
             else:
-                # PLM/PVD-like: local angle at the relevant segment
-                idx = min(seg_idx, len(pitch_arr) - 1)
-                curvature = float(abs(pitch_arr[idx]))
+                idx = min(seg_idx, len(arr) - 1)
+                curvature = float(abs(arr[idx]))
 
             normalised = float(
                 np.clip(curvature / JOINT_ANGLE_MAX_RAD, 0.0, 1.0)
@@ -192,25 +216,52 @@ class SensorEncoder:
     def _encode_motor_proprioception(
         self, body_state: BodyState
     ) -> dict[str, float]:
-        """B-type motor neuron proprioception (Wen et al. 2012).
+        """B-type motor neuron proprioception (Wen et al. 2012 signed).
 
-        Each VB/DB neuron senses curvature of the anterior segment.
-        Prefixed '_mpr_' to distinguish from sensory neuron inputs —
-        these are picked up by _inject_motor_proprioception() in
-        CElegansNervousSystem, not the main sensory loop.
+        Each DB/VB motor neuron senses the *signed* yaw curvature of a
+        joint ~2 segments anterior to its soma (see ``MOTOR_PROPRIO``
+        for offset choice).
+
+        The stretch-receptor convention comes from Wen et al. 2012 Fig 3:
+        when the anterior body bends dorsally (positive yaw in our
+        convention), the VENTRAL side is stretched and its stretch
+        receptor excites the ventral motor neuron VB, so the posterior
+        segment bends ventrally. The chain alternates D/V/D/V segment
+        by segment and produces a propagating S-wave.
+
+        Sign convention here:
+            VB (ventral excitor): fires *more* when the anterior joint
+                is bent dorsally (+yaw).
+            DB (dorsal excitor): fires *more* when the anterior joint
+                is bent ventrally (−yaw).
+
+        The non-locality (reading ~2 segments anterior) keeps each
+        segment from locking onto its own bend; combined with the
+        sign alternation above this reproduces the chain-reflex wave
+        of Wen 2012.
+
+        Output key is ``_mpr_{neuron_name}`` in ``[-1, 1]``; the caller
+        multiplies by ``PROPRIO_MOTOR_GAIN`` and adds to S. The receiver
+        clips at 0 if negative to keep firing rates non-negative.
         """
         result: dict[str, float] = {}
-        pitch_angles = [
+        locomotion_angles = [
             angle
             for jname, angle in body_state.joint_angles.items()
-            if "pitch" in jname
+            if "yaw" in jname
         ]
-        if not pitch_angles:
+        if not locomotion_angles:
             return result
         for neuron_name, joint_idx in self.MOTOR_PROPRIO.items():
-            if joint_idx < len(pitch_angles):
-                curvature = abs(pitch_angles[joint_idx])
-                result[f"_mpr_{neuron_name}"] = float(
-                    np.clip(curvature / JOINT_ANGLE_MAX_RAD, 0.0, 1.0)
-                )
+            if joint_idx >= len(locomotion_angles):
+                continue
+            curvature = locomotion_angles[joint_idx]
+            prefix = neuron_name.rstrip("0123456789")
+            # VB excited by dorsal (+yaw) anterior bend; DB by ventral
+            # (−yaw). This is the alternating stretch reflex that
+            # builds a traveling wave rather than a whole-body curl.
+            sign = -1.0 if prefix == "DB" else 1.0
+            result[f"_mpr_{neuron_name}"] = float(
+                np.tanh(sign * curvature / JOINT_ANGLE_MAX_RAD)
+            )
         return result

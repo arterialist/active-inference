@@ -19,6 +19,7 @@ import numpy as np
 from loguru import logger
 
 from simulations.base_body import BaseBody, BodyState
+from simulations.c_elegans import config as aec
 from simulations.c_elegans.config import N_BODY_SEGMENTS, MUSCLE_QUADRANTS
 
 _MODEL_XML = Path(__file__).parent / "body_model.xml"
@@ -53,6 +54,9 @@ class CElegansBody(BaseBody):
 
         if timestep is not None:
             self._model.opt.timestep = timestep
+
+        # Apply runtime joint-angle limit from config.JOINT_ANGLE_MAX_RAD.
+        self._apply_joint_limits()
 
         self._render_width = render_width
         self._render_height = render_height
@@ -103,6 +107,40 @@ class CElegansBody(BaseBody):
         )
 
     # ------------------------------------------------------------------
+    # Internal helpers
+    # ------------------------------------------------------------------
+
+    def _apply_joint_limits(self) -> None:
+        """Override every hinge joint range with ±JOINT_ANGLE_MAX_RAD.
+
+        body_model.xml hardcodes joint ranges (historically ±1.2 rad), but
+        ``config.JOINT_ANGLE_MAX_RAD`` is the runtime source of truth so the
+        tuning UI can actually restrict body curvature without rewriting XML.
+        Also stiffens the joint-limit constraint (solref/solimp) so the body
+        cannot overshoot by 2-3× the nominal limit under strong muscle drive.
+        """
+        try:
+            max_rad = float(aec.JOINT_ANGLE_MAX_RAD)
+        except Exception:  # noqa: BLE001
+            return
+        # Stiff, well-damped contact constraint so limits behave as hard stops.
+        stiff_solref = np.array([0.005, 1.0])         # 5 ms time constant
+        stiff_solimp = np.array([0.995, 0.9999, 0.001, 0.5, 2.0])
+        n_applied = 0
+        for i in range(self._model.njnt):
+            jtype = int(self._model.jnt_type[i])
+            if jtype == mujoco.mjtJoint.mjJNT_HINGE:
+                self._model.jnt_range[i, 0] = -max_rad
+                self._model.jnt_range[i, 1] = +max_rad
+                self._model.jnt_solref[i] = stiff_solref
+                self._model.jnt_solimp[i] = stiff_solimp
+                n_applied += 1
+        logger.debug(
+            f"CElegansBody: joint limit ±{max_rad:.3f} rad (hard stop) "
+            f"on {n_applied} hinges"
+        )
+
+    # ------------------------------------------------------------------
     # BaseBody interface
     # ------------------------------------------------------------------
 
@@ -114,6 +152,9 @@ class CElegansBody(BaseBody):
         steps until the body rests on the substrate with zero velocity.
         """
         from simulations import evol_trace
+
+        # Re-apply runtime joint-angle limit in case config changed since load
+        self._apply_joint_limits()
 
         with evol_trace.span("reset_body_prep"):
             mujoco.mj_resetData(self._model, self._data)
@@ -155,9 +196,21 @@ class CElegansBody(BaseBody):
         """Read current simulation state into a BodyState."""
         mujoco.mj_forward(self._model, self._data)
 
-        # --- Centre of mass (head segment, biological scale) ---
+        # --- True centre of mass of the full worm (mass-weighted) ---
+        # Previously this was seg0 (head) position, which swings side-to-side
+        # with every head sweep and is not representative of the body's motion
+        # through the environment. Here we average all 13 body segments
+        # weighted by body_mass so CoM reflects actual translation.
         seg0_id = self._body_id.get("seg0", 1)
-        com_model = self._data.xpos[seg0_id].copy()
+        seg_ids = [self._body_id[name] for name in self._body_id
+                   if name.startswith("seg") and name[3:].isdigit()]
+        if seg_ids:
+            seg_ids = sorted(seg_ids)
+            xpos = self._data.xpos[seg_ids]             # (n, 3)
+            mass = self._model.body_mass[seg_ids]        # (n,)
+            com_model = (xpos * mass[:, None]).sum(axis=0) / max(float(mass.sum()), 1e-12)
+        else:
+            com_model = self._data.xpos[seg0_id].copy()
         position = com_model * _SCALE_MODEL_TO_BIO
 
         # --- Orientation (quaternion of head segment) ---

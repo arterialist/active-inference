@@ -81,6 +81,7 @@ class CElegansNervousSystem(BaseNervousSystem):
             "K_OFF_SUPPRESS",
             "TONIC_OFF_CELL",
             "PROPRIO_MOTOR_GAIN",
+            "PROPRIO_TAIL_DECAY",
         ):
             if key in self._evol_config:
                 setattr(self, f"_{key}", self._evol_config[key])
@@ -350,6 +351,34 @@ class CElegansNervousSystem(BaseNervousSystem):
     # B-type motor neuron proprioception gain (Wen et al. 2012).
     _PROPRIO_MOTOR_GAIN: float = 0.08
 
+    # Anterior→posterior taper on the proprioceptive gain. With a
+    # uniform gain every segment amplifies its own bend through the
+    # stretch-reflex chain, so the wave saturates in mid-body and
+    # reflects off the tail as a standing wave. Tapering the gain
+    # toward the tail lets the head drive the wave while the
+    # posterior passively follows and doesn't lock. 0.0 disables the
+    # taper; 1.0 means the last motor neuron receives no
+    # proprioceptive drive.
+    _PROPRIO_TAIL_DECAY: float = 0.7
+
+    # Head central pattern generator (CPG).
+    # Real C. elegans relies on a head rhythm circuit (RIM/RMD/SMD/AVB
+    # oscillatory subnet) to seed the locomotion wave. The simplified
+    # PAULA connectome has no intrinsic oscillator, so the body alone
+    # cannot break symmetry and produces a synchronous whole-body
+    # contraction (verified — every adjacent segment's motor drive
+    # correlated at r>0.5 with 0-lag in muscle_wave analysis).
+    #
+    # We inject a sinusoidal current into the anterior-most DB/VB
+    # neurons in anti-phase. The rest of the chain picks up this
+    # rhythm through the signed proprioceptive stretch reflex
+    # (MOTOR_PROPRIO offset -2), producing a posterior-traveling wave
+    # without requiring the full rhythm circuit.
+    _HEAD_CPG_FREQ_HZ: float = 0.8
+    _HEAD_CPG_AMP: float = 0.35
+    _HEAD_CPG_TARGETS: tuple[str, ...] = ("DB1", "VB1")
+    _NEURON_TICK_DT: float = 0.002  # seconds/tick (matches NEURAL_TICKS_PER_PHYSICS_STEP=1 × MuJoCo 2ms)
+
     def _inject_sensory(
         self, sensory_inputs: dict[str, float], current_tick: int
     ) -> None:
@@ -453,6 +482,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._inject_off_cell_tonic()
         self._inject_motor_proprioception(sensory_inputs)
         self._inject_tonic_forward()
+        self._inject_head_cpg(current_tick)
 
         avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
         if avg_delta < -self._STRESS_DEADZONE:
@@ -498,6 +528,35 @@ class CElegansNervousSystem(BaseNervousSystem):
                 if n is not None:
                     n.S += self._TONIC_FWD_MOTOR
 
+    def _inject_head_cpg(self, current_tick: int) -> None:
+        """Inject a sinusoidal anti-phase drive into the anterior-most
+        DB and VB motor neurons to seed the locomotion wave.
+
+        Substitutes for the biological head-rhythm circuit (RIM/RMD/SMD)
+        which the simplified PAULA connectome lacks. The rest of the
+        chain picks up this oscillation through signed proprioceptive
+        stretch reflexes.
+        """
+        if self._network is None:
+            return
+        amp = float(self._HEAD_CPG_AMP)
+        if amp <= 0.0:
+            return
+        freq = float(self._HEAD_CPG_FREQ_HZ)
+        phase = 2.0 * np.pi * freq * current_tick * self._NEURON_TICK_DT
+        drive = amp * float(np.sin(phase))
+        for name in self._HEAD_CPG_TARGETS:
+            nid = self._name_to_id.get(name)
+            if nid is None:
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is None:
+                continue
+            # DB gets +drive, VB gets −drive → anti-phase oscillation.
+            prefix = name.rstrip("0123456789")
+            sign = 1.0 if prefix == "DB" else -1.0
+            n.S += sign * drive
+
     def _inject_off_cell_tonic(self) -> None:
         """Tonic baseline for OFF-cell sensory neurons.
 
@@ -520,8 +579,16 @@ class CElegansNervousSystem(BaseNervousSystem):
         Direct S injection models intrinsic mechanosensitivity of motor
         neuron processes, not synaptic input.  Each VB/DB neuron senses
         bending in the anterior segment, propagating the locomotion wave.
+
+        Applies an anterior→posterior taper: anterior B neurons (DB1,
+        VB1…) get the full ``PROPRIO_MOTOR_GAIN`` so the wave is
+        launched by the head's curvature, while posterior B neurons
+        get progressively less. Without this taper the posterior
+        chain fully reinforces every local bend and the wave
+        reflects off the tail as a standing wave.
         """
         prefix = "_mpr_"
+        decay = float(self._PROPRIO_TAIL_DECAY)
         for key, val in sensory_inputs.items():
             if not key.startswith(prefix):
                 continue
@@ -530,8 +597,13 @@ class CElegansNervousSystem(BaseNervousSystem):
             if nid is None:
                 continue
             n = self._network.network.neurons.get(nid)
-            if n is not None:
-                n.S += val * self._PROPRIO_MOTOR_GAIN
+            if n is None:
+                continue
+            # Anterior→posterior fraction from the motor's body position
+            frac = float(MOTOR_NEURON_POSITIONS.get(motor_name, 0.0))
+            # gain = full at head (frac≈0), full*(1-decay) at tail (frac≈1)
+            gain = self._PROPRIO_MOTOR_GAIN * (1.0 - frac * decay)
+            n.S += val * gain
 
     def _volume_broadcast(self) -> None:
         """ALERM volume transmission: inject global M0/M1 into all neurons.
@@ -651,6 +723,13 @@ class CElegansNervousSystem(BaseNervousSystem):
         dorsal_excit = np.clip(d_push, 0.0, 1.0)
         ventral_excit = np.clip(v_push, 0.0, 1.0)
 
+        # LP-filter α: prefer the instance attribute (written by the lab
+        # /api/patch → registry wiring) so the live knob actually takes
+        # effect; fall back to the module default for scripts that build
+        # the nervous system directly.
+        alpha = float(
+            getattr(self, "_muscle_filter_alpha", MUSCLE_FILTER_ALPHA)
+        )
         for seg in range(N_BODY_SEGMENTS):
             for quad in MUSCLE_QUADRANTS:
                 key = f"seg{seg}_{quad}"
@@ -660,8 +739,8 @@ class CElegansNervousSystem(BaseNervousSystem):
                     else float(ventral_excit[seg])
                 )
                 self._muscle_activations[key] = (
-                    MUSCLE_FILTER_ALPHA * target
-                    + (1 - MUSCLE_FILTER_ALPHA) * self._muscle_activations[key]
+                    alpha * target
+                    + (1.0 - alpha) * self._muscle_activations[key]
                 )
 
         return dict(self._muscle_activations)

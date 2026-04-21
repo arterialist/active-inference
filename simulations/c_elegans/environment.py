@@ -114,6 +114,11 @@ class AgarPlateEnvironment(BaseEnvironment):
         self._add_nociceptive = add_nociceptive
         self._current_head_pos = np.zeros(3)
 
+    @property
+    def plate_radius_m(self) -> float:
+        """Agar plate radius in biological metres (matches chemicals / UI wire `r`)."""
+        return float(self._plate_radius)
+
     # ------------------------------------------------------------------
     # BaseEnvironment interface
     # ------------------------------------------------------------------

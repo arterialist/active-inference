@@ -98,6 +98,14 @@ class CElegansEngine(SimulationEngine):
         ctrl = NeuromuscularJunction.to_ctrl(motor_outputs)
         with evol_trace.span("tick_mujoco"):
             body_state = self.body.step(ctrl)
+        # Keep the worm on the agar disk (same radius as chemistry / viewer wire `r`).
+        if isinstance(self.environment, AgarPlateEnvironment) and isinstance(
+            self.body, CElegansBody
+        ):
+            if self.body.enforce_plate_bounds_radius_m(
+                self.environment.plate_radius_m
+            ):
+                body_state = self.body.get_state()
         with evol_trace.span("tick_env_post"):
             self.environment.post_body_step(self._body_state_as_dict(body_state))
 

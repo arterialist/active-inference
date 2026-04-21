@@ -20,7 +20,11 @@ from loguru import logger
 
 from simulations.base_body import BaseBody, BodyState
 from simulations.c_elegans import config as aec
-from simulations.c_elegans.config import N_BODY_SEGMENTS, MUSCLE_QUADRANTS
+from simulations.c_elegans.config import (
+    BODY_LENGTH_M,
+    N_BODY_SEGMENTS,
+    MUSCLE_QUADRANTS,
+)
 
 _MODEL_XML = Path(__file__).parent / "body_model.xml"
 
@@ -106,9 +110,28 @@ class CElegansBody(BaseBody):
             f", settle_steps={self._settle_steps}"
         )
 
+        self._root_joint_id: int = mujoco.mj_name2id(
+            self._model, mujoco.mjtObj.mjOBJ_JOINT, "root"
+        )
+
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
+
+    def _mass_weighted_com_model(self) -> np.ndarray:
+        """Mass-weighted COM in MuJoCo model units (same scale as xpos)."""
+        seg0_id = self._body_id.get("seg0", 1)
+        seg_ids = [
+            self._body_id[name]
+            for name in self._body_id
+            if name.startswith("seg") and name[3:].isdigit()
+        ]
+        if seg_ids:
+            seg_ids = sorted(seg_ids)
+            xpos = self._data.xpos[seg_ids]
+            mass = self._model.body_mass[seg_ids]
+            return (xpos * mass[:, None]).sum(axis=0) / max(float(mass.sum()), 1e-12)
+        return self._data.xpos[seg0_id].copy()
 
     def _apply_joint_limits(self) -> None:
         """Override every hinge joint range with ±JOINT_ANGLE_MAX_RAD.
@@ -192,6 +215,60 @@ class CElegansBody(BaseBody):
 
         return self.get_state()
 
+    def enforce_plate_bounds_radius_m(self, plate_radius_bio_m: float) -> bool:
+        """
+        Keep the worm on the agar disk by translating the root free joint in xy.
+
+        If the mass-weighted COM or any segment lies outside the plate radius
+        (minus a body-length margin), shift the root translation so the COM moves
+        to the origin in the horizontal plane and clear root linear xy velocity.
+
+        Args:
+            plate_radius_bio_m: Disk radius in biological metres (same as
+                ``AgarPlateEnvironment.plate_radius_m`` / ``ENV_PLATE_RADIUS_M``).
+
+        Returns:
+            True if a corrective translation was applied.
+        """
+        if self._root_joint_id < 0:
+            return False
+
+        mujoco.mj_forward(self._model, self._data)
+
+        seg_bio = self.get_body_shape()
+        xy_rad = np.linalg.norm(seg_bio[:, :2], axis=1)
+        r_max_seg = float(np.max(xy_rad))
+        com_model = self._mass_weighted_com_model()
+        com_bio_xy = com_model[:2] * _SCALE_MODEL_TO_BIO
+        r_com = float(np.linalg.norm(com_bio_xy))
+
+        # Stay fully inside the drawn plate: worst-case segment reach ~½ body length from COM.
+        half_span = float(BODY_LENGTH_M * 0.55 + 5e-7)
+        limit = max(plate_radius_bio_m - half_span, half_span * 1.5)
+
+        need_fix = r_max_seg > plate_radius_bio_m - 1e-9 or r_com > limit
+        if not need_fix:
+            return False
+
+        qadr = int(self._model.jnt_qposadr[self._root_joint_id])
+        # Free joint: qpos = (tx, ty, tz, qw, qx, qy, qz)
+        self._data.qpos[qadr] -= float(com_model[0])
+        self._data.qpos[qadr + 1] -= float(com_model[1])
+
+        dadr = int(self._model.jnt_dofadr[self._root_joint_id])
+        # Free joint vel: (vx, vy, vz, wx, wy, wz)
+        self._data.qvel[dadr] = 0.0
+        self._data.qvel[dadr + 1] = 0.0
+
+        mujoco.mj_forward(self._model, self._data)
+        logger.debug(
+            "Plate bounds: recentered worm (was r_com={:.4g} m, r_seg_max={:.4g} m, R={:.4g} m)",
+            r_com,
+            r_max_seg,
+            plate_radius_bio_m,
+        )
+        return True
+
     def get_state(self) -> BodyState:
         """Read current simulation state into a BodyState."""
         mujoco.mj_forward(self._model, self._data)
@@ -201,18 +278,10 @@ class CElegansBody(BaseBody):
         # with every head sweep and is not representative of the body's motion
         # through the environment. Here we average all 13 body segments
         # weighted by body_mass so CoM reflects actual translation.
-        seg0_id = self._body_id.get("seg0", 1)
-        seg_ids = [self._body_id[name] for name in self._body_id
-                   if name.startswith("seg") and name[3:].isdigit()]
-        if seg_ids:
-            seg_ids = sorted(seg_ids)
-            xpos = self._data.xpos[seg_ids]             # (n, 3)
-            mass = self._model.body_mass[seg_ids]        # (n,)
-            com_model = (xpos * mass[:, None]).sum(axis=0) / max(float(mass.sum()), 1e-12)
-        else:
-            com_model = self._data.xpos[seg0_id].copy()
+        com_model = self._mass_weighted_com_model()
         position = com_model * _SCALE_MODEL_TO_BIO
 
+        seg0_id = self._body_id.get("seg0", 1)
         # --- Orientation (quaternion of head segment) ---
         xquat = self._data.xquat[seg0_id].copy()
 

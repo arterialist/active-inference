@@ -24,7 +24,9 @@ from simulations.connectome_loader import ConnectomeData, NeuronInfo, SynapticEd
 
 
 # Cache file so we don't hit the Excel reader on every run
-_CACHE_PATH = Path(__file__).resolve().parents[3] / "data" / "c_elegans" / "connectome_cache.json"
+_CACHE_PATH = (
+    Path(__file__).resolve().parents[3] / "data" / "c_elegans" / "connectome_cache.json"
+)
 
 # In-memory cache: avoids repeated loads during evolution (keeps RAM flat)
 _connectome_memory_cache: ConnectomeData | None = None
@@ -126,8 +128,12 @@ def _parse_from_cect() -> ConnectomeData:
 
     chemical_edges: list[SynapticEdge] = []
     gap_junction_edges: list[SynapticEdge] = []
+    muscle_edges: list[SynapticEdge] = []
 
-    # Extract chemical synapses between herm neurons
+    # Identify muscle nodes
+    muscle_nodes = [n for n in all_nodes if n.startswith("M") and len(n) == 5]
+
+    # Extract chemical synapses between herm neurons and to muscles
     for pre_name in herm_neurons:
         if pre_name not in node_index:
             continue
@@ -151,6 +157,22 @@ def _parse_from_cect() -> ConnectomeData:
                     )
                 )
 
+        # Extract NMJs (chemical synapses to muscles)
+        for m_name in muscle_nodes:
+            if m_name not in node_index:
+                continue
+            m_idx = node_index[m_name]
+            nmj_weight = float(row_cs[m_idx])
+            if nmj_weight > 0:
+                muscle_edges.append(
+                    SynapticEdge(
+                        pre_name=pre_name,
+                        post_name=m_name,
+                        synapse_type="chemical",
+                        weight=nmj_weight,
+                    )
+                )
+
             # Gap junctions: include each directed pair once (pre < post
             # in sorted order to avoid double-counting in this loop).
             gj_weight = float(row_gj[post_idx])
@@ -166,14 +188,15 @@ def _parse_from_cect() -> ConnectomeData:
 
     logger.info(
         f"Extracted {len(chemical_edges)} chemical synapses, "
-        f"{len(gap_junction_edges)} gap junctions "
-        f"(each gap junction will yield 2 directed PAULA connections)"
+        f"{len(gap_junction_edges)} gap junctions, "
+        f"{len(muscle_edges)} NMJs"
     )
 
     return ConnectomeData(
         neurons=neurons,
         chemical_edges=chemical_edges,
         gap_junction_edges=gap_junction_edges,
+        muscle_edges=muscle_edges,
     )
 
 
@@ -209,6 +232,15 @@ def _save_to_cache(data: ConnectomeData, path: Path) -> None:
                 "weight": e.weight,
             }
             for e in data.gap_junction_edges
+        ],
+        "muscle_edges": [
+            {
+                "pre_name": e.pre_name,
+                "post_name": e.post_name,
+                "synapse_type": e.synapse_type,
+                "weight": e.weight,
+            }
+            for e in data.muscle_edges
         ],
     }
     with open(path, "w") as f:
@@ -248,10 +280,20 @@ def _load_from_cache(path: Path) -> ConnectomeData:
         )
         for e in payload["gap_junction_edges"]
     ]
+    muscle_edges = [
+        SynapticEdge(
+            pre_name=e["pre_name"],
+            post_name=e["post_name"],
+            synapse_type=e["synapse_type"],
+            weight=e["weight"],
+        )
+        for e in payload.get("muscle_edges", [])
+    ]
     return ConnectomeData(
         neurons=neurons,
         chemical_edges=chemical_edges,
         gap_junction_edges=gap_junction_edges,
+        muscle_edges=muscle_edges,
     )
 
 
@@ -277,7 +319,9 @@ def print_connectome_summary(data: ConnectomeData) -> None:
     weights = [e.weight for e in data.chemical_edges]
     if weights:
         mean_weight = sum(weights) / len(weights)
-        print(f"Chem weight stats   : min={min(weights):.0f}, "
-              f"max={max(weights):.0f}, "
-              f"mean={mean_weight:.1f}")
+        print(
+            f"Chem weight stats   : min={min(weights):.0f}, "
+            f"max={max(weights):.0f}, "
+            f"mean={mean_weight:.1f}"
+        )
     print(f"{'='*50}\n")

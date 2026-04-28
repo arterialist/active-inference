@@ -11,6 +11,7 @@ multiplying by 1e-3.
 from __future__ import annotations
 
 from contextlib import contextmanager
+from math import cos, pi, sin
 from pathlib import Path
 from typing import Generator
 
@@ -21,7 +22,6 @@ from loguru import logger
 from simulations.base_body import BaseBody, BodyState
 from simulations.c_elegans import config as aec
 from simulations.c_elegans.config import (
-    BODY_LENGTH_M,
     N_BODY_SEGMENTS,
     MUSCLE_QUADRANTS,
 )
@@ -30,6 +30,95 @@ _MODEL_XML = Path(__file__).parent / "body_model.xml"
 
 # 1000x scale factor: model units → biological metres
 _SCALE_MODEL_TO_BIO = 1e-3
+# Bio → model units (inverse). Used when generating wall geometry that
+# must match aec.ENV_PLATE_RADIUS_M (biological metres) inside MuJoCo.
+_SCALE_BIO_TO_MODEL = 1.0 / _SCALE_MODEL_TO_BIO
+
+# Floor plane sits at this z in model units (see body_model.xml worldbody).
+_FLOOR_Z_MODEL = -0.04
+
+
+def _build_wall_ring_xml(
+    plate_radius_bio_m: float,
+    wall_height_bio_m: float,
+    wall_thickness_bio_m: float,
+    n_segments: int,
+    friction_tangent: float,
+) -> str:
+    """
+    Generate a ring of static box geoms approximating a hollow cylinder
+    around the agar disk.
+
+    Each box has its inner face flush with the configured plate radius,
+    its tangential extent slightly overlapping its neighbour to avoid
+    gaps, and its base resting on the floor plane. All values are
+    converted from biological metres to MuJoCo model units (1000×).
+    """
+    n = max(8, int(n_segments))
+    radius_m = float(plate_radius_bio_m) * _SCALE_BIO_TO_MODEL
+    height_m = float(wall_height_bio_m) * _SCALE_BIO_TO_MODEL
+    thick_m = float(wall_thickness_bio_m) * _SCALE_BIO_TO_MODEL
+
+    half_thickness = thick_m * 0.5
+    half_height = height_m * 0.5
+    centre_radius = radius_m + half_thickness
+    # 10 % chord overlap between neighbours — kills any gap a worm
+    # capsule could squeeze through under an oblique impact.
+    half_chord = (centre_radius * sin(pi / n)) * 1.10
+    z_centre = _FLOOR_Z_MODEL + half_height
+
+    # Stiffer contact than the default floor: tighter solref time
+    # constant + steeper solimp so the worm cannot tunnel under
+    # strong muscle drive at the boundary.
+    solref = "0.002 1"
+    solimp = "0.99 0.999 0.0001"
+    rgba = "0.55 0.45 0.35 0.55"
+
+    geoms: list[str] = []
+    for i in range(n):
+        theta = 2.0 * pi * i / n
+        cx = centre_radius * cos(theta)
+        cy = centre_radius * sin(theta)
+        size = f"{half_thickness:.6f} {half_chord:.6f} {half_height:.6f}"
+        pos = f"{cx:.6f} {cy:.6f} {z_centre:.6f}"
+        euler = f"0 0 {theta:.6f}"
+        friction = f"{friction_tangent:.4f} 0.8 0.001"
+        geoms.append(
+            f'    <geom name="plate_wall_{i}" type="box" size="{size}"'
+            f' pos="{pos}" euler="{euler}" friction="{friction}"'
+            f' solref="{solref}" solimp="{solimp}" rgba="{rgba}"'
+            f' condim="3"/>'
+        )
+
+    return "<!-- plate boundary wall (auto-generated) -->\n" + "\n".join(geoms)
+
+
+def _load_model_with_wall() -> mujoco.MjModel:
+    """
+    Read body_model.xml, inject the boundary-wall ring just before the
+    closing </worldbody> tag, and load via from_xml_string.
+
+    The wall geometry is regenerated on every call from the current
+    aec.* config values, so the lab "rebuild" parameters (plate radius,
+    wall height, etc.) take effect on body re-creation without editing
+    the XML on disk.
+    """
+    xml_text = _MODEL_XML.read_text(encoding="utf-8")
+    wall_xml = _build_wall_ring_xml(
+        plate_radius_bio_m=float(aec.ENV_PLATE_RADIUS_M),
+        wall_height_bio_m=float(aec.WALL_HEIGHT_M),
+        wall_thickness_bio_m=float(aec.WALL_THICKNESS_M),
+        n_segments=int(aec.WALL_SEGMENTS_N),
+        friction_tangent=float(aec.WALL_FRICTION_TANGENT),
+    )
+    marker = "</worldbody>"
+    if marker not in xml_text:
+        raise RuntimeError(
+            f"body_model.xml is missing {marker}; cannot inject wall ring."
+        )
+    patched = xml_text.replace(marker, wall_xml + "\n  " + marker, 1)
+    # Set assetdir so any relative includes still resolve.
+    return mujoco.MjModel.from_xml_string(patched, assets={})
 
 
 class CElegansBody(BaseBody):
@@ -52,8 +141,8 @@ class CElegansBody(BaseBody):
         render_height: int = 480,
         settle_steps: int | None = None,
     ):
-        logger.info(f"Loading MuJoCo model from {_MODEL_XML}")
-        self._model = mujoco.MjModel.from_xml_path(str(_MODEL_XML))
+        logger.info(f"Loading MuJoCo model from {_MODEL_XML} (with plate wall)")
+        self._model = _load_model_with_wall()
         self._data = mujoco.MjData(self._model)
 
         if timestep is not None:
@@ -69,18 +158,14 @@ class CElegansBody(BaseBody):
         # Cache actuator name -> index map
         self._actuator_index: dict[str, int] = {}
         for i in range(self._model.nu):
-            name = mujoco.mj_id2name(
-                self._model, mujoco.mjtObj.mjOBJ_ACTUATOR, i
-            )
+            name = mujoco.mj_id2name(self._model, mujoco.mjtObj.mjOBJ_ACTUATOR, i)
             if name:
                 self._actuator_index[name] = i
 
         # Cache sensor name -> index map
         self._sensor_index: dict[str, int] = {}
         for i in range(self._model.nsensor):
-            name = mujoco.mj_id2name(
-                self._model, mujoco.mjtObj.mjOBJ_SENSOR, i
-            )
+            name = mujoco.mj_id2name(self._model, mujoco.mjtObj.mjOBJ_SENSOR, i)
             if name:
                 self._sensor_index[name] = i
 
@@ -94,13 +179,15 @@ class CElegansBody(BaseBody):
         # Cache joint names
         self._joint_names_list: list[str] = []
         for i in range(self._model.njnt):
-            name = mujoco.mj_id2name(
-                self._model, mujoco.mjtObj.mjOBJ_JOINT, i
-            )
+            name = mujoco.mj_id2name(self._model, mujoco.mjtObj.mjOBJ_JOINT, i)
             if name and "root" not in name:
                 self._joint_names_list.append(name)
 
-        self._settle_steps = int(settle_steps) if settle_steps is not None else self._SETTLE_STEPS_DEFAULT
+        self._settle_steps = (
+            int(settle_steps)
+            if settle_steps is not None
+            else self._SETTLE_STEPS_DEFAULT
+        )
 
         logger.info(
             f"CElegansBody ready: "
@@ -147,7 +234,7 @@ class CElegansBody(BaseBody):
         except Exception:  # noqa: BLE001
             return
         # Stiff, well-damped contact constraint so limits behave as hard stops.
-        stiff_solref = np.array([0.005, 1.0])         # 5 ms time constant
+        stiff_solref = np.array([0.005, 1.0])  # 5 ms time constant
         stiff_solimp = np.array([0.995, 0.9999, 0.001, 0.5, 2.0])
         n_applied = 0
         for i in range(self._model.njnt):
@@ -217,11 +304,15 @@ class CElegansBody(BaseBody):
 
     def enforce_plate_bounds_radius_m(self, plate_radius_bio_m: float) -> bool:
         """
-        Keep the worm on the agar disk by translating the root free joint in xy.
+        Numerical-stability safety net for the plate boundary.
 
-        If the mass-weighted COM or any segment lies outside the plate radius
-        (minus a body-length margin), shift the root translation so the COM moves
-        to the origin in the horizontal plane and clear root linear xy velocity.
+        With a real wall ring around the agar disk (see
+        :func:`_build_wall_ring_xml`) the worm is normally obstructed by
+        contact forces, so this method should never fire under healthy
+        physics. It exists only to recover from blow-ups: if the COM or
+        worst-case segment leaves the disk by more than
+        ``aec.BOUNDARY_TELEPORT_FACTOR`` × R (default 1.2 → 20 % beyond),
+        we recentre the root free joint and zero its xy velocity.
 
         Args:
             plate_radius_bio_m: Disk radius in biological metres (same as
@@ -242,11 +333,12 @@ class CElegansBody(BaseBody):
         com_bio_xy = com_model[:2] * _SCALE_MODEL_TO_BIO
         r_com = float(np.linalg.norm(com_bio_xy))
 
-        # Stay fully inside the drawn plate: worst-case segment reach ~½ body length from COM.
-        half_span = float(BODY_LENGTH_M * 0.55 + 5e-7)
-        limit = max(plate_radius_bio_m - half_span, half_span * 1.5)
+        # Safety threshold: only step in when the worm is well past the
+        # wall (numerical instability), not on every nudge.
+        factor = float(getattr(aec, "BOUNDARY_TELEPORT_FACTOR", 1.2))
+        threshold = plate_radius_bio_m * factor
 
-        need_fix = r_max_seg > plate_radius_bio_m - 1e-9 or r_com > limit
+        need_fix = r_max_seg > threshold or r_com > threshold
         if not need_fix:
             return False
 
@@ -261,11 +353,13 @@ class CElegansBody(BaseBody):
         self._data.qvel[dadr + 1] = 0.0
 
         mujoco.mj_forward(self._model, self._data)
-        logger.debug(
-            "Plate bounds: recentered worm (was r_com={:.4g} m, r_seg_max={:.4g} m, R={:.4g} m)",
+        logger.warning(
+            "Plate bounds safety net: recentered worm (r_com={:.4g} m, "
+            "r_seg_max={:.4g} m, R={:.4g} m, factor={:.2f})",
             r_com,
             r_max_seg,
             plate_radius_bio_m,
+            factor,
         )
         return True
 
@@ -289,9 +383,7 @@ class CElegansBody(BaseBody):
         joint_angles: dict[str, float] = {}
         joint_vels: dict[str, float] = {}
         for jname in self._joint_names_list:
-            jid = mujoco.mj_name2id(
-                self._model, mujoco.mjtObj.mjOBJ_JOINT, jname
-            )
+            jid = mujoco.mj_name2id(self._model, mujoco.mjtObj.mjOBJ_JOINT, jname)
             if jid >= 0:
                 qadr = self._model.jnt_qposadr[jid]
                 dadr = self._model.jnt_dofadr[jid]
@@ -299,8 +391,34 @@ class CElegansBody(BaseBody):
                 joint_vels[jname] = float(self._data.qvel[dadr])
 
         # --- Touch sensors ---
+        # Every <touch> sensor in the MJCF is exported by name into
+        # BodyState.contact_forces. SensorEncoder picks per-neuron
+        # receptive fields from this dict — no neuron is hard-wired
+        # to a specific site here.
         contact_forces: dict[str, np.ndarray] = {}
-        for sname in ("touch_nose_sensor", "touch_ant_sensor", "touch_post_sensor"):
+        touch_names = (
+            "touch_nose_sensor",
+            "touch_nose_dorsal",
+            "touch_nose_ventral",
+            "touch_nose_left",
+            "touch_nose_right",
+            "touch_ant_sensor",
+            "touch_post_sensor",
+            "touch_seg0_sensor",
+            "touch_seg1_sensor",
+            "touch_seg2_sensor",
+            "touch_seg3_sensor",
+            "touch_seg4_sensor",
+            "touch_seg5_sensor",
+            "touch_seg6_sensor",
+            "touch_seg7_sensor",
+            "touch_seg8_sensor",
+            "touch_seg9_sensor",
+            "touch_seg10_sensor",
+            "touch_seg11_sensor",
+            "touch_seg12_sensor",
+        )
+        for sname in touch_names:
             sidx = self._sensor_index.get(sname)
             if sidx is not None:
                 sadr = self._model.sensor_adr[sidx]

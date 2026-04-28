@@ -20,6 +20,7 @@ from typing import Any
 import numpy as np
 
 from simulations.base_environment import BaseEnvironment, EnvironmentObservation
+from simulations.c_elegans import config as aec
 from simulations.c_elegans.config import (
     ENV_PLATE_RADIUS_M,
     FOOD_SOURCE_POSITION,
@@ -67,10 +68,15 @@ class AgarPlateEnvironment(BaseEnvironment):
         add_nociceptive: bool = True,
         noci_center: tuple[float, float, float] = (-0.02, 0.0, 0.0),
         noci_radius: float = 0.005,
+        fake_wall_obs: bool | None = None,
     ):
         self._plate_radius = plate_radius
         self._noci_center = np.array(noci_center)
         self._noci_radius = noci_radius
+        # When None, fall back to the live aec.FAKE_WALL_OBSERVATION
+        # global at observation time so the lab toggle takes effect
+        # immediately without rebuilding the environment.
+        self._fake_wall_obs_override = fake_wall_obs
 
         positions = (
             food_positions
@@ -314,11 +320,22 @@ class AgarPlateEnvironment(BaseEnvironment):
                 [float(noci_intensity), 0.0, 0.0]
             )
 
-        # Plate boundary → mechanosensory input (worm hits wall)
-        dist_to_edge = self._plate_radius - float(np.linalg.norm(pos[:2]))
-        if dist_to_edge < 0.002:  # within 2mm of edge
-            wall_force = max(0.0, 1.0 - dist_to_edge / 0.002)
-            contact_forces["wall"] = np.array([wall_force, 0.0, 0.0])
+        # Legacy synthetic mechanosensory: a "wall" entry derived from
+        # radial distance. Off by default — the wall ring around the
+        # plate (see body._build_wall_ring_xml) means real touch
+        # sensors fire on contact, so this synthetic channel is a
+        # supervised hack and gated behind aec.FAKE_WALL_OBSERVATION.
+        # Note: even when on, no sensory neuron in TOUCH_NEURON_SITE
+        # references the "wall" key, so it is purely a debug channel.
+        if self._fake_wall_obs_override is None:
+            fake_wall_on = bool(getattr(aec, "FAKE_WALL_OBSERVATION", False))
+        else:
+            fake_wall_on = bool(self._fake_wall_obs_override)
+        if fake_wall_on:
+            dist_to_edge = self._plate_radius - float(np.linalg.norm(pos[:2]))
+            if dist_to_edge < 0.002:  # within 2mm of edge
+                wall_force = max(0.0, 1.0 - dist_to_edge / 0.002)
+                contact_forces["wall"] = np.array([wall_force, 0.0, 0.0])
 
         return EnvironmentObservation(
             chemicals=chemicals,

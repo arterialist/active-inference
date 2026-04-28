@@ -118,14 +118,26 @@ LOCOMOTION_INTERNEURONS = [
 # Chemical concentration -> PAULA input [0,1]
 CHEM_CONCENTRATION_MAX = 1.0      # normalisation maximum
 
+# Touch sensor force -> PAULA input [0,1]
+# MuJoCo touch sensors return summed contact-normal force in model units.
+# The half-sat sigmoid ``f / (f + halfsat)`` keeps quiet floor support
+# (~0.2 model-N per segment when at rest) near zero while saturating on
+# wall contact (~5–50 model-N depending on impact). Lower this to make
+# touch neurons more sensitive to light contact.
+TOUCH_HALF_SAT_FORCE = 2.0
+# Polymodal harsh-touch neurons (FLP, PVD, PHC) require a high
+# threshold to fire — gentle floor contact must not register. This
+# subtracts a fraction of the saturated value before re-normalising.
+TOUCH_HARSH_THRESHOLD = 0.30
+
 # Proprioception: joint angle range in radians
-JOINT_ANGLE_MAX_RAD = 0.45        # tuned with lab gait (see tuning/notes.md)
+JOINT_ANGLE_MAX_RAD = 0.16        # tuned with lab gait (see tuning/notes.md)
 
 # Motor neuron spike rate -> muscle activation
 # A motor neuron firing at 1 spike/tick -> max muscle activation
 SPIKE_RATE_TO_ACTIVATION = 1.0
 # Low-pass filter coefficient for muscle activation smoothing
-MUSCLE_FILTER_ALPHA = 0.16
+MUSCLE_FILTER_ALPHA = 0.022
 
 # Muscle activation -> MuJoCo torque
 # Calibrated so full activation at max torque produces undulatory locomotion
@@ -138,3 +150,30 @@ ENV_PLATE_RADIUS_M = 0.05        # 5 cm agar plate
 FOOD_SOURCE_POSITION = (0.0005, 0.0, 0.0)   # food at x=0.5mm (ahead of head)
 FOOD_GRADIENT_DECAY = 1800.0     # steep gradient at mm scale for stronger chemotaxis
 FOOD_CONSUMPTION_RADIUS_M = 0.0001  # head within 0.1mm (≈1.5× head width) = consumed
+
+# -----------------------------------------------------------------------
+# Plate boundary wall (real physics geometry around the agar disk)
+# -----------------------------------------------------------------------
+# A ring of static box geoms is inserted at MJCF load time so the worm
+# is physically obstructed by the plate edge instead of being teleported
+# back to the centre. The wall is rebuilt whenever the body is rebuilt
+# (which is what changing ENV_PLATE_RADIUS_M / WALL_* triggers via the
+# lab parameter registry).
+WALL_HEIGHT_M = 0.002            # 2 mm — much taller than worm radius (40 µm)
+WALL_THICKNESS_M = 0.0005        # 0.5 mm radial thickness (in-plane)
+WALL_SEGMENTS_N = 64             # ring discretisation; smooth circle by 64 boxes
+WALL_FRICTION_TANGENT = 0.5      # tangent friction (stiffer than floor's 0.005)
+
+# Teleport safety net: only fires when the COM or worst-case segment
+# leaves the disk by this factor, e.g. 1.2 → triggered at 1.2 × R_plate.
+# Under normal operation the wall keeps the worm in; this is a guard
+# against numerical blow-ups, not a feature of the agent's behaviour.
+BOUNDARY_TELEPORT_FACTOR = 1.2
+
+# Legacy synthetic mechanosensory input: when True, environment.step()
+# adds a "wall" key to contact_forces based on radial distance to the
+# plate edge. This is a supervised hack — the nervous system never used
+# the "wall" key directly anyway (TOUCH_NEURON_SITE only references
+# real touch sensor names), so leaving it False keeps the loop
+# closed-loop and self-directed.
+FAKE_WALL_OBSERVATION = False

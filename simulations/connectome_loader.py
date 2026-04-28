@@ -20,7 +20,6 @@ from __future__ import annotations
 import os
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from typing import Any
 
 import numpy as np
 from loguru import logger
@@ -47,8 +46,8 @@ class NeuronInfo:
     """Metadata for a single biological neuron."""
 
     name: str
-    neuron_type: str          # 'sensory' | 'interneuron' | 'motor' | 'unknown'
-    paula_id: int             # integer ID used by PAULA Neuron
+    neuron_type: str  # 'sensory' | 'interneuron' | 'motor' | 'unknown'
+    paula_id: int  # integer ID used by PAULA Neuron
     in_degree_chem: int = 0
     in_degree_gap: int = 0
     out_degree_chem: int = 0
@@ -61,8 +60,8 @@ class SynapticEdge:
 
     pre_name: str
     post_name: str
-    synapse_type: str   # 'chemical' | 'gap_junction'
-    weight: float       # raw synapse count from connectome
+    synapse_type: str  # 'chemical' | 'gap_junction'
+    weight: float  # raw synapse count from connectome
 
 
 @dataclass
@@ -77,6 +76,7 @@ class ConnectomeData:
     neurons: list[NeuronInfo]
     chemical_edges: list[SynapticEdge]
     gap_junction_edges: list[SynapticEdge]
+    muscle_edges: list[SynapticEdge] = field(default_factory=list)
     name_to_info: dict[str, NeuronInfo] = field(init=False)
 
     def __post_init__(self) -> None:
@@ -163,9 +163,7 @@ def build_paula_network(
     # ---- 1. Assign PAULA IDs and compute degree counts ----------------
     _assign_degrees(connectome)
 
-    name_to_id: dict[str, int] = {
-        n.name: n.paula_id for n in connectome.neurons
-    }
+    name_to_id: dict[str, int] = {n.name: n.paula_id for n in connectome.neurons}
 
     # ---- 2. Create Neuron instances -----------------------------------
     neurons: dict[int, Neuron] = {}
@@ -186,11 +184,8 @@ def build_paula_network(
             )
         # num_inputs must match the actual number of postsynaptic_points
         # we will add below.  Cap at PAULA's synapse limit.
-        in_degree = min(
-            info.in_degree_chem + info.in_degree_gap, PAULA_SYNAPSE_LIMIT
-        )
-        # Always give at least 1 input slot so the neuron can receive background
-        in_degree = max(in_degree, 1)
+        in_degree = min(info.in_degree_chem, PAULA_SYNAPSE_LIMIT)
+        # PAULA will allow num_inputs=0 for neurons with no incoming synapses.
 
         params_copy = _copy_params_with_inputs(params, num_inputs=in_degree)
 
@@ -235,16 +230,27 @@ def build_paula_network(
             return
         next_synapse_slot[post_id] += 1
 
-        distance = (GAP_JUNCTION_DISTANCE if synapse_type == "gap_junction"
-                    else CHEMICAL_SYNAPSE_DISTANCE)
+        distance = (
+            GAP_JUNCTION_DISTANCE
+            if synapse_type == "gap_junction"
+            else CHEMICAL_SYNAPSE_DISTANCE
+        )
 
-        pre_neuron.add_axon_terminal(
-            terminal_id=t_slot, distance_from_hillock=distance
+        pre_neuron.add_axon_terminal(terminal_id=t_slot, distance_from_hillock=distance)
+        post_neuron.add_synapse(synapse_id=s_slot, distance_to_hillock=distance)
+
+        # Determine biological inhibition
+        is_inhibitory = pre_name.startswith(("DD", "VD", "RME")) or pre_name in (
+            "RIS",
+            "AVL",
+            "DVB",
         )
-        post_neuron.add_synapse(
-            synapse_id=s_slot, distance_to_hillock=distance
-        )
-        scaled_weight = max(float(weight * scale), 0.01)
+        # Use -50.0 for inhibitory synapses to overcome the strong RIM positive feedback loop
+        sign = -50.0 if (is_inhibitory and synapse_type == "chemical") else 1.0
+
+        # We do not clip the scaled_weight to let PAULA's natural bounds apply
+        scaled_weight = float(weight * scale) * sign
+
         post_neuron.postsynaptic_points[s_slot].u_i.info = scaled_weight
         # Deterministic baseline plasticity.  PAULA's V_local =
         # info_val * (u_i.info + u_i.plast), so plast = 1.0 ensures
@@ -261,14 +267,12 @@ def build_paula_network(
         connection_list.append((pre_id, t_slot, post_id, s_slot))
 
     for edge in connectome.chemical_edges:
-        _add_edge(edge.pre_name, edge.post_name, edge.weight, "chemical",
-                  scale=weight_scale)
+        _add_edge(
+            edge.pre_name, edge.post_name, edge.weight, "chemical", scale=weight_scale
+        )
 
-    for edge in connectome.gap_junction_edges:
-        _add_edge(edge.pre_name, edge.post_name, edge.weight, "gap_junction",
-                  scale=gap_scale)
-        _add_edge(edge.post_name, edge.pre_name, edge.weight, "gap_junction",
-                  scale=gap_scale)
+    # Phase 3: Gap junctions are NO LONGER mapped as discrete PAULA synapses.
+    # They are processed as continuous thermal diffusion in CElegansNervousSystem.
 
     # ---- 4. Assemble NeuronNetwork ------------------------------------
     network = _assemble_network(neurons, connection_list)
@@ -376,7 +380,7 @@ def _assemble_network(
 
     # Construct NeuronNetwork without calling __init__ (which would create random topology)
     network = NeuronNetwork.__new__(NeuronNetwork)
-    network.network = topology          # NeuronNetwork uses self.network internally
+    network.network = topology  # NeuronNetwork uses self.network internally
     network.current_tick = 0
     network.max_history = 1000
 
@@ -402,7 +406,9 @@ def _assemble_network(
 
     # Default off (matches NeuronNetwork.__init__). Set PAULA_RECORD_HISTORY=1 to
     # benchmark or debug with per-tick PAULA deques enabled.
-    network.record_history = os.environ.get("PAULA_RECORD_HISTORY", "").strip().lower() in (
+    network.record_history = os.environ.get(
+        "PAULA_RECORD_HISTORY", ""
+    ).strip().lower() in (
         "1",
         "true",
         "yes",
@@ -424,16 +430,13 @@ class _EmptyTopology:
         self.num_neurons = len(neurons)
 
         # Build connection cache: (pre_id, terminal_id) -> [(post_id, synapse_id)]
-        from collections import defaultdict
         self.connection_cache: dict[tuple, list] = defaultdict(list)
         self.fast_connection_cache: dict[tuple, list] = defaultdict(list)
         self.free_synapses: list = []
         self.external_inputs: dict = {}
 
         for pre_id, terminal_id, post_id, synapse_id in connections:
-            self.connection_cache[(pre_id, terminal_id)].append(
-                (post_id, synapse_id)
-            )
+            self.connection_cache[(pre_id, terminal_id)].append((post_id, synapse_id))
 
         # Build fast cache (direct numpy buffer references)
         for pre_id, terminal_id, post_id, synapse_id in connections:

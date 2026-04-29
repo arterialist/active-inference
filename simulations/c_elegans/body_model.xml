@@ -25,7 +25,7 @@
 
   <compiler angle="radian" autolimits="true" />
 
-  <option timestep="0.002" gravity="0 0 -9.8" integrator="implicitfast" density="1000"
+  <option timestep="0.002" gravity="0 0 -9.8" integrator="implicitfast" density="2000"
     viscosity="0.3">
     <flag contact="enable" energy="disable" />
   </option>

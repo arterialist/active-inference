@@ -137,7 +137,7 @@ JOINT_ANGLE_MAX_RAD = 0.15        # tuned with lab gait (see tuning/notes.md)
 # A motor neuron firing at 1 spike/tick -> max muscle activation
 SPIKE_RATE_TO_ACTIVATION = 1.0
 # Low-pass filter coefficient for muscle activation smoothing
-MUSCLE_FILTER_ALPHA = 0.03
+MUSCLE_FILTER_ALPHA = 0.08
 
 # Muscle activation -> MuJoCo torque
 # Calibrated so full activation at max torque produces undulatory locomotion

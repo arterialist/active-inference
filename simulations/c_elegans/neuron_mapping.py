@@ -359,7 +359,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # posterior passively follows and doesn't lock. 0.0 disables the
     # taper; 1.0 means the last motor neuron receives no
     # proprioceptive drive.
-    _PROPRIO_TAIL_DECAY: float = 0.5
+    _PROPRIO_TAIL_DECAY: float = 0.7
 
     # Head central pattern generator (CPG).
     # Real C. elegans relies on a head rhythm circuit (RIM/RMD/SMD/AVB
@@ -374,8 +374,8 @@ class CElegansNervousSystem(BaseNervousSystem):
     # rhythm through the signed proprioceptive stretch reflex
     # (MOTOR_PROPRIO anterior offset), producing a posterior-traveling wave
     # without requiring the full rhythm circuit.
-    _HEAD_CPG_FREQ_HZ: float = 0.4
-    _HEAD_CPG_AMP: float = 0.08
+    _HEAD_CPG_FREQ_HZ: float = 0.5
+    _HEAD_CPG_AMP: float = 0.15
     _HEAD_CPG_TARGETS: tuple[str, ...] = ("DB1", "VB1")
     _NEURON_TICK_DT: float = 0.002  # seconds/tick (matches NEURAL_TICKS_PER_PHYSICS_STEP=1 × MuJoCo 2ms)
 

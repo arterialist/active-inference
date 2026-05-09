@@ -95,6 +95,17 @@ MOTOR_NEURON_POSITIONS: dict[str, float] = {
     "AS1": 0.06, "AS2": 0.14, "AS3": 0.21, "AS4": 0.28,
     "AS5": 0.35, "AS6": 0.43, "AS7": 0.52, "AS8": 0.60,
     "AS9": 0.68, "AS10": 0.76, "AS11": 0.85,
+    # Head ring motor neurons (innervate head muscles directly).
+    # Mulcahy 2018 (eLife): RMD/SMD have intrinsic Ca²⁺ pacemaker activity
+    # and innervate anteriormost body wall muscles. SMB extends to upper-mid body.
+    # White 1986 anatomy: RMD ring at metacorpus (head end, fractional position 0).
+    "RMDDL": 0.0,  "RMDDR": 0.0,   # dorsal RMD pair
+    "RMDVL": 0.0,  "RMDVR": 0.0,   # ventral RMD pair
+    "RMDL":  0.02, "RMDR":  0.02,  # lateral RMD pair
+    "SMDDL": 0.04, "SMDDR": 0.04,  # dorsal SMD pair
+    "SMDVL": 0.04, "SMDVR": 0.04,  # ventral SMD pair
+    "SMBDL": 0.08, "SMBDR": 0.08,  # dorsal SMB pair (anterior body)
+    "SMBVL": 0.08, "SMBVR": 0.08,  # ventral SMB pair
 }
 
 # Command interneurons that drive forward/backward motor neuron pools
@@ -131,7 +142,10 @@ TOUCH_HALF_SAT_FORCE = 2.0
 TOUCH_HARSH_THRESHOLD = 0.30
 
 # Proprioception: joint angle range in radians
-JOINT_ANGLE_MAX_RAD = 0.15        # tuned with lab gait (see tuning/notes.md)
+JOINT_ANGLE_MAX_RAD = 0.30        # tuned for real-worm S-shape; per-joint bend ≈ 17°
+# Pitch (vertical-plane bend) tightly constrained so body stays planar despite
+# fluid buoyancy lifting tail. Substitutes for unsimulated agar surface tension.
+PITCH_ANGLE_MAX_RAD = 0.02        # ~1.1° — body is effectively 2D laterally
 
 # Motor neuron spike rate -> muscle activation
 # A motor neuron firing at 1 spike/tick -> max muscle activation

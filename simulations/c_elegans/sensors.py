@@ -59,9 +59,9 @@ import numpy as np
 
 from simulations.base_body import BodyState
 from simulations.base_environment import EnvironmentObservation
+from simulations.c_elegans import config as _aec
 from simulations.c_elegans.config import (
     CHEM_CONCENTRATION_MAX,
-    JOINT_ANGLE_MAX_RAD,
     MOTOR_NEURON_POSITIONS,
     N_BODY_SEGMENTS,
     TOUCH_HALF_SAT_FORCE,
@@ -533,13 +533,19 @@ class SensorEncoder:
     ]
 
     # Anterior offset for B-type motor proprioception (Wen 2012).
+    # A-type proprio (backward locomotion stretch reflex) is registered here
+    # but only USED when the reversal command path is active — see
+    # _inject_motor_proprioception in neuron_mapping.py.
     _PROPRIO_ANT_OFFSET: int = 1
+    _PROPRIO_POS_OFFSET: int = 1
     MOTOR_PROPRIO: dict[str, int] = {}
     for _name, _frac in MOTOR_NEURON_POSITIONS.items():
         _prefix = _name.rstrip("0123456789")
+        _seg = int(_frac * (N_BODY_SEGMENTS - 1))
         if _prefix in ("DB", "VB"):
-            _seg = int(_frac * (N_BODY_SEGMENTS - 1))
             MOTOR_PROPRIO[_name] = max(0, _seg - _PROPRIO_ANT_OFFSET)
+        elif _prefix in ("DA", "VA"):
+            MOTOR_PROPRIO[_name] = min(N_BODY_SEGMENTS - 1, _seg + _PROPRIO_POS_OFFSET)
 
     # ------------------------------------------------------------------
     # Public
@@ -659,7 +665,7 @@ class SensorEncoder:
                 idx = min(seg_idx, len(arr) - 1)
                 curvature = float(abs(arr[idx]))
 
-            normalised = float(np.clip(curvature / JOINT_ANGLE_MAX_RAD, 0.0, 1.0))
+            normalised = float(np.clip(curvature / _aec.JOINT_ANGLE_MAX_RAD, 0.0, 1.0))
             # Add to any existing chemo+touch contribution (polymodal:
             # PVD already has harsh-touch + cold-temp; proprio is
             # biologically also part of its repertoire).
@@ -690,13 +696,16 @@ class SensorEncoder:
                 continue
             curvature = locomotion_angles[joint_idx]
             prefix = neuron_name.rstrip("0123456789")
-            # B-type motor neurons must contract IN PHASE with the anterior segment
-            # to propagate the wave backward.
-            # Curvature > 0 means the anterior segment is bent dorsally.
-            # To bend the current segment dorsally, we must EXCITE DB and INHIBIT VB.
-            # Therefore, DB requires a positive sign, and VB a negative sign.
-            sign = 1.0 if prefix == "DB" else -1.0
+            # Sign convention:
+            #   DB: senses anterior joint, contracts IN PHASE → +sign  (forward wave)
+            #   VB: senses anterior joint, opposite muscle → -sign     (forward wave)
+            #   DA: senses posterior joint, contracts IN PHASE → +sign (backward wave)
+            #   VA: senses posterior joint, opposite muscle → -sign    (backward wave)
+            if prefix in ("DB", "DA"):
+                sign = 1.0
+            else:  # VB, VA
+                sign = -1.0
             result[f"_mpr_{neuron_name}"] = float(
-                np.tanh(sign * curvature / JOINT_ANGLE_MAX_RAD)
+                np.tanh(sign * curvature / _aec.JOINT_ANGLE_MAX_RAD)
             )
         return result

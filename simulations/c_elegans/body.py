@@ -221,33 +221,46 @@ class CElegansBody(BaseBody):
         return self._data.xpos[seg0_id].copy()
 
     def _apply_joint_limits(self) -> None:
-        """Override every hinge joint range with ±JOINT_ANGLE_MAX_RAD.
+        """Override every hinge joint range with ±JOINT_ANGLE_MAX_RAD on yaws,
+        and a tight ±PITCH_LIMIT_RAD on pitches.
 
         body_model.xml hardcodes joint ranges (historically ±1.2 rad), but
         ``config.JOINT_ANGLE_MAX_RAD`` is the runtime source of truth so the
         tuning UI can actually restrict body curvature without rewriting XML.
         Also stiffens the joint-limit constraint (solref/solimp) so the body
         cannot overshoot by 2-3× the nominal limit under strong muscle drive.
+
+        Pitch (vertical-plane bend) gets a much smaller range so the body
+        stays effectively planar — real C. elegans on agar crawls in 2D
+        because surface tension binds it to the gel surface, which we don't
+        simulate; the tight pitch limit substitutes geometrically.
         """
         try:
             max_rad = float(aec.JOINT_ANGLE_MAX_RAD)
+            pitch_lim = float(getattr(aec, "PITCH_ANGLE_MAX_RAD", 0.02))
         except Exception:  # noqa: BLE001
             return
         # Stiff, well-damped contact constraint so limits behave as hard stops.
         stiff_solref = np.array([0.005, 1.0])  # 5 ms time constant
         stiff_solimp = np.array([0.995, 0.9999, 0.001, 0.5, 2.0])
-        n_applied = 0
+        n_yaw = 0; n_pitch = 0
         for i in range(self._model.njnt):
             jtype = int(self._model.jnt_type[i])
             if jtype == mujoco.mjtJoint.mjJNT_HINGE:
-                self._model.jnt_range[i, 0] = -max_rad
-                self._model.jnt_range[i, 1] = +max_rad
+                jname = mujoco.mj_id2name(self._model, mujoco.mjtObj.mjOBJ_JOINT, i) or ""
+                if "pitch" in jname:
+                    self._model.jnt_range[i, 0] = -pitch_lim
+                    self._model.jnt_range[i, 1] = +pitch_lim
+                    n_pitch += 1
+                else:
+                    self._model.jnt_range[i, 0] = -max_rad
+                    self._model.jnt_range[i, 1] = +max_rad
+                    n_yaw += 1
                 self._model.jnt_solref[i] = stiff_solref
                 self._model.jnt_solimp[i] = stiff_solimp
-                n_applied += 1
         logger.debug(
-            f"CElegansBody: joint limit ±{max_rad:.3f} rad (hard stop) "
-            f"on {n_applied} hinges"
+            f"CElegansBody: yaw ±{max_rad:.3f} rad on {n_yaw}, "
+            f"pitch ±{pitch_lim:.3f} rad on {n_pitch} (hard stops)"
         )
 
     # ------------------------------------------------------------------

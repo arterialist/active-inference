@@ -614,6 +614,21 @@ class CElegansNervousSystem(BaseNervousSystem):
     _INTRINSIC_OSC_BASELINE: float = 0.01
     _intrinsic_osc_phases: dict[str, float] = {}
 
+    # ----- A-type motor neuron intrinsic oscillator (Gao et al. 2018) -----
+    # DA1-DA9 and VA1-VA12 are intrinsic UNC-2 (P/Q-type Ca²⁺) oscillators.
+    # AVA gates them via a dual-mode coupling: gap junctions shunt at AVA rest
+    # (silent) and chemical synapses release the oscillator during AVA
+    # depolarisation (active during reversal). This method runs ONLY when the
+    # existing reversal latch is in "active" state — so it strictly does not
+    # interfere with forward locomotion. Implementation injects depolarisation
+    # at the A-MN .S directly (external state-variable manipulation, no PAULA
+    # change, matching the Phase B oscillator pattern on RMD/SMD).
+    _A_MN_OSC_ENABLED: bool = True
+    _A_MN_OSC_FREQ_HZ: float = 0.5         # backward wave frequency
+    _A_MN_OSC_AMP: float = 0.025           # peak per-tick injection (matches RMD osc)
+    _A_MN_OSC_SPATIAL_FREQ: float = 1.5    # ~1.5 wavelengths along body
+    _a_mn_osc_phase: float = 0.0           # global phase, advances each tick
+
     def _inject_sensory(
         self, sensory_inputs: dict[str, float], current_tick: int
     ) -> None:
@@ -720,6 +735,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._inject_tonic_forward()
         self._inject_command_noise()
         self._inject_intrinsic_oscillation()
+        self._inject_a_motor_oscillation()
         self._inject_head_cpg(current_tick)
 
         avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
@@ -899,6 +915,38 @@ class CElegansNervousSystem(BaseNervousSystem):
             phase = (phase + omega) % (2.0 * np.pi)
             self._intrinsic_osc_phases[name] = phase
             n.S -= amp * gate * float(np.sin(phase))   # -sign ventral
+
+    def _inject_a_motor_oscillation(self) -> None:
+        """A-MN intrinsic UNC-2 oscillator with AVA dual-mode gating (Gao 2018).
+
+        Runs ONLY when the existing reversal latch is in ``active`` state. In
+        idle/refractory states this method is a no-op so the forward
+        locomotion pathway is exactly the same as upstream HEAD — no
+        side-effects. While active, DA/VA neurons receive a phase-locked
+        sinusoidal injection that produces a tail-to-head wave (DA + sin,
+        VA − sin → anti-phase). Spatial phase shift gives the wave 1.5
+        wavelengths along the body, propagating from tail to head — the
+        kinematic signature of backward locomotion.
+        """
+        if self._network is None or not self._A_MN_OSC_ENABLED:
+            return
+        if self._rev_state != "active":
+            return
+        omega = 2.0 * np.pi * float(self._A_MN_OSC_FREQ_HZ) * self._NEURON_TICK_DT
+        self._a_mn_osc_phase = (self._a_mn_osc_phase + omega) % (2.0 * np.pi)
+        amp = float(self._A_MN_OSC_AMP)
+        spatial_k = 2.0 * np.pi * float(self._A_MN_OSC_SPATIAL_FREQ)
+        for name, nid in self._name_to_id.items():
+            prefix = name.rstrip("0123456789")
+            if prefix not in ("DA", "VA"):
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is None:
+                continue
+            frac = float(MOTOR_NEURON_POSITIONS.get(name, 0.0))
+            local_phase = self._a_mn_osc_phase + frac * spatial_k
+            sign = 1.0 if prefix == "DA" else -1.0
+            n.S += amp * sign * float(np.sin(local_phase))
 
     def _inject_off_cell_tonic(self) -> None:
         """Tonic baseline for OFF-cell sensory neurons.

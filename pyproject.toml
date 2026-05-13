@@ -36,7 +36,7 @@ trace = [
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["simulations"]
+packages = ["simulations", "analysis"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

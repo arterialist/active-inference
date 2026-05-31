@@ -13,6 +13,11 @@ Models AVB↔B-motor gap junction coupling.
 | AVBL, AVBR | `_TONIC_FWD_CMD` | 0.30 | 0.262 | Depolarising current to command interneurons |
 | DB*, VB* neurons | `_TONIC_FWD_MOTOR` | 0.0 | 0.098 | Depolarising current to B-type motor neurons |
 
+> Research finding: non-zero `_TONIC_FWD_MOTOR` in archived evolved configs can
+> collapse the live 13-segment body into a nearly straight line by lifting both
+> DB and VB populations uniformly. Treat the source default `0.0` as the safe
+> current value. See [TONIC_FWD_MOTOR collapse](../c-elegans/tonic-fwd-motor-collapse.md).
+
 The forward command interneurons (AVB) maintain a tonic depolarisation that biases the worm toward forward locomotion, reflecting *C. elegans*' ~80% forward bias.
 
 ## OFF-Cell Tonic (`_inject_off_cell_tonic`)

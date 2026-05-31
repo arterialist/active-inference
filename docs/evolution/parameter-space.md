@@ -39,6 +39,14 @@
 | Sensory w_tref M0 | 12 | 14.97 |
 | Sensory w_tref M1 | −6 | −8.83 |
 
+## Current Finding
+
+`TONIC_FWD_MOTOR` should not be treated as a safe current search dimension
+without an explicit body-shape objective. Ablation on 2026-05-31 showed that
+`TONIC_FWD_MOTOR` alone reproduces the straight-body live-demo failure, while
+removing only that key from the full evolved config restores normal S-shaped
+curvature. See [TONIC_FWD_MOTOR collapse](../c-elegans/tonic-fwd-motor-collapse.md).
+
 ## See Also
 
 - [Neuromodulation Gain Constants](../neuromodulation/overview.md#gain-constants) — indices 0–4

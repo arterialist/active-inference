@@ -21,6 +21,11 @@
 }
 ```
 
+> Current research finding: archived configs with non-zero `TONIC_FWD_MOTOR`
+> can collapse live body curvature even when the simulation has motor activity.
+> Prefer removing that key or setting it to `0.0` for current body-locomotion
+> tests. See [TONIC_FWD_MOTOR collapse](../c-elegans/tonic-fwd-motor-collapse.md).
+
 ## Checkpoint Format
 
 Nests the config under a `"config"` key and adds metadata at the top level:

@@ -779,8 +779,10 @@ def _save_animation(
             ax_fe.set_ylim(0, max(pe_max, me_max) * 1.1)
 
         def _eaten_up_to(food_pos: tuple[float, float, float], up_to_idx: int) -> bool:
-            fp = np.array(food_pos)
-            dists = np.linalg.norm(head_pos[: up_to_idx + 1, :3] - fp, axis=1)
+            # Match environment.py post_body_step: consumption is xy-plane only.
+            # A 3D check spuriously fails when the head pitches above z=0.
+            fp = np.array(food_pos[:2])
+            dists = np.linalg.norm(head_pos[: up_to_idx + 1, :2] - fp, axis=1)
             return bool(np.any(dists <= FOOD_CONSUMPTION_RADIUS_M))
 
         def _update(frame_idx: int) -> tuple[Any, ...]:

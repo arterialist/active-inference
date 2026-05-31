@@ -25,6 +25,13 @@ Or bake into source code permanently:
 uv run python scripts/apply_evolved_config.py --config evolved_food_seeking_config.json
 ```
 
+## Current Caveat
+
+Archived configs with non-zero `TONIC_FWD_MOTOR` can collapse the live
+13-segment body into a nearly straight line while still showing motor activity.
+For current locomotion/body-shape tests, remove that key or set it to `0.0`.
+See [TONIC_FWD_MOTOR collapse](../c-elegans/tonic-fwd-motor-collapse.md).
+
 ## See Also
 
 - [Evolution Output](../evolution/output.md) — full JSON schema and field descriptions

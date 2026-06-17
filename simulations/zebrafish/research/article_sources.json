@@ -1,0 +1,150 @@
+{
+  "checked_on": "2026-05-13",
+  "note": "Open/public article sources to fetch locally. Do not add paywalled PDFs here.",
+  "sources": [
+    {
+      "id": "petkova-2025-fish1",
+      "title": "A connectomic resource for neural cataloguing and circuit dissection of the larval zebrafish brain",
+      "doi": "10.1101/2025.06.10.658982",
+      "html_url": "https://www.biorxiv.org/content/10.1101/2025.06.10.658982v1",
+      "pdf_url": "https://www.biorxiv.org/content/10.1101/2025.06.10.658982v1.full.pdf",
+      "license_note": "bioRxiv preprint page"
+    },
+    {
+      "id": "boulanger-weill-2025-clem",
+      "title": "Correlative light and electron microscopy reveals the fine circuit structure underlying evidence accumulation in larval zebrafish",
+      "doi": "10.1101/2025.03.14.643363",
+      "html_url": "https://www.biorxiv.org/content/10.1101/2025.03.14.643363v1",
+      "pdf_url": "https://www.biorxiv.org/content/10.1101/2025.03.14.643363v1.full.pdf",
+      "license_note": "bioRxiv preprint page"
+    },
+    {
+      "id": "svara-2022-nat-methods",
+      "title": "Automated synapse-level reconstruction of neural circuits in the larval zebrafish brain",
+      "doi": "10.1038/s41592-022-01621-0",
+      "html_url": "https://www.nature.com/articles/s41592-022-01621-0",
+      "pdf_url": "https://www.nature.com/articles/s41592-022-01621-0.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "hildebrand-2017-whole-brain-ssem",
+      "title": "Whole-brain serial-section electron microscopy in larval zebrafish",
+      "doi": "10.1038/nature22356",
+      "html_url": "https://www.nature.com/articles/nature22356",
+      "pdf_url": "https://www.nature.com/articles/nature22356.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "randlett-2015-zbrain",
+      "title": "Whole-brain activity mapping onto a zebrafish brain atlas",
+      "doi": "10.1038/nmeth.3581",
+      "html_url": "https://www.nature.com/articles/nmeth.3581",
+      "pdf_url": "https://www.nature.com/articles/nmeth.3581.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "kunst-2019-cellular-atlas",
+      "title": "A cellular-resolution atlas of the larval zebrafish brain",
+      "doi": "10.1016/j.neuron.2019.04.034",
+      "html_url": "https://www.cell.com/neuron/fulltext/S0896-6273(19)30364-6",
+      "pdf_url": "https://www.cell.com/neuron/pdf/S0896-6273(19)30364-6.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "ahrens-2012-motor-adaptation",
+      "title": "Brain-wide neuronal dynamics during motor adaptation in zebrafish",
+      "doi": "10.1038/nature11057",
+      "html_url": "https://www.nature.com/articles/nature11057",
+      "pdf_url": "https://www.nature.com/articles/nature11057.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "ahrens-2013-lightsheet",
+      "title": "Whole-brain functional imaging at cellular resolution using light-sheet microscopy",
+      "doi": "10.1038/nmeth.2434",
+      "html_url": "https://www.nature.com/articles/nmeth.2434",
+      "pdf_url": "https://www.nature.com/articles/nmeth.2434.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "portugues-2014-visuomotor",
+      "title": "Whole-brain activity maps reveal stereotyped, distributed networks for visuomotor behavior",
+      "doi": "10.1016/j.neuron.2014.01.019",
+      "html_url": "https://www.cell.com/neuron/fulltext/S0896-6273(14)00032-4",
+      "pdf_url": "https://www.cell.com/neuron/pdf/S0896-6273(14)00032-4.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "dunn-2016-exploratory-locomotion",
+      "title": "Brain-wide mapping of neural activity controlling zebrafish exploratory locomotion",
+      "doi": "10.7554/eLife.12741",
+      "html_url": "https://elifesciences.org/articles/12741",
+      "pdf_url": "https://elifesciences.org/articles/12741.pdf",
+      "license_note": "eLife open-access article"
+    },
+    {
+      "id": "marques-2018-locomotor-repertoire",
+      "title": "Structure of the Zebrafish Locomotor Repertoire Revealed with Unsupervised Behavioral Clustering",
+      "doi": "10.1016/j.cub.2017.12.002",
+      "html_url": "https://www.cell.com/current-biology/fulltext/S0960-9822(17)31661-7",
+      "pdf_url": "https://www.cell.com/current-biology/pdf/S0960-9822(17)31661-7.pdf",
+      "license_note": "publisher article page; fetch only if public"
+    },
+    {
+      "id": "budick-omalley-2000-locomotor",
+      "title": "Locomotor repertoire of the larval zebrafish: swimming, turning and prey capture",
+      "html_url": "https://journals.biologists.com/jeb/article/203/17/2565/8555/Locomotor-repertoire-of-the-larval-zebrafish",
+      "pdf_url": "https://journals.biologists.com/jeb/article-pdf/203/17/2565/1159259/2565.pdf",
+      "license_note": "Journal of Experimental Biology article page"
+    },
+    {
+      "id": "mueller-2004-body-waves",
+      "title": "Swimming of larval zebrafish: ontogeny of body waves and implications for locomotory development",
+      "doi": "10.1242/jeb.00821",
+      "html_url": "https://journals.biologists.com/jeb/article/207/5/853/14404/Swimming-of-larval-zebrafish-ontogeny-of-body",
+      "pdf_url": "https://journals.biologists.com/jeb/article-pdf/207/5/853/1067492/853.pdf",
+      "license_note": "Journal of Experimental Biology article page"
+    },
+    {
+      "id": "fishnet-2007",
+      "title": "FishNet: an online database of zebrafish anatomy",
+      "doi": "10.1186/1741-7007-5-34",
+      "html_url": "https://bmcbiol.biomedcentral.com/articles/10.1186/1741-7007-5-34",
+      "pdf_url": "https://bmcbiol.biomedcentral.com/counter/pdf/10.1186/1741-7007-5-34.pdf",
+      "license_note": "BMC open-access article"
+    },
+    {
+      "id": "fishchip-2023",
+      "title": "A neural basis for categorizing sensory stimuli to enhance decision accuracy",
+      "doi": "10.1038/s41467-023-35836-2",
+      "html_url": "https://www.nature.com/articles/s41467-023-35836-2",
+      "pdf_url": "https://www.nature.com/articles/s41467-023-35836-2.pdf",
+      "license_note": "Nature Communications open-access article"
+    },
+    {
+      "id": "pyzebrascope-2022",
+      "title": "PyZebrascope: a Python platform for large-scale analysis of zebrafish behavioral and neuronal activity data",
+      "doi": "10.3389/fcell.2022.875044",
+      "html_url": "https://www.frontiersin.org/articles/10.3389/fcell.2022.875044/full",
+      "pdf_url": "https://www.frontiersin.org/articles/10.3389/fcell.2022.875044/pdf",
+      "license_note": "Frontiers open-access article"
+    },
+    {
+      "id": "campari2-2026",
+      "title": "CaMPARI2 enables stimulus-locked whole-brain activity mapping at cellular resolution in unrestrained larval zebrafish",
+      "doi": "10.3389/fnmol.2026.1772915",
+      "html_url": "https://www.frontiersin.org/articles/10.3389/fnmol.2026.1772915/full",
+      "pdf_url": "https://www.frontiersin.org/articles/10.3389/fnmol.2026.1772915/pdf",
+      "license_note": "Frontiers open-access article"
+    },
+    {
+      "id": "tabor-2017-registration",
+      "title": "High-precision registration between zebrafish brain atlases using symmetric diffeomorphic normalization",
+      "doi": "10.1093/gigascience/gix056",
+      "html_url": "https://academic.oup.com/gigascience/article/6/8/gix056/3920772",
+      "pdf_url": "https://academic.oup.com/gigascience/article-pdf/6/8/gix056/25143068/gix056.pdf",
+      "license_note": "GigaScience open-access article"
+    }
+  ]
+}
+

@@ -78,6 +78,13 @@ show that a better regional fit can largely survive removal of axial coupling.
 Distributed stimulus transduction must therefore be separated from propagation
 before interpreting the fit as a cellular repair.
 
+The [regional connected-network test](APL_REGIONAL_FINDINGS_2026-09-10.md)
+uses public neuropil meshes as readouts without altering the graph. KC-output
+blockade nearly removes vertical-lobe local release while calyx release persists,
+at two electrical-coupling settings. Full ticks expose saturation and negative
+PN input that prevent calling this a calcium-physiology replication. A whole-cell
+average cannot adjudicate the regional feedback claim.
+
 Current distinctions:
 
 | Item | Evidence status |
@@ -210,6 +217,9 @@ response-strength controls so silence cannot count as sparse discrimination.
 Use shared cell-class parameters across interventions. Any failure must be
 examined against cut-boundary input, physiological uncertainty, missing local
 APL processing and PAULA equations before changing anatomy or fitting edges.
+The regional comparison now supplies separate calyx and lobe measurements;
+the next input control must also distinguish the broad artificial ALPN course
+from an olfactory stimulus. Keep both regions and actual recurrent projections.
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.
 

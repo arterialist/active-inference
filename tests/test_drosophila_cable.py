@@ -194,3 +194,17 @@ def test_first_input_refinement_retains_every_substep_and_port_contribution(cabl
         refine_first_response(cable_record, output, divisions=(1, 2))
     with pytest.raises(ValueError, match="strictly increasing"):
         refine_first_response(cable_record, output / "invalid", divisions=(2, 1))
+
+
+def test_cable_coupling_override_reaches_model_without_changing_default(tmp_path):
+    import inspect
+    from simulations.drosophila.intervention_probe import main
+    for function in (main, run_intervention):
+        assert inspect.signature(function).parameters["apl_cable_rm_over_ra_um"].default == Dynamics().apl_cable_rm_over_ra_um
+    output = tmp_path / "stronger-coupling"
+    run_intervention(graph(), output, "intact", .5, spatial=spatial_fixture(tmp_path),
+                     apl_representation="local_cable", apl_cable_rm_over_ra_um=200000.)
+    m = json.loads((output / "manifest.json").read_text())
+    assert m["assumptions"]["parameters"]["apl_cable_rm_over_ra_um"] == 200000.
+    assert m["assumptions"]["spatial"]["rm_over_ra_um"] == 200000.
+    assert verify_unobserved(graph(), output)["ticks"] == 224

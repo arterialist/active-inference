@@ -220,12 +220,14 @@ class TickRecorder:
 
 
 def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_count: float,
-                     *, spatial: Path | None = None, apl_representation="global_graded"):
+                     *, spatial: Path | None = None, apl_representation="global_graded",
+                     apl_cable_rm_over_ra_um: float = 25000.0):
     if condition not in CONDITIONS:
         raise ValueError(f"Unknown condition: {condition}")
     started = time.perf_counter()
     sources_at_start = source_hashes()
-    dynamics = replace(Dynamics(), weight_per_count=weight_per_count, apl_representation=apl_representation)
+    dynamics = replace(Dynamics(), weight_per_count=weight_per_count, apl_representation=apl_representation,
+                       apl_cable_rm_over_ra_um=apl_cable_rm_over_ra_um)
     p = build_paula(graph, dynamics, spatial=spatial)
     drive, kc_rows, pn_rows, apl_row, epochs = make_course(p, graph)
     ids = np.asarray(list(p.root_to_id.values()))
@@ -296,9 +298,11 @@ def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_c
 
 
 def main(source: Path, output: Path, condition: str = "intact", weight_per_count: float = 0.02,
-         spatial: Path | None = None, apl_representation: str = "global_graded"):
+         spatial: Path | None = None, apl_representation: str = "global_graded",
+         apl_cable_rm_over_ra_um: float = 25000.0):
     result = run_intervention(Subgraph.load(source), output, condition, weight_per_count,
-                              spatial=spatial, apl_representation=apl_representation)
+                              spatial=spatial, apl_representation=apl_representation,
+                              apl_cable_rm_over_ra_um=apl_cable_rm_over_ra_um)
     print(json.dumps(result["epoch_summaries_not_acceptance"], indent=2), flush=True)
 
 

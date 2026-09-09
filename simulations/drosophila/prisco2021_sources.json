@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "dataset_doi": "10.5061/dryad.bk3j9kdd1",
+  "dataset_version": 160926,
+  "article_doi": "10.7554/eLife.74172",
+  "license": "CC0-1.0",
+  "retrieved_local_date": "2026-09-10",
+  "scope": "20 primary-data workbooks and README only; no HTML anatomy renders.",
+  "files": [
+    {
+      "id": 1282857,
+      "filename": "APL_GCaMP6m_DL_vs_Oct_peaks_(Figure_2G).xlsx",
+      "bytes": 10164,
+      "sha256": "9913dad006d84506ad6c6a278b7a8075d513dc075a674a753201c1dea06716dc",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282857",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282857"
+    },
+    {
+      "id": 1282858,
+      "filename": "APL_GCaMP6m_Mch_vs_Oct_peaks_(Figure_2D).xlsx",
+      "bytes": 10193,
+      "sha256": "c3c2decc3f00c57c35635a43b1977e659ddc816373e4c2c8cab0100b0979c2cb",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282858",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282858"
+    },
+    {
+      "id": 1282859,
+      "filename": "APL_locality_PA_FA_vs_MP_FA_(Figure_5-figure_supplement_1B).xlsx",
+      "bytes": 9184,
+      "sha256": "bfe757ce95f449fda0b96f26a75151df46814c17bbc08db51dd7597637a77b41",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282859",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282859"
+    },
+    {
+      "id": 1282860,
+      "filename": "APL_locality_PA_MP_vs_FA_MP_(Figure_5C).xlsx",
+      "bytes": 10310,
+      "sha256": "b4df291e070131decc54d9909bfab6654293e937093ea7669bbf44ac6b19c35a",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282860",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282860"
+    },
+    {
+      "id": 1282861,
+      "filename": "APL_PN_connectivity_table_(Figure_1D).xlsx",
+      "bytes": 9536,
+      "sha256": "bf73e14d119296bf8c326b710db9a61a81e2563ddba1ad87ea33a3195dad9e9f",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282861",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282861"
+    },
+    {
+      "id": 1282862,
+      "filename": "APL_KC_connectivity_table_(Figure_1E).xlsx",
+      "bytes": 68386,
+      "sha256": "087a91e237790b053b7678ce47dea755f3138177a57d729108ea9155a1ff0a07",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282862",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282862"
+    },
+    {
+      "id": 1282863,
+      "filename": "APL-TNT_MB247-homer-GCaMP3_Mch_vs_Oct_(Figure_4B_and_4D).xlsx",
+      "bytes": 10459,
+      "sha256": "579c9fa8922440b1f7682d64aba36cfc155ad49bd474f3459ad46bb1a84190b2",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282863",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282863"
+    },
+    {
+      "id": 1282864,
+      "filename": "APL-TNT_MB247-homer-GCaMP3_Mch_vs_Oct_all_MG_peaks_(Figure_4E_and_4F).xlsx",
+      "bytes": 24344,
+      "sha256": "0962cfcb82c1bb124eaa4edc3081accacb5a0f94ed75b8ff4eda586b27cd6d3c",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282864",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282864"
+    },
+    {
+      "id": 1282865,
+      "filename": "GH146-GCaMP6m_DL_vs_Oct_AL_average_activity_(Figure_3-figure_supplement_2D).xlsx",
+      "bytes": 8964,
+      "sha256": "619deff51082ef1edcb2d7890a98fbf7f645fa780339b081726d09f6e2f24e0d",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282865",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282865"
+    },
+    {
+      "id": 1282866,
+      "filename": "GH146-GCaMP6m_DL_vs_Oct_single_AL_glomeruli_values_(Figure_3-figure_supplement_1).xlsx",
+      "bytes": 10265,
+      "sha256": "3fd1851186b02b405dcdf79aa91e31930dc35ca529cea220d11c22b127706cae",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282866",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282866"
+    },
+    {
+      "id": 1282867,
+      "filename": "GH146-GCaMP6m_Mch_vs_Oct_AL_average_activity_(Figure_3-figure_supplement_2B).xlsx",
+      "bytes": 8978,
+      "sha256": "23f0eb9f6c8b8488c88f6c3db664cce56225d38dbb818eae5e0001a6dcecf6a8",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282867",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282867"
+    },
+    {
+      "id": 1282868,
+      "filename": "GH146-GCaMP6m_Mch_vs_Oct_single_AL_glomeruli_values_(Figure_3-figure_supplement_1).xlsx",
+      "bytes": 10355,
+      "sha256": "a9e875a76db94c3a5aa80833c8ddab91244f1fc8026dfd944892b5b83359ebc6",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282868",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282868"
+    },
+    {
+      "id": 1282869,
+      "filename": "Inter-odour_delta_among_conditions_-_Figure_4-figure_supplement_1.xlsx",
+      "bytes": 9272,
+      "sha256": "da3c97eae60db8559b319b9de8c1276aead73e194fd5a68bc688a4cded7d84c8",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282869",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282869"
+    },
+    {
+      "id": 1282870,
+      "filename": "MB247-homer-GCaMP3_DL_vs_Oct_average_(Figure_3-figure_supplement_2G_and_2I).xlsx",
+      "bytes": 9467,
+      "sha256": "7a9176b053d469c97242724a3725902c5f9da6802e3229b7ababc5379ff25e42",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282870",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282870"
+    },
+    {
+      "id": 1282871,
+      "filename": "MB247-homer-GCaMP3_DL_vs_Oct_single_MG_peaks_(Figure_3-figure_supplement_2H).xlsx",
+      "bytes": 10604,
+      "sha256": "8712e9984b0e2c76d49b2f1b361bb2213b438fbc247cac4fd7a766f0ef84ee04",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282871",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282871"
+    },
+    {
+      "id": 1282872,
+      "filename": "MB247-homer-GCaMP3_locality_of_MGs_responses_(Figure_5-figure_supplement_1A).xlsx",
+      "bytes": 9311,
+      "sha256": "534258b166d0860a97a3f810bf4c955265d10138d54b84f6e032e05c63272356",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282872",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282872"
+    },
+    {
+      "id": 1282873,
+      "filename": "MB247-homer-GCaMP3_Mch_vs_Oct_all_MG_peaks_(Figure_3G).xlsx",
+      "bytes": 12388,
+      "sha256": "91309c136134f37f7ce6cb77800080d968adc0e71484a1c981b5a21d34eef577",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282873",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282873"
+    },
+    {
+      "id": 1282874,
+      "filename": "NP225_Syp-GCaMP3_Mch_vs_Oct_all_boutons_peaks_(Figure_3C).xlsx",
+      "bytes": 14261,
+      "sha256": "ea54e08889bb0cbaa7647c368f49b489a80c1e26cac4a3243baf1e40a04c13e7",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282874",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282874"
+    },
+    {
+      "id": 1282875,
+      "filename": "MB247-homer-GCaMP3_Mch_vs_Oct_average_response_(Figure_3F-H).xlsx",
+      "bytes": 9497,
+      "sha256": "95c727611d13d852fc60cd9e17938f4613088604e8a4ad8509b9cba5b0f7ae3a",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282875",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282875"
+    },
+    {
+      "id": 1282876,
+      "filename": "NP225_Syp-GCaMP3_Mch_vs_Oct_average_response_(Figure_3B-D).xlsx",
+      "bytes": 9686,
+      "sha256": "c7274b3a9b9b4c8f27c0df1a099ac2712ae19d14473997c287b2fb7ab2a519da",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282876",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282876"
+    },
+    {
+      "id": 1282879,
+      "filename": "README.rtf",
+      "bytes": 45615,
+      "sha256": "7249dcd653bf75d5076062e40b39b3bf98ac7fd5b46c22ef0e4d0371a1457b6a",
+      "digest_type": "sha-256",
+      "api_url": "https://datadryad.org/api/v2/files/1282879",
+      "browser_url": "https://datadryad.org/downloads/file_stream/1282879"
+    }
+  ]
+}

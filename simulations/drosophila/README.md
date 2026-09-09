@@ -171,6 +171,13 @@ release.
 
 ## Next physiological test
 
+The Prisco et al. primary tables have now been acquired and audited. They
+provide an animal-level APL-blockade target, but only nine glomerulus labels,
+no physiological time series, and three unresolved pooled-KC count mismatches.
+Twenty of the 174 selected PNs are exact-label candidates, not individually
+measured inputs. See [the primary physiology audit](PRISCO_PHYSIOLOGY_2026-09-10.md)
+and `prisco.py` for the read-only importer, identity mapping and reanalysis.
+
 The branch-local implementation and matched release-block controls now execute,
 but the first response already caps some local releases. Finer time steps do
 not remove that effect. Current density, local release, spatial stimulation and

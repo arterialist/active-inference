@@ -29,6 +29,22 @@ may be host code. All cognitive control must stay in the neural network.
 
 ## Current experiment and continuation
 
+The new magnitude-coordinate retrograde extension prevents the inhibitory gate
+failure in a completed 193-cell comparison, 16,000 ticks per condition. The native
+gate leaks at tick 10,395 and its terminal becomes negative at 11,621; the new
+gate remains responsive to withdrawal and reactivation with finite latency.
+This is an isolated mechanism result, not repaired associative memory.
+
+Four 590-cell embodied courses now repeat sixteen-block acquisition with the
+extension enabled. Their first blocks pass 7,360 recorded-tick audits, with exact
+original-course preflights. The gate remains active but joint recall still fails
+after that exposure. All four courses remain in progress; finish these exact
+runs rather than restarting them. The incoming graded plasticity rule also
+continues depressing nonselected weights, so lifetime stability remains open.
+See `experiments/MAGNITUDE_FEEDBACK_2026-09-09.md` for protocol, results, failed
+test assertions, literature boundaries and data locations. The full goal remains
+active and unachieved.
+
 Continuing the same acquired brain/body state has separated a growing joint
 audiovisual component from a larger, reversing common-direction bias. All four
 sixteen-exposure courses completed, executing 99,072 ticks; 97,536 recorded ticks

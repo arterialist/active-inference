@@ -48,8 +48,12 @@ The current execution probe has not reproduced those assays.
 [Amin et al., 2020](https://doi.org/10.7554/eLife.56954) shows spatially restricted
 activity and inhibition within non-spiking APL. This prevents interpreting a
 single global APL integrator as a complete cellular reconstruction. The current
-table has no synapse locations. A localized model needs additional anatomical
-data and an explicit intracellular hypothesis, not arbitrary extra APL neurons.
+pair table has no synapse locations. A separate spatial snapshot now locates
+all 128,435 linked APL contacts and exactly matches all 6,315 incident pair
+counts. It also retains 42,572 connectors with no linked partner. See
+[the spatial findings and reproduction commands](SPATIAL_FINDINGS_2026-09-10.md).
+A localized model still needs an explicit intracellular hypothesis, not
+arbitrary extra APL neurons. The current PAULA execution remains global graded.
 
 Current distinctions:
 
@@ -57,6 +61,7 @@ Current distinctions:
 | --- | --- |
 | Neuron identity and directed pair counts | Imported from the pinned FlyWire-derived tables. Anatomical reconstructions have their own uncertainty. Weak one-count pairs are retained. |
 | Cell labels | Pinned annotation release. `cell_class` identifies all KCs; a nonempty `cell_type` is not required. |
+| APL spatial anatomy | Public CATMAID m783 snapshot, 360,309 tree nodes. Linked contact counts match the pair table exactly; coordinates, original source rows and open connectors are retained separately. Not yet used by the neural dynamics. |
 | Neurotransmitters | Predicted transmitter/confidence and known-transmitter/source fields remain separate. |
 | Forward sign | Uses the Shiu table's `Excitatory` model column, not a measured receptor effect. |
 | Initial strength | Assumed linear conversion, `sign × count × 0.02`, on postsynaptic information only. No per-edge fitting or clipping. |

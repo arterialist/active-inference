@@ -1,16 +1,28 @@
 # PAULA brain research goal
 
-The active goal is a mammal-level embodied artificial agent built from PAULA,
-with explicit neuron extensions where needed: seeing, hearing, continuing
-learning, reasoning, action, hierarchical regulation and potentially rhythmic
-workspace coordination. The user's end goal includes consciousness and
-artificial life. Isolated regulation or association does not complete it.
+The active goal is an embodied artificial organism built from PAULA, pursuing
+mammal-level cognitive breadth and the possibility of consciousness. The central
+question is how locally adaptive neural dynamics compose into a coherent,
+self-regulating whole. Perception, memory, prediction, reasoning and action
+must participate in one continuing brain–body–environment process. Populations
+should acquire useful states, retain experience, influence and regulate other
+populations, and reorganize through interaction.
 
-PAULA/ALERM are both the construction basis and subjects of investigation.
-Retain failed hypotheses and intervention evidence. Do not substitute pretrained
-perception, a host policy, global supervised training or impressive animation
-for the requested neural mechanisms. Body physics and physical transduction
-may be host code. All cognitive control must stay in the neural network.
+PAULA is the cornerstone; ALERM supplies an organizing framework to develop and
+test. Exploit existing dynamics, parameterization and composition. Explain any
+change to core equations. Cognitive control stays neural, with no hidden host
+policy or pretrained system supplying missing intelligence. Adaptation remains
+available throughout operation. Body physics and physical transduction may be
+host code.
+
+Use environments that make new capabilities necessary, preserve proven versions,
+and investigate coupled failures. Biology is inspiration, not a mandatory
+blueprint. Workspaces, waves and field coupling are options, not requirements.
+Do not require perfect components before composing them. Build tools for needed
+observations and interventions; preserve failures and faithful visual evidence.
+Measure progress by what the organism can learn, integrate, regulate or do,
+and what explains that change. Develop comparative tasks for mammal-level
+breadth, while separating demonstrated capabilities from subjective experience.
 
 ## Evidence required before completion can be claimed
 
@@ -19,7 +31,7 @@ may be host code. All cognitive control must stay in the neural network.
 | Seeing and hearing | Distinguishable representations of varied real inputs, preserved together and used by neural consumers | Regional feedback preserves weaker sound under strong vision across four graph seeds; recognition/generalization unproved |
 | Learned multimodal memory | Assignment-specific acquisition, partial-cue retrieval, retention, reversal and transfer, with activity/weight interventions | Selected-weight transfer restores some cue-specific action, but the harder crossed audiovisual association fails in all four tested seeds; reliable joint recall and transfer to new stimuli remain unproved |
 | Hierarchical dynamics | Parent consumes and regulates child dynamics causally; distinct useful states survive composition and perturbation | Upper-to-sensory feedback changes responses to a physical disturbance in a full-state factorial assay; useful learned regulation and content preservation unproved |
-| Self-regulation | Local disturbances recover without erasing unrelated representations; adaptation stays effective | Regional alignment helps integration; an opt-in magnitude rule removes observed inhibitory sign flips in two-seed audiovisual tests without freezing adaptation. Long-run and embodied regulation unproved |
+| Self-regulation | Local disturbances recover without erasing unrelated representations; adaptation stays effective | Magnitude feedback preserves the context gate throughout four completed sixteen-block embodied courses. Joint association remains transient; learned and lifetime regulation remain unproved |
 | Reasoning | Neural use of learned relations for novel combinations, delayed choices and counterfactual interventions | No evidence from the new population prototype |
 | Embodied action and perception | One neural network controls a physical body and learns consequences of its actions across challenging worlds | Acquired temporal prediction weights now affect muscle actuation and physical motion through neural error feedback; direct reflex and learned routes reject a bounded load with different effort/progress costs. Learned upper control and multimodal action remain unproved |
 | Mammal-level breadth | Defined comparative task families, transfer, continuing learning and long-horizon autonomy | Not achieved; no narrow benchmark can substitute |
@@ -35,15 +47,35 @@ gate leaks at tick 10,395 and its terminal becomes negative at 11,621; the new
 gate remains responsive to withdrawal and reactivation with finite latency.
 This is an isolated mechanism result, not repaired associative memory.
 
-Four 590-cell embodied courses now repeat sixteen-block acquisition with the
-extension enabled. Their first blocks pass 7,360 recorded-tick audits, with exact
-original-course preflights. The gate remains active but joint recall still fails
-after that exposure. All four courses remain in progress; finish these exact
-runs rather than restarting them. The incoming graded plasticity rule also
-continues depressing nonselected weights, so lifetime stability remains open.
-See `experiments/MAGNITUDE_FEEDBACK_2026-09-09.md` for protocol, results, failed
-test assertions, literature boundaries and data locations. The full goal remains
-active and unachieved.
+Four 590-cell embodied courses have completed sixteen-block acquisition with
+the extension enabled: 131,504 executed ticks, 130,048 recorded ticks audited.
+The gate stays functional throughout acquisition in all seeds. At block 12,
+three seeds express the correct joint relation for all four pairings throughout
+resting probe ticks 16–63, before fresh somatic evidence. At block 16 all seeds
+again share one prediction direction. This is transient acquired organization,
+not reliable retention. Joint content grows while stronger shared updates change
+its expression; the full four-block update attribution covers 23,296 ticks.
+
+A wiring-only local inhibitory circuit adds eight cells. Its four-seed embodied
+screen completed and audited 17,472 ticks. Joint/shared contrast improves at
+every pre-feedback tick 16–63, but absolute joint activity falls in three seeds
+and one conditional capacity margin worsens. It is a candidate for testing
+continued learning, not a declared repair. `competition_acquisition.py` compares
+the same physical course and preserves positive adaptation and exact branch
+replay. Do not replace this question with a demand for perfect component output.
+
+The unchanged-condition runner reproduced all 1,840 first-block recorded ticks,
+including its diagnostic branches, exactly. Four feedback-enabled sixteen-block
+courses are running in `.live/research/20260909_competition_learning_seed*`,
+seeds 11, 23, 44 and 77. Continue those processes and audit completed blocks;
+do not treat their manifests as completion evidence or start duplicate runs.
+
+The incoming graded rule continues depressing nonselected weights, so lifetime
+regulation remains open. See `experiments/MAGNITUDE_FEEDBACK_2026-09-09.md` for
+the evidence, negative results, literature boundaries and data locations.
+The full objective remains active and unachieved.
+
+### Earlier native-feedback course and interventions
 
 Continuing the same acquired brain/body state has separated a growing joint
 audiovisual component from a larger, reversing common-direction bias. All four

@@ -4,12 +4,13 @@
 
 The opt-in `MagnitudeRetrogradeNeuron` prevents the measured inhibitory-terminal
 failure in a completed 193-cell, 16,000-tick preparation. The unchanged comparison
-also ran 16,000 ticks. This is an isolated gate result, not accepted memory or a
-new agent version. Four 590-cell embodied acquisition courses are running from
-the same birth graphs and schedule as the previous crossed audiovisual tests.
-The first completed block, 7,360 recorded training/probe ticks across four seeds,
-passes independent physical, sensory, learning and ordered-return audits. It
-does **not** solve the joint association.
+also ran 16,000 ticks. Four 590-cell embodied acquisition courses have now
+completed the same sixteen-block schedule as the previous crossed audiovisual
+tests. All 130,048 recorded training/probe ticks pass independent physical,
+sensory, learning and ordered-context-return audits. No suppressed-bank cell
+becomes active during acquisition in any seed. The gate repair survives this
+body experiment, but does **not** provide reliably retained joint association.
+The four courses executed 131,504 ticks including exact reference replays.
 
 ## What changes
 
@@ -113,21 +114,108 @@ that biological inhibition must remain permanently on. Full-text PMC access
 was blocked during this continuation; the literature claim is limited to the
 retrieved abstracts and indexed passages.
 
-## Next decision
+## Full-course result and interference mechanism
 
 The subsequent `20260909_magnitude_learning_b3_analysis` audits all first three
 blocks: 22,080 recorded ticks and 48 expression probes. No context-terminal
 sign failure or active suppressed-bank cell occurs in that acquisition prefix.
 At the third block's resting probe ticks 16–63, the opposite bias now dominates:
 crossed pairs have the correct negative prediction, while same-index pairs are
-wrong. This retains the earlier evidence of overwriting despite functional
-gating. The runs have not yet reached the old block-eight terminal failure.
+wrong. The subsequent full sixteen-block audit is retained in
+`20260909_magnitude_learning_b16_analysis`, including 384 probe cases. All four
+workers exited successfully. The final context-terminal coefficient is
+2.0760421752929688 in every seed; none became negative during acquisition.
 
-Finish and audit the four existing courses before changing their source or
-starting replacements. Compare the preserved gate, selected weight trajectories,
-common versus joint prediction components, and acquired/reset physical behavior
-with the original sixteen-block failures. If inhibition stays functional while
-recall still overwrites, that separates two failures instead of declaring the
-whole system repaired. The longer-term incoming-plasticity issue also remains.
-This preparation is one experiment toward the full PAULA/ALERM objective, not
-semantic recognition, a learned hierarchy, mammal-level cognition or consciousness.
+At block 12, seeds 11, 23 and 77 express the correct relation for all four
+pairings at every resting probe tick 16 through 63, before new somatic evidence.
+Seed 44 still gets pair 10 wrong throughout that interval. At block 16, all
+seeds again predict the same negative direction for all pairs: 01/10 are right
+and 00/11 are wrong throughout that interval. The block-12 result is a
+retrospectively identified transient, not a stopping rule or general retention
+claim. Each probe continues adapting, and onset and post-feedback ticks remain
+in the evidence.
+
+At the final probe tick 63, the shared prediction component is -0.331 through
+-0.293 across seeds, while the joint component is positive, 0.084 through 0.122.
+This is not simply erased joint content. The four-block per-update audit,
+`20260909_magnitude_credit_b4`, projects all 23,296 actual acquisition updates
+onto one declared four-pair reference. Joint contributions largely accumulate,
+while much larger changes rewrite the response shared by all pairings. Absolute
+shared effects at reference tick 63 sum to 9.20 through 9.57 across seeds, versus
+0.025 through 0.045 for joint effects. These are conditional projections, not
+derivatives or counterfactual trajectories of the coupled brain. Every
+acquisition-tick by reference-tick effect and its source identities are saved.
+Native reference reconstruction has zero residual in all four seeds.
+
+Thus preserving the inhibitory interface repairs one consequential failure,
+but does not remove learning interference. The incoming-plasticity issue also
+remains. A neuron-wide rate multiplier changes the magnitude, not the direction,
+of one unclipped update at a fixed state. Temporal regulation, clipping and
+feedback can still change the integrated trajectory. The next experiment asks
+whether neural competition changes that trajectory usefully.
+
+## Local competition screen
+
+`components/learning/feedback_competition.py` adds four inhibitory pools
+per mixed bank, each represented here by one graded cell reading 48 principals.
+Each reads only its disjoint territory with total birth input conductance one
+and returns weight -1 to each member. Eight additional cells bring the complete
+brain from 590 to 598 cells. No external average, pair label or desired action
+enters these circuits. Existing positive adaptation and return pathways remain;
+the default disabled configuration is an exact copy of the original.
+
+The fixed gain was chosen before the screen. The corresponding held-coefficient,
+all-active common-mode delay polynomial has largest root magnitude 0.909. That
+calculation is not a stability proof for the adaptive network. The isolated
+256-tick test suppresses without silencing its driven principals.
+
+Four completed embodied screens compare no added cells, wired cells with zero
+output weight, and functional feedback. Each condition receives four fresh
+364-tick crossed-media episodes. All 17,472 ticks pass independent selected
+learning, physical, afferent, neural-command and context-return checks. Added
+cells are fully observed, not independently equation-reconstructed. Original
+episodes replay exactly. The zero-output circuit retains extra retrograde paths
+and is not assumed to be identical to absent wiring.
+
+| Seed | Joint/shared norm ratio, no feedback | With feedback | Conditional margin, no feedback | With feedback |
+| --- | --- | --- | --- | --- |
+| 11 | 0.0803 | 0.1024 | 0.3451 | 0.3440 |
+| 23 | 0.0813 | 0.0975 | 0.3109 | 0.3122 |
+| 44 | 0.0734 | 0.0807 | 0.2949 | 0.2490 |
+| 77 | 0.0714 | 0.0914 | 0.2799 | 0.2960 |
+
+Norm ratios in this table use mean norms over ticks 16 through 63. The ratio
+advantage also holds at every individual tick in that interval for every seed.
+All four active-bank inhibitory cells operate throughout the interval. The
+first mixed-cell divergence from the wired-zero control occurs at tick 8 for
+audio 0 and tick 9 for audio 1, for both videos in every seed.
+
+Absolute joint norm decreases in three seeds on that window average, and seed
+44 loses conditional margin. The margin uses fixed factual incoming histories
+and legal constant weights, with primal/dual numerical checks; no fitted weights
+are stored or installed. Neither contrast nor conditional capacity establishes
+learned behavior. The screen supports a continued-acquisition comparison, not
+acceptance of the circuit as a memory repair. Data and full member traces are
+in `20260909_feedback_competition_seed{11,23,44,77}` and
+`20260909_feedback_competition_analysis`.
+
+[Agnes and Vogels, 2024](https://www.nature.com/articles/s41593-024-01597-4)
+model excitatory and inhibitory plasticity as co-dependent through neighboring
+currents, obtaining stable learned organization in their simulations. This
+motivates testing compatibility between local adaptation processes. The present
+PAULA feedback circuit neither implements their conductance/STDP equations nor
+demonstrates their results. Its existing graded learning remains a separate
+model hypothesis. Biology informs the experiment without prescribing its form.
+
+Thirty-three focused tests pass across local extensions, exact runtime replay,
+ordered-event corruption checks, update attribution and feedback construction.
+`competition_acquisition.py` reuses screened graphs for the same continuous
+course. Its completed unchanged-condition validation reproduced the original
+first block exactly, including every field of all four diagnostic branches:
+1,840 recorded ticks, 2,204 executed including the source-screen replay.
+The validation is retained in `20260909_competition_acquisition_none_preflight`.
+Four feedback-enabled sixteen-block courses have started in
+`20260909_competition_learning_seed{11,23,44,77}`. They are in progress, not
+completed results; their own source-screen preflights must also replay exactly.
+These experiments address composition and retained neural use of experience,
+not semantic recognition, mammal-level breadth or subjective experience.

@@ -133,14 +133,35 @@ boundary ports were retained. These are short-run observations, not long-run
 scaling benchmarks. All processes
 finished. No live agent servers or large simulation suites were started.
 
-## Next physiological test
+## PN-drive interventions
 
-Use one declared PN input course and its matched controls to test KC-output
-blockade and APL-output blockade on the same graph. Preserve input histories,
-ongoing adaptation and native return-path accounting. Compare response onset,
-density and temporal profile before any summary acceptance decision. A
-direct-current assay can establish qualitative intervention effects, but cannot
-stand in for the paper's odor panel or fluorescence measurements.
+The first matched intervention course is complete. Five recordings cover the
+default strength, a stronger shared count conversion, KC-output blockade,
+APL-output blockade and APL activation. They retain the same measured graph,
+boundary slots and positive native adaptation. See
+[the findings and tick-level causal witness](INTERVENTION_FINDINGS_2026-09-10.md).
+
+The stronger conversion recruits KCs and produces inhibitory feedback. This is
+an operating-range result, not a reproduction of odor discrimination. In one
+weak-drive window, KC blockade delays a PN spike and a downstream KC spike,
+reducing the window's count despite increasing KC activity later. Averages
+alone would miss that preserved KC→PN→KC route.
+
+`intervention_probe` records all inputs, native local potentials, soma fields
+and information coefficients in 16-tick chunks. `intervention_analysis` checks
+the input schedule, actual experimental-port arrivals, silent cut boundary,
+blockade targets, continuous state and independently recomputed summaries.
+Comparisons require matching parameters, anatomy, port identities and initial
+recorded state. These are diagnostic checks, never biological acceptance.
+
+Both intact 224-tick courses also replayed exactly without tick instrumentation,
+including every recorded postsynaptic and terminal coefficient, not just their
+endpoints. The intervention recordings omit complete event queues and cannot
+be used as executable checkpoints. Release blockade removes forward events;
+the blocked cell's `O` can remain positive. It must not be displayed as delivered
+release.
+
+## Next physiological test
 
 Obtain an empirically grounded odor-to-PN input mapping before claiming odor
 decorrelation. Test multiple odors and similar mixtures, with liveness and
@@ -172,6 +193,32 @@ uv run python -m simulations.drosophila.execution_probe \
   .live/research/flywire783/kc-apl-left-boundary-preserved
 uv run python -m pytest tests/test_drosophila_connectome.py -q
 ```
+
+The full intervention course and its independent replay check:
+
+```sh
+uv run python -m simulations.drosophila.intervention_probe \
+  .live/research/flywire783/kc-apl-left-v1 \
+  .live/research/flywire783/pn-course-new-intact \
+  --condition intact --weight-per-count 0.075
+uv run python -m simulations.drosophila.intervention_analysis \
+  .live/research/flywire783/pn-course-new-intact \
+  .live/research/flywire783/pn-course-new-intact/analysis.json
+uv run python -m simulations.drosophila.intervention_analysis \
+  .live/research/flywire783/pn-course-new-intact \
+  .live/research/flywire783/pn-course-new-intact/unobserved-verification.json \
+  --source .live/research/flywire783/kc-apl-left-v1
+uv run python -m pytest tests/test_drosophila_connectome.py tests/test_drosophila_interventions.py -q
+```
+
+Repeat the recording with a distinct output directory and `--condition`
+`kc_release_block`, `apl_release_block` or `apl_activation`, keeping
+`--weight-per-count 0.075`. Analyze each record on its own, then compare using
+`--reference PATH_TO_INTACT_RECORD`. The `--source` replay option runs the
+network again; inspection and comparison only read existing files. None starts
+a live server. The new 13 tests cover release lesions, chunk boundaries,
+current attribution, misleading metadata, source-file sampling and exact
+uninstrumented state agreement, bringing the fly package to 39 tests.
 
 Existing outputs are never overwritten. To repeat the rate comparison with the
 current boundary-preserving builder, call

@@ -519,3 +519,136 @@ was an observation race, not a neural or simulation failure. No worker was
 restarted. The completed independent audit waited for all case manifests and
 verified the finalized files. Future consumers must likewise use completion
 evidence rather than treating file existence as a completed recording.
+
+### Continuing acquisition, declared before execution
+
+Continue the original exponential and verification-matched cascade from their
+intact tick-1536 states, for seeds 11, 23, 44 and 77. The fixed endpoint is
+tick 4304, twenty complete 164-tick motor cycles after the earlier tick-1024
+intervention. Record every tick and save executable neural state, physical
+integration state, sensor-delay history and gate history at ticks 2560, 3584
+and 4304. Do not change the graph, learning rates, resistance or gates.
+
+At 4304, compare 512 continuing ticks with retained versus birth-reset selected
+predictive weights. All other state is retained, including intracellular credit
+stages. Both branches keep adaptation active. Compare a 64-tick checkpoint
+reload against the uninterrupted intact trajectory on every recorder field.
+Audit local learning, actual neural releases, physical integration and gate
+events independently, using the same audit as the preceding kernel experiment.
+
+The hypothesis is that the small useful acquired-weight contribution can grow
+with experience. Saturation, wrong-direction contribution, drift, or loss of
+usefulness are equally valid outcomes. Retain full per-stroke trajectories;
+do not substitute favorable endpoint counts for task completion. Motor phase
+matches the earlier intervention, but audiovisual phase and the rest of acquired
+state do not. This compares two ages of a continuing organism, not duration
+with all other variables held fixed. No transfer or general body-model claim
+follows from success in this preparation alone.
+
+The producer/analyzer is `active_sweep_acquisition.py`. Four workers run two
+conditions each, with a fixed artifact budget of 384 MiB per seed, 1.5 GiB
+combined, and a 3 GiB free-space reserve. This is 30,848 additional recorded
+ticks including 512 replay ticks, not a restart of the version-acceptance matrix.
+
+### Completed acquisition: useful memory grows, but control remains inadequate
+
+All four workers completed both conditions. The independent auditor checked
+30,848 additional ticks, including 512 exact checkpoint-replay ticks. The
+67-test focused regression set passed. No neuron equation, synaptic graph,
+plasticity rate, physical parameter or external input schedule changed during
+this continuation. The intervention at tick 4304 has the same observed motor
+phase as the earlier intervention: positive pulses start at local ticks 0, 164,
+328 and 492, with negative pulses at 82, 246 and 410.
+
+The original exponential learner deteriorates. Its retained weights reduce
+advance at every completed stroke endpoint in both directions and every seed.
+At tick 1024, this learner had usually helped negative strokes while impairing
+positive ones. At tick 4304 its selected memory hurts both. For seeds 11, 23
+and 77, the intact branch has less stroke advance throughout local ticks
+3 through 511. Seed 44 has brief favorable intervals 82–88 and 246–249,
+end exclusive, but all its completed endpoints are negative too.
+
+The matched cascade has the opposite age comparison. Its acquired-weight
+contribution grows at all six corresponding completed endpoints in each seed.
+Every late completed endpoint is positive. The table gives the late effect in
+microradians, retained minus reset; the earlier table above uses the same
+physical reference convention. These are measured contributions to movement,
+not weights interpreted as memories merely because they changed.
+
+| Seed | Positive 0–81 | Negative 82–163 | Positive 164–245 | Negative 246–327 | Positive 328–409 | Negative 410–491 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 11 | +484.2 | +716.2 | +457.7 | +742.2 | +499.6 | +686.4 |
+| 23 | +371.1 | +472.4 | +320.0 | +453.2 | +339.4 | +449.1 |
+| 44 | +639.0 | +289.6 | +660.8 | +286.4 | +622.0 | +348.7 |
+| 77 | +365.2 | +430.7 | +395.3 | +383.9 | +382.5 | +419.8 |
+
+The full trajectories still contain harmful onset intervals for the cascade:
+
+| Seed | Less stroke advance, local ticks, end exclusive |
+| --- | --- |
+| 11 | 164–171, 328–334, 492–497 |
+| 23 | 164–173, 328–335, 492–500 |
+| 44 | 82–93, 246–256, 410–419 |
+| 77 | None; greater advance throughout 3–511 |
+
+In all eight condition/seed pairs, selected weights differ immediately,
+recorded cellular state after one tick, body motion after three, and delivered
+physical input and neural teaching after 68. The reset branches continue
+learning, and retain other acquired state. The experiment therefore measures
+selected memory's contribution with online reacquisition allowed; it neither
+erases all memory nor measures performance with learning disabled.
+
+No continuation or probe crosses a gate. Completed cascade stroke advances
+are 0.007228–0.007497 radians, still far short of the 0.016-radian gate gap.
+The continuous physical curves also expose drifting sweep centers, including
+opposite drift directions across seeds. Current-force residuals remain large
+near motor events. A growing useful contribution does not establish accurate
+force prediction, sufficient compensation, stable lifetime behavior, or a
+transferable model of the body. Two acquisition ages also do not establish a
+monotonic learning curve or an asymptotic limit.
+
+This does rule out the simple explanation that these selected weights never
+become useful under actual movement. Under the same forward anatomy, changing
+local credit produces experience that increasingly helps rather than increasingly
+hinders movement. Kernel gain, timing and the resulting experience histories
+remain coupled; the result is not an attribution to timing alone.
+
+The next discriminating step should be a bounded change in resistance from
+the saved acquired state, retaining sensory delay history and adaptation, with
+matched selected-weight interventions. Do not hand-retime the cascade. Check
+prediction and physical action separately: a correction can assist movement in
+several worlds without accurately representing their different loads. A more
+ambitious body should reuse useful adaptive organization, but neither stronger
+innate drive nor an easier world is evidence of learned compensation. The
+present single-joint test is not the definition of the organism goal.
+
+### A consequential literature distinction
+
+[Herreros-Alonso, Arsiwalla and Verschure, 2016](https://proceedings.neurips.cc/paper_files/paper/2016/file/65699726a3c601b9f31bf04019c8593c-Paper.pdf)
+derive eligibility from the closed-loop response, rather than transport delay
+alone. Their derivation assumes linear time-invariant plant/controller dynamics;
+the example uses a supplied reference and predefined temporal bases. This is
+not a convergence theorem for our adapting, rectified PAULA network. The useful
+hypothesis is that appropriate credit depends on what downstream components do
+to a signal, not only when it arrives. Before adopting that mechanism, measure
+the relevant response in the coupled preparation. Do not put a known physical
+model or externally fitted control policy inside a neuron and call it acquired.
+
+A separate consolidation lead is [Bae et al., 2025](https://www.nature.com/articles/s41467-025-60511-z).
+Its abstract and introduction describe task-dependent transfer between cerebellar
+cortex and nuclei, investigated with a dual-system model and mouse experiments.
+Only those sections were checked here; methods and supplements need review
+before any implementation. Their explicit optimization objective does not supply
+a PAULA-local transfer mechanism. This is a possible later question about a
+corrective population teaching another pathway, not a reason to replace the
+present resistance-transfer experiment or assume consolidation is necessary.
+
+The saved evidence is `.live/research/20260909_active_sweep_acquisition_seed{seed}`,
+with independent analysis in `20260909_active_sweep_acquisition_analysis`.
+`active_sweep_figures.py --acquisition <earlier-kernel-analysis>` joins the entire
+0–4815 physical course and compares both ages of the weight intervention. The
+figure is `20260909_active_sweep_acquisition_figures/active-sweep-acquisition.png`.
+It retains every sample, common seed scales, all unfavorable intervals and
+the final incomplete stroke. The new raw records occupy approximately 655 MiB;
+9.9 GiB remains free. All workers have exited. No live agent or version matrix
+was started, and no new agent version is accepted by this result.

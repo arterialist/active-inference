@@ -1324,6 +1324,33 @@ hand-retiming the learned preparation. Sixty-six focused tests pass. The full go
 active; there is no accepted new agent version or consciousness result.
 See [the completed kernel experiment](experiments/ACTIVE_SWEEP_2026-09-09.md#completed-kernel-result).
 
+## Continuation: experience strengthens useful motor memory in the matched cascade
+
+The unchanged 596-cell brains continued from tick 1536 to 4304, with intermediate
+executable checkpoints. Matched intact/reset probes then ran another 512 ticks.
+All four seeds and both conditions completed 30,848 independently audited ticks,
+including 512 exact replay ticks; 67 focused tests passed. Adaptation remained
+active throughout, including after selected weights were reset.
+
+The original exponential learner's retained weights now impair both directions
+at every completed stroke endpoint. The matched cascade's contribution grows
+at every corresponding endpoint relative to the earlier probe and helps both
+directions in all four seeds. Brief harmful onset intervals remain visible.
+This distinguishes increasingly useful stored experience from a mere increase
+in synaptic change or motor influence, under the tested coupled conditions.
+
+Neither condition reaches a gate. Cascade stroke advance remains about
+0.00723–0.00750 radians against a 0.016-radian gate gap, with seed-dependent
+center drift and large rapid-event prediction residuals. The next bounded
+question is whether the contribution survives and reorganizes under a changed
+resistance without hand-retiming, not whether another run in the same world
+can be treated as general sensorimotor intelligence. Preserve the full brain,
+physical and delay state when branching, and distinguish prediction accuracy
+from merely assisting movement. See [the completed acquisition findings](experiments/ACTIVE_SWEEP_2026-09-09.md#completed-acquisition-useful-memory-grows-but-control-remains-inadequate).
+
+The evidence occupies about 655 MiB, with 9.9 GiB free. All workers are terminal.
+The artificial-organism objective remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

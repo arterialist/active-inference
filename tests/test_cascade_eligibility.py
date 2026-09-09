@@ -84,3 +84,28 @@ def test_enabled_local_cascades_in_the_coupled_body(tmp_path,condition):
     body=LoadedHinge(.8);body.restore(state,crossings=int(gates[0]),next_gate=int(gates[1]))
     actual=record_credit(saved.network,body,PhysicalDelay(history),features,g,64)
     for key in expected:np.testing.assert_array_equal(actual[key],expected[key])
+
+
+def test_continuing_course_and_reset_keep_nonweight_state(tmp_path):
+    from simulations.active_inference.experiments.active_sweep_acquisition import continuation,replay_prefix
+    from simulations.active_inference.experiments.active_sweep_memory import restore,reset_selected
+    n,g,cfg,features=prepare(tmp_path,'matched_cascade')
+    body=LoadedHinge(.8);delay=PhysicalDelay()
+    acquired=record_credit(n,body,delay,features,g,256)
+    neural=tmp_path/'acquired.paula';physical=tmp_path/'body.npz'
+    base.save_checkpoint(n,neural,sources=[])
+    np.savez_compressed(physical,state=body.state(),delay=delay.state(),gate=[body.crossings,body.next_gate])
+    intact=record_credit(n,body,delay,features,g,96)
+    continuation(acquired,intact)
+    n,body,delay=restore(neural,physical)
+    short=record_credit(n,body,delay,features,g,64)
+    replay_prefix(intact,short)
+    bad={k:v.copy() for k,v in short.items()};bad['credit_states'][20,0,0,0]+=.001
+    with pytest.raises(ValueError):replay_prefix(intact,bad)
+    bad={k:v.copy() for k,v in intact.items()};bad['gate_initial'][0]+=1
+    with pytest.raises(ValueError):continuation(acquired,bad)
+    n,body,delay=restore(neural,physical);reset_selected(n,g)
+    reset=record_credit(n,body,delay,features,g,96)
+    continuation(acquired,reset,reset=True)
+    assert audit(reset,cfg,g,features)==0.
+    assert np.any(reset['weights'])  # Reset diagnostic continues acquiring.

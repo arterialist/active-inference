@@ -1,0 +1,215 @@
+<title>An agent that plans — true active inference</title>
+<style>
+  :root{--bg:#FBFAF7;--panel:#FFFFFF;--panel2:#F4F2EC;--ink:#16181D;--muted:#585B63;--faint:#9A9DA5;
+    --line:#E6E3DC;--line2:#D6D2C9;--accent:#3B4CC0;--good:#1F7A6D;--bad:#B0473C;--amber:#B5811A;--epi:#7A52B3;
+    --goodbg:#E4F1EE;--badbg:#F7E8E5;--accbg:#E9EBF7;--maze:#EAE6DC;--maze2:#DED8CB;
+    --mono:ui-monospace,"SF Mono",Menlo,monospace;--sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--serif:Georgia,"Times New Roman",serif;}
+  @media (prefers-color-scheme:dark){:root{--bg:#0E1013;--panel:#16181D;--panel2:#1B1E24;--ink:#E8E6E1;--muted:#9DA0A8;--faint:#6A6D75;--line:#252831;--line2:#31353E;--accent:#8A97F0;--good:#5FB3A3;--bad:#E0796D;--amber:#DCB255;--epi:#B292E0;--goodbg:#14231e;--badbg:#241a18;--accbg:#181c2b;--maze:#1B1E24;--maze2:#252A33;}}
+  :root[data-theme="light"]{--bg:#FBFAF7;--panel:#FFFFFF;--panel2:#F4F2EC;--ink:#16181D;--muted:#585B63;--faint:#9A9DA5;--line:#E6E3DC;--line2:#D6D2C9;--accent:#3B4CC0;--good:#1F7A6D;--bad:#B0473C;--amber:#B5811A;--epi:#7A52B3;--goodbg:#E4F1EE;--badbg:#F7E8E5;--accbg:#E9EBF7;--maze:#EAE6DC;--maze2:#DED8CB;}
+  :root[data-theme="dark"]{--bg:#0E1013;--panel:#16181D;--panel2:#1B1E24;--ink:#E8E6E1;--muted:#9DA0A8;--faint:#6A6D75;--line:#252831;--line2:#31353E;--accent:#8A97F0;--good:#5FB3A3;--bad:#E0796D;--amber:#DCB255;--epi:#B292E0;--goodbg:#14231e;--badbg:#241a18;--accbg:#181c2b;--maze:#1B1E24;--maze2:#252A33;}
+  *{box-sizing:border-box}body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:940px;margin:0 auto;padding:42px 20px 90px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 12px}
+  h1{font-family:var(--serif);font-weight:600;font-size:2.1rem;margin:0 0 10px;letter-spacing:-.01em;text-wrap:balance}
+  .sub{color:var(--muted);font-size:1.02rem;margin:0 0 20px;max-width:82ch}
+  .stage{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .row{display:grid;grid-template-columns:1.15fr 1fr;gap:16px}@media(max-width:760px){.row{grid-template-columns:1fr}}
+  .view{position:relative;border-radius:11px;overflow:hidden;background:var(--maze);aspect-ratio:1/1}
+  #maze{width:100%;height:100%;display:block}
+  .hud{position:absolute;left:12px;top:12px;right:12px;display:flex;justify-content:space-between;gap:10px;pointer-events:none;font-family:var(--mono);font-size:12px}
+  .hud .chip{background:rgba(10,12,16,.72);color:#fff;border-radius:8px;padding:5px 10px;font-weight:600}
+  .side{display:flex;flex-direction:column;gap:14px;justify-content:center}
+  .belief h3,.efe h3{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
+  .bbar{height:34px;border-radius:8px;overflow:hidden;display:flex;border:1px solid var(--line2);font-family:var(--mono);font-size:12px;font-weight:600}
+  .bbar .l{background:var(--good);color:#fff;display:flex;align-items:center;justify-content:flex-start;padding-left:10px;transition:width .18s ease}
+  .bbar .r{background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;transition:width .18s ease}
+  .blab{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px}
+  .efe canvas{width:100%;height:150px;display:block}
+  .efe .cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:4px}
+  .controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 2px 0}
+  button{font-family:var(--sans);font-size:.9rem;font-weight:550;border:1px solid var(--line2);background:var(--panel);color:var(--ink);padding:7px 14px;border-radius:8px;cursor:pointer}button:hover{border-color:var(--accent);color:var(--accent)}button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}button.primary:hover{color:#fff;opacity:.92}
+  .seg{display:inline-flex;border:1px solid var(--line2);border-radius:8px;overflow:hidden}
+  .seg button{border:none;border-radius:0;border-left:1px solid var(--line2)}.seg button:first-child{border-left:none}.seg button.on{background:var(--accbg);color:var(--accent)}
+  h2{font-family:var(--serif);font-size:1.32rem;margin:36px 0 8px}
+  p.body{color:var(--muted);max-width:82ch;margin:0 0 8px}
+  .cmp{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+  .cmp .r{display:grid;grid-template-columns:230px 1fr 1fr;gap:12px;align-items:center;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 13px}
+  @media(max-width:640px){.cmp .r{grid-template-columns:1fr}}
+  .cmp .nm{font-family:var(--mono);font-size:12px}
+  .meter{position:relative;height:20px;background:var(--maze);border-radius:5px;overflow:hidden}
+  .meter>span{position:absolute;left:0;top:0;height:100%;border-radius:5px}
+  .meter>b{position:absolute;right:7px;top:0;height:100%;display:flex;align-items:center;font-family:var(--mono);font-size:11px;font-weight:600;color:var(--ink)}
+  .mlab{font-family:var(--mono);font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);display:grid;grid-template-columns:230px 1fr 1fr;gap:12px;padding:0 13px}
+  @media(max-width:640px){.mlab{display:none}}
+  .tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:12px 0}table{border-collapse:collapse;width:100%;font-size:.87rem}th,td{padding:8px 12px;text-align:left;border-top:1px solid var(--line);vertical-align:top}thead th{border-top:none;background:var(--panel2);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}td.m{font-family:var(--mono)}code{font-family:var(--mono);font-size:.88em;background:var(--accbg);padding:1px 5px;border-radius:5px}
+  .note{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:13px 16px;margin:14px 0;color:var(--muted);font-size:.95rem;max-width:82ch}.note b{color:var(--ink)}
+  .note.epi{border-left-color:var(--epi)}
+  footer{margin-top:38px;padding-top:16px;border-top:1px solid var(--line2);color:var(--faint);font-size:.82rem;font-family:var(--mono)}
+</style>
+<div class="wrap">
+  <p class="eyebrow">active inference · generative world model · planning by expected free energy</p>
+  <h1>An agent that plans — true active inference</h1>
+  <p class="sub">Not a reactive controller. This agent holds an explicit <b>generative model</b> of the
+  world, <b>infers</b> a hidden fact it cannot see by Bayesian belief-updating, and <b>plans</b> by
+  minimising <b>expected free energy</b> over a tree of possible futures. The task is the classic
+  epistemic-foraging <b>T-maze</b>: a reward hides in the <span style="color:var(--good)">left</span> or
+  <span style="color:var(--accent)">right</span> arm, and only the <span style="color:var(--epi)">cue</span>
+  reveals which. A reward-greedy agent must guess (≈50%). This one walks to the cue to <b>resolve its
+  uncertainty first</b> (epistemic value), then collects the now-certain reward (pragmatic value).</p>
+
+  <div class="stage">
+    <div class="row">
+      <div class="view">
+        <canvas id="maze"></canvas>
+        <div class="hud"><span class="chip" id="hudStep">…</span><span class="chip" id="hudMsg">…</span></div>
+      </div>
+      <div class="side">
+        <div class="belief">
+          <h3>belief — where is the reward? (the agent's world model)</h3>
+          <div class="bbar"><div class="l" id="bL">left</div><div class="r" id="bR">right</div></div>
+          <div class="blab"><span>P(reward left)</span><span id="bTxt"></span><span>P(reward right)</span></div>
+        </div>
+        <div class="efe">
+          <h3>why it chose the cue — planned value of each first move</h3>
+          <canvas id="efe"></canvas>
+          <div class="cap">Planned expected value (−G) after looking ahead. Committing to an arm now is a
+            50/50 gamble; visiting the <span style="color:var(--epi)">cue</span> first, then the correct
+            arm, is worth more — so the planner picks it.</div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button class="primary" id="play">▶ Play</button>
+      <button id="replay">↻ Replay</button>
+      <span class="seg" id="ctxSeg"></span>
+      <span style="font-family:var(--mono);font-size:.8rem;color:var(--muted)" id="outcome"></span>
+    </div>
+  </div>
+
+  <h2>The evidence — planning and the epistemic drive, ablated</h2>
+  <p class="body">100 episodes per condition, both reward contexts. Turning off either the ability to
+  <b>plan</b> or the <b>epistemic</b> term changes the behaviour in the way the theory predicts — this is
+  what makes it active inference rather than a lucky heuristic.</p>
+  <div class="mlab"><span></span><span>visits the cue</span><span>reaches the reward</span></div>
+  <div class="cmp" id="cmp"></div>
+
+  <h2>Why this is <em>true</em> active inference</h2>
+  <div class="note"><b>A generative model, not a policy.</b> The agent is defined by four objects it can
+  reason with: <code>A</code> (how hidden states cause observations), <code>B</code> (how actions change
+  states), <code>C</code> (which observations it prefers — reward good, punishment bad), and <code>D</code>
+  (its prior). It never sees the reward location directly; it <b>infers</b> it.</div>
+  <div class="note"><b>Perception = free-energy minimisation.</b> After each observation it updates a
+  posterior belief over the hidden context — exact Bayesian updating, which for this discrete model is the
+  minimiser of variational free energy. Watch the belief bar snap from 50/50 to certain the instant it
+  reads the cue.</div>
+  <div class="note epi"><b>Action = minimising <i>expected</i> free energy.</b> It scores candidate futures
+  by <code>G = −(pragmatic value) − (epistemic value)</code>: pragmatic value pulls toward preferred
+  (rewarding) observations; the epistemic term rewards <i>information gain</i>. The planner searches a tree
+  that branches on anticipated observations, so it discovers that a detour to the cue — worthless in
+  reward — is worth it because the information it yields enables a guaranteed reward next.</div>
+
+  <h2>The generative model</h2>
+  <div class="tw"><table><thead><tr><th>object</th><th>meaning</th><th>in this T-maze</th></tr></thead><tbody>
+    <tr><td class="m">A</td><td>likelihood P(obs&nbsp;|&nbsp;state)</td><td>location is seen; the <b>reward</b> signal and the <b>cue</b> signal each depend on the hidden reward-context</td></tr>
+    <tr><td class="m">B</td><td>transitions P(state′&nbsp;|&nbsp;state,&nbsp;action)</td><td>move to a chosen location; entering an arm is a commitment (absorbing)</td></tr>
+    <tr><td class="m">C</td><td>preferences (log) over observations</td><td>reward = <span style="color:var(--good)">+4</span>, punishment = <span style="color:var(--bad)">−4</span>, everything else 0</td></tr>
+    <tr><td class="m">D</td><td>prior over the initial state</td><td>starts at CENTER; reward location <b>unknown</b> (50/50)</td></tr>
+  </tbody></table></div>
+
+  <div class="note" style="border-left-color:var(--good)"><b>Relationship to the spiking organism.</b> The
+  earlier <i>organism</i> in this project is a reactive winner-take-all over hand-set drives — no world
+  model, no lookahead. This is the opposite end: a genuine planner with an explicit model. It is the
+  <b>algorithmic</b> form of active inference (exact discrete inference + expected-free-energy planning),
+  not a spiking network. Implementing the same computation faithfully in PAULA neurons — belief updating as
+  firing-rate dynamics, expected free energy as a neural message-passing scheme — is a much larger research
+  step; this establishes the capability and the correct behaviour first.</div>
+
+  <footer>Sophisticated active inference (planning depth 3) · exact discrete generative model · epistemic-foraging T-maze</footer>
+</div>
+<script>const DATA=/*__DATA__*/{};
+const EP=DATA.episodes||[],CMP=DATA.conditions||[],MZ=DATA.maze||{},LOCN=DATA.actions||["CENTER","CUE","LEFT","RIGHT"];
+let epi=1, i=0, playing=false, tprog=0, last=performance.now();   // epi index into EP (default reward-RIGHT)
+function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';}
+function steps(){return (EP[epi]&&EP[epi].steps)||[];}
+const cv=document.getElementById('maze'), ec=document.getElementById('efe');
+function fit(c,hpx){const d=Math.min(2,devicePixelRatio||1),w=c.clientWidth||320,h=hpx||c.clientHeight||320;c.width=Math.round(w*d);c.height=Math.round(h*d);const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.__w=w;x.__h=h;return x;}
+function P(loc,W,H){const p=MZ[LOCN[loc]]||[0.5,0.5];return [p[0]*W,p[1]*H];}
+// smooth agent position between step k-1 and k with progress f in [0,1]
+function agentPos(W,H){const S=steps();if(S.length<2)return P(0,W,H);
+  const k=Math.min(i,S.length-1),k0=Math.max(0,k-1);
+  const a=P(S[k0].loc,W,H),b=P(S[k].loc,W,H),f=(i===0)?0:tprog;
+  return [a[0]+(b[0]-a[0])*f, a[1]+(b[1]-a[1])*f];}
+function curBelief(){const S=steps();if(!S.length)return[0.5,0.5];
+  const k=Math.min(i,S.length-1),k0=Math.max(0,k-1);const f=(i===0)?1:tprog;
+  const A=S[k0].belief,B=S[k].belief;return [A[0]+(B[0]-A[0])*f, A[1]+(B[1]-A[1])*f];}
+function drawMaze(){const x=fit(cv),W=x.__w,H=x.__h;x.clearRect(0,0,W,H);
+  const cen=P(0,W,H),cue=P(1,W,H),lf=P(2,W,H),rt=P(3,W,H);
+  // corridors
+  x.strokeStyle=css('--maze2');x.lineCap='round';x.lineWidth=Math.min(W,H)*0.14;
+  x.beginPath();x.moveTo(cen[0],cen[1]);x.lineTo(cue[0],cue[1]);x.lineTo(lf[0],lf[1]);x.moveTo(cue[0],cue[1]);x.lineTo(rt[0],rt[1]);x.stroke();
+  const S=steps(),cur=S[Math.min(i,S.length-1)]||{},truth=EP[epi]?EP[epi].ctx:1;  // 0=RL,1=RR
+  const readCue = i>=1;   // after first move the agent has (in these episodes) read the cue
+  // location nodes
+  function node(p,fill,lab,sub){x.beginPath();x.arc(p[0],p[1],Math.min(W,H)*0.075,0,7);x.fillStyle=fill;x.fill();
+    x.fillStyle=css('--ink');x.font='600 12px '+css('--mono');x.textAlign='center';x.fillText(lab,p[0],p[1]-Math.min(W,H)*0.1);
+    if(sub){x.fillStyle=css('--faint');x.font='10px '+css('--mono');x.fillText(sub,p[0],p[1]+Math.min(W,H)*0.13);}}
+  // arms colour by ground truth reward/punish, revealed only once agent has committed there
+  const lArm = truth===0, rArm = truth===1;   // which arm holds reward
+  node(lf, lArm?css('--good'):css('--bad'), 'LEFT', lArm?'reward':'punish');
+  node(rt, rArm?css('--good'):css('--bad'), 'RIGHT', rArm?'reward':'punish');
+  node(cue, readCue?css('--epi'):css('--maze'), 'CUE', readCue?(truth===0?'“go left”':'“go right”'):'?');
+  node(cen, css('--panel'), 'START', null);
+  // agent
+  const ap=agentPos(W,H);
+  x.beginPath();x.arc(ap[0],ap[1],Math.min(W,H)*0.045,0,7);x.fillStyle=css('--accent');x.fill();
+  x.strokeStyle=css('--bg');x.lineWidth=2.5;x.stroke();
+  // hud
+  document.getElementById('hudStep').textContent='step '+(cur.t!==undefined?cur.t:0)+' / '+(S.length-1);
+  let msg='choosing…';
+  if(i===0)msg='belief 50 / 50 — must decide';
+  else if(cur.loc===1)msg='reading cue → belief resolves';
+  else if(cur.loc===2||cur.loc===3)msg=(truth===cur.loc-2)?'✓ reward':'✗ punish';
+  document.getElementById('hudMsg').textContent=msg;}
+function drawBelief(){const b=curBelief(),pl=Math.round(b[0]*100),pr=100-pl;
+  document.getElementById('bL').style.width=pl+'%';document.getElementById('bR').style.width=pr+'%';
+  document.getElementById('bL').textContent=pl>12?pl+'%':'';document.getElementById('bR').textContent=pr>12?pr+'%':'';
+  document.getElementById('bTxt').textContent=(pl===50)?'uncertain':'certain';}
+function drawEFE(){const x=fit(ec,150),W=x.__w,H=x.__h;x.clearRect(0,0,W,H);
+  const S=steps();const dec=S.find(s=>s.efe);   // the decision made at the start (from CENTER)
+  if(!dec||!dec.efe){return;}
+  const acts=[1,2,3],names={1:'go CUE',2:'go LEFT',3:'go RIGHT'};   // ignore 'stay at center'
+  const val=a=>{const e=dec.efe[a];return e?e[2]:0;};              // planned value (-G) after lookahead
+  const vals=acts.map(val),vmin=Math.min(...vals),vmax=Math.max(...vals),span=Math.max(1e-6,vmax-vmin);
+  const best=acts[vals.indexOf(vmax)];
+  const bw=W/acts.length, pad=bw*0.22, bwid=bw-2*pad, base=H-24, top=14;
+  x.font='11px '+css('--mono');x.textAlign='center';
+  acts.forEach((a,k)=>{const h=(base-top)*(val(a)-vmin)/span, x0=k*bw+pad;
+    x.fillStyle = a===best?css('--epi'):css('--maze2');
+    x.fillRect(x0, base-Math.max(2,h), bwid, Math.max(2,h));
+    x.fillStyle=css('--ink');x.fillText(names[a], x0+bwid/2, H-8);
+    if(a===best){x.fillStyle=css('--epi');x.font='600 11px '+css('--mono');x.fillText('◄ chosen', x0+bwid/2, base-Math.max(2,h)-6);x.font='11px '+css('--mono');}});
+  x.strokeStyle=css('--line2');x.beginPath();x.moveTo(0,base);x.lineTo(W,base);x.stroke();}
+function render(){drawMaze();drawBelief();drawEFE();}
+function loop(now){const dt=(now-last)/1000;last=now;const S=steps();
+  if(playing){tprog+=dt*1.1;
+    if(tprog>=1){tprog=0;if(i<S.length-1){i++;}else{playing=false;document.getElementById('play').textContent='▶ Play';document.getElementById('outcome').textContent=outcomeTxt();}}
+  }render();requestAnimationFrame(loop);}
+function outcomeTxt(){const S=steps(),last=S[S.length-1]||{},truth=EP[epi]?EP[epi].ctx:1;
+  if(last.loc===2||last.loc===3)return (truth===last.loc-2)?'→ collected the reward ✓':'→ punished ✗';return'';}
+document.getElementById('play').onclick=e=>{const S=steps();if(i>=S.length-1){i=0;tprog=0;}playing=!playing;e.target.textContent=playing?'❚❚ Pause':'▶ Play';document.getElementById('outcome').textContent='';};
+document.getElementById('replay').onclick=()=>{i=0;tprog=0;playing=true;document.getElementById('play').textContent='❚❚ Pause';document.getElementById('outcome').textContent='';};
+// context selector
+const seg=document.getElementById('ctxSeg');
+EP.forEach((e,k)=>{const b=document.createElement('button');b.textContent='reward '+e.ctx_name;b.className=(k===epi)?'on':'';
+  b.onclick=()=>{epi=k;i=0;tprog=0;playing=false;document.getElementById('play').textContent='▶ Play';document.getElementById('outcome').textContent='';
+    [...seg.children].forEach((c,ci)=>c.className=(ci===k)?'on':'');render();};seg.appendChild(b);});
+// comparison bars
+const cmp=document.getElementById('cmp');
+CMP.forEach(c=>{const row=document.createElement('div');row.className='r';
+  function meter(v,col){return `<div class="meter"><span style="width:${v}%;background:${col}"></span><b>${v}%</b></div>`;}
+  row.innerHTML=`<div class="nm">${c.name}</div>${meter(c.cue,css('--epi'))}${meter(c.reward,css('--good'))}`;
+  cmp.appendChild(row);});
+new MutationObserver(()=>render()).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+window.addEventListener('resize',render);
+render();requestAnimationFrame(loop);
+</script>

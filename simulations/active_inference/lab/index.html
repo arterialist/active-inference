@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101a1c">
+<title>PAULA Research Lab</title>
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#101a1c;--bg-deep:#0c1416;--surface:#172326;--surface-2:#1d2b2e;--surface-3:#243337;
+  --ink:#eaf2ef;--muted:#9aada9;--dim:#6f8582;--line:#304548;--line-strong:#466064;
+  --amber:#e7b768;--amber-strong:#f3c873;--amber-ink:#241b0b;--mint:#83d5aa;--coral:#ef8f82;--sky:#8cc8c9;
+  --font-body:"IBM Plex Sans","Avenir Next","Segoe UI",sans-serif;--font-display:"IBM Plex Sans","Avenir Next",sans-serif;--font-mono:"IBM Plex Mono","SFMono-Regular",Menlo,monospace;
+  --r-sm:4px;--r-md:8px;--sp:4px;--ease:cubic-bezier(.23,1,.32,1);--fast:140ms;--normal:200ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg-deep);color:var(--ink);font-family:var(--font-body);font-size:14px}
+body{overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+button,select,input{min-height:40px}
+button,select{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 11px}
+button{cursor:pointer;transition:background var(--fast) var(--ease),border-color var(--fast) var(--ease),transform var(--fast) var(--ease)}
+button:hover:not(:disabled){border-color:var(--amber);background:var(--surface-3)}
+button:active:not(:disabled){transform:translateY(1px)}
+button:disabled{cursor:not-allowed;opacity:.45}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:0;box-shadow:0 0 0 2px var(--amber),0 0 0 4px var(--bg-deep)}
+button.primary{background:var(--amber);border-color:var(--amber);color:var(--amber-ink);font-weight:700}
+button.primary:hover:not(:disabled){background:var(--amber-strong);border-color:var(--amber-strong)}
+button.quiet{background:transparent;border-color:transparent;color:var(--muted)}
+button.quiet:hover:not(:disabled){background:var(--surface-2);border-color:var(--line)}
+button.icon{width:40px;padding:0;display:grid;place-items:center;font-size:18px}
+input,select{width:100%;background:var(--bg-deep);border-color:var(--line);padding:8px 10px}
+input[type=range]{min-height:28px;padding:0;accent-color:var(--amber);cursor:pointer;background:transparent;border:0}
+a{color:var(--amber);text-decoration:none}
+a:hover{text-decoration:underline}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.mono{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font:10px var(--font-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.topbar{height:68px;display:flex;align-items:center;gap:16px;padding:10px 18px;background:var(--surface);border-bottom:1px solid var(--line);position:relative;z-index:3}
+.brand{display:flex;align-items:center;gap:11px;min-width:250px}
+.brand-mark{width:30px;height:30px;border:1px solid var(--amber);border-radius:50%;display:grid;place-items:center;color:var(--amber);font:13px var(--font-mono);position:relative}
+.brand-mark:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:var(--amber);top:4px;right:4px}
+.brand h1{font:600 16px var(--font-display);letter-spacing:.01em;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:11px}
+.topbar-tools{display:flex;align-items:center;gap:8px;margin-left:auto;min-width:0}
+.session-select{width:190px}.backend-field{width:270px;font:11px var(--font-mono)}
+.connection{display:flex;align-items:center;gap:7px;font:11px var(--font-mono);color:var(--muted);white-space:nowrap}
+.connection-dot{width:8px;height:8px;border-radius:50%;background:var(--dim);border:1px solid rgba(255,255,255,.18)}
+.connection.live .connection-dot{background:var(--mint)}.connection.error .connection-dot{background:var(--coral)}
+.app-shell{height:calc(100vh - 68px);display:grid;grid-template-columns:248px minmax(0,1fr);min-height:0}
+.sidebar{background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;overflow:auto;display:flex;flex-direction:column;gap:18px}
+.side-heading{display:flex;align-items:end;justify-content:space-between;padding:0 4px}.side-heading strong{font-size:14px;font-weight:600}.side-heading span{font:10px var(--font-mono);color:var(--dim)}
+.version-list{display:grid;gap:6px}.version-item{width:100%;text-align:left;background:transparent;border-color:transparent;padding:10px 9px;min-height:60px}.version-item:hover{background:var(--surface-2)}.version-item.active{background:var(--surface-2);border-color:var(--amber)}
+.version-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.version-name{font-weight:600}.version-id{font:10px var(--font-mono);color:var(--amber)}.version-detail{display:block;color:var(--muted);font-size:11px;line-height:1.3;margin-top:4px}
+.side-section{border-top:1px solid var(--line);padding-top:13px}.side-section h2{font:10px var(--font-mono);letter-spacing:.11em;text-transform:uppercase;color:var(--dim);margin:0 4px 9px}
+.transport{display:grid;grid-template-columns:1fr 1fr;gap:6px}.transport .wide{grid-column:span 2}.transport button{font-size:12px}
+.field-label{display:block;font:10px var(--font-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:11px 0 5px}
+.trace-compact{display:grid;grid-template-columns:1fr 1fr;gap:7px}.trace-compact div{padding:8px;background:var(--bg-deep);border:1px solid var(--line);border-radius:var(--r-sm)}.trace-compact b{display:block;font:16px var(--font-mono);font-variant-numeric:tabular-nums}.trace-compact span{font:10px var(--font-mono);color:var(--dim)}
+.meta-note{margin:9px 4px 0;color:var(--dim);font-size:11px;line-height:1.45}
+.sidebar-footer{margin-top:auto;color:var(--dim);font-size:11px;line-height:1.45;padding:0 4px}.sidebar-footer kbd{font:10px var(--font-mono);border:1px solid var(--line);border-radius:3px;padding:1px 4px;color:var(--muted)}
+.workspace{min-width:0;min-height:0;overflow:auto;padding:16px 18px 22px;background:var(--bg-deep)}
+.workspace-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.workspace-title{min-width:0}.workspace-title h2{font:600 18px var(--font-display);margin:3px 0 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.workspace-title p{margin:3px 0 0;color:var(--muted);font-size:12px}.head-metrics{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.metric{padding:7px 9px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--surface);font:11px var(--font-mono);color:var(--muted);font-variant-numeric:tabular-nums}.metric b{color:var(--ink);font-weight:500}
+.microscope-grid{display:grid;grid-template-columns:minmax(0,1fr) 344px;gap:12px;min-height:560px}
+.zone{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);min-width:0;min-height:0;overflow:hidden}.zone-head{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 13px;border-bottom:1px solid var(--line);gap:10px}.zone-head h3{font-size:13px;font-weight:600;margin:0}.zone-head small{font:10px var(--font-mono);color:var(--dim)}.zone-tools{display:flex;align-items:center;gap:5px}.zone-tools button{min-height:32px;padding:5px 8px;font-size:11px}
+.viewport-zone{display:grid;grid-template-rows:48px minmax(0,1fr);min-height:560px}.viewport-frame{position:relative;min-height:0;background:#070d0f}.viewport-frame iframe{width:100%;height:100%;border:0;display:block;background:#070d0f}.viewport-hud{position:absolute;left:12px;bottom:12px;display:flex;gap:6px;flex-wrap:wrap;pointer-events:none}.hud-chip{background:rgba(10,18,19,.88);border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:6px 8px;font:10px var(--font-mono);color:var(--muted)}.hud-chip b{color:var(--ink)}
+.rail{display:flex;flex-direction:column;min-height:560px;overflow:hidden}.rail-content{overflow:auto;padding:0 13px 16px}.rail-section{padding:14px 0;border-bottom:1px solid var(--line)}.rail-section:last-child{border-bottom:0}.rail-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}.rail-title h3{font-size:12px;margin:0;font-weight:600}.rail-title span{font:10px var(--font-mono);color:var(--dim)}
+.tick-readout{display:flex;align-items:baseline;justify-content:space-between;gap:10px}.tick-readout output{font:600 25px var(--font-mono);color:var(--amber);font-variant-numeric:tabular-nums}.tick-readout .tick-kind{font:10px var(--font-mono);color:var(--muted)}.slider-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:7px;margin-top:8px}.slider-row output{font:10px var(--font-mono);color:var(--muted);min-width:40px;text-align:right}.rail-actions{display:flex;gap:6px;margin-top:8px}.rail-actions button{min-height:32px;font-size:11px;padding:5px 8px}
+.timeline{height:54px;display:flex;align-items:end;gap:2px;padding:8px 0 3px;overflow:hidden;border-bottom:1px solid var(--line);cursor:crosshair}.timeline-bar{flex:1;min-width:2px;height:20px;min-height:0;padding:0;border:0;border-radius:0;background:var(--sky);opacity:.45;transform-origin:bottom;transition:opacity var(--fast) var(--ease),background var(--fast) var(--ease)}.timeline-bar:hover{opacity:1}.timeline-bar.hot{background:var(--amber);opacity:.95}.timeline-bar.selected{background:var(--ink);opacity:1}.timeline-empty{font:11px var(--font-mono);color:var(--dim);align-self:center}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin:0}.kv dt{color:var(--muted);font-size:11px}.kv dd{margin:0;color:var(--ink);font:11px var(--font-mono);font-variant-numeric:tabular-nums;text-align:right}.kv dd.good{color:var(--mint)}.kv dd.bad{color:var(--coral)}
+.event-line{display:flex;align-items:center;gap:7px;font-size:12px;line-height:1.35}.event-mark{width:8px;height:8px;border-radius:50%;background:var(--dim);flex:0 0 auto}.event-mark.food{background:var(--mint)}.event-mark.toxin{background:var(--coral)}.event-mark.movement{background:var(--amber)}
+.afferent-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:9px}.afferent-cell{padding:6px 7px;background:var(--bg-deep);border:1px solid var(--line);border-radius:3px;min-width:0}.afferent-cell span{display:block;color:var(--dim);font:9px var(--font-mono);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.afferent-cell b{display:block;color:var(--ink);font:11px var(--font-mono);font-variant-numeric:tabular-nums;margin-top:2px}.afferent-empty{color:var(--dim);font-size:11px;grid-column:span 2}
+.fired-list{display:flex;flex-wrap:wrap;gap:5px;max-height:86px;overflow:auto}.fired-list button{min-height:26px;padding:3px 6px;font:10px var(--font-mono);background:var(--bg-deep)}.fired-list button:hover{color:var(--amber)}.empty-note{color:var(--dim);font-size:11px}
+.component-list{display:flex;flex-wrap:wrap;gap:5px}.component-tag{display:inline-flex;padding:4px 6px;background:var(--bg-deep);border:1px solid var(--line);border-radius:3px;color:var(--muted);font:10px var(--font-mono);line-height:1.2}
+.inspector-search{display:flex;gap:6px}.inspector-search input{min-height:34px;font:11px var(--font-mono)}.inspector-search button{min-height:34px;font-size:11px;padding:5px 9px}.neuron-result{margin-top:9px;background:var(--bg-deep);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px;display:none}.neuron-result.on{display:block}.neuron-head{display:flex;justify-content:space-between;gap:8px;align-items:center}.neuron-head strong{font:600 13px var(--font-mono);color:var(--amber)}.neuron-head span{font:10px var(--font-mono);color:var(--muted)}.neuron-meta{margin-top:8px;color:var(--muted);font-size:11px;line-height:1.4}.neuron-meta b{color:var(--ink);font-weight:500}.neuron-error{color:var(--coral);font-size:11px;margin-top:8px}.sub-inspector{margin-top:13px;padding-top:10px;border-top:1px solid var(--line)}.sub-inspector h4{font:10px var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:0 0 7px}.synapse-form{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:5px}.synapse-form input{min-height:32px;padding:5px 6px}.synapse-form button{min-height:32px;padding:5px 7px}.synapse-result{margin-top:7px;font:10px/1.45 var(--font-mono);color:var(--muted);min-height:15px}.synapse-result b{color:var(--ink);font-weight:500}.synapse-result.error{color:var(--coral)}
+.dock{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden}.dock-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border-bottom:1px solid var(--line)}.dock-head h2{font-size:13px;margin:0}.dock-head p{margin:3px 0 0;color:var(--muted);font-size:11px}.dock-head-actions{display:flex;gap:6px}.dock-head-actions button{min-height:32px;font-size:11px;padding:5px 9px}.dock.collapsed .dock-body{display:none}
+.dock-body{display:grid;grid-template-columns:310px minmax(260px,1fr) minmax(300px,1.15fr);min-height:264px}.dock-pane{padding:13px;border-right:1px solid var(--line);min-width:0}.dock-pane:last-child{border-right:0}.dock-pane h3{font-size:12px;margin:0 0 10px}.harness-list{display:grid;gap:5px;max-height:212px;overflow:auto}.harness-row{display:block;width:100%;text-align:left;padding:8px;background:transparent;border-color:transparent;min-height:0}.harness-row.selected{background:var(--surface-2);border-color:var(--amber)}.harness-row strong{font-size:11px;font-weight:600}.harness-row span{display:block;color:var(--muted);font-size:10px;line-height:1.25;margin-top:3px}.harness-filter{display:flex;gap:5px;margin-bottom:8px}.harness-filter input{min-height:32px;font-size:11px}.run-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.run-form .full{grid-column:span 2}.run-form label{display:block;font:10px var(--font-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}.run-form input,.run-form select{min-height:34px;font-size:11px}.run-actions{display:flex;align-items:center;gap:6px;grid-column:span 2;margin-top:3px}.run-actions button{min-height:36px;font-size:11px}.run-status{font:10px var(--font-mono);color:var(--muted);min-height:24px;display:flex;align-items:center}.run-status.pass{color:var(--mint)}.run-status.fail{color:var(--coral)}.run-log{height:204px;overflow:auto;background:var(--bg-deep);border:1px solid var(--line);border-radius:var(--r-sm);padding:9px;white-space:pre-wrap;font:10px/1.45 var(--font-mono);color:var(--muted)}.run-history{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.history-item{font:10px var(--font-mono);padding:4px 6px;border:1px solid var(--line);border-radius:3px;color:var(--muted);cursor:pointer}.history-item:hover{border-color:var(--amber);color:var(--ink)}
+.toast{position:fixed;right:18px;bottom:18px;z-index:10;background:var(--surface-3);border:1px solid var(--line-strong);border-radius:var(--r-sm);padding:10px 12px;font:11px var(--font-mono);color:var(--ink);opacity:0;transform:translateY(8px);pointer-events:none}.toast.show{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:no-preference){.toast{transition:opacity var(--normal) var(--ease),transform var(--normal) var(--ease)}}
+@media (prefers-reduced-motion:reduce){button,.timeline-bar,.toast{transition:none!important}}
+@media (max-width:1180px){.app-shell{grid-template-columns:214px minmax(0,1fr)}.microscope-grid{grid-template-columns:minmax(0,1fr) 310px}.brand{min-width:210px}.backend-field{width:220px}.dock-body{grid-template-columns:270px minmax(230px,1fr) minmax(270px,1.1fr)}}
+@media (max-width:930px){body{overflow:auto}.topbar{height:auto;min-height:68px;flex-wrap:wrap}.topbar-tools{width:100%;margin-left:0}.session-select{flex:0 0 170px}.backend-field{flex:1;min-width:170px}.app-shell{height:auto;min-height:calc(100vh - 68px);grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:11px 14px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.sidebar-footer{display:none}.side-section{border-top:0;padding-top:0}.version-list{grid-template-columns:repeat(4,minmax(0,1fr));grid-column:span 2}.version-item{min-height:52px}.workspace{overflow:visible;padding:12px}.microscope-grid{grid-template-columns:1fr;min-height:0}.viewport-zone,.rail{min-height:480px}.dock-body{grid-template-columns:1fr 1fr}.dock-pane:last-child{grid-column:span 2;border-top:1px solid var(--line);border-right:0}.dock-pane:nth-child(2){border-right:0}}
+@media (max-width:640px){.topbar{padding:10px 12px}.brand{min-width:100%;}.topbar-tools{display:grid;grid-template-columns:1fr 1fr}.topbar-tools .backend-field{grid-column:span 2;width:100%}.topbar-tools .connection{grid-column:span 2}.app-shell{min-height:calc(100vh - 126px)}.sidebar{grid-template-columns:1fr}.version-list{grid-column:span 1;grid-template-columns:1fr 1fr}.workspace-head{align-items:start;flex-direction:column}.head-metrics{justify-content:flex-start}.microscope-grid{gap:8px}.viewport-zone{min-height:430px}.rail{min-height:0}.dock-body{display:block}.dock-pane{border-right:0;border-bottom:1px solid var(--line)}.dock-pane:last-child{border-bottom:0}.run-form{grid-template-columns:1fr}.run-form .full,.run-actions{grid-column:span 1}.dock-head{align-items:flex-start}.dock-head-actions{flex-wrap:wrap}.zone-head{padding:0 10px}.workspace{padding:10px}.brand p{display:none}}
+@media (max-width:640px){.synapse-form{grid-template-columns:1fr 1fr 1fr}.synapse-form button{grid-column:span 3}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true">P</div>
+    <div><h1>PAULA research lab</h1><p>PAULA neural microscope · embodied inspection console</p></div>
+  </div>
+  <div class="topbar-tools">
+    <label class="sr-only" for="preset">Live agent session</label>
+    <select id="preset" class="session-select" aria-label="Live agent session">
+      <option value="http://127.0.0.1:8770">V1 · reactive</option>
+      <option value="http://127.0.0.1:8780">V2 · memory</option>
+      <option value="http://127.0.0.1:8790" selected>V3 · interoceptive</option>
+      <option value="http://127.0.0.1:8800">V4 · obstacle</option>
+    </select>
+    <label class="sr-only" for="backend">Live brain HTTP URL</label>
+    <input id="backend" class="backend-field" type="url" spellcheck="false" autocomplete="url" aria-label="Live brain HTTP URL">
+    <button id="connect" class="primary">Connect</button>
+    <span id="connection" class="connection" role="status" aria-live="polite"><i class="connection-dot" aria-hidden="true"></i><span>offline</span></span>
+  </div>
+</header>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Lab controls">
+    <div class="side-heading"><strong id="sideSession">V3 · interoceptive</strong><span id="sideProtocol">—</span></div>
+    <div id="versions" class="version-list" aria-label="Agent versions"></div>
+    <section class="side-section">
+      <h2>Transport</h2>
+      <div class="transport">
+        <button id="run" class="primary wide">Run continuously</button>
+        <button id="step">Step</button><button id="pause">Pause</button>
+        <button id="reset" class="wide">Reset session</button>
+      </div>
+      <label class="field-label" for="world">World fixture</label>
+      <select id="world"><option value="meadow">Meadow</option><option value="sparse">Sparse food</option><option value="minefield">Minefield</option><option value="obstacle_detour">Obstacle wall</option><option value="obstacle_corner">Obstacle corner</option><option value="obstacle_chicane">Obstacle chicane</option><option value="obstacle_maze">Obstacle maze</option></select>
+    </section>
+    <section class="side-section">
+      <h2>Trace window</h2>
+      <div class="trace-compact"><div><b id="traceFirst">—</b><span>first tick</span></div><div><b id="traceLast">—</b><span>latest tick</span></div></div>
+      <p class="meta-note">The trace is bounded, post-tick, and read-only. Use the rail to seek exact intracellular state.</p>
+    </section>
+    <div class="sidebar-footer">Keyboard: <kbd>R</kbd> run · <kbd>S</kbd> step · <kbd>P</kbd> pause · <kbd>L</kbd> jump live<br><span id="footerVersion">select a session to begin</span></div>
+  </aside>
+  <main class="workspace">
+    <section class="workspace-head">
+      <div class="workspace-title"><div class="eyebrow">Live microscope / embodied loop</div><h2 id="workspaceTitle">Connecting to the selected PAULA brain</h2><p id="workspaceSubtitle">The 3D surface is the live viewer; the evidence rail is the exact tick record.</p></div>
+      <div class="head-metrics"><span class="metric">neurons <b id="metricNeurons">—</b></span><span class="metric">synapses <b id="metricSynapses">—</b></span><span class="metric">rate <b id="metricRate">—</b></span><a id="openLive" href="#" target="_blank" rel="noopener">open live page ↗</a></div>
+    </section>
+    <section class="microscope-grid">
+      <section class="zone viewport-zone" aria-label="Live 3D microscope">
+        <div class="zone-head"><div><h3>3D circuit + body</h3><small id="viewportStatus">waiting for protocol handshake</small></div><div class="zone-tools"><button id="reloadFrame" title="Reload the live viewer">reload view</button><button id="focusFrame" title="Focus the live viewer">focus</button></div></div>
+        <div class="viewport-frame"><iframe id="brain" title="Live 3D PAULA brain viewer" loading="eager"></iframe><div class="viewport-hud"><span class="hud-chip">mode <b id="hudMode">—</b></span><span class="hud-chip">pose <b id="hudPose">—</b></span><span class="hud-chip">event <b id="hudEvent">quiet</b></span></div></div>
+      </section>
+      <aside class="zone rail" aria-label="Tick evidence inspector">
+        <div class="zone-head"><div><h3>Evidence rail</h3><small id="railSource">no tick selected</small></div><button id="railRefresh" class="icon" title="Refresh selected tick" aria-label="Refresh selected tick">↻</button></div>
+        <div class="rail-content">
+          <section class="rail-section">
+            <div class="rail-title"><h3>Tick cursor</h3><span id="tickStep">step —</span></div>
+            <div class="tick-readout"><output id="tickValue" for="tickSlider">—</output><span id="tickKind" class="tick-kind">no trace</span></div>
+            <div class="slider-row"><input id="tickSlider" type="range" min="0" max="0" value="0" aria-label="Trace tick"><output id="tickRangeLabel">—</output></div>
+            <div class="rail-actions"><button id="jumpLive" class="primary">jump to live</button><button id="prevTick">previous</button><button id="nextTick">next</button></div>
+            <div id="timeline" class="timeline" role="img" aria-label="Neural tick timeline"><span class="timeline-empty">Waiting for trace frames…</span></div>
+          </section>
+          <section class="rail-section"><div class="rail-title"><h3>Body at selected tick</h3><span id="bodyEvent">quiet</span></div><dl class="kv"><dt>position</dt><dd id="bodyPose">—</dd><dt>speed</dt><dd id="bodySpeed">—</dd><dt>yaw rate</dt><dd id="bodyYaw">—</dd><dt>home distance</dt><dd id="bodyHome">—</dd><dt>food eaten</dt><dd id="bodyFood">—</dd><dt>toxin hits</dt><dd id="bodyToxin">—</dd></dl><div id="bodyEventLine" class="event-line" style="margin-top:10px"><i class="event-mark" aria-hidden="true"></i><span>no physical event in this frame</span></div></section>
+          <section class="rail-section"><div class="rail-title"><h3>Transducer inputs</h3><span>body → PAULA</span></div><div id="afferents" class="afferent-grid"><span class="afferent-empty">No body inputs in the selected frame.</span></div></section>
+          <section class="rail-section"><div class="rail-title"><h3>Neural activity</h3><span id="firedCount">0 fired</span></div><div id="firedList" class="fired-list"><span class="empty-note">No firing cells in the selected frame.</span></div></section>
+          <section class="rail-section"><div class="rail-title"><h3>Inspect a neuron</h3><span class="mono">state + metadata</span></div><form id="neuronForm" class="inspector-search"><label class="sr-only" for="neuronId">Neuron ID</label><input id="neuronId" inputmode="numeric" placeholder="e.g. 88310" aria-label="Neuron ID"><button class="primary" type="submit">Inspect</button></form><div id="neuronResult" class="neuron-result" aria-live="polite"></div><div class="sub-inspector"><h4>Inspect a synapse edge</h4><form id="synapseForm" class="synapse-form"><label class="sr-only" for="synapseSource">Source neuron</label><input id="synapseSource" inputmode="numeric" placeholder="source" aria-label="Synapse source neuron"><label class="sr-only" for="synapseTarget">Target neuron</label><input id="synapseTarget" inputmode="numeric" placeholder="target" aria-label="Synapse target neuron"><label class="sr-only" for="synapseSlot">Synapse slot</label><input id="synapseSlot" inputmode="numeric" placeholder="slot" aria-label="Synapse slot"><button class="primary" type="submit">Read</button></form><div id="synapseResult" class="synapse-result" aria-live="polite"></div></div></section>
+          <section class="rail-section"><div class="rail-title"><h3>Version wiring</h3><span id="componentCount">0 components</span></div><div id="components" class="component-list"></div></section>
+        </div>
+      </aside>
+    </section>
+    <section id="dock" class="dock" aria-label="Harness laboratory">
+      <div class="dock-head"><div><div class="eyebrow">Causal bench</div><h2>Batch harnesses and run records</h2><p>Run maintained experiments without leaving the microscope. Full output stays under <span class="mono">.live/lab-runs</span>.</p></div><div class="dock-head-actions"><button id="copyRun" class="quiet" disabled>copy record</button><button id="toggleDock" aria-expanded="true">collapse dock</button></div></div>
+      <div class="dock-body">
+        <section class="dock-pane"><h3>Choose a harness</h3><div class="harness-filter"><label class="sr-only" for="harnessSearch">Filter harnesses</label><input id="harnessSearch" type="search" placeholder="filter by name or component"></div><div id="harnesses" class="harness-list"><span class="empty-note">Loading harness catalog…</span></div></section>
+        <section class="dock-pane"><h3 id="runFormTitle">Run configuration</h3><form id="runForm" class="run-form"><div class="full"><label for="runVersion">Agent version</label><select id="runVersion"><option value="v1">V1 · reactive</option><option value="v2">V2 · memory</option><option value="v3" selected>V3 · interoceptive</option><option value="v4">V4 · obstacle</option></select></div><div id="runWorldField" class="full" hidden><label for="runWorld">V4 geometry fixture</label><select id="runWorld"></select></div><div><label for="runSteps">Body steps</label><input id="runSteps" type="number" min="1" max="2000" value="80"></div><div><label for="runSubsteps">Neural substeps</label><input id="runSubsteps" type="number" min="1" max="64" value="4"></div><div class="full"><label for="runSeeds">Seeds</label><input id="runSeeds" type="text" value="11" inputmode="numeric" spellcheck="false"></div><div class="run-actions"><button id="runHarness" class="primary" type="submit">Run selected harness</button><span id="runStatus" class="run-status" role="status" aria-live="polite">no run yet</span></div></form></section>
+        <section class="dock-pane"><h3>Run output</h3><div id="runLog" class="run-log" tabindex="0">Select a harness to see its causal contract.</div><div id="runHistory" class="run-history" aria-label="Recent run records"></div></section>
+      </div>
+    </section>
+  </main>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const qs = new URLSearchParams(location.search);
+  const clean = value => String(value || '').replace(/\/+$/, '');
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const presets = [...$('preset').options].map(option => ({url: option.value, label: option.textContent}));
+  const versionCatalog = [
+    {id:'v1', label:'Reactive', short:'reactive sensorimotor loop', url:'http://127.0.0.1:8770'},
+    {id:'v2', label:'Memory', short:'mushroom-body valence', url:'http://127.0.0.1:8780'},
+    {id:'v3', label:'Interoceptive', short:'metabolic arbitration + sleep', url:'http://127.0.0.1:8790'},
+    {id:'v4', label:'Obstacle', short:'whisker detour prototype', url:'http://127.0.0.1:8800'}
+  ];
+  let backend = clean(qs.get('source') || localStorage.getItem('aif-live-backend') || $('preset').value);
+  let selectedVersion = versionCatalog.find(item => item.url === backend) || versionCatalog[2];
+  let session = null, state = null, timeline = [], selectedTick = null, followLive = true;
+  let timelineKey = '', pollTimer = null, tickTimer = null, currentRun = null, harnesses = [], selectedHarness = null;
+
+  $('backend').value = backend;
+  $('preset').value = presets.some(item => item.url === backend) ? backend : selectedVersion.url;
+
+  function toast(message) {
+    const node = $('toast'); node.textContent = message; node.classList.add('show');
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => node.classList.remove('show'), 2600);
+  }
+  function setConnection(kind, label) {
+    $('connection').className = 'connection ' + kind;
+    $('connection').querySelector('span').textContent = label;
+  }
+  async function json(url, options = {}) {
+    const response = await fetch(url, {...options, cache:'no-store'});
+    let payload = null;
+    try { payload = await response.json(); } catch (_) { payload = {error: response.statusText}; }
+    if (!response.ok) throw new Error(payload.error || `${response.status} ${response.statusText}`);
+    return payload;
+  }
+  function livePath(path) { return backend + path; }
+  function renderVersions() {
+    $('versions').innerHTML = versionCatalog.map(item => {
+      const active = item.id === selectedVersion.id;
+      const accepted = session && session.version && session.version.id === item.id ? ' · connected' : '';
+      return `<button class="version-item ${active ? 'active' : ''}" data-version="${item.id}" aria-pressed="${active}"><span class="version-top"><span class="version-name">${esc(item.label)}</span><span class="version-id">${item.id}</span></span><span class="version-detail">${esc(item.short)}${accepted}</span></button>`;
+    }).join('');
+    $('versions').querySelectorAll('[data-version]').forEach(button => button.addEventListener('click', () => {
+      const item = versionCatalog.find(candidate => candidate.id === button.dataset.version); if (!item) return;
+      selectedVersion = item; $('preset').value = item.url; $('backend').value = item.url; connect();
+    }));
+  }
+  function updateTraceSummary(range) {
+    const first = range && range.first != null ? range.first : '—';
+    const last = range && range.last != null ? range.last : '—';
+    $('traceFirst').textContent = first; $('traceLast').textContent = last;
+    $('tickSlider').min = first === '—' ? 0 : first; $('tickSlider').max = last === '—' ? 0 : last;
+    if (last !== '—' && selectedTick == null) selectedTick = last;
+    if (selectedTick != null) $('tickSlider').value = Math.max(Number(first) || 0, Math.min(Number(last) || 0, selectedTick));
+  }
+  function eventFor(body) {
+    if (!body) return {kind:'', text:'quiet'};
+    if (body.event) return {kind: String(body.event).toLowerCase().includes('tox') ? 'toxin' : 'food', text: String(body.event)};
+    if ((body.yaw_rate || 0) > .05 || (body.yaw_rate || 0) < -.05) return {kind:'movement', text:'turning'};
+    if ((body.speed || 0) > .02) return {kind:'movement', text:'moving'};
+    return {kind:'', text:'quiet'};
+  }
+  function renderAfferents(body) {
+    const groups = [];
+    for (const [key, value] of Object.entries(body?.sensors || {})) groups.push([`sensor · ${key}`, value]);
+    for (const [key, value] of Object.entries(body?.metabolic || {})) groups.push([`metabolic · ${key}`, value]);
+    for (const [key, value] of Object.entries(body?.obstacle || {})) groups.push([`obstacle · ${key}`, value]);
+    const node = $('afferents');
+    if (!groups.length) { node.innerHTML = '<span class="afferent-empty">No body inputs in the selected frame.</span>'; return; }
+    node.innerHTML = groups.slice(0, 16).map(([key, value]) => `<div class="afferent-cell"><span>${esc(key)}</span><b>${typeof value === 'number' ? Number(value).toFixed(3) : esc(value)}</b></div>`).join('');
+  }
+  function renderState(next) {
+    state = next;
+    const version = next.version || session?.version || {};
+    if (version.id) {
+      const found = versionCatalog.find(item => item.id === version.id); if (found) selectedVersion = found;
+      $('workspaceTitle').textContent = version.label || version.id;
+      $('workspaceSubtitle').textContent = version.description || 'Versioned PAULA composition';
+      $('sideSession').textContent = version.label || version.id;
+      $('footerVersion').textContent = `${version.id} · ${version.accepted ? 'accepted composition' : 'prototype'}`;
+      const components = version.components || [];
+      $('componentCount').textContent = `${components.length} components`;
+      $('components').innerHTML = components.length ? components.map(component => `<span class="component-tag">${esc(component)}</span>`).join('') : '<span class="empty-note">No component manifest returned.</span>';
+    }
+    $('metricRate').textContent = next.rate != null ? `${Number(next.rate).toFixed(2)} step/s` : '—';
+    $('metricNeurons').textContent = session?.neuron_count ?? '—'; $('metricSynapses').textContent = session?.introspection?.synapse_count ?? session?.synapse_count ?? '—';
+    $('hudPose').textContent = Array.isArray(next.pose) ? next.pose.map(value => Number(value).toFixed(2)).join(' · ') : '—';
+    const modeRow = (next.dec || []).find(row => row.k === 'mode'); $('hudMode').textContent = modeRow ? String(modeRow.v).split('  ')[0] : '—';
+    const event = eventFor(next.trace?.body || {speed:0}); $('hudEvent').textContent = event.text;
+    updateTraceSummary(next.trace || {});
+    $('viewportStatus').textContent = next.running ? 'streaming · live edge' : 'paused · inspection mode';
+    if (followLive && next.trace && next.trace.last != null) {
+      selectedTick = next.trace.last; $('tickSlider').value = selectedTick; loadTick(selectedTick, false);
+    }
+    renderVersions();
+  }
+  function renderTimeline() {
+    const node = $('timeline');
+    if (!timeline.length) { node.innerHTML = '<span class="timeline-empty">Waiting for trace frames…</span>'; return; }
+    const maxFiring = Math.max(1, ...timeline.map(row => row.firing_count || 0));
+    node.innerHTML = timeline.map(row => `<button class="timeline-bar ${row.firing_count > maxFiring * .35 ? 'hot' : ''} ${Number(row.tick) === Number(selectedTick) ? 'selected' : ''}" style="height:${Math.max(10, Math.round((row.firing_count / maxFiring) * 100))}%" data-tick="${row.tick}" title="tick ${row.tick} · ${row.firing_count} firing"></button>`).join('');
+    node.querySelectorAll('[data-tick]').forEach(button => button.addEventListener('click', () => selectTick(Number(button.dataset.tick))));
+  }
+  async function loadTimeline(force = false) {
+    if (!backend) return;
+    try {
+      const data = await json(livePath('/api/trace?limit=256'));
+      const key = `${data.trace?.first}:${data.trace?.last}:${data.trace?.count}`;
+      if (!force && key === timelineKey) return;
+      timelineKey = key; timeline = data.frames || []; renderTimeline(); updateTraceSummary(data.trace || {});
+    } catch (error) { $('timeline').innerHTML = `<span class="timeline-empty">Trace unavailable: ${esc(error.message)}</span>`; }
+  }
+  function renderTick(detail) {
+    if (!detail) return;
+    selectedTick = detail.tick; $('tickSlider').value = detail.tick; $('tickValue').textContent = detail.tick; $('tickRangeLabel').textContent = `${detail.trace?.first ?? '—'}–${detail.trace?.last ?? '—'}`; $('tickStep').textContent = `step ${detail.step ?? '—'}`; $('railSource').textContent = `aif-introspection/1 · tick ${detail.tick}`;
+    const body = detail.body || {}; const pose = body.pose || [];
+    $('bodyPose').textContent = pose.length ? pose.map(value => Number(value).toFixed(3)).join(' · ') : '—'; $('bodySpeed').textContent = body.speed == null ? '—' : Number(body.speed).toFixed(3); $('bodyYaw').textContent = body.yaw_rate == null ? '—' : Number(body.yaw_rate).toFixed(3); $('bodyHome').textContent = body.home_distance == null ? '—' : Number(body.home_distance).toFixed(2); $('bodyFood').textContent = body.eaten ?? '—'; $('bodyToxin').textContent = body.toxin_hits ?? '—';
+    const event = eventFor(body); $('bodyEvent').textContent = event.text; $('bodyEventLine').innerHTML = `<i class="event-mark ${event.kind}" aria-hidden="true"></i><span>${esc(event.text)}${body.pending_event ? ` · pending ${esc(body.pending_event)}` : ''}</span>`; $('tickKind').textContent = event.kind ? event.kind + ' frame' : 'neural frame';
+    renderAfferents(body);
+    const fired = detail.fired || []; $('firedCount').textContent = `${fired.length} fired`; $('firedList').innerHTML = fired.length ? fired.slice(0, 80).map(id => `<button data-neuron="${id}" title="Inspect neuron ${id}">${id}</button>`).join('') + (fired.length > 80 ? `<span class="empty-note">+${fired.length - 80} more</span>` : '') : '<span class="empty-note">No firing cells in the selected frame.</span>';
+    $('firedList').querySelectorAll('[data-neuron]').forEach(button => button.addEventListener('click', () => inspectNeuron(Number(button.dataset.neuron)))); renderTimeline();
+  }
+  async function loadTick(tick, updateTimeline = true) {
+    if (tick == null || !backend) return;
+    if (updateTimeline) followLive = false;
+    clearTimeout(tickTimer); tickTimer = setTimeout(async () => {
+      try { const detail = await json(livePath(`/api/tick/${encodeURIComponent(tick)}?detail=neurons`)); renderTick(detail); }
+      catch (error) { $('railSource').textContent = `tick ${tick} unavailable`; $('firedList').innerHTML = `<span class="empty-note">${esc(error.message)}</span>`; }
+    }, 35);
+  }
+  function selectTick(tick) { selectedTick = tick; $('tickSlider').value = tick; loadTick(tick, true); }
+  async function inspectNeuron(id) {
+    if (!Number.isFinite(id)) return;
+    $('neuronId').value = id; const box = $('neuronResult'); box.className = 'neuron-result on'; box.innerHTML = '<span class="empty-note">Loading neuron detail…</span>';
+    try { const detail = await json(livePath(`/api/neuron/${id}?tick=${encodeURIComponent(selectedTick ?? '')}`)); const stateValue = detail.state || {}; const metadata = detail.metadata && Object.keys(detail.metadata).length ? JSON.stringify(detail.metadata) : 'none'; box.innerHTML = `<div class="neuron-head"><strong>${detail.id}</strong><span>${detail.firing ? 'firing' : 'quiet'} · tick ${detail.tick ?? 'live'}</span></div><div class="neuron-meta"><b>membrane S</b> ${Number(stateValue.S || 0).toFixed(4)} · <b>output O</b> ${Number(stateValue.O || 0).toFixed(4)}<br><b>threshold r</b> ${Number(stateValue.r || 0).toFixed(4)} · <b>t_ref</b> ${Number(stateValue.t_ref || 0).toFixed(2)}<br><b>metadata</b> ${esc(metadata)}<br><b>incoming/outgoing</b> ${detail.limits?.incoming_total ?? '—'} / ${detail.limits?.outgoing_total ?? '—'}</div>`; }
+    catch (error) { box.innerHTML = `<div class="neuron-error">${esc(error.message)}</div>`; }
+  }
+  async function inspectSynapse(source, target, slot) {
+    const box = $('synapseResult'); box.className = 'synapse-result'; box.textContent = 'Loading edge…';
+    try { const edge = await json(livePath(`/api/synapse?source=${encodeURIComponent(source)}&target=${encodeURIComponent(target)}&synapse=${encodeURIComponent(slot)}&tick=${encodeURIComponent(selectedTick ?? '')}`)); box.innerHTML = `<b>${edge.source} → ${edge.target}</b> · slot ${edge.synapse} · distance ${edge.distance}<br>info ${Number(edge.info || 0).toFixed(4)} · plastic ${Number(edge.plast || 0).toFixed(4)} · potential ${Number(edge.potential || 0).toFixed(4)}<br>${edge.source_firing ? 'source firing' : 'source quiet'} · ${edge.target_firing ? 'target firing' : 'target quiet'}`; }
+    catch (error) { box.className = 'synapse-result error'; box.textContent = error.message; }
+  }
+  async function connect() {
+    backend = clean($('backend').value); if (!/^https?:\/\//.test(backend)) { setConnection('error', 'invalid URL'); toast('Use an http:// or https:// live brain URL'); return; }
+    localStorage.setItem('aif-live-backend', backend); const found = presets.find(item => item.url === backend); if (found) $('preset').value = backend; selectedVersion = versionCatalog.find(item => item.url === backend) || selectedVersion; setConnection('', 'connecting'); $('viewportStatus').textContent = 'opening protocol handshake…'; $('brain').src = `${backend}/?lab=microscope&shell=research` ; $('openLive').href = `${backend}/?lab=microscope`;
+    try { session = await json(livePath('/api/session')); const introspection = await json(livePath('/api/introspection')); session.introspection = introspection; $('sideProtocol').textContent = session.protocol || 'live'; $('metricNeurons').textContent = session.neuron_count ?? '—'; $('metricSynapses').textContent = introspection.synapse_count ?? '—'; setConnection('live', `${session.version?.id || 'brain'} ready`); renderVersions(); updateTraceSummary(introspection.trace || {}); await loadTimeline(true); await poll(); toast(`${session.version?.label || 'PAULA brain'} connected`); }
+    catch (error) { session = null; setConnection('error', 'unavailable'); $('viewportStatus').textContent = 'backend unavailable'; $('workspaceTitle').textContent = 'No live brain connection'; $('workspaceSubtitle').textContent = error.message; toast(error.message); }
+    clearInterval(pollTimer); pollTimer = setInterval(poll, 850);
+  }
+  async function poll() { if (!backend || !session) return; try { const next = await json(livePath('/api/state')); renderState(next); await loadTimeline(); } catch (error) { setConnection('error', 'connection lost'); } }
+  async function command(c, extra = {}) { if (!backend) return; try { await json(livePath('/api/command'), {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({c, ...extra})}); if (c === 'reset') { followLive = true; selectedTick = null; timelineKey = ''; } await poll(); } catch (error) { toast(`Command failed: ${error.message}`); } }
+  function renderHarnesses(filter = '') { const needle = filter.trim().toLowerCase(); const list = harnesses.filter(item => !needle || `${item.label} ${item.description} ${item.id}`.toLowerCase().includes(needle)); $('harnesses').innerHTML = list.length ? list.map(item => `<button class="harness-row ${selectedHarness?.id === item.id ? 'selected' : ''}" data-harness="${esc(item.id)}"><strong>${esc(item.label)}</strong><span>${esc(item.description)}</span><span class="mono">${item.id} · ${item.supported_versions.join(', ')} · ${item.version_policy}</span></button>`).join('') : '<span class="empty-note">No harness matches that filter.</span>'; $('harnesses').querySelectorAll('[data-harness]').forEach(button => button.addEventListener('click', () => chooseHarness(button.dataset.harness))); }
+  function worldLabel(value) { return String(value).replace(/_/g, ' ').replace(/\b\w/g, ch => ch.toUpperCase()); }
+  function chooseHarness(id) { selectedHarness = harnesses.find(item => item.id === id); if (!selectedHarness) return; $('runFormTitle').textContent = selectedHarness.label; $('runSteps').value = selectedHarness.default_steps; $('runSubsteps').value = selectedHarness.default_substeps; $('runSeeds').value = selectedHarness.default_seeds.join(' '); $('runVersion').value = selectedHarness.supported_versions.includes(selectedVersion.id) ? selectedVersion.id : selectedHarness.supported_versions[0]; const worlds = selectedHarness.worlds || []; $('runWorldField').hidden = !worlds.length; $('runWorld').innerHTML = worlds.map(world => `<option value="${esc(world)}">${esc(worldLabel(world))}</option>`).join(''); if (worlds.length) $('runWorld').value = selectedHarness.default_world && worlds.includes(selectedHarness.default_world) ? selectedHarness.default_world : worlds[0]; $('runStatus').textContent = `${selectedHarness.mode} · ${selectedHarness.version_policy} · max ${selectedHarness.max_steps} steps`; $('runStatus').className = 'run-status'; $('runLog').textContent = `${selectedHarness.label}\n\n${selectedHarness.description}\n\nVersion policy: ${selectedHarness.version_policy}${selectedHarness.pass_version ? '\nThe selected version is passed into the strict builder.' : '\nThe selected version is metadata only; this harness does not claim a version-specific brain.'}\n\nVersions: ${selectedHarness.supported_versions.join(', ')}${worlds.length ? `\nGeometry fixtures: ${worlds.join(', ')}` : ''}\nDefault fixture: ${selectedHarness.default_steps} steps × ${selectedHarness.default_substeps} neural substeps`; renderHarnesses($('harnessSearch').value); }
+  async function loadHarnesses() { try { const payload = await json('/api/harnesses'); harnesses = payload.harnesses || []; chooseHarness(harnesses[0]?.id); } catch (error) { $('harnesses').innerHTML = `<span class="empty-note">Harness catalog unavailable: ${esc(error.message)}</span>`; } }
+  function renderRun(run) { currentRun = run; const status = run.status || 'queued'; $('runStatus').textContent = `${status} · ${run.id}`; $('runStatus').className = 'run-status ' + (status === 'passed' ? 'pass' : ['failed','error'].includes(status) ? 'fail' : ''); $('runLog').textContent = run.log || JSON.stringify(run, null, 2); $('copyRun').disabled = false; if (['queued','running'].includes(status)) setTimeout(() => watchRun(run.id), 650); }
+  async function watchRun(id) { try { const run = await json(`/api/runs/${encodeURIComponent(id)}`); renderRun(run); if (!['queued','running'].includes(run.status)) { const history = JSON.parse(localStorage.getItem('aif-lab-runs') || '[]').filter(value => value !== id); history.unshift(id); localStorage.setItem('aif-lab-runs', JSON.stringify(history.slice(0, 8))); renderHistory(); } } catch (error) { $('runStatus').textContent = error.message; $('runStatus').className = 'run-status fail'; } }
+  async function runHarness(event) { event.preventDefault(); if (!selectedHarness) { toast('Choose a harness first'); return; } const seeds = $('runSeeds').value.split(/[ ,]+/).filter(Boolean).map(Number); const payload = {harness:selectedHarness.id,version:$('runVersion').value,steps:Number($('runSteps').value),substeps:Number($('runSubsteps').value),seeds}; if (selectedHarness.worlds?.length) payload.world = $('runWorld').value; $('runHarness').disabled = true; $('runStatus').textContent = 'queueing…'; try { const run = await json('/api/harness/run', {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(payload)}); renderRun(run); toast('Harness queued'); } catch (error) { $('runStatus').textContent = error.message; $('runStatus').className = 'run-status fail'; $('runLog').textContent = error.message; } finally { $('runHarness').disabled = false; } }
+  function renderHistory() { const ids = JSON.parse(localStorage.getItem('aif-lab-runs') || '[]'); $('runHistory').innerHTML = ids.length ? ids.map(id => `<button class="history-item" data-run="${esc(id)}">${esc(id)}</button>`).join('') : ''; $('runHistory').querySelectorAll('[data-run]').forEach(button => button.addEventListener('click', () => watchRun(button.dataset.run))); }
+  async function copyRecord() { if (!currentRun) return; try { await navigator.clipboard.writeText(JSON.stringify(currentRun, null, 2)); toast('Run record copied'); } catch (_) { toast('Clipboard unavailable; focus output and copy manually'); } }
+
+  $('connect').addEventListener('click', connect); $('preset').addEventListener('change', () => { $('backend').value = $('preset').value; connect(); }); $('backend').addEventListener('keydown', event => { if (event.key === 'Enter') connect(); }); $('synapseForm').addEventListener('submit', event => { event.preventDefault(); inspectSynapse(Number($('synapseSource').value), Number($('synapseTarget').value), Number($('synapseSlot').value)); });
+  $('run').addEventListener('click', () => command('run', {n:-1})); $('step').addEventListener('click', () => { followLive = true; command('step'); }); $('pause').addEventListener('click', () => command('pause')); $('reset').addEventListener('click', () => command('reset')); $('world').addEventListener('change', event => command('world', {w:event.target.value}));
+  $('reloadFrame').addEventListener('click', () => { const src = $('brain').src; $('brain').src = 'about:blank'; setTimeout(() => $('brain').src = src, 30); }); $('focusFrame').addEventListener('click', () => $('brain').focus()); $('railRefresh').addEventListener('click', () => loadTick(selectedTick, false)); $('jumpLive').addEventListener('click', async () => { followLive = true; await poll(); if (state?.trace?.last != null) loadTick(state.trace.last, false); }); $('prevTick').addEventListener('click', () => selectTick(Math.max(Number($('tickSlider').min), Number(selectedTick || 0) - 1))); $('nextTick').addEventListener('click', () => selectTick(Math.min(Number($('tickSlider').max), Number(selectedTick || 0) + 1))); $('tickSlider').addEventListener('input', event => { $('tickValue').textContent = event.target.value; }); $('tickSlider').addEventListener('change', event => selectTick(Number(event.target.value))); $('neuronForm').addEventListener('submit', event => { event.preventDefault(); inspectNeuron(Number($('neuronId').value)); }); $('toggleDock').addEventListener('click', () => { const collapsed = $('dock').classList.toggle('collapsed'); $('toggleDock').textContent = collapsed ? 'expand dock' : 'collapse dock'; $('toggleDock').setAttribute('aria-expanded', String(!collapsed)); }); $('harnessSearch').addEventListener('input', event => renderHarnesses(event.target.value)); $('runForm').addEventListener('submit', runHarness); $('copyRun').addEventListener('click', copyRecord);
+  document.addEventListener('keydown', event => { if (['INPUT','SELECT','TEXTAREA'].includes(document.activeElement?.tagName)) return; const key = event.key.toLowerCase(); if (key === 'r') command('run', {n:-1}); else if (key === 's') command('step'); else if (key === 'p') command('pause'); else if (key === 'l') $('jumpLive').click(); });
+  renderVersions(); renderHistory(); loadHarnesses(); connect();
+})();
+</script>
+</body>
+</html>

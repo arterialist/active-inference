@@ -26,9 +26,11 @@ c_elegans_run.png
 scripts/misc/
 
 benchmark_results_*.txt
+simulations/active_inference/experiments/results/
 
 *.bak
 *.csv
 
 evolved_*.json
 evo_*.json
+.live/

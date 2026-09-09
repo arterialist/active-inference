@@ -17,9 +17,14 @@ dependencies = [
     "scipy>=1.13",
     "matplotlib>=3.9",
     "tqdm>=4.66",
+    "typer>=0.12",
+    "websockets>=12",
     # OpenWorm ConnectomeToolbox (cect) — installed from GitHub
     "cect @ git+https://github.com/openworm/ConnectomeToolbox.git",
 ]
+
+[project.scripts]
+aif-live = "simulations.active_inference.live.cli:app"
 
 [project.optional-dependencies]
 dev = [

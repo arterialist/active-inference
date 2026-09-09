@@ -29,6 +29,38 @@ may be host code. All cognitive control must stay in the neural network.
 
 ## Current experiment and continuation
 
+Continuing the same acquired brain/body state has separated a growing joint
+audiovisual component from a larger, reversing common-direction bias. All four
+sixteen-exposure courses completed, executing 99,072 ticks; 97,536 recorded ticks
+pass the final audit. End-of-course joint recall still fails in all seeds.
+
+A separate, completed intervention verifies that acquired weights can briefly
+express the correct relation in actual PAULA/body runs. The first retrospectively
+selected candidate per seed gives correct signs for all four pairings at probe
+ticks 16–63, before fresh somatic evidence, in every seed. At tick 63 the physical
+displacement reduction is only 0.275–6.300 percent. Weights recorded 32 training
+ticks later lose the all-pair property in three seeds, while seed 23 retains it.
+The full 3,072 new probe ticks pass independent audits; 4,608 ticks were executed
+including exact reference replays. Onset and later feedback failures are retained.
+
+This is transient learned content, not reliable autonomous recall or retained
+multimodal control. The next regulatory experiment must preserve useful content
+under continuing learning, not freeze weights or use offline pair labels as
+supervisory input. See `experiments/CROSSED_AV_CONTINUATION_2026-09-09.md` for
+the actual selection procedure, full-tick interference factors and literature
+boundary. The full objective remains unachieved.
+
+An upstream composition defect now takes priority. The graded context gate's
+single terminal receives native retrograde updates from 192 inhibitory inputs;
+its release coefficient becomes negative by block eight. Negative arrivals are
+ignored by the base model, allowing the supposedly suppressed mixed population
+to activate. Four completed full-state interventions, 3,072 ticks, show that
+restoring only this coefficient restores suppression, but does not repair the
+remaining wrong associations. The next change must repair graded/inhibitory/
+retrograde semantics through an explicit, tested extension before adding more
+competition circuitry. No Python reset controller or learning freeze is an
+acceptable repair. All experimental workers from this unit have finished.
+
 Latest continuation: the crossed audiovisual world completed 77,152 ticks in
 eight four-seed/assignment courses. Neither sense alone specifies the imposed
 load before somatic feedback. All seeds fail the joint rule: they learn one

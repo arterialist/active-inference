@@ -502,6 +502,29 @@ unresolved. The finding is not proof that zero latency or error-free recall is
 biologically necessary. Also check task necessity: a continuously available
 direct load signal can let feedback sidestep the memory capability being tested.
 
+## RULE 23 — A RELEASE EXTENSION CHANGES THE PLASTICITY EVENTS IT INHERITS
+
+When a subclass suppresses somatic spikes, inspect every inherited use of
+`t_last_fire`, not only its forward output. In the current graded preparation,
+native retrograde timing direction stays negative. At a negative incoming
+information weight, the native error compares positive arrival amplitude with
+that negative weight. Returning this error can push a presynaptic information
+coefficient through zero even when all incoming weights keep their signs.
+
+The sixteen-exposure audiovisual course found precisely this at a context
+terminal shared by 192 inhibitory targets. Its coefficient crossed below zero
+by block eight in the retained checkpoint series. Negative incoming information
+is ignored by the base input mask, so a source with active soma and intact
+inhibitory wiring ceased to suppress its target bank. Four full-state terminal
+restorations recovered suppression but did not fix the joint association.
+See `crossed_av_gate_probe.py` and the continuation findings.
+
+Record terminal coefficients, actual arriving release and return-event counts
+alongside soma output and postsynaptic weights. Check both sign conventions and
+feedback fanout. Dividing fanout or lowering a rate can delay a failure without
+repairing it. A temporary restoration is a causal diagnostic, not an autonomous
+solution; keep plasticity active and verify any repair in the coupled brain.
+
 ## WHERE TO LOOK
 
 - **`ROADMAP.md`** — status, the 8 numbered failures (F1-F8), and the ordered Phase 0-4 plan

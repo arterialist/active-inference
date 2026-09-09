@@ -194,3 +194,81 @@ circuit to perfection before testing the coupled organization.
 
 This remains a small maintenance task in a much larger artificial-life goal.
 It does not demonstrate mammal-level breadth or subjective experience.
+
+## 10 September: sensory substitution exposes two-resource coordination
+
+The same-graph clamp comparison is complete. Each seed branches the verified
+603-cell initial checkpoint into intact oxygen input or a reading held at .25,
+.50 or .75 of reserve. The actual body, oxygen and energy continue evolving.
+Substitution occurs after the real 64-tick organ queue; both raw and delivered
+signals are retained. No anatomy, motor command or learning rule changes.
+Every intact 1024-tick record exactly reproduces the prior full-feedback course.
+
+Holding the reading high produces oxygen debt in all four seeds, first at
+local indices 392, 383, 390 and 385. Holding it low maintains oxygen but spends
+enough actual energy to recruit the energy alarm. Holding it at its initial
+half-reserve value maintains both resources and costs less energy than normal
+oxygen feedback in every seed. Thus the afferent influences recruitment, but
+varying oxygen information is not necessary or best in this fixed environment.
+
+The low-reading condition permits a causal test of the previously unused
+energy pathway. A matched branch zeros only its two incoming muscle weights,
+from -2 to 0. All cells, other weights, sensory histories and native return
+edges remain. Adaptation stays active, including in the predictor.
+
+| Seed | First energy-alarm output | First muscle/body difference | First energy debt with output cut | Minimum energy intact, J |
+| --- | ---: | ---: | ---: | ---: |
+| 11 | 429 | 431 | 751 | .077046 |
+| 23 | 495 | 497 | 830 | .079282 |
+| 44 | 494 | 496 | 828 | .078372 |
+| 77 | 495 | 497 | 829 | .079346 |
+
+Indices are zero-based within each 1024-tick course. Before alarm recruitment,
+the matched branches have identical recorded activity, body, sensory and
+predictive-weight histories. The intact pathway prevents energy debt while
+preserving oxygen. Cutting its muscle projections produces energy debt in
+all four seeds, although final energy has recovered above zero. This is a
+bounded demonstration of bodily energy feedback restraining expenditure
+driven by another pathway. It is not learned arbitration or evidence of
+indefinite maintenance with a finite gut supply.
+
+The actual motor traces also expose a temporal imbalance. Under natural
+oxygen feedback, retraction activation costs roughly three times protraction
+activation; the fixed half-reserve input produces much more balanced costs.
+The full records retain each phase source event, actual and delayed oxygen,
+the arriving deficit signal and relay output. A delay/phase interaction is a
+hypothesis, not yet a demonstrated cause. First predictive-weight differences
+occur before the changed physical afferents return, so those early changes
+must not be credited to newly delivered bodily feedback.
+
+The analyzer checked 20,480 recorded ticks across the sixteen clamp and four
+energy-output-cut courses. Independent checks cover physical integration,
+resource accounting, the actual sensory substitution, muscle-output identity
+and predictive learning. The four intact courses also pass the existing full
+added-path equation audit. Clamped courses do not claim that auditor's complete
+nine-cell reconstruction, which assumes unmodified organ input. No claim here
+independently rederives all 603 cells.
+
+Retained artifacts under `.live/research/`:
+
+- `20260910_ventilation_input_clamp_seed{11,23,44,77}` holds every full course,
+  protocol and final neural/physical checkpoint.
+- `20260910_ventilation_energy_conflict_seed{11,23,44,77}` holds the matched
+  two-weight interventions, including raw ticks and continuing state.
+- `20260910_ventilation_clamp_analysis/` holds the checked per-tick contrasts,
+  phase events, explicit neuron IDs and first-divergence records.
+- `20260910_ventilation_clamp_figures/` contains `energy-conflict.png` and
+  `oxygen-clamps.png`, with all samples and hashed input provenance.
+
+Reproduce with the original verified checkpoints available:
+
+```sh
+uv run --offline --no-sync --with cloudpickle==3.1.2 python -m simulations.active_inference.experiments.ventilation_input_clamp .live/research/20260909_ventilation_verified_feedback_seed11 NEW_CLAMP_OUTPUT
+uv run --offline --no-sync --with cloudpickle==3.1.2 python -m simulations.active_inference.experiments.ventilation_energy_conflict .live/research/20260909_ventilation_verified_feedback_seed11 NEW_CONFLICT_OUTPUT
+```
+
+Next change the physical oxygen supply over time, leaving both neural
+regulators and acquired sensorimotor learning intact. Compare actual oxygen
+feedback with the fixed half-reserve input that performed better here. The
+world must reveal whether their differences help during both challenge and
+recovery; a passing unchanged world cannot answer that question.

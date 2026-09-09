@@ -1452,6 +1452,29 @@ or an unused energy regulator as a demonstrated capability. See the
 [completed findings](experiments/VENTILATION_REGULATION_2026-09-09.md).
 The full artificial-organism objective remains active and unachieved.
 
+## Continuation: an active bodily feedback loop restrains another pathway's expenditure
+
+Same-graph oxygen-afferent clamps and matched energy-output cuts now supply
+20,480 checked ticks across four seeds. All four intact oxygen courses exactly
+repeat the previous full records. A fixed low reading recruits actual energy
+feedback; removing only its two muscle weights causes energy deficits in every
+seed, while the intact pathway preserves both resources. This establishes
+bounded two-resource coordination, not acquired arbitration or long-term
+autonomy. Both graphs retain ongoing adaptation and native return pathways.
+
+The unfavorable control is equally important: holding oxygen at the initial
+half-reserve reading outperforms normal oxygen feedback on energy expenditure
+in this unchanged environment. Natural feedback produces unequal antagonist
+activation costs. The traces support a phase-related investigation but do not
+yet identify the delay as its cause. Early predictive-weight divergence occurs
+before changed physical afferents arrive and is not evidence of learning from
+those new bodily consequences. See the [10 September continuation](experiments/VENTILATION_REGULATION_2026-09-09.md#10-september-sensory-substitution-exposes-two-resource-coordination).
+
+Next expose this continuing brain to changing physical oxygen availability,
+without an environmental-change flag entering the network. Compare challenge
+and recovery with the same fixed sensory control. The full organism goal
+remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

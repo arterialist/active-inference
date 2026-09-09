@@ -72,6 +72,12 @@ anatomical reference calculation also still differs from the published curves.
 Registration recovery and numerical verification are established; a physiological
 fit is not. The code keeps this saved specimen separate from FlyWire.
 
+The [input-physics follow-up](APL_INPUT_PHYSICS_2026-09-10.md) tests shared
+electrical parameters and current versus conductance drive. Full-tick controls
+show that a better regional fit can largely survive removal of axial coupling.
+Distributed stimulus transduction must therefore be separated from propagation
+before interpreting the fit as a cellular repair.
+
 Current distinctions:
 
 | Item | Evidence status |

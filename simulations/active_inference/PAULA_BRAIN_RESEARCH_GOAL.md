@@ -68,18 +68,24 @@ Correct intervals occur at different checkpoints, rather than demonstrating
 retention. `competition_course_comparison.py` preserves every checkpoint and
 all 36,864 matched diagnostic ticks, with full-course visual evidence.
 
-The next causal question is regulation of rewriting without suppressing the
-representation's expression. It needs continued adaptation, a constant-rate
-control and acquisition after a changed physical relationship. No autonomous
-write regulator has been built or accepted. This is compatible with proceeding
-to action-dependent body/context composition rather than waiting for perfect
-isolated recall. See the completed-course section in the magnitude findings.
+The next causal question is regulation of rewriting without directly suppressing
+the representation's expression. A new experimental eligibility subclass and
+two neural reference cells now implement signed, source-relative eligibility.
+Seven local/embodied tests pass, including exact default behavior, read-only
+observation, independent update reconstruction and checkpoint continuation.
+The 592-cell candidate is being tested against identical reference wiring with
+unchanged learning and a quarter-rate control, followed by a physical reversal.
+No retained association or learned supervisory policy has been established.
+See `experiments/ELIGIBILITY_REFERENCE_2026-09-09.md` for the explicit changed
+equation, temporal/return-path limits and bounded preflight protocol. This does
+not postpone the separate action-dependent body/context composition.
 
 The unchanged-condition runner reproduced all 1,840 first-block recorded ticks,
-including its diagnostic branches, exactly. Four feedback-enabled sixteen-block
-courses are running in `.live/research/20260909_competition_learning_seed*`,
-seeds 11, 23, 44 and 77. Continue those processes and audit completed blocks;
-do not treat their manifests as completion evidence or start duplicate runs.
+including its diagnostic branches, exactly. The four feedback-enabled courses
+are complete and audited; do not restart them. Current reference-pathway screen
+workers use `.live/research/20260909_eligibility_reference_screen_seed{seed}`,
+seeds 11, 23, 44 and 77. Revalidate their exact process handles before any
+continuation; manifests or progress files alone are not liveness evidence.
 
 The incoming graded rule continues depressing nonselected weights, so lifetime
 regulation remains open. See `experiments/MAGNITUDE_FEEDBACK_2026-09-09.md` for
@@ -98,8 +104,8 @@ See `experiments/BODY_STATE_MEMORY_2026-09-09.md` and its full-seed visual evide
 Next test an environment where motion changes contact/load, and whether neural
 proprioceptive/motor-copy coupling supplies useful action-dependent prediction.
 Do not keep refining a media-to-exogenous-load association as if it already
-were a complete sensorimotor model. Keep the four ongoing competition courses
-and their evidence; their first four blocks are audited, not the full courses.
+were a complete sensorimotor model. Keep the completed competition courses and
+their full sixteen-block evidence alongside the current reference-pathway test.
 
 ### Earlier native-feedback course and interventions
 

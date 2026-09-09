@@ -479,6 +479,29 @@ Do not widen tolerances to hide an arithmetic-order discrepancy. Preserve
 failed checks, validate the corrected checker against deliberate corruption,
 and recover missing checkpoints only through verified executable continuation.
 
+## RULE 22 — A PLASTIC RECALL PROBE IS ALSO A LEARNING EPISODE
+
+With ongoing adaptation, an initially poor memory can be repaired during the
+same probe used to score it. Retain the onset, every selected update, actual
+neural teaching arrivals and the physical trajectory. Compare matched executable
+states with the declared learned weights reset. Do not assume late convergence
+means the earlier memory was unnecessary, or that good final behavior proves
+the desired response was already stored.
+
+When needed, use an explicit diagnostic lesion of neural teaching pathways to
+separate expression from rapid reacquisition. Keep positive basal rates and
+record residual state, continuing updates and any affected retrograde paths.
+This is an intervention, not a mechanism to install in the agent. Verify an
+unchanged replay before interpreting the lesion; do not hide its broader effects.
+
+In the 9 September context-organization experiment, teaching-path interruption
+preserved compensation for one recording but exposed persistent wrong responses
+for the other across four seeds. Ordinary probes had repaired those responses
+online. Both training blocks ended with the first recording, so recency remains
+unresolved. The finding is not proof that zero latency or error-free recall is
+biologically necessary. Also check task necessity: a continuously available
+direct load signal can let feedback sidestep the memory capability being tested.
+
 ## WHERE TO LOOK
 
 - **`ROADMAP.md`** — status, the 8 numbered failures (F1-F8), and the ordered Phase 0-4 plan

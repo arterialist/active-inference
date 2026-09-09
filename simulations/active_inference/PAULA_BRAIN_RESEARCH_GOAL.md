@@ -29,6 +29,36 @@ may be host code. All cognitive control must stay in the neural network.
 
 ## Current experiment and continuation
 
+Latest continuation: a separate 590-neuron audiovisual/context/motor preparation
+completes eight acquisition/probe and four expression-lesion courses across
+four graph seeds. Contextual neural access preserves earlier selected weights
+and allows the same real-media cue to contribute to opposite physical motor
+responses in two contexts. The context-blind comparison loses earlier-context
+protection. This is externally signalled context, not autonomous inference.
+
+It does not yet retain a useful repertoire within each context. Recording 1
+initially drives a worse response than selected-weight reset in all four seeds.
+With new neural teaching arrivals interrupted, its apparent compensation
+collapses while recording-0 compensation remains. Exact unlesioned replay and
+selected-learning/physical checks pass; all rates remain positive. Thus rapid
+online correction had concealed deficient learned expression. Recency and
+representation/learning interference are unresolved because both acquisition
+blocks ended with recording 0. The load is directly measurable, so this task
+does not establish that audiovisual memory is necessary for success.
+
+Next address coexisting event representations and learned authority over action
+in a challenge where remembered relations help before direct evidence arrives.
+Do not chase perfect hinge compensation or interpret context gating as a full
+supervisor. New local PAULA extensions remain allowed; existing classes are not
+the theoretical ceiling. First exploit PAULA's existing equations, parameters,
+signed channels, wiring and composition. Inheritance alone does not make a
+replacement dynamical model PAULA: a core-changing variant needs an identified
+limitation, an explanation of why existing flexibility is insufficient, and a
+separate, scoped scientific hypothesis. No core change was made in this test.
+The full objective above remains unchanged and open.
+See `experiments/CONTEXT_ORGANIZATION_FINDINGS_2026-09-09.md` for the complete
+81,536-tick comparison, failures, inspection limits and reproducible commands.
+
 Latest continuation: the acquired predictive motor brain now participates in
 a finite physiological energy loop. Four 2,048-tick courses compare intact
 neural energy feedback with a matched output-disconnected control, under

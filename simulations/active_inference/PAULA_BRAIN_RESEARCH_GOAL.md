@@ -75,6 +75,21 @@ regulation remains open. See `experiments/MAGNITUDE_FEEDBACK_2026-09-09.md` for
 the evidence, negative results, literature boundaries and data locations.
 The full objective remains active and unachieved.
 
+The body-state intervention now separates correct load prediction from posture
+control. Across four seeds, retaining the same learned association can slow an
+already-displaced arm's return but reduce displacement when that physical arm
+is put at rest. All 12,288 probe ticks are audited, including 3,072 exact prior
+replays. Neural histories stay identical for 64 ticks; body-state influence
+first appears at tick 65. Mechanical accounting now distinguishes damping,
+actuator work and numerical dissipation from the earlier load-plus-motor proxy.
+See `experiments/BODY_STATE_MEMORY_2026-09-09.md` and its full-seed visual evidence.
+
+Next test an environment where motion changes contact/load, and whether neural
+proprioceptive/motor-copy coupling supplies useful action-dependent prediction.
+Do not keep refining a media-to-exogenous-load association as if it already
+were a complete sensorimotor model. Keep the four ongoing competition courses
+and their evidence; their first four blocks are audited, not the full courses.
+
 ### Earlier native-feedback course and interventions
 
 Continuing the same acquired brain/body state has separated a growing joint

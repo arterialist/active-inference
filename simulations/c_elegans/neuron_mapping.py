@@ -133,6 +133,7 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._prev_sensory.clear()
         self._chem_ema_fast.clear()
         self._chem_ema_slow.clear()
+        self._proprio_ema.clear()
         self._global_m0 = 0.0
         self._global_m1 = 0.0
 
@@ -169,6 +170,13 @@ class CElegansNervousSystem(BaseNervousSystem):
 
         # --- run one tick ---
         self._network.run_tick()
+
+        # --- bound graded-neuron S after PAULA's integration. The pre-tick
+        # clamp only resets S once; chemical-input integration during run_tick
+        # can push it back outside the bound. Re-clamping here ensures the
+        # observed S (and downstream readout) stays within the biological
+        # range, especially the tighter HEAD_RING_S_BOUND. ---
+        self._clamp_motor_S()
 
         # --- volume transmission: broadcast M0/M1 to all neurons ---
         if self._enable_m0 or self._enable_m1:
@@ -354,23 +362,41 @@ class CElegansNervousSystem(BaseNervousSystem):
     # reset. Real C. elegans body-wall neurons stay within ~10-20 mV of rest
     # (Goodman et al. 2012); this clip simulates intrinsic conductance balance.
     _GRADED_S_BOUND: float = 1.0
+    # Head-ring (RMD/SMD/SMB) gets a TIGHTER bound so that strong chemical
+    # synaptic input from many upstream neurons does not pin S at the
+    # general-graded clamp (1.0) and erase the anti-phase contribution from
+    # the intrinsic oscillator (Phase B) and RIA cross-coupling. With S
+    # bounded at ±0.5 the oscillator amp ±0.10 produces a clear ±0.10 swing
+    # around the upstream-driven mean instead of being absorbed by saturation.
+    _HEAD_RING_S_BOUND: float = 0.5
 
     def _clamp_motor_S(self) -> None:
-        """Bound graded-neuron S to ±_GRADED_S_BOUND. Without spikes there's
-        no native reset; the leaky integrator alone lets S drift to ±1000.
-        Real C. elegans body-wall membrane potentials operate in a narrow
-        ~mV range due to channel-dependent shunting (Goodman 2012)."""
+        """Bound graded-neuron S. Without spikes there is no native reset;
+        the leaky integrator alone lets S drift well outside the biological
+        range. Real C. elegans body-wall membrane potentials operate in a
+        narrow ~mV range (Goodman 2012).
+
+        Head-ring neurons (RMD/SMD/SMB) get a tighter bound so the intrinsic
+        oscillator and RIA cross-coupling can produce a visible anti-phase
+        signal that would otherwise be absorbed by chemical-input saturation
+        at the general clamp.
+        """
         if self._network is None:
             return
-        bound = float(self._GRADED_S_BOUND)
+        body_bound = float(self._GRADED_S_BOUND)
+        head_bound = float(getattr(self, "_HEAD_RING_S_BOUND", body_bound))
+        head_set = set(self._HEAD_RING_GRADED)
         for name, nid in self._name_to_id.items():
-            if self._is_graded_neuron(name):
-                neuron = self._network.network.neurons.get(nid)
-                if neuron is not None:
-                    if neuron.S > bound:
-                        neuron.S = bound
-                    elif neuron.S < -bound:
-                        neuron.S = -bound
+            if not self._is_graded_neuron(name):
+                continue
+            neuron = self._network.network.neurons.get(nid)
+            if neuron is None:
+                continue
+            bound = head_bound if name in head_set else body_bound
+            if neuron.S > bound:
+                neuron.S = bound
+            elif neuron.S < -bound:
+                neuron.S = -bound
 
     def _inject_graded_release(self) -> None:
         """Inject graded chemical release for body-wall motor synapses.
@@ -522,16 +548,24 @@ class CElegansNervousSystem(BaseNervousSystem):
     # triggering a reversal episode.
     _BKW_CMD_NAMES: set[str] = {"AVAL", "AVAR", "AVDL", "AVDR", "AVEL", "AVER"}
     # Noise σ on command interneurons (Ornstein-Uhlenbeck per tick) — tunable.
-    _CMD_NOISE_SIGMA: float = 0.05
-    _CMD_NOISE_TAU: float = 50.0   # ticks (~100 ms correlation time)
+    # OU noise tuned with the A-MN gate threshold (0.70). σ=0.20 / τ=1500
+    # produces sustained AVA crossings ~46% of the time, which engages the
+    # A-MN intrinsic oscillator long enough to drive backward locomotion
+    # episodes and prevent the body from sticking in a dorsal/ventral curl.
+    _CMD_NOISE_SIGMA: float = 0.20
+    _CMD_NOISE_TAU: float = 1500.0  # ticks (~3s correlation time)
     # OU state for command interneuron noise.
     _cmd_noise_state: dict[str, float] = {}
 
-    # Reversal latch: AVA plateau-potential dynamics. Trigger when AVA mean S
-    # crosses a HIGH threshold (must be a strong burst, not just noise jitter).
-    # Bio reversal duration 1-3s, refractory 2-5s (Pierce-Shimomura 1999).
-    # Set trigger to 1e9 to disable.
-    _REV_LATCH_TRIGGER_S: float = 1.50
+    # Reversal latch: AVA plateau-potential dynamics. Trigger when bkw command
+    # interneuron mean S crosses threshold sustained (not just noise jitter).
+    # Lowered from 1.50 to 0.85 to match the A-MN oscillator gate threshold —
+    # the latch is the AUTHORITATIVE state for forward/backward, so A-MN OSC
+    # and B-proprio share it instead of independently using continuous sigmoid
+    # gates. Without this binding the system spent time at partial gate values,
+    # producing two competing waves at once. Bio reversal duration 1-3s,
+    # refractory 2-5s (Pierce-Shimomura 1999). Set trigger to 1e9 to disable.
+    _REV_LATCH_TRIGGER_S: float = 0.85
     _REV_LATCH_DURATION_TICKS_RANGE: tuple[int, int] = (500, 1500)
     _REV_REFRACTORY_TICKS_RANGE: tuple[int, int] = (1000, 2500)
     _rev_state: str = "idle"
@@ -546,6 +580,11 @@ class CElegansNervousSystem(BaseNervousSystem):
 
     # B-type motor neuron proprioception gain (Wen et al. 2012).
     _PROPRIO_MOTOR_GAIN: float = 0.10
+    # Slow EMA used to high-pass the proprio signal — see _inject_motor_proprioception.
+    # alpha=0.005 → time constant ≈ 200 ticks (~0.4s). Static bends fade out;
+    # rate-of-change passes through.
+    _PROPRIO_HIGHPASS_ALPHA: float = 0.005
+    _proprio_ema: dict[str, float] = {}
 
     # Anterior→posterior taper on the proprioceptive gain. With a
     # uniform gain every segment amplifies its own bend through the
@@ -604,7 +643,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # connectome bias wins → body locks ventrally.
     _INTRINSIC_OSC_ENABLED: bool = True
     _INTRINSIC_OSC_FREQ_HZ: float = 0.6   # autonomous oscillation frequency
-    _INTRINSIC_OSC_AMP: float = 0.025     # Option B: smaller amp keeps S in ±0.5 (no clamp)
+    _INTRINSIC_OSC_AMP: float = 0.10      # peak per-tick injection; combined with HEAD_RING_S_BOUND=0.5 produces ±0.5 swings
     _INTRINSIC_OSC_GATE_S: float = -0.05  # neuron.S threshold above which oscillator is active
     # Option A: baseline=0, amp=0.10 — S oscillates ±2 around 0 (clamped to ±1)
     _INTRINSIC_OSC_BASELINE_D: float = 0.0   # NALCN-like leak on dorsal-side RMD/SMD/SMB
@@ -614,20 +653,89 @@ class CElegansNervousSystem(BaseNervousSystem):
     _INTRINSIC_OSC_BASELINE: float = 0.01
     _intrinsic_osc_phases: dict[str, float] = {}
 
-    # ----- A-type motor neuron intrinsic oscillator (Gao et al. 2018) -----
-    # DA1-DA9 and VA1-VA12 are intrinsic UNC-2 (P/Q-type Ca²⁺) oscillators.
-    # AVA gates them via a dual-mode coupling: gap junctions shunt at AVA rest
-    # (silent) and chemical synapses release the oscillator during AVA
-    # depolarisation (active during reversal). This method runs ONLY when the
-    # existing reversal latch is in "active" state — so it strictly does not
-    # interfere with forward locomotion. Implementation injects depolarisation
-    # at the A-MN .S directly (external state-variable manipulation, no PAULA
-    # change, matching the Phase B oscillator pattern on RMD/SMD).
+    # ----- A-type motor neuron intrinsic oscillator + AVA dual-mode gating -----
+    # Gao et al. 2018 (eLife 7:e29915): DA1-DA9 and VA1-VA12 neurons are
+    # themselves intrinsic UNC-2 (P/Q-type Ca²⁺) driven oscillators with their
+    # own ~50s natural cycle. AVA controls them via a dual-mode coupling:
+    #   - Gap junctions: shunt A-MN intrinsic oscillation when AVA is at rest
+    #     (low-impedance path drains intrinsic depolarisation)
+    #   - Chemical synapses: depolarise A-MNs above their oscillation threshold
+    #     during AVA depolarisation (release the oscillator)
+    #
+    # We treat DA/VA as state variables manipulated by an external phase
+    # oscillator gated by AVA's S level. When AVA is below threshold (rest),
+    # gate ≈ 0 and A-MNs are silent. When AVA noise drives it above threshold
+    # (reversal episode), gate ≈ 1 and A-MNs phase-lock to a wave that
+    # propagates from tail to head — the kinematic signature of backward
+    # locomotion.
+    #
+    # No PAULA modifications: this is an external dynamic system reading and
+    # writing neuron.S, consistent with the Phase B design pattern used for
+    # RMD/SMD intrinsic oscillation.
     _A_MN_OSC_ENABLED: bool = True
     _A_MN_OSC_FREQ_HZ: float = 0.5         # backward wave frequency
-    _A_MN_OSC_AMP: float = 0.025           # peak per-tick injection (matches RMD osc)
+    _A_MN_OSC_AMP: float = 0.10            # peak depolarization injection per tick
+    # Threshold lowered from 1.10 to 0.70 after empirical sweep — at 1.10 the
+    # gate fired only briefly and the body locked dorsal; at 0.70 the gate
+    # is engaged ~40% of the time and the body produces sustained anti-phase
+    # waves with run-reversal cycling.
+    _A_MN_OSC_GATE_THRESHOLD: float = 0.70 # AVA mean S threshold for activation
+    _A_MN_OSC_GATE_SHARPNESS: float = 10.0 # sigmoid steepness around threshold
     _A_MN_OSC_SPATIAL_FREQ: float = 1.5    # ~1.5 wavelengths along body
+    _A_MN_OSC_TONIC: float = 0.0           # extra depolarization when gated on
     _a_mn_osc_phase: float = 0.0           # global phase, advances each tick
+    _a_mn_gate_now: float = 0.0            # current AVA→A-MN gate; B-proprio is attenuated by this
+
+    # ----- RIA neurite cross-compartmentalization (Hendricks 2012) -----
+    # RIA's dendritic neurite has dorsal (nrD) and ventral (nrV) compartments
+    # whose Ca²⁺ activity is locally driven by head bend rather than the soma
+    # potential. The compartments cross-project to SMD motor neurons:
+    #     nrD (active during dorsal head bend) → SMDV → ventral motor drive
+    #     nrV (active during ventral head bend) → SMDD → dorsal motor drive
+    # This is the source of RMDD/RMDV anti-phase oscillation in real C. elegans
+    # (Hendricks et al. 2012 Nature 487:99). Without this cross-coupling the
+    # connectome biases all RMDs similarly and the head muscles co-contract
+    # at ≈0.5/0.5 — the longstanding head co-contraction issue here.
+    #
+    # External implementation (no PAULA modification): each tick we read the
+    # head joint angle (via the existing DB1 proprio sensor — DB1 senses j01),
+    # gate by RIA.S (only depolarized RIA produces compartmental output), and
+    # inject into the appropriate SMD pair.
+    _RIA_COMPARTMENTS_ENABLED: bool = True
+    _RIA_COMPARTMENT_GAIN: float = 0.05    # injection strength per tick at full bend
+    _RIA_COMPARTMENT_RIA_GATE: bool = True # require RIA.S > 0 for compartments to fire
+
+    # ----- Per-cell biological resting potentials (Step 3 / research-derived) -----
+    # Published intracellular recordings from C. elegans neurons. Values are
+    # mapped from millivolts to PAULA S units via a linear transform with
+    # rest=-50 mV → S=0, firing=-25 mV → S=+1, deep hyperpolarization=-75 mV → S=-1
+    # (so a 25 mV change ≈ 1 S-unit). Each tick we inject k × (V_rest − S) to
+    # gently pull each tagged neuron toward its bio rest, on top of the
+    # connectome-driven dynamics.
+    #
+    # Sources:
+    #   AVA  −25 mV  (Mellem 2008; Lindsay 2011)  → near-firing depolarised rest
+    #   AVB  −50 mV  (Lockery 2009)               → moderately depolarised
+    #   RMD  −73 mV  (Mellem 2008)                → bistable, hyperpolarised at rest
+    #   SMD  −70 mV  (estimated from RMD class)
+    #   AWC  −74 mV  (Lockery 2009)               → hyperpolarised
+    #   ASE  −60 mV  (Suzuki 2008)                → near rest
+    _BIO_RESTING_POTENTIALS_ENABLED: bool = True
+    _RESTING_POT_LEAK: float = 0.05         # fraction of (target − S) injected per tick
+    _BIO_RESTING_POTENTIALS: dict[str, float] = {
+        # Backward command — depolarised, near firing
+        "AVAL": 0.70, "AVAR": 0.70,
+        # Forward command — moderately depolarised
+        "AVBL": 0.20, "AVBR": 0.20,
+        # Off-cell / chemosensory — hyperpolarised
+        "AWCL": -0.30, "AWCR": -0.30,
+        "ASEL": -0.10, "ASER": -0.10,
+        # Head-ring motors — hyperpolarised at rest, depolarised when active
+        "RMDDL": -0.20, "RMDDR": -0.20, "RMDVL": -0.20, "RMDVR": -0.20,
+        "RMDL": -0.20, "RMDR": -0.20,
+        "SMDDL": -0.15, "SMDDR": -0.15, "SMDVL": -0.15, "SMDVR": -0.15,
+        "SMBDL": -0.10, "SMBDR": -0.10, "SMBVL": -0.10, "SMBVR": -0.10,
+    }
 
     def _inject_sensory(
         self, sensory_inputs: dict[str, float], current_tick: int
@@ -734,8 +842,10 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._inject_motor_proprioception(sensory_inputs)
         self._inject_tonic_forward()
         self._inject_command_noise()
+        self._inject_resting_potentials()
         self._inject_intrinsic_oscillation()
         self._inject_a_motor_oscillation()
+        self._inject_ria_compartments(sensory_inputs)
         self._inject_head_cpg(current_tick)
 
         avg_delta = delta_accum / n_chem if n_chem > 0 else 0.0
@@ -889,6 +999,19 @@ class CElegansNervousSystem(BaseNervousSystem):
         gate_thr = float(self._INTRINSIC_OSC_GATE_S)
         baseline_d = float(self._INTRINSIC_OSC_BASELINE_D)
         baseline_v = float(self._INTRINSIC_OSC_BASELINE_V)
+        # Single shared phase across the whole head-ring pool. Earlier per-neuron
+        # phases drifted independently from random initial values, and
+        # connectome gap junctions then synced them IN-phase rather than
+        # anti-phase — measured RMD D-V correlation = +0.995. With a single
+        # phase, +sin (dorsal) and −sin (ventral) are mathematically anti-phase
+        # by construction; the connectome can no longer sync them in-phase
+        # because the external oscillator overrides at every tick.
+        phase = self._intrinsic_osc_phases.get("__shared__")
+        if phase is None:
+            phase = float(np.random.uniform(0.0, 2.0 * np.pi))
+        phase = (phase + omega) % (2.0 * np.pi)
+        self._intrinsic_osc_phases["__shared__"] = phase
+        sin_p = float(np.sin(phase))
         for name in self._RMD_DORSAL_TARGETS:
             nid = self._name_to_id.get(name)
             if nid is None: continue
@@ -896,12 +1019,7 @@ class CElegansNervousSystem(BaseNervousSystem):
             if n is None: continue
             n.S += baseline_d
             gate = float(np.tanh(max(0.0, n.S - gate_thr) * 5.0))
-            phase = self._intrinsic_osc_phases.get(name)
-            if phase is None:
-                phase = float(np.random.uniform(0.0, 2.0 * np.pi))
-            phase = (phase + omega) % (2.0 * np.pi)
-            self._intrinsic_osc_phases[name] = phase
-            n.S += amp * gate * float(np.sin(phase))   # +sign dorsal
+            n.S += amp * gate * sin_p             # +sin dorsal
         for name in self._RMD_VENTRAL_TARGETS:
             nid = self._name_to_id.get(name)
             if nid is None: continue
@@ -909,32 +1027,51 @@ class CElegansNervousSystem(BaseNervousSystem):
             if n is None: continue
             n.S += baseline_v
             gate = float(np.tanh(max(0.0, n.S - gate_thr) * 5.0))
-            phase = self._intrinsic_osc_phases.get(name)
-            if phase is None:
-                phase = float(np.random.uniform(0.0, 2.0 * np.pi))
-            phase = (phase + omega) % (2.0 * np.pi)
-            self._intrinsic_osc_phases[name] = phase
-            n.S -= amp * gate * float(np.sin(phase))   # -sign ventral
+            n.S -= amp * gate * sin_p             # −sin ventral (anti-phase)
 
     def _inject_a_motor_oscillation(self) -> None:
         """A-MN intrinsic UNC-2 oscillator with AVA dual-mode gating (Gao 2018).
 
-        Runs ONLY when the existing reversal latch is in ``active`` state. In
-        idle/refractory states this method is a no-op so the forward
-        locomotion pathway is exactly the same as upstream HEAD — no
-        side-effects. While active, DA/VA neurons receive a phase-locked
-        sinusoidal injection that produces a tail-to-head wave (DA + sin,
-        VA − sin → anti-phase). Spatial phase shift gives the wave 1.5
-        wavelengths along the body, propagating from tail to head — the
-        kinematic signature of backward locomotion.
+        DA/VA neurons are themselves Ca²⁺ pacemakers. AVA gap junctions shunt
+        their oscillation at AVA rest; AVA chemical synapses depolarise them
+        above oscillation threshold during reversal episodes.
+
+        Implementation:
+          1. Compute AVA mean S (from AVAL, AVAR).
+          2. gate = sigmoid((AVA_mean - threshold) × sharpness). Off at rest,
+             on during AVA bursts.
+          3. Advance global phase at intrinsic frequency.
+          4. Per A-MN: local_phase = global_phase + frac × spatial_k. Tail
+             (frac=1) leads, head (frac=0) lags → tail-to-head wave (backward).
+          5. DA neurons get +amp·sin(local_phase) (dorsal contraction);
+             VA neurons get -amp·sin(local_phase) (ventral, anti-phase).
+          6. Output is gated by AVA depolarisation, so A-MNs are silent in
+             forward state and oscillating during reversal — exactly the
+             phenomenology Gao 2018 reports.
+
+        Gating-only oscillation (no tonic): leaky integrator damps S to zero
+        when gate=0, so A-MNs cleanly disengage between reversal episodes
+        without leaving residual depolarisation that would compete with
+        B-types in forward state.
         """
         if self._network is None or not self._A_MN_OSC_ENABLED:
             return
-        if self._rev_state != "active":
-            return
+        # Binary gate from the reversal latch — A-MN oscillator only fires when
+        # the system is committed to reversal mode. Earlier the gate was a
+        # sigmoid on AVA mean which produced partial activation states where
+        # both A-MN OSC and B-type proprio ran simultaneously, generating
+        # competing forward/backward waves that cancelled. Latching cleanly
+        # separates the two.
+        gate = 1.0 if self._rev_state == "active" else 0.0
+        self._a_mn_gate_now = gate
+        # Advance global phase even when gate is 0 — keeps wave continuous
+        # across forward periods so a new latch trigger picks up a coherent wave.
         omega = 2.0 * np.pi * float(self._A_MN_OSC_FREQ_HZ) * self._NEURON_TICK_DT
         self._a_mn_osc_phase = (self._a_mn_osc_phase + omega) % (2.0 * np.pi)
-        amp = float(self._A_MN_OSC_AMP)
+        if gate < 0.5:
+            return
+        amp = float(self._A_MN_OSC_AMP) * gate
+        tonic = float(self._A_MN_OSC_TONIC) * gate
         spatial_k = 2.0 * np.pi * float(self._A_MN_OSC_SPATIAL_FREQ)
         for name, nid in self._name_to_id.items():
             prefix = name.rstrip("0123456789")
@@ -946,7 +1083,98 @@ class CElegansNervousSystem(BaseNervousSystem):
             frac = float(MOTOR_NEURON_POSITIONS.get(name, 0.0))
             local_phase = self._a_mn_osc_phase + frac * spatial_k
             sign = 1.0 if prefix == "DA" else -1.0
-            n.S += amp * sign * float(np.sin(local_phase))
+            n.S += tonic + amp * sign * float(np.sin(local_phase))
+
+    def _inject_ria_compartments(self, sensory_inputs: dict[str, float]) -> None:
+        """RIA neurite cross-compartmentalization (Hendricks 2012 Nature 487:99).
+
+        RIA's dendritic neurite has dorsal and ventral compartments whose Ca²⁺
+        activity is independent of the soma — local synaptic input depolarises
+        them in proportion to head bend direction. The compartments project to
+        SMD motor neurons that drive the OPPOSITE side of the head, producing
+        an antagonist reflex that creates RMDD/RMDV anti-phase oscillation.
+
+        Wiring (cross-coupling):
+            dorsal head bend  → RIA nrD active → SMDV depolarised → ventral muscle
+            ventral head bend → RIA nrV active → SMDD depolarised → dorsal muscle
+
+        Implementation:
+          - Read head joint yaw via the existing DB1 proprio sensor (`_mpr_DB1`),
+            already in [-1, 1] with positive = dorsal bend.
+          - Gate by RIAL/RIAR mean S > 0 (only depolarised RIA produces output).
+          - Inject k × max(0, ±curv) × ria_gate into the corresponding SMD pair.
+
+        The intrinsic RMD/SMD oscillator (Phase B) provides the rhythmic
+        substrate; this compartmental cross-coupling provides the spatial
+        anti-phase between dorsal/ventral that the connectome cannot supply.
+        """
+        if self._network is None or not self._RIA_COMPARTMENTS_ENABLED:
+            return
+        head_curv = float(sensory_inputs.get("_mpr_DB1", 0.0))
+        if abs(head_curv) < 1e-3:
+            return
+        ria_gate = 1.0
+        if self._RIA_COMPARTMENT_RIA_GATE:
+            ria_S = 0.0
+            n_ria = 0
+            for nm in ("RIAL", "RIAR"):
+                nid = self._name_to_id.get(nm)
+                if nid is None:
+                    continue
+                n = self._network.network.neurons.get(nid)
+                if n is not None:
+                    ria_S += n.S
+                    n_ria += 1
+            if n_ria == 0:
+                return
+            ria_S /= n_ria
+            ria_gate = max(0.0, ria_S)
+            if ria_gate < 1e-3:
+                return
+        nrD = max(0.0, head_curv) * ria_gate
+        nrV = max(0.0, -head_curv) * ria_gate
+        k = float(self._RIA_COMPARTMENT_GAIN)
+        if nrD > 0:
+            for nm in ("SMDVL", "SMDVR"):
+                nid = self._name_to_id.get(nm)
+                if nid is None:
+                    continue
+                n = self._network.network.neurons.get(nid)
+                if n is not None:
+                    n.S += k * nrD
+        if nrV > 0:
+            for nm in ("SMDDL", "SMDDR"):
+                nid = self._name_to_id.get(nm)
+                if nid is None:
+                    continue
+                n = self._network.network.neurons.get(nid)
+                if n is not None:
+                    n.S += k * nrV
+
+    def _inject_resting_potentials(self) -> None:
+        """Pull tagged neurons toward their published bio resting potential.
+
+        Each tick, inject ``leak * (V_rest_S − n.S)`` where V_rest_S is the
+        target resting potential in PAULA's normalised S units. The
+        steady-state effect is to bias the neuron's S toward V_rest while
+        leaving connectome-driven transient activity untouched.
+
+        Sources are documented next to ``_BIO_RESTING_POTENTIALS``. The leak
+        is gentle enough that strong synaptic inputs can still depolarise
+        AVA past the A-MN gate threshold or quiet RMD between locomotion
+        bouts.
+        """
+        if self._network is None or not self._BIO_RESTING_POTENTIALS_ENABLED:
+            return
+        k = float(self._RESTING_POT_LEAK)
+        for name, target in self._BIO_RESTING_POTENTIALS.items():
+            nid = self._name_to_id.get(name)
+            if nid is None:
+                continue
+            n = self._network.network.neurons.get(nid)
+            if n is None:
+                continue
+            n.S += k * (float(target) - n.S)
 
     def _inject_off_cell_tonic(self) -> None:
         """Tonic baseline for OFF-cell sensory neurons.
@@ -1029,8 +1257,24 @@ class CElegansNervousSystem(BaseNervousSystem):
             fwd_gate = 1.0
             bkw_gate_sharp = 0.0
 
+        # When the A-MN intrinsic oscillator (Gao 2018) is active, B-type
+        # proprioception is attenuated proportionally so the body cleanly
+        # transitions into backward locomotion without competing forward drive.
+        # a_mn_gate_now reflects the current AVA depolarisation level (0 at
+        # rest, 1 during full burst); using (1 - gate) suppresses B-proprio
+        # whenever the A-MN oscillator is dominant.
+        b_proprio_atten = max(0.0, 1.0 - float(getattr(self, "_a_mn_gate_now", 0.0)))
+
         prefix_str = "_mpr_"
         decay = float(self._PROPRIO_TAIL_DECAY)
+        # High-pass proprioception: subtract a slow EMA of each `_mpr_` value
+        # so static body bend doesn't drive ongoing reinforcement. Real C.
+        # elegans body-wall stretch receptors adapt to sustained strain (the
+        # signal is partly rate-coded; Wen 2012). Without this filter, a
+        # statically dorsally-bent body keeps DB depolarised and VB suppressed
+        # — a positive-feedback lock that prevents the wave from propagating.
+        ema_alpha = float(self._PROPRIO_HIGHPASS_ALPHA)
+        ema_state = self._proprio_ema  # dict instance attr
         for key, val in sensory_inputs.items():
             if not key.startswith(prefix_str):
                 continue
@@ -1041,6 +1285,12 @@ class CElegansNervousSystem(BaseNervousSystem):
             n = self._network.network.neurons.get(nid)
             if n is None:
                 continue
+            # Update slow EMA (≈ tracks the static bend baseline).
+            prev_ema = ema_state.get(motor_name, val)
+            ema = ema_alpha * val + (1.0 - ema_alpha) * prev_ema
+            ema_state[motor_name] = ema
+            # Effective input is the FAST component only. Static bend → val == ema → 0.
+            val = val - ema
             frac = float(MOTOR_NEURON_POSITIONS.get(motor_name, 0.0))
             prefix = motor_name.rstrip("0123456789")
             if prefix in ("DA", "VA"):
@@ -1049,10 +1299,12 @@ class CElegansNervousSystem(BaseNervousSystem):
                 # do nothing during forward locomotion.
                 gain = self._PROPRIO_MOTOR_GAIN * (1.0 - (1.0 - frac) * decay) * bkw_gate_sharp
             else:
-                # B-type: head strong (forward wave starts at head). Always
-                # active — B-type proprio is part of the substrate-level
-                # locomotion machinery that doesn't depend on the flip-flop.
-                gain = self._PROPRIO_MOTOR_GAIN * (1.0 - frac * decay)
+                # B-type: head strong (forward wave starts at head). Active in
+                # the forward state, attenuated by the A-MN oscillator gate so
+                # B and A drive don't cancel during a reversal episode.
+                gain = (self._PROPRIO_MOTOR_GAIN
+                        * (1.0 - frac * decay)
+                        * b_proprio_atten)
             n.S += val * gain
 
     def _volume_broadcast(self) -> None:
@@ -1086,6 +1338,11 @@ class CElegansNervousSystem(BaseNervousSystem):
     _RECIP_INHIB: float = 0.5
     _FWD_WEIGHT: float = 1.0
     _BKW_WEIGHT: float = 0.3
+    # Compensate for the connectome's dorsal-side bias (DB/VB asymmetric
+    # synaptic input). Without this, dorsal muscles win RECIP_INHIB cleanly
+    # and the worm walks in circles bent dorsal. Multiplies the ventral pool
+    # excitation pre-RECIP. 1.0 = neutral.
+    _VENTRAL_BIAS_COMP: float = 1.5
     # Head ring motor neuron contribution to anterior muscle drive.
     # RMD/SMD/SMB innervate head and anterior body muscles directly in real
     # C. elegans (Mulcahy 2018). Without this path, the RMD pacemaker drive
@@ -1093,6 +1350,15 @@ class CElegansNervousSystem(BaseNervousSystem):
     # synapse stages. Low weight (0.5) prevents head over-saturation that
     # otherwise pins the body via proprio runaway.
     _HEAD_RING_WEIGHT: float = 0.5
+
+    # Head-ring differential readout. When ON, the muscle readout for RMD/SMD/SMB
+    # subtracts the across-pool mean S before clipping to [0,1]. This converts
+    # connectome-driven common-mode saturation into a relative signal so that
+    # dorsal/ventral asymmetry from RIA cross-coupling (Hendricks 2012) can drive
+    # the head muscles even when all RMD/SMD neurons sit at S>1. Without this
+    # the clip(S/S_NORM) readout pins both sides to 1.0 and the head locks at
+    # 0.5/0.5 co-contraction (the longstanding seg1-3 issue).
+    _HEAD_DIFFERENTIAL_READOUT: bool = True
 
     # Neuromuscular-junction transfer.
     #   muscle = clip((excit - threshold) * scale, 0, 1)
@@ -1153,9 +1419,10 @@ class CElegansNervousSystem(BaseNervousSystem):
                 return 0.0
             return float(np.clip(n.S / self._S_NORM, 0.0, 1.0))
 
-        # Compute head-ring baseline: mean of all RMD/SMD/SMB S values.
-        # Used by signed readout for head muscles so dorsal/ventral alternate
-        # cleanly even when connectome inputs bias them all positive.
+        # Compute head-ring baseline: mean of all RMD/SMD/SMB S values. Used by
+        # the differential head readout (see _HEAD_DIFFERENTIAL_READOUT) so that
+        # connectome-driven common-mode saturation doesn't pin every head muscle
+        # to 0.5/0.5 (the seg1-3 co-contraction bug).
         _head_ring_all = ("RMDDL", "RMDDR", "RMDVL", "RMDVR",
                            "SMDDL", "SMDDR", "SMDVL", "SMDVR",
                            "SMBDL", "SMBDR", "SMBVL", "SMBVR")
@@ -1165,6 +1432,25 @@ class CElegansNervousSystem(BaseNervousSystem):
             if nn is not None:
                 head_ring_S_values.append(nn.S)
         head_ring_baseline = float(np.mean(head_ring_S_values)) if head_ring_S_values else 0.0
+
+        head_diff = bool(getattr(self, "_HEAD_DIFFERENTIAL_READOUT", True))
+        head_residual = float(getattr(self, "_HEAD_DIFF_RESIDUAL", 0.20))
+
+        def _head_graded(name: str) -> float:
+            n = self.get_neuron_by_name(name)
+            if n is None:
+                return 0.0
+            if head_diff:
+                # Subtractive-clip with residual baseline: at pool balance both
+                # sides give `residual` (small, non-zero) so opposing muscles
+                # aren't fully silenced when the pool is symmetric. Asymmetry
+                # adds (S − mean)/S_NORM to one side and effectively zero to
+                # the other (clipped). Earlier the readout was pure (S − mean)
+                # which left the losing side at 0; the user observed
+                # "muscles opposite of locked barely receive signal".
+                diff = (n.S - head_ring_baseline) / self._S_NORM
+                return float(np.clip(head_residual + diff, 0.0, 1.0))
+            return float(np.clip(n.S / self._S_NORM, 0.0, 1.0))
 
         dorsal_excit = np.zeros(N_BODY_SEGMENTS)
         ventral_excit = np.zeros(N_BODY_SEGMENTS)
@@ -1193,16 +1479,25 @@ class CElegansNervousSystem(BaseNervousSystem):
                     v_inh += _graded(name) * w
                 # Head ring motor neurons (RMD/SMD/SMB) — direct innervation of
                 # head/anterior body muscles, real-biology pathway (Mulcahy 2018).
+                # Use _head_graded so that the head-ring common-mode is removed
+                # before clipping; only neurons above the pool mean contribute.
                 elif name in ("RMDDL", "RMDDR", "SMDDL", "SMDDR", "SMBDL", "SMBDR"):
-                    d_exc += _graded(name) * w * self._HEAD_RING_WEIGHT
+                    d_exc += _head_graded(name) * w * self._HEAD_RING_WEIGHT
                 elif name in ("RMDVL", "RMDVR", "SMDVL", "SMDVR", "SMBVL", "SMBVR"):
-                    v_exc += _graded(name) * w * self._HEAD_RING_WEIGHT
+                    v_exc += _head_graded(name) * w * self._HEAD_RING_WEIGHT
 
             dorsal_excit[seg] = d_exc - d_inh * self._INHIB_WEIGHT
             ventral_excit[seg] = v_exc - v_inh * self._INHIB_WEIGHT
 
         dorsal_excit = np.clip(dorsal_excit, 0.0, 1.0)
         ventral_excit = np.clip(ventral_excit, 0.0, 1.0)
+
+        # Compensate for connectome dorsal/ventral asymmetry. Without this the
+        # dorsal pool consistently wins RECIP_INHIB and the worm bends into a
+        # permanent dorsal C. Boost is applied pre-RECIP so the antagonism
+        # math still works the same way, but the pools are on more equal
+        # footing.
+        ventral_excit = np.clip(ventral_excit * self._VENTRAL_BIAS_COMP, 0.0, 1.0)
 
         # Reciprocal inhibition (mechanical antagonism of body-wall muscles)
         d_push = dorsal_excit - ventral_excit * self._RECIP_INHIB

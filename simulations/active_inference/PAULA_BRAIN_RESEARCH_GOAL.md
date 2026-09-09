@@ -41,6 +41,27 @@ breadth, while separating demonstrated capabilities from subjective experience.
 
 ## Current experiment and continuation
 
+### Latest result, 10 September: the respiratory line is bounded
+
+The completed 608-cell, four-seed factorial comparison separates two failures.
+The new neural phase-dependent motor route preserves energy and avoids recorded
+membrane bounds during changing air, while retaining predictive motor influence
+and positive adaptation. The old route still depletes energy when its predictive
+motor projections are cut, but that cut prevents the large late escalation.
+All sixteen courses incur oxygen debt. The new connected route still has oxygen
+deficits during recovery; its diagnostic predictor cut does not. This is a
+useful designed composition, not acquired coordination or viable physiology.
+All 32,768 recorded ticks pass the scoped independent checks; 47 tests pass.
+See the [complete comparison](experiments/VENTILATION_REGULATION_2026-09-09.md#10-september-phase-dependent-recruitment-separates-two-coupled-failures).
+
+Do not automatically make the next residual organ failure another circuit-design
+project. Preserve this imperfect mechanism and choose the next experiment for
+what it reveals about adaptive collective organization: can interacting learned
+populations reorganize useful behavior when their consequences change, without
+us specifying a new operating regime for each condition? Further respiratory
+repair is justified only if it demonstrably blocks that experiment. The sections
+below preserve earlier continuation history, not currently running jobs.
+
 The new magnitude-coordinate retrograde extension prevents the inhibitory gate
 failure in a completed 193-cell comparison, 16,000 ticks per condition. The native
 gate leaks at tick 10,395 and its terminal becomes negative at 11,621; the new

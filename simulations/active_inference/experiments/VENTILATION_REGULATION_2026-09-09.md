@@ -373,3 +373,86 @@ contrasts, all off-phase and membrane-bound events, stage-specific debt
 increments and `challenge-recovery.png`. Every sample is retained. All four
 simulation workers and the completed analyzer exited successfully; the
 behavioral result is failure despite those successful executions.
+
+## 10 September: phase-dependent recruitment separates two coupled failures
+
+Sixteen new 2048-tick courses are complete, across seeds 11, 23, 44 and 77.
+All branch the acquired neural state at tick 6352, with pending signals,
+learned weights, physical state and sensory history preserved. All use the
+same expanded 608-cell graph and the same changing-air course. The declared
+interventions select the old or new motor route, with or without the two
+predictor-to-muscle projections. Diagnostic zero weights remain zero under
+the existing multiplicative rule; neurons, neural teaching, other learning
+and native return pathways remain active in every condition.
+
+The new five-cell circuit receives deficit D and the two existing rhythm
+channels R. A matched excitatory relay P and inhibitory comparator Q supply
+each output G. With held unit weights and without attenuation, its local
+transformation is P=relu(D), Q=relu(D-R), G=3*relu(P-Q), or 3*min(D,R) for
+nonnegative inputs. These are neural operations, not a Python online rule.
+The implementation uses existing graded PAULA cells, distance-one dendrites,
+positive adaptation and separate P terminals for the two consumers. No neuron
+equation changed. The extra layer adds two ticks relative to the old relay.
+
+[Yang, Murray & Wang (2016)](https://pmc.ncbi.nlm.nih.gov/articles/PMC5034308/)
+motivates disinhibitory routing. This cancellation population does not reproduce
+that paper's NMDA/GABA compartment model or establish a respiratory anatomy.
+Its gating is imperfect. In the full predictor-connected new-route courses,
+peak off-phase output is .000781–.000861, versus phase peaks near 2.94.
+The audit uses actual arrivals with the measured three-tick Q-input-to-G-output
+delay, rather than comparing simultaneous source and output samples.
+
+| Motor route | Predictive muscle projections | Energy debt | Any recorded membrane bound | New oxygen debt during normal-air recovery |
+| --- | --- | --- | --- | --- |
+| Old additive relay | Connected | 4/4 seeds | 4/4 seeds | 4/4 seeds |
+| Old additive relay | Diagnostic cut | 4/4 seeds | 0/4 seeds | 4/4 seeds |
+| New phase-dependent route | Connected | 0/4 seeds | 0/4 seeds | 4/4 seeds |
+| New phase-dependent route | Diagnostic cut | 0/4 seeds | 0/4 seeds | 0/4 seeds |
+
+Every condition nevertheless incurs oxygen debt during the reduced-air phase.
+This is not a fully viable organism. The connected new route maintains energy
+above .0473–.0679 J across seeds, while its first oxygen deficit still occurs
+at indices 720, 720, 721 and 720. It has 108, 98, 7 and 111 further oxygen-debt
+ticks after normal air returns. Cutting its predictive motor projections removes
+those recovery deficits, but not the earlier challenge deficit. A candidate
+that disconnects acquired motor influence is not accepted as the solution.
+
+The old route first incurs energy debt at 803, 803, 805 and 804. Cutting its
+predictive projections moves these onsets to 817, 817, 815 and 817 but does not
+prevent depletion. It does eliminate the later recorded membrane-bound events.
+Thus predictive motor influence contributes to the large late escalation,
+while the earlier energy failure can occur without it. This is a whole-course
+intervention, not proof that a cut made at the instant of failure would recover
+the same trajectory. Switching routes also changes latency and the earlier
+body history; the outcome is not attributed to cancellation alone.
+
+The added graph is not dynamically inert even when its muscle weights are zero.
+Compared with the original 603-cell course, the expanded legacy control first
+changes an old terminal coefficient at tick 3, muscles/body at 88 and selected
+predictive weights at 91, in every seed. Its first oxygen and energy failures
+remain at the earlier indices. The factorial comparisons therefore use this
+same expanded graph, not an assumption of exact equivalence to the old brain.
+The recorded CPG output trains remain identical across all four conditions.
+
+All 32,768 ticks pass independent physical, resource, sensory-delivery,
+predictive-learning and new-path input/integration checks. The new-path
+residual is zero in these recordings. This does not independently rederive
+every update in all 608 cells. Forty-seven focused tests pass, including local
+range probes, preservation of acquired state and deliberate trace corruption.
+All four simulation workers and the first analyzer exited successfully.
+
+The raw courses and initial/final executable states remain in
+`.live/research/20260910_ventilation_phase_composition_seed{11,23,44,77}`.
+The checked full-tick contrasts and shared-axis figure are in
+`.live/research/20260910_ventilation_phase_analysis_v2/`. The earlier analysis
+is retained; v2 shortens overlapping axis labels and includes explicit group
+identities, without changing the underlying recordings or numerical analysis.
+
+This bounds the respiratory line rather than setting up another automatic
+relay or gain repair. The new route is a useful, imperfect compositional part;
+its improved behavior was designed, not acquired. The next research question
+is whether the interacting learned populations can change their coordination
+when consequences change, without the experimenter selecting a new operating
+regime for each condition. Existing imperfect mechanisms and observation tools
+should support that test. A remaining respiratory defect warrants more work
+only if it demonstrably prevents that broader experiment.

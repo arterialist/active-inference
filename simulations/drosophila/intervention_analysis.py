@@ -11,6 +11,7 @@ import numpy as np
 import typer
 
 from .connectome import sha256
+from .input_panels import recorded_drive_rows
 
 
 def first_tick(mask):
@@ -28,10 +29,12 @@ def inspect_record(directory: Path):
             raise ValueError(f"Changed recording {directory / name}")
     with np.load(directory / "columns.npz", allow_pickle=False) as c:
         ids, roots, ports, bindings, delay = (c[k] for k in ("cell_ids", "root_ids", "postsynaptic_ports", "edge_bindings", "input_delays"))
-        n_terminals = len(c["terminals"])
+        terminals = c["terminals"]
+        n_terminals = len(terminals)
     with np.load(directory / "soma.npz", allow_pickle=False) as c:
         soma = c["soma"]
     protocol = m["protocol"]
+    drive_rows = recorded_drive_rows(protocol, roots)
     n_ticks = protocol["ticks"]
     cable = m["assumptions"]["parameters"].get("apl_representation") == "local_cable"
     cable_report = {}
@@ -134,6 +137,32 @@ def inspect_record(directory: Path):
     positive_terminals = True
     changed_post = changed_pre = None
     initial_post = initial_pre = None
+    undriven_pn_rows = np.setdiff1d(groups["PN"], drive_rows)
+    recruited = np.argwhere(soma[:, undriven_pn_rows, 1] > 0)
+    first_recruitment = None
+    recruitment_ports, recruitment_sources, recruitment_outputs = [], {}, []
+    if len(recruited):
+        tick, column = map(int, recruited[0])
+        row = int(undriven_pn_rows[column])
+        target = int(ids[row])
+        first_recruitment = {"tick": tick, "root": str(roots[row]), "neuron_id": target,
+                             "incoming_potentials": [], "apl_deliveries": []}
+        recruitment_ports = np.flatnonzero(ports[:, 0] == target)
+        recruitment_sources = {int(sid): int(pre) for _, pre, _, post, sid in bindings if post == target}
+        for source_row, pre, tid, post, sid in bindings:
+            if pre != target or post != apl_id:
+                continue
+            col = port_for_pair[(int(post), int(sid))]
+            terminal_col, = np.flatnonzero((terminals[:, 0] == pre) & (terminals[:, 1] == tid))
+            receiving = tick + m["assumptions"]["cleft_delay_ticks"]
+            delivery = {"source_pair_row": int(source_row), "source_terminal": int(tid),
+                        "apl_port": int(sid), "source_output_tick": tick,
+                        "receiving_tick": receiving, "integration_tick": receiving + int(delay[col]),
+                        "source_output": float(soma[tick, row, 1]),
+                        "receiving_tick_recorded": receiving < n_ticks,
+                        "integration_tick_recorded": receiving + int(delay[col]) < n_ticks}
+            recruitment_outputs.append((delivery, col, int(terminal_col)))
+            first_recruitment["apl_deliveries"].append(delivery)
     for chunk in recorded["chunks"]:
         if chunk["start"] != expected_start or chunk["stop"] <= chunk["start"]:
             raise ValueError("Chunk gap, overlap or reversal")
@@ -236,6 +265,41 @@ def inspect_record(directory: Path):
                 raise ValueError("The declared undriven boundary received input")
             if not np.array_equal(inputs[:, drive_cols, 0], external[start:stop].astype(np.float32)):
                 raise ValueError("External drive did not arrive at its experimental ports")
+            for delivery, col, terminal_col in recruitment_outputs:
+                tick = delivery["source_output_tick"]
+                if start <= tick < stop:
+                    # Retrograde arrivals are processed before the source tick.
+                    # The after-tick terminal coefficient is the emitted one.
+                    delivery["source_terminal_info_at_emission"] = float(data["terminal_info"][tick-start+1, terminal_col])
+                receiving = delivery["receiving_tick"]
+                if start <= receiving < stop:
+                    k = receiving-start
+                    delivery.update(arriving_info=float(inputs[k, col, 0]),
+                        postsynaptic_info_before_receiving_tick=float(w[k, col]),
+                        local_potential_before_learning=float(local[k, col]),
+                        predicted_delayed_potential_float64=float(local[k, col] * m["assumptions"]["parameters"]["signal_decay"]**int(delay[col])))
+                integration = delivery["integration_tick"]
+                if cable and start <= integration < stop:
+                    delivery["recorded_cable_arrived_current"] = float(arrived[integration-start, delivery["apl_port"]])
+            for col in recruitment_ports:
+                receiving_tick = first_recruitment["tick"] - int(delay[col])
+                if not start <= receiving_tick < stop:
+                    continue
+                k = receiving_tick-start
+                if local[k, col] == 0:
+                    continue
+                sid = int(ports[col, 1])
+                pre = recruitment_sources.get(sid)
+                first_recruitment["incoming_potentials"].append({
+                    "receiving_tick": receiving_tick, "port": sid,
+                    "source_neuron_id": pre,
+                    "source_root": str(roots[row_for_id[pre]]) if pre is not None else None,
+                    "source_group": source_group[pre] if pre is not None else "external_or_boundary",
+                    "source_output_tick": receiving_tick-m["assumptions"]["cleft_delay_ticks"] if pre is not None else None,
+                    "arriving_info": float(inputs[k, col, 0]),
+                    "postsynaptic_info_before_receiving_tick": float(w[k, col]),
+                    "local_potential_before_learning": float(local[k, col]),
+                    "potential_at_spike_tick": float(local[k, col] * m["assumptions"]["parameters"]["signal_decay"]**int(delay[col]))})
             # Source-tagged creation potentials, shifted by their actual fixed
             # dendritic delay. Float64 sums are diagnostic currents, not a
             # bit-exact reimplementation of native heap accumulation order.
@@ -264,7 +328,7 @@ def inspect_record(directory: Path):
         if not previous_stop <= start < stop <= n_ticks:
             raise ValueError("Invalid experimental epoch")
         previous_stop = stop
-        expected_drive[start:stop, groups["PN"]] = epoch["PN_drive"]
+        expected_drive[start:stop, drive_rows] = epoch["PN_drive"]
         kc = soma[start:stop, groups["KC"], 1] > 0
         epochs.append({**epoch, "kc_cells_fired": int(kc.any(axis=0).sum()),
                        "kc_spikes": int(kc.sum()),
@@ -281,6 +345,22 @@ def inspect_record(directory: Path):
     unblocked_rows = np.asarray([i for i in range(len(ids)) if i not in set(blocked_rows)], dtype=int)
     if not np.array_equal(blocked[:, blocked_rows], emitted[:, blocked_rows]) or blocked[:, unblocked_rows].any():
         raise ValueError("Release blockade did not match its declared targets")
+    if first_recruitment is not None:
+        tick, row = first_recruitment["tick"], row_for_id[first_recruitment["neuron_id"]]
+        first_chunk = directory / recorded["chunks"][0]["file"]
+        with np.load(first_chunk, allow_pickle=False) as f:
+            initial = f["soma"][0, row]
+        previous = soma[tick-1, row] if tick else initial
+        current = sum(x["potential_at_spike_tick"] for x in first_recruitment["incoming_potentials"])
+        alpha = 1/m["assumptions"]["parameters"]["lambda_ticks"]
+        predicted = (1-alpha)*previous[0] + alpha*current
+        threshold = soma[tick, row, 4 if tick-previous[6] <= m["assumptions"]["parameters"]["cooldown_ticks"] else 3]
+        if abs(predicted) < .005:
+            threshold = soma[tick, row, 3]
+        first_recruitment.update(previous_membrane=float(previous[0]), external_current=float(external[tick, row]),
+            summed_delayed_potential=float(current), reconstructed_unclipped_pre_reset_voltage=float(predicted),
+            active_threshold=float(threshold), recorded_post_reset_voltage=float(soma[tick, row, 0]),
+            scope="First undriven PN spike, accounting from native recorded potentials and fixed delays; float64 sum is not native float32 accumulation order. No pathway has been lesioned here.")
     report = {
         "scope": m["claim"], "condition": m["condition"],
         "recording_checks_passed": True, "positive_terminal_coefficients": positive_terminals,
@@ -288,6 +368,12 @@ def inspect_record(directory: Path):
         "terminal_coefficients_changed": int(changed_pre.sum()),
         "first_spike_or_release": {key: first_tick(np.any(soma[:, rows, 1] > 0, axis=1)) for key, rows in groups.items()},
         "kc_spikes_each_tick": (soma[:, groups["KC"], 1] > 0).sum(axis=1).tolist(),
+        "pn_input_selection": {"name": protocol.get("pn_drive_panel", {}).get("name", "all_selected_legacy"),
+                               "driven": len(drive_rows), "undriven": len(undriven_pn_rows),
+                               "first_undriven_PN_spike": first_recruitment},
+        "pn_spikes_by_drive_group_each_tick": {
+            "externally_driven": (soma[:, drive_rows, 1] > 0).sum(axis=1).tolist(),
+            "not_externally_driven": (soma[:, undriven_pn_rows, 1] > 0).sum(axis=1).tolist()},
         "apl_output_each_tick": soma[:, protocol["apl_row"], 1].tolist(),
         "apl_input_by_source_each_tick": {key: values.tolist() for key, values in currents.items()},
         "apl_release_cap_ticks": np.flatnonzero(soma[:, protocol["apl_row"], 0] * m["assumptions"]["parameters"]["apl_graded_gain"] >= m["assumptions"]["parameters"]["apl_release_max"]).tolist(),
@@ -316,6 +402,9 @@ def compare(reference: Path, variant: Path):
     with np.load(reference / "columns.npz") as ca, np.load(variant / "columns.npz") as cb:
         if set(ca.files) != set(cb.files) or any(not np.array_equal(ca[key], cb[key]) for key in ca.files):
             raise ValueError("Unmatched anatomical port columns")
+        if not np.array_equal(recorded_drive_rows(ma["protocol"], ca["root_ids"]),
+                              recorded_drive_rows(mb["protocol"], cb["root_ids"])):
+            raise ValueError("Unmatched driven PN subsets")
     with np.load(reference / ma["recording"]["chunks"][0]["file"]) as ca, np.load(variant / mb["recording"]["chunks"][0]["file"]) as cb:
         keys = ("soma", "M", "post_weight", "terminal_info")
         if "cable_voltage" in ca.files:
@@ -431,6 +520,11 @@ def verify_unobserved(graph, directory: Path):
         raise ValueError("Uninstrumented verification requires an intact record")
     if graph.provenance != m["anatomical_provenance"] or graph.summary() != m["anatomy"]:
         raise ValueError("Replay graph differs from recorded anatomy")
+    if "pn_drive_panel" in m["protocol"]:
+        from .input_panels import make_panel
+        panel = m["protocol"]["pn_drive_panel"]
+        if make_panel(graph, panel["name"]) != panel:
+            raise ValueError("Recorded input panel differs from source annotations or model signs")
     spatial = m["assumptions"].get("spatial")
     p = build_paula(graph, Dynamics(**m["assumptions"]["parameters"]),
                     spatial=Path(spatial["analysis_path"]).parent if spatial else None)
@@ -496,7 +590,8 @@ def main(directory: Path, output: Path, reference: Path | None = None, source: P
         json.dump(report, out, indent=2)
     def compact(value):
         if isinstance(value, dict):
-            return {k: compact(v) for k, v in value.items() if "each_tick" not in k}
+            return {k: (len(v) if k == "incoming_potentials" else compact(v))
+                    for k, v in value.items() if "each_tick" not in k}
         return value
     print(json.dumps(compact(report), indent=2))
 

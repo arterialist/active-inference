@@ -40,7 +40,7 @@ def regional_balance(voltage, capacity, masks, current, alpha):
     return (charge[1:] - (1-alpha)*charge[:-1]) / alpha - current
 
 
-def analyze(record: Path, regions: Path, output: Path):
+def analyze(record: Path, regions: Path, output: Path, *, decompose_negative_pn=False):
     if output.exists():
         raise FileExistsError(output)
     m = json.loads((record / "manifest.json").read_text())
@@ -66,6 +66,10 @@ def analyze(record: Path, regions: Path, output: Path):
         if not np.array_equal(ids, f["node_ids"]) or not np.array_equal(xyz, f["xyz_nm"]):
             raise ValueError("Region node identities or coordinates differ")
         contacts, pair_rows = f["contacts"], f["pair_source_rows"]
+        if decompose_negative_pn:
+            from neuron.extensions.experimental.passive_cable import PassiveCable
+            negative_component = PassiveCable(f["parents"], f["xyz_nm"] / 1000,
+                f["radius_nm"] / 1000, params["apl_cable_rm_over_ra_um"])
     if sha256(record / "columns.npz") != m["recording"]["columns_sha256"]:
         raise ValueError("Changed recording columns")
     with np.load(record / "columns.npz", allow_pickle=False) as f:
@@ -122,6 +126,24 @@ def analyze(record: Path, regions: Path, output: Path):
               "axial_inflow": np.zeros((n_ticks, n_regions))}
     for key in ("input_signed", "input_positive", "input_negative"):
         arrays[key] = np.zeros((n_ticks, n_regions, len(SOURCES)))
+    split_keys = ("negative_pn_voltage_mean", "other_recorded_current_voltage_mean",
+                  "other_recorded_current_all_output_release_mean") if decompose_negative_pn else ()
+    for key in split_keys:
+        arrays[key] = np.zeros((n_ticks+1, n_regions))
+    if decompose_negative_pn:
+        arrays["component_equation_max_residual"] = np.zeros(n_ticks)
+        arrays["remainder_equation_max_residual"] = np.zeros(n_ticks)
+        area_weights = cap[:, None] * masks
+        alpha = 1 / params["lambda_ticks"]
+
+        def split_snapshot(t, recorded_voltage):
+            remainder = recorded_voltage - negative_component.voltage
+            arrays["negative_pn_voltage_mean"][t] = weighted_mean(negative_component.voltage[None], area_weights)[0]
+            arrays["other_recorded_current_voltage_mean"][t] = weighted_mean(remainder[None], area_weights)[0]
+            release = np.clip(remainder * params["apl_graded_gain"], 0, params["apl_release_max"])
+            arrays["other_recorded_current_all_output_release_mean"][t] = weighted_mean(
+                release[None], contact_weights["all_output"])[0]
+
     maximum_current_error = 0.
     for chunk in m["recording"]["chunks"]:
         path = record / chunk["file"]
@@ -130,6 +152,26 @@ def analyze(record: Path, regions: Path, output: Path):
         start, stop = chunk["start"], chunk["stop"]
         with np.load(path, allow_pickle=False) as f:
             v, arrived, current = f["cable_voltage"], f["cable_arrived_current"], f["cable_current"]
+        if decompose_negative_pn:
+            split_snapshot(start, v[0])
+            for k, port_current in enumerate(arrived):
+                # Split actual signed current after learned weights and delays,
+                # not transmitter labels or a decoded population firing rate.
+                negative = np.where(source_names == "PN", np.minimum(port_current, 0), 0)
+                negative_current = np.bincount(nodes, weights=negative[ports] / counts[ports], minlength=len(ids))
+                old_component = negative_component.voltage.copy()
+                negative_component.step(negative_current, alpha)
+                remainder = v[k+1] - negative_component.voltage
+                for key, before, after, forcing in (
+                    ("component", old_component, negative_component.voltage, negative_current),
+                    ("remainder", v[k]-old_component, remainder, current[k]-negative_current)):
+                    left = cap * after + alpha * (negative_component.laplacian @ after)
+                    right = (1-alpha) * cap * before + alpha * forcing
+                    residual = np.abs(left-right)
+                    if np.any(residual > 1e-10 * np.maximum(1, np.abs(left)+np.abs(right))):
+                        raise ValueError(f"Per-node {key} equation disagrees with decomposition")
+                    arrays[key+"_equation_max_residual"][start+k] = residual.max()
+                split_snapshot(start+k+1, v[k+1])
         destination = slice(start, stop+1)
         arrays["voltage_mean"][destination] = weighted_mean(v, cap[:, None] * masks)
         release = np.clip(v * params["apl_graded_gain"], 0, params["apl_release_max"])
@@ -153,7 +195,7 @@ def analyze(record: Path, regions: Path, output: Path):
         per_region = {}
         for j, name in enumerate(names):
             entry = {}
-            for key in ("voltage_mean", "all_output_release_mean", "kc_output_release_mean", "all_output_saturated_fraction"):
+            for key in ("voltage_mean", "all_output_release_mean", "kc_output_release_mean", "all_output_saturated_fraction", *split_keys):
                 values = arrays[key][start+1:stop+1, j]
                 entry[key] = float(values.mean()) if np.isfinite(values).all() else None
             entry["input_signed_sum"] = dict(zip(SOURCES, arrays["input_signed"][start:stop, j].sum(axis=0).tolist()))
@@ -186,6 +228,18 @@ def analyze(record: Path, regions: Path, output: Path):
             "Local release is before pair averaging, learned terminal gain and blockade; not the delivered synaptic event",
             "Whole-KC output blockade also removes other KC projections, not only KC-to-APL feedback",
             "External PN drive is an artificial course; this is not physiological acceptance"]}
+    if decompose_negative_pn:
+        result["negative_pn_decomposition"] = {
+            "scope": "Fixed-recorded-input linear cable decomposition, not a connected-network lesion",
+            "selection": "Negative part of each actual delayed PN-to-APL port current at each tick",
+            "initial_state": "Selected component starts at zero; remainder retains the full recorded initial state",
+            "max_component_equation_residual": float(arrays["component_equation_max_residual"].max()),
+            "max_remainder_equation_residual": float(arrays["remainder_equation_max_residual"].max()),
+            "limits": ["All other recorded currents stay fixed, including effects of ongoing adaptation in the original run",
+                "The remainder does not predict how PNs, KCs, APL release or weights would react to a network lesion",
+                "Voltages add by linearity of the declared passive operator; rectified and capped release does not add",
+                "Full-node equations are checked every tick; only regional decomposition readouts are persisted",
+                "No neuronal state, graph, stimulus or original recording is modified"]}
     write_new(output / "analysis.json", result)
     return result
 
@@ -194,8 +248,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ("record", "regions", "output"):
         parser.add_argument(name, type=Path)
+    parser.add_argument("--decompose-negative-pn", action="store_true")
     args = parser.parse_args()
-    result = analyze(args.record, args.regions, args.output)
+    result = analyze(args.record, args.regions, args.output, decompose_negative_pn=args.decompose_negative_pn)
     print(json.dumps({k: v for k, v in result.items() if k != "epochs_not_acceptance"}, indent=2))
 
 

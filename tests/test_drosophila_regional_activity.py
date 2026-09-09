@@ -81,3 +81,71 @@ def test_rehashed_binding_cannot_swap_recorded_node_identities(cable_record, tmp
     (regions / "analysis.json").write_text(json.dumps(metadata))
     with pytest.raises(ValueError, match="identities or coordinates"):
         analyze(cable_record, regions, tmp_path / "bad")
+
+
+def test_no_negative_pn_current_produces_zero_component(cable_record, tmp_path):
+    regions = binding(cable_record, tmp_path)
+    output = tmp_path / "split"
+    analyze(cable_record, regions, output, decompose_negative_pn=True)
+    with np.load(output / "per_tick.npz") as f:
+        assert np.nanmax(np.abs(f["negative_pn_voltage_mean"])) == 0
+        np.testing.assert_allclose(f["other_recorded_current_voltage_mean"], f["voltage_mean"], equal_nan=True)
+        np.testing.assert_allclose(f["other_recorded_current_all_output_release_mean"],
+                                   f["all_output_release_mean"], equal_nan=True)
+
+
+def test_negative_pn_decomposition_matches_independent_dense_replay(tmp_path):
+    from test_drosophila_cable import spatial_fixture
+    from test_drosophila_input_panels import recruited_pn_graph
+    from simulations.drosophila.intervention_probe import run_intervention
+    from neuron.extensions.experimental.passive_cable import PassiveCable
+
+    g = recruited_pn_graph()
+    spatial = spatial_fixture(tmp_path)
+    path = spatial / "anatomy.npz"
+    with np.load(path) as f:
+        arrays = {k: f[k] for k in f.files}
+    # The recruited inhibitory PN has one contact at the middle cable node.
+    arrays["contacts"] = np.vstack([arrays["contacts"],
+        [10, int(g.selected[-1]), int(g.selected[1]), 500, 102, -1, 1]])
+    arrays["pair_source_rows"] = np.r_[arrays["pair_source_rows"], 4]
+    np.savez_compressed(path, **arrays)
+    meta = json.loads((spatial / "analysis.json").read_text())
+    meta["anatomy_sha256"] = sha256(path)
+    (spatial / "analysis.json").write_text(json.dumps(meta))
+    record, output = tmp_path / "course", tmp_path / "split"
+    run_intervention(g, record, "intact", .5, spatial=spatial,
+        apl_representation="local_cable", pn_drive_panel="without_inhibitory_drive")
+    result = analyze(record, binding(record, tmp_path), output, decompose_negative_pn=True)
+    assert "not a connected-network lesion" in result["negative_pn_decomposition"]["scope"]
+    audit = json.loads((output / "full_record_audit.json").read_text())
+    delivery, = audit["pn_input_selection"]["first_undriven_PN_spike"]["apl_deliveries"]
+    assert delivery["recorded_cable_arrived_current"] == pytest.approx(-.5 * .95**2)
+
+    cable = PassiveCable(arrays["parents"], arrays["xyz_nm"] / 1000, arrays["radius_nm"] / 1000, 25000)
+    alpha = 1/20
+    matrix = np.diag(cable.capacity) + alpha * cable.laplacian.toarray()
+    manifest = json.loads((record / "manifest.json").read_text())
+    with np.load(record / "columns.npz") as c:
+        edge, = c["edge_bindings"][c["edge_bindings"][:, 1] == 3]
+        pn_port = int(edge[4])
+    negative, remainder = np.zeros(3), np.zeros(3)
+    expected_negative, expected_remainder = [negative.copy()], [remainder.copy()]
+    for chunk in manifest["recording"]["chunks"]:
+        with np.load(record / chunk["file"]) as f:
+            for current, arrived in zip(f["cable_current"], f["cable_arrived_current"], strict=True):
+                selected = np.array([0, min(0, arrived[pn_port]), 0])
+                negative = np.linalg.solve(matrix, (1-alpha)*cable.capacity*negative + alpha*selected)
+                remainder = np.linalg.solve(matrix, (1-alpha)*cable.capacity*remainder + alpha*(current-selected))
+                expected_negative.append(negative.copy())
+                expected_remainder.append(remainder.copy())
+    with np.load(output / "per_tick.npz") as f:
+        assert np.nanmin(f["negative_pn_voltage_mean"]) < 0
+        np.testing.assert_allclose(f["negative_pn_voltage_mean"][:, :2], np.array(expected_negative)[:, [0, 2]], atol=1e-10)
+        np.testing.assert_allclose(f["other_recorded_current_voltage_mean"][:, :2], np.array(expected_remainder)[:, [0, 2]], atol=1e-10)
+        np.testing.assert_allclose(f["negative_pn_voltage_mean"] + f["other_recorded_current_voltage_mean"],
+                                   f["voltage_mean"], atol=1e-10, equal_nan=True)
+        # Rectify the reconstructed node voltage before region averaging.
+        np.testing.assert_allclose(f["other_recorded_current_all_output_release_mean"][:, 1],
+                                   np.clip(np.array(expected_remainder)[:, 2] * .01, 0, 1), atol=1e-10)
+        assert np.isnan(f["negative_pn_voltage_mean"][:, 2]).all()

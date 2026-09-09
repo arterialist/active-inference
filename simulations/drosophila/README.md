@@ -85,6 +85,13 @@ at two electrical-coupling settings. Full ticks expose saturation and negative
 PN input that prevent calling this a calcium-physiology replication. A whole-cell
 average cannot adjudicate the regional feedback claim.
 
+The [PN input controls](PN_INPUT_CONTROLS_2026-09-10.md) now trace inhibitory PNs
+recruited without direct experimental current, through their actual input ports
+and onward to APL. The regional distinction survives this and a VP-label input
+control. A fixed-recorded-input cable decomposition attributes the blocked
+vertical lobe's negative voltage to PN inhibition, while leaving a large
+regional feedback effect. It is not a connected-network lesion prediction.
+
 Current distinctions:
 
 | Item | Evidence status |
@@ -218,8 +225,10 @@ Use shared cell-class parameters across interventions. Any failure must be
 examined against cut-boundary input, physiological uncertainty, missing local
 APL processing and PAULA equations before changing anatomy or fitting edges.
 The regional comparison now supplies separate calyx and lobe measurements;
-the next input control must also distinguish the broad artificial ALPN course
-from an olfactory stimulus. Keep both regions and actual recurrent projections.
+the input-subset controls retain that distinction. The next input experiment
+must address temporal structure and empirical odor selectivity, not treat the
+broad artificial ALPN course as an olfactory stimulus. Keep both regions and
+actual recurrent projections.
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.
 

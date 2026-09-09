@@ -19,6 +19,7 @@ import typer
 
 from .connectome import Subgraph, sha256
 from .execution_probe import SOMA_FIELDS
+from .input_panels import make_panel
 from .paula import Dynamics, Neuron, GradedNeuron, LocalCableGradedNeuron, build_paula, _assemble_network
 
 CONDITIONS = ("intact", "kc_release_block", "apl_release_block", "apl_activation")
@@ -29,7 +30,7 @@ def source_hashes():
     from .spatial_paula import configure_local_apl
     paths = {Path(__file__)} | {
         Path(inspect.getfile(obj))
-        for obj in (Subgraph, build_paula, Neuron, GradedNeuron, LocalCableGradedNeuron,
+        for obj in (Subgraph, build_paula, make_panel, Neuron, GradedNeuron, LocalCableGradedNeuron,
                     configure_local_apl, NeuronNetwork, _assemble_network)
     }
     return {str(path.resolve()): sha256(path) for path in sorted(paths)}
@@ -38,7 +39,7 @@ def source_hashes():
 SOURCE_FILES_AT_IMPORT = source_hashes()
 
 
-def make_course(preparation, graph):
+def make_course(preparation, graph, pn_drive_panel="all_selected"):
     """Four increasing drive levels, with pre/post zero input. No odor labels."""
     roots = tuple(preparation.root_to_id)
     classes = [graph.nodes[r]["annotation"]["cell_class"] for r in roots]
@@ -47,12 +48,15 @@ def make_course(preparation, graph):
     apl_rows = [i for i, r in enumerate(roots) if graph.nodes[r]["annotation"]["hemibrain_type"] == "APL"]
     if len(apl_rows) != 1 or not len(kc_rows) or not len(pn_rows):
         raise ValueError("The PN intervention course requires PN, KC and exactly one APL")
+    panel = make_panel(graph, pn_drive_panel)
+    driven = set(panel["drive_roots"])
+    drive_rows = [i for i in pn_rows if roots[i] in driven]
     drive = np.zeros((224, len(roots)), dtype=np.float64)
     epochs = []
     for i, amplitude in enumerate((1.25, 2.5, 5.0, 10.0)):
         start = 32 + i * 40
         stop = start + 40
-        drive[start:stop, pn_rows] = amplitude
+        drive[start:stop, drive_rows] = amplitude
         epochs.append({"start": start, "stop": stop, "PN_drive": amplitude})
     return drive, kc_rows, pn_rows, apl_rows[0], epochs
 
@@ -221,7 +225,7 @@ class TickRecorder:
 
 def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_count: float,
                      *, spatial: Path | None = None, apl_representation="global_graded",
-                     apl_cable_rm_over_ra_um: float = 25000.0):
+                     apl_cable_rm_over_ra_um: float = 25000.0, pn_drive_panel: str = "all_selected"):
     if condition not in CONDITIONS:
         raise ValueError(f"Unknown condition: {condition}")
     started = time.perf_counter()
@@ -229,7 +233,8 @@ def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_c
     dynamics = replace(Dynamics(), weight_per_count=weight_per_count, apl_representation=apl_representation,
                        apl_cable_rm_over_ra_um=apl_cable_rm_over_ra_um)
     p = build_paula(graph, dynamics, spatial=spatial)
-    drive, kc_rows, pn_rows, apl_row, epochs = make_course(p, graph)
+    drive, kc_rows, pn_rows, apl_row, epochs = make_course(p, graph, pn_drive_panel)
+    driven_pn_rows = np.flatnonzero(drive.any(axis=0)).tolist()
     ids = np.asarray(list(p.root_to_id.values()))
     blocked_ids = set(map(int, ids[kc_rows])) if condition == "kc_release_block" else {int(ids[apl_row])} if condition == "apl_release_block" else set()
     if condition == "apl_activation":
@@ -267,7 +272,8 @@ def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_c
         "anatomical_provenance": graph.provenance, "anatomy": graph.summary(),
         "protocol": {"ticks": len(drive), "epochs": epochs, "kc_rows": kc_rows.tolist(),
                      "pn_rows": pn_rows.tolist(), "apl_row": apl_row,
-                     "input": "uniform current to all actual ALPN providers, not an odor pattern",
+                     "input": "uniform per-cell current to the declared ALPN subset, not an odor pattern",
+                     "driven_pn_rows": driven_pn_rows, "pn_drive_panel": make_panel(graph, pn_drive_panel),
                      "block": "remove all forward release events from named cells throughout course; membrane, weights, inputs and native return events remain active",
                      "blocked_ids": sorted(blocked_ids),
                      "activation": "extra APL current 50 during ticks 32..191 only in apl_activation"},
@@ -299,10 +305,10 @@ def run_intervention(graph: Subgraph, output: Path, condition: str, weight_per_c
 
 def main(source: Path, output: Path, condition: str = "intact", weight_per_count: float = 0.02,
          spatial: Path | None = None, apl_representation: str = "global_graded",
-         apl_cable_rm_over_ra_um: float = 25000.0):
+         apl_cable_rm_over_ra_um: float = 25000.0, pn_drive_panel: str = "all_selected"):
     result = run_intervention(Subgraph.load(source), output, condition, weight_per_count,
                               spatial=spatial, apl_representation=apl_representation,
-                              apl_cable_rm_over_ra_um=apl_cable_rm_over_ra_um)
+                              apl_cable_rm_over_ra_um=apl_cable_rm_over_ra_um, pn_drive_panel=pn_drive_panel)
     print(json.dumps(result["epoch_summaries_not_acceptance"], indent=2), flush=True)
 
 

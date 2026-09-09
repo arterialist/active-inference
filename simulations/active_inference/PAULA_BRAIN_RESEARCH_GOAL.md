@@ -1407,6 +1407,26 @@ resource, retain the imperfect predictor, and test neural regulation of both
 resource maintenance and expenditure. Require the physical and neural paths
 to matter under matched cuts. The broader goal remains active and unachieved.
 
+## Continuation: physical maintenance has an operating range, but feedback remains untested
+
+A movement-linked chamber and the existing energy organ now give the retained
+sensorimotor histories explicit physical consequences. Forty-four replay
+courses across four seeds contain 45,056 independently checked ticks. Original
+MuJoCo trajectories reproduce exactly; no brain or PAULA equation changed.
+Loaded movement periodically fails the new oxygen demand. Doubling recorded
+activation avoids deficits during the bounded course; quadrupling supplies
+oxygen but exhausts energy. The open-loop scaling controls are experimental
+capacity probes, not organism policies. Twenty-four focused tests passed.
+
+This is evidence that useful movement and excessive expenditure can be
+distinguished in the proposed body. It is not yet evidence of neural regulation
+or its necessity: fixed doubled activation passes this particular course.
+Final positive reserves also hide earlier deficits, now retained explicitly.
+The next composition must test organ afferents and neural regulation against
+that fixed-gain alternative while retaining the acquired predictive state and
+active adaptation. See [the physical-necessity screen](experiments/VENTILATION_2026-09-09.md).
+The full artificial-organism objective remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

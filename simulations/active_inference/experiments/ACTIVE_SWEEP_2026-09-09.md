@@ -947,3 +947,113 @@ all four physical continuations. Its source is `active_sweep_figures.py --return
 The raw records occupy about 471 MiB; 7.9 GiB was free after the run. All four
 workers are terminal. These are bounded causal experiments, not long-term
 survival validation.
+
+### 10 September: acquired motor influence transfers across sensory backgrounds
+
+The same acquired 608-cell phase-dependent brain now has a completed sensory
+transfer comparison. No cells, connections, learning equations, body mechanics
+or neural context labels were added. Each branch begins at global tick 6352
+from the actual initial authorized-phase checkpoint, with both physical sensory
+queues and all other acquired state retained. The organs begin at their declared
+initial reserves, not the exhausted endpoint of the changing-air experiment.
+Air stays at .21 and drag at .8 throughout this comparison.
+
+Four backgrounds independently select vision and sound from the two existing
+real recordings: familiar, vision changed, sound changed, both changed. Each
+is crossed with retained versus zeroed selected predictive weights. The reset
+affects 768 information coefficients, not all memory. Positive learning remains
+active, so the reset branch can acquire new weights during the probe. Four
+graph seeds, 11, 23, 44 and 77, each complete eight 1024-tick courses. These are
+4.096-second expression/transfer probes, not asymptotic adaptation tests.
+
+All four workers finished. The independent analyzer checked 32,768 ticks,
+including body/resource recurrences, actual sensory scheduling, selected local
+learning, terminal returns and the fourteen-cell regulation/muscle path.
+This is not an independent equation reconstruction of every one of 608 cells.
+Every unchanged-background retained branch reproduces the previous first 512
+ticks exactly. Initial recorded fields match across backgrounds; all four CPG
+release trains match across all conditions. Ten focused tests pass, including
+deliberately corrupted dynamics and an observer test in which a good endpoint
+must not hide earlier adverse intervals.
+
+The intervention reaches the network and body. In every retained comparison,
+changed sensory delivery starts at local tick 0, the corresponding receptor
+outputs differ at 1, the active mixed population at 3, selected weights at 4,
+predictor output at 5, and muscles/body at 7. Delayed organ input and neural
+error first differ at 72. Weight changes at 4 therefore cannot be attributed
+to the later changed physical feedback. These are measured onsets, not universal
+conduction constants. Unchanged-modality receptor outputs and the inhibited
+second mixed bank remain identical in this bounded comparison.
+
+Retaining the selected acquired weights raises the minimum oxygen reserve in
+every seed/background pair, by .009906 to .038616 mL. But this does not mean
+the intact branch has more oxygen at every tick. For both changed streams, the
+retained branch has less oxygen during local intervals 602–753, 601–752,
+602–752 and 598–756 for seeds 11, 23, 44 and 77, respectively. Some also have
+earlier adverse intervals. All end indices here are exclusive. Energy also
+initially favors reset, followed by later favorable and unfavorable intervals.
+The inspection preserves every such interval, not only these examples.
+
+Neither branch incurs oxygen or energy debt during the course. No recorded
+membrane reaches the numerical bound. Thus this environment does not require
+the selected acquired weights for short-course resource preservation. Nor does
+reset alone establish that their precise learned arrangement matters rather
+than some aggregate learned motor gain. The finding is a transferable acquired
+contribution with ongoing adaptation, not a solved association or generic skill.
+
+The full trajectories expose a consequential limitation behind that resource
+pass. At the observed neural cycle boundaries 84, 248, 412, 576, 740 and 904,
+the body's sweep shifts increasingly negative. There are five complete cycles;
+the opening 84 ticks and final 120 ticks remain explicit partial intervals.
+For both changed streams with weights retained:
+
+| Seed | First → last complete cycle excursion, rad | First → last inspired gas, mL | Effective exchange per positive rad, first → last |
+| --- | --- | --- | --- |
+| 11 | .02345 → .02921 | 1.4631 → .8304 | 99.07 → 60.23 |
+| 23 | .02301 → .02497 | 1.4499 → .7370 | 99.18 → 62.07 |
+| 44 | .02342 → .02534 | 1.4085 → .7135 | 99.12 → 60.75 |
+| 77 | .02310 → .02631 | 1.4274 → .7121 | 99.14 → 58.19 |
+
+Larger excursions coexist with less exchange. This follows from the actual
+bounded chamber linkage, V(q)=6+5 tanh(20q): shifting away from the central
+range reduces volume change per positive angular displacement. The measured
+exchange-per-radian values use every physical increment, not the ratio of
+peak-to-peak excursions. The last complete cycle loses oxygen in every retained
+branch shown above. Oxygen peaks decline overall but not monotonically in
+every seed. This does not prove inevitable future failure; it directly rules
+out treating these short records as evidence of a stationary operating regime.
+It is not a reason to resume indefinite respiratory gain tuning.
+
+The larger question is which relationships should survive sensory change and
+which should adapt when consequences change. In this preparation, sensory
+background changes motor output within seven ticks despite unchanged mechanics.
+That influence is real, but it is not acquired relevance selection. A next
+weight-placement control should preserve selected-weight distributions within
+the same active/inactive source banks, testing learned arrangement without
+confounding it with silencing a bank. The subsequent task should make sensory
+context informative about action-dependent mechanics, against matched
+noninformative contexts. Success must include retention across recurring
+conditions without an external context-to-action selector. Another standalone
+perfect regulator would not answer that question.
+
+[Howard, Wolpert and Franklin, 2013](https://pubmed.ncbi.nlm.nih.gov/23446696/)
+provides relevant evidence that sensory contexts differ in their ability to
+separate human motor memories; changes in perceived or actual limb state were
+more effective than several simple visual cues. The abstract and accessible
+introductory/discussion text were reviewed, not the complete methods. This
+motivates separating action-related sensory state from incidental context;
+our audiovisual hinge test is not a reproduction of their force-field study.
+
+The media are not sensory-dose matched. The inherited driver consumes one
+encoded frame per 250-Hz neural tick although the original decoding used 60-Hz
+frames. Relative sequence alignment is preserved, but this is not normal-speed
+video playback or evidence of animal recognition, natural audiovisual timing,
+semantic novelty or mammal-level cognition. No simulation server was started.
+
+Source: `sensory_motor_transfer.py`; the complementary cycle/interval inspector
+is `sensory_motor_transfer_inspection.py`. Records and final executable states
+are in `.live/research/20260910_sensory_motor_transfer_seed{seed}`. The independent
+analysis directory `20260910_sensory_motor_transfer_analysis` contains the
+full-course figures, `per-tick.npz`, `summary.json` and `inspection.json`.
+The four raw families total about 978 MiB; 3.8 GiB remains free. No raw records
+were deleted or published. The full organism objective remains unachieved.

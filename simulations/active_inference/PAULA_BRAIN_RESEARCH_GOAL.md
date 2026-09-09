@@ -41,7 +41,30 @@ breadth, while separating demonstrated capabilities from subjective experience.
 
 ## Current experiment and continuation
 
-### Latest result, 10 September: the respiratory line is bounded
+### Latest result, 10 September: acquired influence survives sensory change
+
+The same 608-cell acquired brain completed four real audiovisual backgrounds
+crossed with retained/reset selected predictive weights across four seeds.
+All 32,768 ticks pass the scoped neural, learning and physical checks; unchanged
+opening traces reproduce exactly. Ten focused tests pass. No neural or physical
+equation, wiring or context label changed, and adaptation remains active.
+
+Retained weights raise the minimum oxygen reserve in every background/seed
+pair, but also cause unfavorable intervals. All short courses avoid depletion,
+including reset controls, while full trajectories show a negative sweep drift
+and declining exchange efficiency. Larger movements can supply less gas because
+the body has shifted into a different part of its nonlinear physical linkage.
+This is transferred acquired influence, not stable autonomy or learned selection
+of relevant sensory context. All workers and analyzers are terminal.
+See the [completed transfer and cycle inspection](experiments/ACTIVE_SWEEP_2026-09-09.md#10-september-acquired-motor-influence-transfers-across-sensory-backgrounds).
+
+Next distinguish the role of learned weight placement from aggregate gain,
+then make sensory context informative about action-dependent consequences.
+Preserve the imperfect continuing brain and compare with noninformative context.
+Do not resume indefinite respiratory tuning or substitute another fixed neural
+selector for acquired coordination. The complete organism goal remains active.
+
+### Earlier result, 10 September: the respiratory line is bounded
 
 The completed 608-cell, four-seed factorial comparison separates two failures.
 The new neural phase-dependent motor route preserves energy and avoids recorded

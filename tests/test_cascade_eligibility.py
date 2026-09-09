@@ -109,3 +109,48 @@ def test_continuing_course_and_reset_keep_nonweight_state(tmp_path):
     continuation(acquired,reset,reset=True)
     assert audit(reset,cfg,g,features)==0.
     assert np.any(reset['weights'])  # Reset diagnostic continues acquiring.
+
+
+def test_world_removal_has_delayed_neural_effect_and_audited_readaptation(tmp_path):
+    from simulations.active_inference.experiments.active_sweep_transfer import audit as transfer_audit,replace_weights,match_initial
+    from simulations.active_inference.experiments.active_sweep_memory import restore
+    from simulations.active_inference.experiments.active_sweep_acquisition import replay_prefix
+    n,g,cfg,features=prepare(tmp_path,'matched_cascade')
+    body=LoadedHinge(.8);delay=PhysicalDelay()
+    acquired=record_credit(n,body,delay,features,g,256)
+    neural=tmp_path/'transfer.paula';physical=tmp_path/'transfer-body.npz'
+    base.save_checkpoint(n,neural,sources=[])
+    np.savez_compressed(physical,state=body.state(),delay=delay.state(),gate=[body.crossings,body.next_gate])
+    loaded=record_credit(n,body,delay,features,g,192)
+    assert transfer_audit(loaded,cfg,g,features,.8)==audit(loaded,cfg,g,features)==0.
+    n,body,delay=restore(neural,physical);body.drag=0.
+    removed=record_credit(n,body,delay,features,g,192)
+    match_initial(loaded,removed)
+    assert transfer_audit(removed,cfg,g,features,0.)==0.
+    assert not np.array_equal(loaded['raw_afferents'][0],removed['raw_afferents'][0])
+    np.testing.assert_array_equal(loaded['drive'][:64],removed['drive'][:64])
+    np.testing.assert_array_equal(loaded['cells'][:64],removed['cells'][:64])
+    assert not np.array_equal(loaded['drive'][64],removed['drive'][64])
+    for key in ('weights','credit_states','errors','drive','physical_states','gate','raw_afferents'):
+        bad={k:v.copy() for k,v in removed.items()};bad[key][100]+=.01 if bad[key].dtype.kind=='f' else 1
+        with pytest.raises(ValueError):transfer_audit(bad,cfg,g,features,0.)
+    with pytest.raises(ValueError):transfer_audit(removed,cfg,g,features,.8)
+    late_neural=tmp_path/'late.paula';late_physical=tmp_path/'late-body.npz'
+    base.save_checkpoint(n,late_neural,sources=[])
+    np.savez_compressed(late_physical,state=body.state(),delay=delay.state(),gate=[body.crossings,body.next_gate])
+    late=record_credit(n,body,delay,features,g,128)
+    n,body,delay=restore(late_neural,late_physical);body.drag=0.
+    replay=record_credit(n,body,delay,features,g,64);replay_prefix(late,replay)
+    n,body,delay=restore(late_neural,late_physical);body.drag=0.
+    replace_weights(n,g,acquired['weights'][-1])
+    restored=record_credit(n,body,delay,features,g,128);match_initial(late,restored,weights=False)
+    np.testing.assert_array_equal(restored['weights_initial'],acquired['weights'][-1])
+    assert transfer_audit(restored,cfg,g,features,0.)==0.
+    with pytest.raises(ValueError):replace_weights(n,g,np.zeros((2,1)))
+    # Same-age donor differs only in environmental history, not learning age.
+    n,body,delay=restore(late_neural,late_physical);body.drag=0.
+    replace_weights(n,g,loaded['weights'][-1])
+    age_control=record_credit(n,body,delay,features,g,128)
+    match_initial(late,age_control,weights=False)
+    np.testing.assert_array_equal(age_control['weights_initial'],loaded['weights'][-1])
+    assert transfer_audit(age_control,cfg,g,features,0.)==0.

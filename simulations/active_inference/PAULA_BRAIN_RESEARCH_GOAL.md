@@ -1351,6 +1351,36 @@ from merely assisting movement. See [the completed acquisition findings](experim
 The evidence occupies about 655 MiB, with 9.9 GiB free. All workers are terminal.
 The artificial-organism objective remains active and unachieved.
 
+## Continuation: physical experience changes the usefulness of stored correction
+
+The resistance-removal experiment and same-age weight controls completed across
+four seeds. There are 20,576 newly recorded, independently audited ticks,
+including 4,352 exact replay ticks. Thirty focused tests pass. No neuron
+equations or wiring changed, and adaptation remained available throughout.
+
+Removing resistance permits gate crossings even with selected weights reset.
+That initial recovery is not learned compensation. The stronger result is at
+the later matched-state intervention: weights learned after removal preserve
+four alternating crossings in every seed. Same-age weights learned with drag
+still present produce two crossings in three seeds and four in the remaining
+seed. The full physical trajectories identify the failure: the sweep shifts
+negative and misses the positive gate. Released-experience weights reduce some
+stroke distances while preventing that loss. Larger movement is not a reliable
+proxy for better organization of the continuing behavior.
+
+Current-force residuals improve over substantial intervals but retain explicit
+adverse intervals. Each branch's physical force differs after movement diverges;
+the comparison is not prediction evaluated on identical sensory histories.
+The evidence supports a useful environmental-history-specific weight contribution
+in this coupled preparation, not a general internal body model or a solved
+loaded task. See [the completed transfer findings](experiments/ACTIVE_SWEEP_2026-09-09.md#completed-transfer-changed-experience-helps-preserve-the-sweeps-position).
+
+Next test recurring physical conditions from these continuing states. Can
+previously useful organization be recovered without overwriting the new one?
+Use this to establish where conditional memory and neural regulation become
+necessary, rather than adding them solely because a diagram has an upper layer.
+The full organism objective remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

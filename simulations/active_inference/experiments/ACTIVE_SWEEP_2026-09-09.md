@@ -652,3 +652,162 @@ It retains every sample, common seed scales, all unfavorable intervals and
 the final incomplete stroke. The new raw records occupy approximately 655 MiB;
 9.9 GiB remains free. All workers have exited. No live agent or version matrix
 was started, and no new agent version is accepted by this result.
+
+### Resistance removal, declared before execution
+
+Use the matched-cascade checkpoint at global tick 4304 in each of the four
+seeds. Compare 1024 continuing ticks with the added drag retained at 0.8 or
+removed to zero. The physical spring and native joint damping remain. Do not
+reset velocity, position, gate history, the sensory delay queue or neural state.
+In both worlds compare intact predictive weights with their zero birth values,
+keeping adaptation active. The loaded branches must reproduce the previously
+saved 512-tick intact/reset probes exactly before their new continuation.
+
+At the end of the released/intact branch, compare 328 ticks of continuing
+weights against restoration of the pre-removal predictive weights from tick
+4304. These branches have identical later body and other neural state. This
+tests the contribution of weight changes during the changed environment,
+including any continuing drift, rather than crediting easier mechanics as
+successful adaptation. Also replay 64 uninterrupted ticks from its checkpoint.
+
+The primary evidence is the full physical, prediction, neural-error and weight
+history, including adverse intervals. No explicit change cue enters the brain.
+The first 64 ticks must retain the old sensory history, even though the body
+already experiences the changed force. A lower current-force residual alone
+does not establish useful control, and assistance in an easier world does not
+establish an accurate general model. This preparation's declared goals are
+still unmet by the loaded agent; resistance removal is a transfer intervention,
+not a new acceptance criterion.
+
+`active_sweep_transfer.py` records and independently audits this fixed course.
+Its physical audit accepts the declared world while retaining the preceding
+neural equations, arrival checks and numerical tolerance. The archived fixed-
+world auditor remains unchanged so earlier evidence can still be replayed.
+The new audit is cross-checked against it on loaded data and challenged with
+deliberate corruption. Four workers run 19,264 total ticks, including 4,352
+exact replay ticks. The budget remains 384 MiB per seed with 3 GiB free reserve.
+
+Before interpreting the transfer result, add one same-age control. In the
+released/intact state at tick 5328, transplant predictive weights from the
+matched loaded/intact state at that same tick, leaving everything else in the
+released state. Run 328 ticks per seed. This tests whether the new physical
+experience produced a useful weight difference, beyond the passage of time.
+It adds 1,312 ticks through `active_sweep_transfer_age.py`, reusing the existing
+released-weight reference. This control was declared while the original
+transfer workers were still running, before reading their transfer outcomes.
+
+### Completed transfer: changed experience helps preserve the sweep's position
+
+All four transfer families and all four same-age controls completed. The
+independent audits checked 19,264 transfer ticks and 2,624 same-age comparison
+ticks. The latter includes 1,312 reused reference ticks, so there are 20,576
+newly recorded ticks, including 4,352 exact replay ticks. Thirty focused tests
+passed, including the same-age transplant, independently reconstructed physics,
+learning recurrences, corrupted-record rejection and checkpoint behavior.
+No neural equation, wiring, learning-rate parameter or sensory schedule changed.
+
+Removing drag makes the task easier even with the selected weights reset.
+Across all four seeds, released/intact crosses eight gates during the 1024-tick
+course; released/reset crosses six. Both loaded branches cross none. The first
+released crossing occurs at local tick 22–31 with retained weights and 23–32
+with reset weights, before new physical afferents reach either brain. Initial
+task recovery therefore cannot be credited to learning the changed load.
+Later retained-weight effects on individual stroke distances alternate in sign.
+The released body's motion is not a simple scaled version of loaded motion.
+
+The physical change has an identical first-divergence sequence in all seeds,
+using zero-based recorded tick indices. Physical state and raw afferents differ
+at 0, delivered sensory input at 64, cellular state at 65, neural teaching at
+68, and selected weights and their learning rates at 69. Terminal information
+first differs at 74. The 64-sample history remains intact. There is no hidden
+instantaneous load-change cue to the neural learner.
+
+The stronger result comes from the later intervention at tick 5328. Starting
+with the same released body and full other neural state, retaining weights
+acquired in the released world sustains four alternating crossings in 328
+ticks for every seed. Transplanting same-age weights acquired in the still-loaded
+world produces two crossings for seeds 11, 23 and 77, and four for seed 44.
+Plasticity continues in both branches. Weights differ immediately, cellular
+state at local tick 1, body state at 3, and delivered input and neural teaching
+at 68. This isolates the causal contribution of selected weight history,
+including its subsequent consequences, rather than extra chronological age.
+
+The loss is visible in the actual trajectory. After the first positive and
+negative gate crossing, the same-age loaded-weight branch shifts toward the
+negative side. Its next positive maximum fails to reach +0.008 radians in
+three seeds. These are the positive maxima at local tick 208, not a fitted
+center or a mean over an oscillation:
+
+| Seed | Released-experience weights, rad | Same-age loaded-experience weights, rad | Crossings, released / same-age |
+| --- | --- | --- | --- |
+| 11 | +0.009254 | +0.004541 | 4 / 2 |
+| 23 | +0.009116 | +0.006161 | 4 / 2 |
+| 44 | +0.011414 | +0.009868 | 4 / 4 |
+| 77 | +0.009802 | +0.007454 | 4 / 2 |
+
+The released-experience weights *reduce* advance on both completed negative
+strokes in every seed, while increasing advance on the completed positive
+stroke. The first negative-stroke endpoint changes by -0.001073 through
+-0.002571 radians. Treating every reduction in stroke distance as a failure
+would reject part of the correction that preserves the alternating task.
+This replaces the earlier amplitude-only intuition with a positional account:
+the useful learned contribution depends on the whole continuing trajectory.
+The intervention supports that account over this course; it does not prove
+asymptotic stability or a consciously represented body model.
+
+Current-force prediction improves for substantial intervals against the
+same-age donor, but not every tick. The table lists *all* intervals where the
+released-experience branch has larger absolute current-force residual, with
+local zero-based ticks and exclusive ends:
+
+| Seed | Larger error than same-age loaded weights | Larger error than pre-removal weights |
+| --- | --- | --- |
+| 11 | 1–36, 120–130, 202–211, 283–288 | 38–118, 201–204, 282–283 |
+| 23 | 1–32, 119–130, 199–205, 282–287 | 36–116, 199–227, 282–286 |
+| 44 | 1–8, 118–125, 200–203, 283–286 | 38–116, 200–221, 282–294 |
+| 77 | 1–32, 117–125, 198–202, 281–285 | 35–108, 198–241, 280–281 |
+
+Outside these intervals, residuals are smaller from tick 1 onward. Tick 0 is
+equal. The residual compares signed neural prediction with each branch's own
+current environmental force divided by 0.2 Nm; it is not the delayed local
+teaching signal. Branches subsequently move differently and therefore experience
+different spring forces. These residuals do not isolate representational
+accuracy on an identical input history. They describe each coupled trajectory.
+
+The pre-removal-weight comparison yields four, three, one and three crossings
+for seeds 11, 23, 44 and 77, respectively. Its error intervals and behavior
+differ from the same-age control. This is why retaining both controls matters:
+the acquired q-values reflect experience under a particular load, continuing
+learning time, and interactions with the rest of the state.
+
+**What is established:** this continuously adapting neural preparation acquires
+a physical-experience-specific weight contribution that helps preserve an
+ongoing embodied task after resistance changes. Easier mechanics account for
+the initial recovery, but do not account for the later matched-state weight
+contrast. No gate score, host action selection or externally computed learning
+error enters the brain. The result concerns 596 cells and one joint; it does
+not establish general sensorimotor intelligence, hierarchical coordination,
+multimodal understanding, lifetime robustness or consciousness. The original
+loaded task remains unsolved.
+
+The next discriminating question is whether this adjustment can coexist with
+previous experience when physical conditions recur, rather than merely replace
+it. Reinstating resistance from these same continuing states can test savings,
+interference and readaptation without changing the neuron equations. A context
+pathway or higher-level regulator is warranted if recurring worlds expose a
+specific failure that available body signals cannot resolve in time. This is
+a route toward composing memory and regulation, not a requirement to perfect
+every stroke before assembling a richer organism.
+
+Evidence is in `.live/research/20260909_active_sweep_transfer_seed{seed}` and
+`20260909_active_sweep_transfer_age_seed{seed}`, with independent `*_analysis`
+directories. The four-column figure in
+`20260909_active_sweep_transfer_figures/active-sweep-transfer.png` shows full
+movement, current prediction, both error contrasts and all three late body
+trajectories on shared seed scales. It uses every tick without smoothing or
+seed averaging. A first rendering attempt failed on a subplot index; the
+renderer was corrected without changing experiments or their audits.
+
+The new raw records occupy about 587 MiB. There is 9.3 GiB free, all simulation
+workers have exited, and neither the live-agent servers nor the version matrix
+was started. This result accepts no new agent version.

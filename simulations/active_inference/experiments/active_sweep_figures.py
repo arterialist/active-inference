@@ -214,11 +214,95 @@ def render_acquisition(analysis,output,earlier):
     return manifest
 
 
+def render_transfer(analysis,output,age_control=None):
+    """Keep easier mechanics, prediction and weight-readaptation effects apart."""
+    analysis,output=(Path(p).resolve() for p in (analysis,output))
+    if output.exists():raise FileExistsError(output)
+    summary=json.loads((analysis/'summary.json').read_text())
+    for p,h in summary['sources'].items():
+        if base.digest(p)!=h:raise ValueError('Audited source changed: '+p)
+    if summary['seeds']!=[11,23,44,77]:raise ValueError('Need every declared graph seed')
+    with np.load(analysis/'per-tick.npz') as z:data={k:z[k] for k in z.files}
+    age=None
+    if age_control is not None:
+        age_control=Path(age_control).resolve();am=json.loads((age_control/'summary.json').read_text())
+        if am['seeds']!=summary['seeds']:raise ValueError('Same-age seeds differ')
+        for p,h in am['sources'].items():
+            if base.digest(p)!=h:raise ValueError('Same-age evidence changed: '+p)
+        with np.load(age_control/'per-tick.npz') as z:age={k:z[k] for k in z.files}
+    fig,axes=plt.subplots(4,4,figsize=(21,11),sharex='col',layout='constrained')
+    styles={'loaded-intact':('#777777','-', 'Loaded, retained'),
+            'loaded-reset':('#777777',':','Loaded, reset'),
+            'released-intact':('#813aa0','-','Released, retained'),
+            'released-reset':('#813aa0',':','Released, reset')}
+    for row,seed in enumerate(summary['seeds']):
+        for name,(color,ls,label) in styles.items():
+            trace=data[f's{seed}_{name}'];t=np.arange(len(trace))
+            axes[row,0].plot(t,trace[:,1],color=color,ls=ls,lw=1.1,label=label)
+        for gate in (-.008,.008):axes[row,0].axhline(gate,color='#333333',ls='--',lw=.7)
+        trace=data[f's{seed}_released-intact'];t=np.arange(len(trace))
+        axes[row,1].plot(t,trace[:,4]/.2,color='#111111',lw=1.,label='Current environmental force / 0.2 Nm')
+        axes[row,1].plot(t,trace[:,5],color='#813aa0',lw=1.2,label='Intact prediction')
+        trace=data[f's{seed}_released-reset']
+        axes[row,1].plot(t,trace[:,5],color='#777777',ls=':',lw=1.2,label='Reset-branch prediction')
+        change=data[f's{seed}_readapt_error_change'];t=np.arange(len(change))
+        axes[row,2].axhline(0,color='#333333',lw=.8)
+        axes[row,2].plot(t,change,color='#333333',lw=1.,label='Error difference vs pre-removal weights')
+        if age is not None:
+            axes[row,2].plot(t,age[f's{seed}_error_change'],color='#813aa0',ls='--',lw=1.2,
+                             label='Error difference vs same-age loaded weights')
+        for name,color,ls,label in (
+                ('readapt-intact','#813aa0','-','Late body: released weights'),
+                ('readapt-restored','#777777',':','Late body: pre-removal weights')):
+            trace=data[f's{seed}_{name}']
+            axes[row,3].plot(t,trace[:,1],color=color,ls=ls,lw=1.2,label=label)
+        if age is not None:
+            trace=age[f's{seed}_same-age']
+            axes[row,3].plot(t,trace[:,1],color='#111111',ls='--',lw=1.2,
+                             label='Late body: same-age loaded weights')
+        for gate in (-.008,.008):axes[row,3].axhline(gate,color='#333333',ls='--',lw=.7)
+        axes[row,0].set_ylabel(f'Seed {seed}\nJoint angle [rad]')
+        axes[row,1].set_ylabel('Force / prediction\n[receptor-scale units]')
+        axes[row,2].set_ylabel('Absolute error difference\n[receptor-scale units]')
+        axes[row,3].set_ylabel('Joint angle [rad]')
+        for col,ax in enumerate(axes[row]):
+            ax.grid(alpha=.12);ax.set_xlim(0,327 if col>=2 else 1023)
+            ax.set_xlabel('Ticks after late weight intervention' if col>=2 else 'Ticks after resistance intervention')
+    for col in range(4):
+        lo=min(ax.get_ylim()[0] for ax in axes[:,col]);hi=max(ax.get_ylim()[1] for ax in axes[:,col])
+        for ax in axes[:,col]:ax.set_ylim(lo,hi)
+    axes[0,0].set_title('Movement after retaining or removing added drag')
+    axes[0,1].set_title('Released world: force and neural prediction')
+    axes[0,2].set_title('Effect of post-removal weight changes\nNegative: smaller error. Positive: larger.')
+    axes[0,3].set_title('Same later body, different weight histories\nDashed horizontal lines: alternating gates')
+    handles,labels=axes[0,0].get_legend_handles_labels()
+    h,l=axes[0,1].get_legend_handles_labels()
+    h2,l2=axes[0,2].get_legend_handles_labels()
+    h3,l3=axes[0,3].get_legend_handles_labels()
+    fig.legend(handles+h+h2+h3,labels+l+l2+l3,loc='outside lower center',ncol=4,fontsize=9)
+    fig.suptitle('Does acquired prediction adjust when the physical relationship changes?\n'
+                 'Full tick trajectories. No load-change cue. Sensory history and adaptation continue. 4 ms per tick.',fontsize=13)
+    output.mkdir();path=output/'active-sweep-transfer.png';fig.savefig(path,dpi=160);plt.close(fig)
+    manifest=dict(analysis_sha256=base.digest(analysis/'summary.json'),data_sha256=base.digest(analysis/'per-tick.npz'),
+                  producer_sha256=base.digest(__file__),file=path.name,
+                  limits='All four seeds without smoothing. Gate lines do not imply learned success. '
+                  'Late comparisons replace only predictive weights with pre-removal or same-age loaded weights in a matched later state; '
+                  'both branches keep learning and their subsequent physical loads can diverge.')
+    if age_control is not None:
+        manifest.update(age_control_sha256=base.digest(age_control/'summary.json'),
+                        age_control_data_sha256=base.digest(age_control/'per-tick.npz'))
+    (output/'manifest.json').write_text(base.encode(manifest)+'\n')
+    return manifest
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('analysis',type=Path);p.add_argument('output',type=Path)
     p.add_argument('--memory',action='store_true')
     p.add_argument('--credit',action='store_true')
     p.add_argument('--acquisition',type=Path,help='Earlier kernel analysis for the continuing-acquisition comparison')
+    p.add_argument('--transfer',action='store_true')
+    p.add_argument('--age-control',type=Path)
     a=p.parse_args()
-    print(render_acquisition(a.analysis,a.output,a.acquisition) if a.acquisition else
+    print(render_transfer(a.analysis,a.output,a.age_control) if a.transfer else
+          render_acquisition(a.analysis,a.output,a.acquisition) if a.acquisition else
           (render_credit if a.credit else render_memory if a.memory else render)(a.analysis,a.output))

@@ -238,6 +238,15 @@ lingering somatic voltage. Receptor-current kinetics and membrane integration
 must be constrained separately. These data do not yet provide an odor drive
 for the full selected PN population or calibrate a physical PAULA clock.
 
+The [current-kernel and reunion experiment](PN_CURRENT_REUNION_2026-09-10.md)
+adds an opt-in, per-port PAULA current state and tests its fitted tail with
+peak-matched and charge-matched controls. The connected preparation preserves
+every pair. Exact target-PN replay exposes APL-driven spike-time changes that
+the unchanged total spike count conceals. Effective current shape is partly
+constrained; physiological gain, conductance, depression and odor coding are
+not yet reproduced. `PNCurrentKernel` must be explicitly selected for one
+identified PN and presynaptic type; all default preparations remain unchanged.
+
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.
 

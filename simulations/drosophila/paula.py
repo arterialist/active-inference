@@ -24,6 +24,7 @@ from neuron.neuron import (  # noqa: E402
 )
 from neuron.extensions.graded import GradedNeuron  # noqa: E402
 from neuron.extensions.experimental.passive_cable import LocalCableGradedNeuron  # noqa: E402
+from neuron.extensions.experimental.input_current import InputCurrentNeuron  # noqa: E402
 from simulations.connectome_loader import _assemble_network  # noqa: E402
 
 PORT_CAPACITY = 2**12
@@ -90,9 +91,31 @@ class Preparation:
         self.network.set_external_input(self.root_to_id[root], self.drive_ports[root], info)
 
 
-def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Path | None = None) -> Preparation:
+@dataclass(frozen=True)
+class PNCurrentKernel:
+    """One explicitly identified PN's input-current hypothesis, never a default.
+
+    Only incoming pairs with the declared presynaptic hemibrain_type are
+    filtered. Other anatomical ports and the experimental-current port bypass.
+    Time constants are in model units; no physical clock is implied.
+    """
+    target_root: str
+    source_type: str
+    decay_ticks: tuple[float, ...]
+    peak_fractions: tuple[float, ...]
+    normalization: str = "area"
+
+
+def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Path | None = None,
+                current_kernel: PNCurrentKernel | None = None) -> Preparation:
     graph.validate()
     dynamics.validate()
+    if current_kernel is not None:
+        if (current_kernel.target_root not in graph.selected
+                or graph.nodes[current_kernel.target_root]["annotation"]["cell_class"] != "ALPN"):
+            raise ValueError("Current-kernel target must be an explicitly selected ALPN")
+        if not current_kernel.source_type:
+            raise ValueError("Current kernel needs an explicit presynaptic cell type")
     if dynamics.apl_representation == "local_cable" and spatial is None:
         raise ValueError("Local cable requires a verified spatial analysis directory")
     if spatial is not None and dynamics.apl_representation != "local_cable":
@@ -132,6 +155,8 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
         neuron_class = GradedNeuron if graded else Neuron
         if graded and dynamics.apl_representation == "local_cable":
             neuron_class = LocalCableGradedNeuron
+        if current_kernel is not None and root == current_kernel.target_root:
+            neuron_class = InputCurrentNeuron
         cell = neuron_class(nid, params, log_level="CRITICAL", metadata=metadata)
         # Construct explicit coefficients without the helpers' random defaults.
         # Terminal distances are unused by the base release equations. Do not
@@ -148,6 +173,7 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
     connections = []
     bindings = []
     incoming_boundary, outgoing_boundary = [], []
+    filtered_ports, filtered_rows = [], []
     for edge, weight, has_pre, has_post in zip(edges, weights, pre_inside, post_inside, strict=True):
         pre, post = int(edge[2]), int(edge[3])
         if has_pre:
@@ -159,6 +185,10 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
             synapse = next_input[post]
             next_input[post] += 1
             neurons[post].postsynaptic_points[synapse].u_i.info = float(weight)
+            if (current_kernel is not None and str(edge[1]) == current_kernel.target_root
+                    and graph.nodes[str(edge[0])]["annotation"]["hemibrain_type"] == current_kernel.source_type):
+                filtered_ports.append(synapse)
+                filtered_rows.append(int(edge[8]))
         if has_pre and has_post:
             neurons[post].register_source(synapse, pre, terminal)
             connection = (pre, terminal, post, synapse)
@@ -168,6 +198,10 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
             incoming_boundary.append((int(edge[8]), pre, post, synapse))
         else:
             outgoing_boundary.append((int(edge[8]), pre, terminal, post))
+    if current_kernel is not None:
+        cell = neurons[root_to_id[current_kernel.target_root]]
+        cell.configure_current_kernel(filtered_ports, current_kernel.decay_ticks,
+                                      current_kernel.peak_fractions, current_kernel.normalization)
     spatial_assumptions = None
     if dynamics.apl_representation == "local_cable":
         from .spatial_paula import configure_local_apl
@@ -200,5 +234,9 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
         "apl_limit": "experimental passive branch-local graded release; inherited global timing plasticity is not a non-spiking cellular learning model" if spatial_assumptions else "global graded approximation, lacks measured local integration; inherited timing plasticity is not a non-spiking cellular learning model",
         "spatial_limit": "APL contacts located, other cells remain pair aggregates; no calcium or measured timing calibration" if spatial_assumptions else "pair counts only, no contact positions or axonal propagation model",
         **({"spatial": spatial_assumptions} if spatial_assumptions else {}),
+        **({"input_current": {**asdict(current_kernel), "ports": filtered_ports,
+                               "source_rows": filtered_rows,
+                               "status": "experimental effective hillock current, not identified receptor kinetics or voltage clamp"}}
+           if current_kernel is not None else {}),
         "experimental_input": "one additional unit-weight zero-delay input per selected neuron, not claimed as anatomy",
     })

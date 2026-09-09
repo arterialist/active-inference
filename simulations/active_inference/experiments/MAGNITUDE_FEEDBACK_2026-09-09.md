@@ -115,6 +115,14 @@ retrieved abstracts and indexed passages.
 
 ## Next decision
 
+The subsequent `20260909_magnitude_learning_b3_analysis` audits all first three
+blocks: 22,080 recorded ticks and 48 expression probes. No context-terminal
+sign failure or active suppressed-bank cell occurs in that acquisition prefix.
+At the third block's resting probe ticks 16–63, the opposite bias now dominates:
+crossed pairs have the correct negative prediction, while same-index pairs are
+wrong. This retains the earlier evidence of overwriting despite functional
+gating. The runs have not yet reached the old block-eight terminal failure.
+
 Finish and audit the four existing courses before changing their source or
 starting replacements. Compare the preserved gate, selected weight trajectories,
 common versus joint prediction components, and acquired/reset physical behavior

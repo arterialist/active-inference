@@ -241,3 +241,111 @@ regression set passes 58 tests. No shared
 core neuron equations, live agent versions or other organisms were changed.
 The result is a physically consequential learning loop and a replicated
 adaptive-control failure, not completion of the artificial-organism goal.
+
+## Acquired-weight intervention: memory reaches action but distorts the sweep
+
+The next experiment is complete. Each of the four loaded/fused brains resumes
+at global tick 1024 for another 512 uninterrupted ticks, just over three motor
+cycles. A paired branch resets only the selected predictive information weights
+to their zero birth values. Both branches retain the acquired body, oscillator
+phase, sensory delay, pending neural signals, terminal coefficients, context and
+error traces, and positive adaptation. This is not a whole-brain memory reset.
+The reset branch can relearn immediately, and later differences include the
+coupled consequences of that reacquisition.
+
+An intact checkpoint is also serialized again and replayed for 96 ticks. Every
+recorded field matches the intact continuation exactly, including delivered
+return events and delay history. Four seeds therefore produce 4,480 audited
+ticks, of which 384 are exact replay controls. The separate analyzer reconstructs
+physical integration, transduction, sensory delays, learning updates, selected
+source arrivals, terminal returns and mechanical balance. All eight substantive
+branches still complete zero gate crossings.
+
+In all four seeds, the selected-weight intervention changes predictive output
+at local tick 1, muscle output and actual body motion at tick 3, raw bodily
+afferents at tick 4, and mixed-population output at tick 5. The CPG output stays
+exactly the same for all 512 ticks. The learned weights therefore have an
+expressed downstream motor consequence; this is not a silent memory pathway.
+
+Error-comparator outputs first differ at tick 67, predictor error state at 68
+and local rate at 69. Delivered sensory input differs at 68, but force/joint/
+velocity receptor output differs only at 69. The chronology must not be
+described as exclusively body-mediated learning feedback: the changed internal
+prediction-to-comparator path is already active. The earlier actuator-omission
+experiment establishes the physical dependency separately.
+
+### Full stroke trajectories, including contrary intervals
+
+The motor rhythm starts alternate positive and negative half-cycles at local
+ticks 0, 82, 164, 246, 328, 410 and 492. For each branch, stroke advance is the
+angle change since just before that half-cycle, multiplied by its neural motor
+direction. The paired difference uses each branch's own prestroke position.
+This observer is not a neural input, a gate score, or a claim that more movement
+is always preferable. The last half-cycle is incomplete and labeled as such.
+
+| Completed half-cycle | Direction | Intact minus reset advance across seeds, radians |
+| --- | --- | --- |
+| 0–81 | Positive | -0.0000615 to -0.0000194 |
+| 82–163 | Negative | +0.0000392 to +0.0000928 |
+| 164–245 | Positive | -0.0001564 to -0.0001007 |
+| 246–327 | Negative | +0.00000785 to +0.0000615 |
+| 328–409 | Positive | -0.0001339 to -0.0000885 |
+| 410–491 | Negative | -0.0000129 to +0.0000312 |
+
+These endpoints alone miss a real transient benefit. In the first positive
+stroke, intact weights increase advance from tick 3 until ticks 52, 59, 33 and
+46 respectively for seeds 11, 23, 44 and 77. The sign then reverses before the
+stroke ends. Every later complete positive stroke has less advance throughout
+its recorded interval. Negative strokes generally advance further, but the last
+one has a smaller endpoint advance in seed 11. All favorable and unfavorable
+intervals, not just these endpoints, are retained in the independent analysis.
+
+The effect is small relative to the approximately 0.0066–0.0070-radian stroke
+excursions. It does not approach the 0.016-radian gate separation. The retained
+prediction changes movement and its directional balance, but does not restore
+useful alternating sweeps. There is no justification here for increasing its
+gain and declaring the architecture repaired.
+
+### What this changes about the next experiment
+
+The missing capability is not simply storage or an absent link from storage to
+action. Selected acquired weights are expressed and affect movement before the
+two branches receive different sensory evidence. What remains unproven is that
+the learned relation is appropriate for the ongoing sensorimotor phase.
+
+The inherited 64-tick physical delay, delayed prediction verification and broad
+64-tick exponential eligibility are different mechanisms. Matching the first
+two does not guarantee that synaptic credit is assigned to the context that
+produced the verified prediction. A useful next intervention should change
+credit timing while preserving forward representation and the physical world,
+then compare it against a representation-only change. The present traces do not
+establish which is the limiting cause, nor that longer acquisition cannot help.
+No new cellular rule, gain tuning or enlarged population was introduced in this
+matched-state experiment.
+
+### Reproduction and evidence
+
+`active_sweep_memory.py` runs the acquired-state branches; the separate
+`active_sweep_memory_analysis.py` checks them and retains full difference masks
+and stroke trajectories. `active_sweep_figures.py --memory` displays the actual
+angle, per-stroke effect and neural prediction for every seed. Source and state
+hashes tie each continuation to its acquisition. Nine dedicated sweep tests and
+the 60-test focused regression set pass, including reset scope, exact replay,
+active reacquisition, corruption rejection and direction-aware stroke analysis.
+
+```sh
+uv run --offline --no-sync --with cloudpickle==3.1.2 python -m \
+  simulations.active_inference.experiments.active_sweep_memory \
+  .live/research/20260909_active_sweep_seed11 NEW_OUTPUT_DIRECTORY
+```
+
+Repeat for graph seeds 23, 44 and 77. Pass those four output directories to
+`active_sweep_memory_analysis --output NEW_ANALYSIS_DIRECTORY`. Existing
+directories are never overwritten. The completed local outputs are
+`.live/research/20260909_active_sweep_memory_seed{seed}`, with independent
+analysis in `20260909_active_sweep_memory_analysis` and the full-trajectory
+figure in `20260909_active_sweep_memory_figures/active-sweep-memory.png`.
+The new records and checkpoints occupy approximately 55 MiB; raw evidence
+remains local. All four workers have exited. No live simulation or large suite
+was started. This result narrows a consequential failure; it is not a new
+accepted agent version or completion of the organism research goal.

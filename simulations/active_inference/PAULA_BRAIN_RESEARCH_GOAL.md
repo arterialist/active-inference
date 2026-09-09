@@ -1272,6 +1272,30 @@ representation and credit remain to be separated through matched acquired-state
 interventions. See [active-sweep evidence and limits](experiments/ACTIVE_SWEEP_2026-09-09.md).
 All preflight workers are terminal; no follow-on sweep or live server is running.
 
+## Continuation: retained prediction affects action without repairing control
+
+The acquired-weight experiment resumes all four loaded/fused brains from the
+same body, neural state and delay history. Resetting selected predictive weights
+alone changes prediction after one tick and physical motion after three, with
+positive adaptation continuing in both branches. All 4,480 ticks pass the
+independent audit, including 384 exact reserialized-checkpoint replay ticks.
+Sixty focused regression tests pass.
+
+Retained weights briefly improve the first positive stroke, then reduce its
+completed advance. Every later complete positive stroke also advances less;
+negative strokes usually advance further. The intact motor clock is identical,
+and neither intact nor reset weights restore gate crossings. This establishes
+expressed motor memory, not useful resistance compensation. The current
+limitation cannot be dismissed as a disconnected memory-to-action pathway.
+
+Next separate temporal credit from forward state representation under the same
+physical task. Delayed prediction verification does not itself align eligibility
+with the causal context. Do not amplify the same predictor before testing that
+distinction. Full tick intervals and physical traces for all four seeds are documented in
+[the acquired-weight results](experiments/ACTIVE_SWEEP_2026-09-09.md#acquired-weight-intervention-memory-reaches-action-but-distorts-the-sweep).
+The new evidence occupies about 55 MiB. All workers are terminal; the full
+artificial-organism goal remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

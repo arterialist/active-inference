@@ -58,6 +58,53 @@ def render(analysis,output):
     return m
 
 
+def render_memory(analysis,output):
+    """Full recorded continuation; stroke diagnostics are not task success."""
+    analysis,output=(Path(p).resolve() for p in (analysis,output))
+    if output.exists():raise FileExistsError(output)
+    summary=json.loads((analysis/'summary.json').read_text())
+    for p,h in summary['sources'].items():
+        if base.digest(p)!=h:raise ValueError('Audited source changed')
+    if len(summary['seeds'])!=4:raise ValueError('Need all four graph seeds')
+    with np.load(analysis/'per-tick.npz') as z:data={k:z[k] for k in z.files}
+    fig,axes=plt.subplots(4,3,figsize=(16,10),sharex=True,layout='constrained')
+    for row,case in enumerate(summary['cases']):
+        seed=case['seed'];a=data[f's{seed}_intact'];b=data[f's{seed}_reset'];t=np.arange(len(a))
+        for trace,label,color,ls in ((a,'Retained weights','#005ca9','-'),(b,'Reset selected weights','#b45400','--')):
+            axes[row,0].plot(t,trace[:,1],label=label,color=color,ls=ls,lw=1.4)
+            axes[row,2].plot(t,trace[:,5],label=label,color=color,ls=ls,lw=1.4)
+        for gate in (-.008,.008):axes[row,0].axhline(gate,color='#777777',ls=':',lw=.8)
+        effect=data[f's{seed}_effect_stroke']
+        ax=axes[row,1];ax.axhline(0,color='#777777',lw=.8)
+        ax.plot(t,effect,color='#333333',lw=1.)
+        ax.fill_between(t,0,effect,where=effect>0,color='#005ca9',alpha=.3)
+        ax.fill_between(t,0,effect,where=effect<0,color='#b45400',alpha=.3)
+        for stroke in case['strokes']:
+            ax.axvline(stroke['start'],color='#999999',ls=':',lw=.6)
+        axes[row,0].set_ylabel(f'Seed {seed}\nJoint angle [rad]')
+        axes[row,1].set_ylabel('Stroke-advance difference [rad]\nRetained minus reset')
+        axes[row,2].set_ylabel('Signed prediction [model units]')
+        for ax in axes[row]:
+            ax.grid(alpha=.15);ax.set_xlim(0,len(a)-1);ax.set_xlabel('Ticks since intervention, 4 ms per step')
+    for col in range(3):
+        lo=min(ax.get_ylim()[0] for ax in axes[:,col]);hi=max(ax.get_ylim()[1] for ax in axes[:,col])
+        for ax in axes[:,col]:ax.set_ylim(lo,hi)
+    axes[0,0].set_title('Actual movement; dotted lines are task gates')
+    axes[0,1].set_title('Blue: more stroke advance; orange: less\nReference resets at each neural half-cycle')
+    axes[0,2].set_title('Retained weights change neural prediction')
+    axes[0,0].legend(fontsize=9)
+    fig.suptitle('Memory is expressed, but does not restore the loaded sweep\n'
+                 'Same acquired brain and body. Selected weights alone reset. Adaptation remains active.',fontsize=13)
+    output.mkdir();path=output/'active-sweep-memory.png';fig.savefig(path,dpi=150);plt.close(fig)
+    m=dict(analysis_sha256=base.digest(analysis/'summary.json'),data_sha256=base.digest(analysis/'per-tick.npz'),
+           producer_sha256=base.digest(__file__),file=path.name,
+           limits='Every recorded tick, common seed scales, no smoothing. Stroke-advance differences use each '
+           'branch angle immediately before a CPG-driven half-cycle; they are not gate completion or energy.')
+    (output/'manifest.json').write_text(base.encode(m)+'\n')
+    return m
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('analysis',type=Path);p.add_argument('output',type=Path)
-    a=p.parse_args();print(render(a.analysis,a.output))
+    p.add_argument('--memory',action='store_true')
+    a=p.parse_args();print((render_memory if a.memory else render)(a.analysis,a.output))

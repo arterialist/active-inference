@@ -110,3 +110,56 @@ def test_executable_checkpoint_replays_the_coupled_continuation(tmp_path):
     assert set(actual)==set(expected)
     for key in expected:np.testing.assert_array_equal(actual[key],expected[key])
     assert verify(actual,g,features)==0.
+
+
+def test_memory_reset_preserves_pending_state_and_keeps_relearning(tmp_path):
+    from simulations.active_inference.experiments.active_sweep_memory import reset_selected, exact_prefix
+    net,g,features=preparation(tmp_path);body=LoadedHinge(.8);delay=PhysicalDelay()
+    record(net,body,delay,features,g,ticks=256)
+    original=deepcopy(net)
+    selected=reset_selected(net,g)
+    assert np.any(selected[:,2])
+    ports={(int(n),int(s)) for n,s,_ in selected}
+    for nid,n in net.network.neurons.items():
+        old=original.network.neurons[nid]
+        assert n.propagation_queue==old.propagation_queue
+        for attr in ('S','O','t_last_fire','prediction_error','prediction_eta'):
+            assert getattr(n,attr)==getattr(old,attr)
+        np.testing.assert_array_equal(n.prediction_context,old.prediction_context)
+        for sid,p in n.postsynaptic_points.items():
+            assert p.u_i.info==(0. if (nid,sid) in ports else old.postsynaptic_points[sid].u_i.info)
+        for tid,p in n.presynaptic_points.items():
+            assert p.u_o.info==old.presynaptic_points[tid].u_o.info
+    # With identical random streams, the reserialized prefix covers all fields,
+    # not only soma output. The reset branch remains free to learn immediately.
+    import random
+    from simulations.active_inference.experiments.crossed_av_continuation import isolated_rng
+    path=tmp_path/'reset.paula';base.save_checkpoint(net,path,sources=[])
+    state,history=body.state(),delay.state();gates=(body.crossings,body.next_gate)
+    with isolated_rng():full=record(net,body,delay,features,g,ticks=128)
+    saved=base.load_checkpoint(path,trusted=True)
+    random.setstate(saved.python_rng);np.random.set_state(saved.numpy_rng)
+    other=LoadedHinge(.8);other.restore(state,crossings=gates[0],next_gate=gates[1])
+    prefix=record(saved.network,other,PhysicalDelay(history),features,g,ticks=96)
+    exact_prefix(full,prefix)
+    assert not np.any(full['weights_initial']) and np.any(full['weights']) and np.all(full['eta']>0)
+    for key in ('weights_initial','terminal_info','retrograde_events','delay_final'):
+        bad={k:v.copy() for k,v in prefix.items()};bad[key].flat[0]+=.1
+        with pytest.raises(ValueError,match='replay differs'):exact_prefix(full,bad)
+
+
+def test_stroke_audit_uses_direction_and_own_prestroke_position():
+    from simulations.active_inference.experiments.active_sweep_memory_analysis import stroke_effect
+    groups={'cpg':[1,2,3,4]};cells=np.zeros((10,4,len(base.FIELDS)))
+    cells[[0,8],0,base.FIELDS.index('O')]=1
+    cells[4,2,base.FIELDS.index('O')]=1
+    a=dict(neuron_ids=np.arange(1,5),cells=cells,body=np.zeros((10,5)),body_initial=LoadedHinge(.8).state())
+    a['body'][:,1]=np.arange(10)*.001
+    b=deepcopy(a);b['body'][:,1]*=.5
+    effect,rows=stroke_effect(a,b,groups)
+    assert effect[3]==pytest.approx(.0015)
+    assert effect[7]==pytest.approx(-.002)
+    assert effect[8]==pytest.approx(.0005)
+    assert [r['complete'] for r in rows]==[True,True,False]
+    b['cells'][2,0,base.FIELDS.index('O')]=1
+    with pytest.raises(ValueError,match='different motor clocks'):stroke_effect(a,b,groups)

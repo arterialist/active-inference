@@ -571,6 +571,23 @@ relationships. Keep both the physical measurements and any experimentally
 substituted inputs in the record. See `ventilation_reseed_probe.py` and
 `VENTILATION_REGULATION_2026-09-09.md` for evidence and unresolved scope.
 
+## RULE 26 — A CIRCUIT'S FUNCTION CAN CHANGE OUTSIDE ITS TESTED INPUT RANGE
+
+A name such as coincidence gate or regulator is a hypothesis about a circuit's
+actual dynamics. Test it on the signal ranges created by the coupled organism,
+including challenge and recovery. Bounded individual weights do not establish
+stability of the brain–body loop. Preserve latency, native return paths and
+the actual input-to-output transformation when interpreting an intervention.
+
+In the 10 September changing-air course, deficit alone crossed an additive
+phase relay's threshold. Both antagonists then received output without rhythm
+input. Energy depletion preceded the delayed alarm, and later predictive
+activity reached the numerical membrane bound. The four-seed fixed-low-input
+success had never exercised that regime. Full relay-potential reconstruction
+identifies the off-phase release; the later predictor escalation still needs
+its own causal intervention. A completed run or bounded endpoint does not
+turn those failure dynamics into self-regulation.
+
 ## WHERE TO LOOK
 
 - **`ROADMAP.md`** — status, the 8 numbered failures (F1-F8), and the ordered Phase 0-4 plan

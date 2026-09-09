@@ -1475,6 +1475,32 @@ without an environmental-change flag entering the network. Compare challenge
 and recovery with the same fixed sensory control. The full organism goal
 remains active and unachieved.
 
+## Continuation: a changing environment exposes failure of composed regulation
+
+Eight complete 2048-tick challenge/recovery courses now compare actual oxygen
+feedback with a fixed half-reserve reading. Environmental gas concentration
+halves, then returns. All 4096 opening ticks exactly repeat earlier records;
+16,384 full ticks pass the physical, resource, predictive-learning and sensory
+checks. All workers exited. The organism itself fails: actual feedback incurs
+oxygen and energy debt in every seed and does not recover viable operation.
+The fixed control retains energy but still incurs oxygen debt in three seeds,
+including failure after normal air returns. It is not a general solution.
+
+The exact relay traces identify a change in functional role. A deficit large
+enough to cross an additive relay's threshold releases both antagonist paths
+without phase input. Energy feedback arrives after reserve depletion. Later,
+predictive activity and motion escalate to model bounds despite bounded
+individual weights. A local operating-range success did not compose into
+stable regulation under the changed condition. The later predictor escalation
+still needs a path-specific intervention; chronology alone is not mediation.
+
+Next test a neural phase-authorization mechanism that remains conditional on
+phase across the actual deficit range, alongside a diagnostic predictor output
+cut. Preserve the full learned state and positive adaptation. Do not replace
+feedback with the fixed control, freeze learning, or tune a standalone organ
+to perfection. See the [complete challenge/recovery findings](experiments/VENTILATION_REGULATION_2026-09-09.md#10-september-changing-air-breaks-the-composed-organization).
+The full artificial-organism objective remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

@@ -272,3 +272,104 @@ regulators and acquired sensorimotor learning intact. Compare actual oxygen
 feedback with the fixed half-reserve input that performed better here. The
 world must reveal whether their differences help during both challenge and
 recovery; a passing unchanged world cannot answer that question.
+
+## 10 September: changing air breaks the composed organization
+
+The challenge/recovery experiment is complete. Each of four seeds branches
+the same acquired initial state into actual delayed oxygen feedback or the
+half-reserve sensory clamp. Environmental oxygen fraction is .21 for ticks
+0–511, .105 for 512–1279, then .21 for 1280–2047. Total duration is 8.192
+seconds. No environmental-change flag, brain parameter change, weight reset
+or host motor intervention occurs. Only the gas concentration changes.
+
+All eight opening 512-tick prefixes exactly match their previous fixed-world
+records, including inputs, returns and weights. The new resource accountant
+and existing physical/predictive checks cover all 16,384 ticks. The analyzer
+also reconstructs both phase relays from recorded local potentials, including
+their actual .99 dendritic attenuation. Its first guard incorrectly assumed
+unit attenuation and rejected the record; the correction uses the existing
+configuration without changing the brain or tolerances. Forty-one focused
+tests pass across the existing comparison and new world adapter.
+
+| Seed | Actual feedback: first oxygen debt | First release by both relays without phase input | First energy debt | First energy-alarm output | First predictor membrane bound | Fixed reading: first oxygen debt |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 11 | 719 | 769 | 803 | 875 | 1157 | none |
+| 23 | 719 | 769 | 803 | 874 | 1206 | 1233 |
+| 44 | 721 | 770 | 805 | 877 | 1228 | 1389 |
+| 77 | 719 | 769 | 804 | 875 | 1181 | 1233 |
+
+Indices are local and zero-based. Every actual-feedback branch fails both
+resource budgets. None recovers viable operation after normal air returns.
+The fixed-reading branches retain energy and avoid the recorded membrane
+bounds, but three incur oxygen debt. Seed 44's first deficit occurs during
+recovery, after gas concentration is restored. A final-reserve test would
+conceal all three fixed-reading failures. This challenge does not establish
+that feedback is universally necessary: the fixed control passes in seed 11.
+
+### The first identified change in circuit function
+
+The supposed phase-coincidence relay is an additive threshold circuit. With
+unit membrane time constant and one-tick dendritic delay, its output is three
+times the positive part of the attenuated weighted input sum minus one. If
+the deficit contribution alone crosses that threshold, the rhythm input is
+no longer necessary. Both antagonist relays then release together. The exact
+recorded potential histories reproduce this output change in all four seeds.
+The off-phase check uses the preceding tick's actual input because dendritic
+propagation takes one tick; it does not mistake a delayed phase pulse for
+spontaneous release.
+
+In the fixed-low clamp experiment, the deficit stayed below this range and
+the energy pathway successfully restrained expenditure. Real oxygen loss
+now drives the circuit outside that operating range. The alarm first responds
+71–72 ticks after the first actual energy deficit, consistent with its delayed
+measurement and neural integration. This is useful feedback arriving too late
+for the new expenditure history, not an unwired alarm.
+
+The energy ledger distinguishes activation from net torque. By the first
+energy deficit, common antagonist activation has spent .258–.274 J across
+seeds. This is the accumulated term `2 * .1 * .004 * m0 * m1` in the identity
+`m0² + m1² = (m0-m1)² + 2*m0*m1`. It is actual paid activation that does not
+increase net torque. Removing it mathematically is an accounting comparison,
+not evidence that a neural intervention could preserve the same trajectory.
+
+Later the predictive populations reach the base model's membrane bound of
+1000, followed by some velocity and joint cells. Predictive weights remain
+inside their declared 0–1 interval while muscle outputs approach 1000 and
+motion escalates. Restoring normal air does not undo this state. These late
+trajectories are failure diagnostics, not viable physiology: the energy model
+continues recording expenditure after debt instead of imposing an undeclared
+host exhaustion brake. Numerical clipping is not evidence of neural stability.
+
+The matched sensory control establishes an effect of actual oxygen feedback
+on this failure. It does not yet isolate the cause of the later predictive
+escalation. A forward-path intervention is needed to separate excessive
+off-phase recruitment from the predictor's subsequent contribution. Freezing
+learning or replacing real feedback with a permanent fixed signal would not
+solve the research problem.
+
+### What this changes next
+
+The next intervention should preserve the full learned brain while making
+phase authorization independent of deficit amplitude, then repeat the same
+challenge and recovery. Compare a diagnostic predictor-to-muscle output cut
+to determine whether the later instability is a second failure. Keep positive
+adaptation, organ signals and physical consequences active in the candidate
+organism. The target is useful composition across conditions, not a perfect
+isolated respiratory component. A literature-grounded neural design and
+explicit latency/range accounting must precede implementing that change.
+
+Reproduction:
+
+```sh
+uv run --offline --no-sync --with cloudpickle==3.1.2 python -m simulations.active_inference.experiments.ventilation_changing_air .live/research/20260910_ventilation_input_clamp_seed11 NEW_CHANGING_AIR_OUTPUT
+uv run --offline --no-sync --with cloudpickle==3.1.2 --with pytest python -m pytest tests/test_ventilation_changing_air.py -q
+```
+
+The four `20260910_ventilation_changing_air_seed{11,23,44,77}` folders retain
+both complete courses, protocols and final executable neural/physical states,
+including the environmental clock and sensory-clamp setting. The
+`20260910_ventilation_changing_air_analysis/` folder retains checked per-tick
+contrasts, all off-phase and membrane-bound events, stage-specific debt
+increments and `challenge-recovery.png`. Every sample is retained. All four
+simulation workers and the completed analyzer exited successfully; the
+behavioral result is failure despite those successful executions.

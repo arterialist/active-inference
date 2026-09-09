@@ -229,6 +229,15 @@ the input-subset controls retain that distinction. The next input experiment
 must address temporal structure and empirical odor selectivity, not treat the
 broad artificial ALPN course as an olfactory stimulus. Keep both regions and
 actual recurrent projections.
+
+The [DL5 primary-current audit](PN_CURRENT_PHYSIOLOGY_2026-09-10.md) now supplies
+12 time-resolved unitary ORN→PN current traces and binned intrinsic ramp
+responses from Gugel et al. The native receptor-to-hillock witness retains all
+ports of the identified DL5 PN and separates one-tick arriving current from
+lingering somatic voltage. Receptor-current kinetics and membrane integration
+must be constrained separately. These data do not yet provide an odor drive
+for the full selected PN population or calibrate a physical PAULA clock.
+
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.
 

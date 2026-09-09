@@ -17,7 +17,7 @@ may be host code. All cognitive control must stay in the neural network.
 | Requirement | Evidence needed | Current status |
 | --- | --- | --- |
 | Seeing and hearing | Distinguishable representations of varied real inputs, preserved together and used by neural consumers | Regional feedback preserves weaker sound under strong vision across four graph seeds; recognition/generalization unproved |
-| Learned multimodal memory | Assignment-specific acquisition, partial-cue retrieval, retention, reversal and transfer, with activity/weight interventions | Selected-weight transfer restores cue-specific predictive action across four graph seeds, with an identified failure in one seed; necessity of both senses, general recall and transfer to new stimuli remain unproved |
+| Learned multimodal memory | Assignment-specific acquisition, partial-cue retrieval, retention, reversal and transfer, with activity/weight interventions | Selected-weight transfer restores some cue-specific action, but the harder crossed audiovisual association fails in all four tested seeds; reliable joint recall and transfer to new stimuli remain unproved |
 | Hierarchical dynamics | Parent consumes and regulates child dynamics causally; distinct useful states survive composition and perturbation | Upper-to-sensory feedback changes responses to a physical disturbance in a full-state factorial assay; useful learned regulation and content preservation unproved |
 | Self-regulation | Local disturbances recover without erasing unrelated representations; adaptation stays effective | Regional alignment helps integration; an opt-in magnitude rule removes observed inhibitory sign flips in two-seed audiovisual tests without freezing adaptation. Long-run and embodied regulation unproved |
 | Reasoning | Neural use of learned relations for novel combinations, delayed choices and counterfactual interventions | No evidence from the new population prototype |
@@ -28,6 +28,24 @@ may be host code. All cognitive control must stay in the neural network.
 | Inspectability | Reproducible input/state records, exact executable replay, causal cuts and independent analyses | Tools exist and are being extended; recordings declare their limits |
 
 ## Current experiment and continuation
+
+Latest continuation: the crossed audiovisual world completed 77,152 ticks in
+eight four-seed/assignment courses. Neither sense alone specifies the imposed
+load before somatic feedback. All seeds fail the joint rule: they learn one
+dominant prediction sign for all four pairings. Reversing the physical
+assignment reverses that bias. The failure survives body/activity reset and
+shifted sensory onset. All 74,240 recorded ticks pass the independent audits;
+35 focused tests pass. See `experiments/CROSSED_AV_FINDINGS_2026-09-09.md`.
+
+A conditional interface audit reconstructs the actual predictor arithmetic and
+finds that alternative legal selected weights could support the correct signed
+relation on the recorded histories. No optimizer weights are installed. This
+rules against simply assuming that more neurons are needed, but does not prove
+whole-network capacity under changed return paths. Next examine longer balanced
+acquisition with intermediate weight-transfer probes. Distinguish slow learning
+from recurrent overwriting before adding competition or selective regulation.
+Four exposures per pairing are not treated as a biological deadline. The full
+goal remains unchanged and unachieved.
 
 Latest continuation: delayed-verification acquisition and selected-weight
 transfer completed 78,944 ticks across four graph seeds. Both timing conditions

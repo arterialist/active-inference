@@ -60,9 +60,20 @@ A wiring-only local inhibitory circuit adds eight cells. Its four-seed embodied
 screen completed and audited 17,472 ticks. Joint/shared contrast improves at
 every pre-feedback tick 16–63, but absolute joint activity falls in three seeds
 and one conditional capacity margin worsens. It is a candidate for testing
-continued learning, not a declared repair. `competition_acquisition.py` compares
-the same physical course and preserves positive adaptation and exact branch
-replay. Do not replace this question with a demand for perfect component output.
+continued learning, not a declared repair. The four complete feedback courses
+now have 130,048 recorded ticks independently audited. Context gates remain
+intact. Competition reduces the shared prediction bias but also weakens the
+joint component; every seed still has final pre-feedback recall failures.
+Correct intervals occur at different checkpoints, rather than demonstrating
+retention. `competition_course_comparison.py` preserves every checkpoint and
+all 36,864 matched diagnostic ticks, with full-course visual evidence.
+
+The next causal question is regulation of rewriting without suppressing the
+representation's expression. It needs continued adaptation, a constant-rate
+control and acquisition after a changed physical relationship. No autonomous
+write regulator has been built or accepted. This is compatible with proceeding
+to action-dependent body/context composition rather than waiting for perfect
+isolated recall. See the completed-course section in the magnitude findings.
 
 The unchanged-condition runner reproduced all 1,840 first-block recorded ticks,
 including its diagnostic branches, exactly. Four feedback-enabled sixteen-block

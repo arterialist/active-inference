@@ -214,8 +214,99 @@ course. Its completed unchanged-condition validation reproduced the original
 first block exactly, including every field of all four diagnostic branches:
 1,840 recorded ticks, 2,204 executed including the source-screen replay.
 The validation is retained in `20260909_competition_acquisition_none_preflight`.
-Four feedback-enabled sixteen-block courses have started in
-`20260909_competition_learning_seed{11,23,44,77}`. They are in progress, not
-completed results; their own source-screen preflights must also replay exactly.
+Four feedback-enabled sixteen-block courses have completed in
+`20260909_competition_learning_seed{11,23,44,77}`. All four workers exited with
+code zero, each executing 32,876 ticks including its exact source-screen replay.
 These experiments address composition and retained neural use of experience,
 not semantic recognition, mammal-level breadth or subjective experience.
+
+## Completed competition course: smaller interference, still unstable recall
+
+`20260909_competition_learning_b16_analysis` independently checks all 130,048
+recorded ticks and 384 probes. All context gates remain functional, with no
+active suppressed-bank member or negative context release during acquisition.
+The final context release is 2.0760421752929688 in every seed. This rules out
+recurrence of the earlier context sign failure in these courses, not all
+possible gating or learning failures.
+
+`competition_course_comparison.py` compares every matched diagnostic tick,
+including acquired-body learned/reset branches: 36,864 matched probe ticks
+across the two architectures. It retains all sign transitions and physical
+displacement differences separately. Zero output is never accepted as correct
+recall. The comparison consumes independent audits; it does not introduce a
+fitted readout or another raw-equation verifier. All sixteen checkpoints remain
+visible in `20260909_competition_course_figures/competition-recall-course.png`.
+Tiles in that figure are separate resting diagnostic replays, not a continuous
+physical trajectory. All 96 ticks appear, with the new-afferent boundary marked.
+Forty focused tests pass, including rejection of incomplete comparison families,
+changed audited sources, nonfinite trajectories and silence-as-correct recall.
+
+| Seed | Final shared component, original → competition | Final joint component, original → competition |
+| --- | --- | --- |
+| 11 | -0.3042 → -0.1068 | 0.1125 → 0.1017 |
+| 23 | -0.3306 → -0.1291 | 0.1221 → 0.1037 |
+| 44 | -0.3142 → -0.1261 | 0.0843 → 0.0544 |
+| 77 | -0.2935 → -0.0935 | 0.0915 → 0.0819 |
+
+These table entries are indices into the full factorial trajectories at block
+16, probe tick 63, not the primary acceptance evidence. Competition reduces
+the final shared bias but also the joint component in every seed. At every
+tick 16–63, final same-index predictions are more load-aligned than the original
+course in all eight seed/pair cases. That improvement is insufficient: every
+seed still has incorrect recall somewhere in that window. Seed 11 briefly
+gets all pairs right at ticks 19–41; seed 23 retains correct pair 11 but gets
+00 wrong throughout; seed 44 predicts the negative direction for all pairs
+from tick 7 through 95. Seed 77 has no all-pair-correct interval in this probe.
+
+The trajectories also contradict a monotonic-retention account. At block 12,
+the original has all four pairs correct throughout ticks 16–63 in seeds 11,
+23 and 77. Competition has no such full-window case then. At block 15,
+competition gives seed 11 an all-pair-correct interval at ticks 15–72 and seed
+23 at 20–95. The latter misses the first four ticks of the declared comparison
+window, but is still a real useful interval, not an absent capability. Neither
+architecture demonstrates retained joint recall across the full course.
+
+The four-block update attribution in `20260909_competition_credit_b4` checks
+23,296 actual training ticks. The summed absolute shared effects at reference
+tick 63 fall from 9.20–9.57 without competition to 5.19–5.76 with it. Net joint
+effects also decrease in every seed, especially seed 44, from 0.02209 to
+0.01431. Each architecture uses its own factual four-block reference, so this
+is not a shared-coordinate counterfactual comparison. Full acquisition-tick
+by reference-tick effects and all decomposition factors are retained. Native
+predictor reconstruction is exact in all four reference sets.
+
+Increasing the selected-weight ceiling is not supported by the original
+course: direct inspection of every selected training weight found no value at
+the upper cap of one. Maxima by seed were 0.56629, 0.75037, 0.54976 and 0.53486.
+Lower clipping still occurs, and the suppressed bank accounts for many zero
+entries. This excludes an active upper ceiling as the explanation for those
+observed trajectories, not all consequences of the bounded learning rule.
+
+### Next causal distinction
+
+The result distinguishes suppressing expression from regulating rewriting.
+The tested inhibitory pools alter the activity that both the neural consumer
+and its learning machinery receive. Less shared drive can reduce interference
+while also reducing the relation's acquisition and expression. This does not
+establish that all inhibition, all rate regulation or all larger populations
+would fail. A scalar rate can change a coupled trajectory even though it only
+rescales one unclipped update at a fixed state.
+
+[Udakis et al., 2025](https://pmc.ncbi.nlm.nih.gov/articles/PMC12606138/)
+provide a relevant biological distinction: their indexed primary results
+describe OLM inhibition of dendritic calcium and associative plasticity, with
+effects on place-cell expression and remapping dependent on environmental
+context. This supports testing the location and conditions of regulation,
+not a universal separation of writing from expression. Full-text retrieval
+was blocked; numerical claims about preserved somatic voltage are not adopted
+here, nor is an OLM cellular mechanism claimed for the PAULA pools.
+
+The next discriminating test should alter access to the neural learning path
+while preserving the forward representation, then test both retained recall
+and acquisition after a changed physical relation. Compare autonomous neural
+regulation with a constant attenuation control; otherwise slower rewriting
+could be mislabeled self-regulation. Basal adaptation must remain positive,
+and no decoded pair identity, imposed surprise flag or host-selected learning
+phase may reach the candidate brain. This experiment has not yet been built.
+It is not a reason to postpone the separate action-dependent body/context
+composition identified by the body-state intervention.

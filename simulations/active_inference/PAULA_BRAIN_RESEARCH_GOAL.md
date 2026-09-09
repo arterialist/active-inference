@@ -17,7 +17,7 @@ may be host code. All cognitive control must stay in the neural network.
 | Requirement | Evidence needed | Current status |
 | --- | --- | --- |
 | Seeing and hearing | Distinguishable representations of varied real inputs, preserved together and used by neural consumers | Regional feedback preserves weaker sound under strong vision across four graph seeds; recognition/generalization unproved |
-| Learned multimodal memory | Assignment-specific acquisition, partial-cue retrieval, retention, reversal and transfer, with activity/weight interventions | Weight-carried clip-specific predictions influence neural error and plasticity in a one-graph assay; general recall, retention and transfer remain unproved |
+| Learned multimodal memory | Assignment-specific acquisition, partial-cue retrieval, retention, reversal and transfer, with activity/weight interventions | Selected-weight transfer restores cue-specific predictive action across four graph seeds, with an identified failure in one seed; necessity of both senses, general recall and transfer to new stimuli remain unproved |
 | Hierarchical dynamics | Parent consumes and regulates child dynamics causally; distinct useful states survive composition and perturbation | Upper-to-sensory feedback changes responses to a physical disturbance in a full-state factorial assay; useful learned regulation and content preservation unproved |
 | Self-regulation | Local disturbances recover without erasing unrelated representations; adaptation stays effective | Regional alignment helps integration; an opt-in magnitude rule removes observed inhibitory sign flips in two-seed audiovisual tests without freezing adaptation. Long-run and embodied regulation unproved |
 | Reasoning | Neural use of learned relations for novel combinations, delayed choices and counterfactual interventions | No evidence from the new population prototype |
@@ -28,6 +28,30 @@ may be host code. All cognitive control must stay in the neural network.
 | Inspectability | Reproducible input/state records, exact executable replay, causal cuts and independent analyses | Tools exist and are being extended; recordings declare their limits |
 
 ## Current experiment and continuation
+
+Latest continuation: delayed-verification acquisition and selected-weight
+transfer completed 78,944 ticks across four graph seeds. Both timing conditions
+now carry useful opposite cue associations in three seeds. From the same birth
+brain and resting body, learned weights reduce 256 ms displacement in 14 of 16
+context/recording cases per condition. Seed 77 retains a wrong-direction response
+to recording 0 in both contexts. The full trajectory audit records its onset,
+sign reversals and physical cost. Positive learning is never disabled.
+
+This separates weight-carried predictive action from acquired activity and body
+displacement. It also corrects an interpretation error: the restoring reflex
+can add torque along an imposed load when the body starts displaced, even with
+a correct learned load prediction. Both timing conditions share gain and credit
+trace changes, so this result does not attribute the improvement to temporal
+alignment alone. It does not establish reliable multimodal integration or
+hierarchical memory. See
+`experiments/TEMPORAL_VERIFICATION_FINDINGS_2026-09-09.md`.
+
+Next test a crossed audiovisual physical contingency where neither sense alone
+specifies the needed response. Keep transfer and sensory/pathway interventions,
+continuing learning, body feedback and all unsuccessful trajectories. Use that
+failure to identify necessary joint representations or learned regulation,
+rather than optimizing this one-joint preparation indefinitely. The full goal
+above remains open.
 
 Latest continuation: the counterbalanced signed-error pilot completed 41,728
 ticks in six runs on graph seed 11. Reversing acquisition order reverses the

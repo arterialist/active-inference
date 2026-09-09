@@ -12,13 +12,13 @@ from .opponent_context import verify_afferents
 WINDOWS = ((0,32),(32,64),(64,128),(128,192))
 
 
-def read_record(root, row, manifest):
+def read_record(root, row, manifest, *, learning_auditor=base.verify_learning):
     path = root/row['file']
     if base.digest(path) != row['sha256']:
         raise ValueError('Recorded data changed')
     with np.load(path) as z:
         data = {k:z[k] for k in z.files}
-    base.verify_learning(data); base.verify_physics(data); verify_afferents(data)
+    learning_auditor(data); base.verify_physics(data); verify_afferents(data)
     ids = list(data['neuron_ids']); groups=manifest['groups']
     muscles=data['cells'][:,[ids.index(n) for n in groups['muscle']],base.FIELDS.index('O')]
     if not np.array_equal(muscles[:,0]-muscles[:,1],data['body'][:,3]):

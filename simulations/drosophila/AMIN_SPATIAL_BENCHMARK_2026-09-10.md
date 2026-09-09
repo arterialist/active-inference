@@ -6,6 +6,12 @@ separates a reproduced reference calculation, the authors' published anatomical
 predictions, and a new schematic test of PAULA's conservative cable operator.
 It does not change any neuronal equations or agent defaults.
 
+Later on 10 September, the saved anatomical registration was recovered and
+verified for every node. The [registered APL follow-up](REGISTERED_APL_FINDINGS_2026-09-10.md)
+now tests the actual saved tree. It removes the registration obstacle described
+below, but exposes a spatial-response mismatch. This earlier report remains a
+record of the schematic experiment and what was unresolved at that point.
+
 ## Data and observation model
 
 [Amin et al. 2020](https://doi.org/10.7554/eLife.56954) locally activated APL with

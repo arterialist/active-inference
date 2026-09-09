@@ -65,6 +65,13 @@ diagnostic exposes different spatial operators despite the same nominal decay
 length. This is not yet a physiological fit of the FlyWire APL or an independent
 rerun of the authors' anatomical predictions.
 
+The [registered APL follow-up](REGISTERED_APL_FINDINGS_2026-09-10.md) recovers the
+authors' saved 181,741-node tree and reproduces every node-to-region assignment.
+Its full cable traces expose underpredicted vertical propagation. An independent
+anatomical reference calculation also still differs from the published curves.
+Registration recovery and numerical verification are established; a physiological
+fit is not. The code keeps this saved specimen separate from FlyWire.
+
 Current distinctions:
 
 | Item | Evidence status |

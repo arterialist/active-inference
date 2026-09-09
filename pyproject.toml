@@ -30,6 +30,9 @@ aif-live = "simulations.active_inference.live.cli:app"
 flywire = [
     "pyarrow==21.0.0",
 ]
+physiology = [
+    "mat-io==1.0.0",  # Read primary MATLAB objects without executing MATLAB code.
+]
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",

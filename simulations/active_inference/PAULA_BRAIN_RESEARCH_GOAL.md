@@ -29,6 +29,26 @@ may be host code. All cognitive control must stay in the neural network.
 
 ## Current experiment and continuation
 
+Latest continuation: the counterbalanced signed-error pilot completed 41,728
+ticks in six runs on graph seed 11. Reversing acquisition order reverses the
+baseline's clearer pre-feedback recall benefit. The new eight-connection
+opponent coupling instead produces growing correction oscillations. Halving
+comparison input strengths in matched acquired-state branches damps those
+oscillations but does not consistently improve body displacement. This is a
+causal stability result and failed architecture candidate, not accepted memory.
+
+Delaying physical afferents by 64 ticks also exposes a temporal-reference
+mismatch: current predictions are taught against old bodily evidence, with
+substantial selected weight changes before fresh feedback arrives. The next
+coupled test should align prediction verification and credit with delayed
+consequences, using existing PAULA pathway/history mechanisms first, and
+normalize the participation of opposing learning pathways. Keep order controls
+and four-seed replication; do not substitute stable output for useful memory
+or a repaired hinge for the full brain. All 21 focused tests and recorded
+learning/physics/afferent/motor audits pass. Shared neuron sources and previous
+recorded producers remain unchanged. See
+`experiments/OPPONENT_CONTEXT_FINDINGS_2026-09-09.md`.
+
 Latest continuation: a separate 590-neuron audiovisual/context/motor preparation
 completes eight acquisition/probe and four expression-lesion courses across
 four graph seeds. Contextual neural access preserves earlier selected weights

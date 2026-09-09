@@ -1296,6 +1296,34 @@ distinction. Full tick intervals and physical traces for all four seeds are docu
 The new evidence occupies about 55 MiB. All workers are terminal; the full
 artificial-organism goal remains active and unachieved.
 
+## Continuation: local learning-window shape improves retained motor contribution
+
+A factorial experiment keeps the full forward graph and physical task unchanged
+while varying the shape and mean age of local predictive eligibility. The new
+experimental PAULA subclass uses a cascade of decaying intracellular states,
+not a host clock or policy. Default behavior reproduces the parent exactly.
+The longer mean comes from the configured verification path, not a fitted
+behavioral target. The distinction between a wide exponential and a delayed,
+concentrated eligibility window was motivated by cerebellar timing research.
+
+All four graph seeds and four conditions completed 32,768 independently audited
+embodied ticks, including 8,192 exact baseline replay ticks. With the matched
+cascade, selected retained weights increase completed stroke advance in both
+directions across three seeds; the fourth has one slightly negative completed
+stroke. The original trace weakens every completed positive stroke. Full
+trajectories retain the transient contrary effects. This is evidence of an
+improved learned motor contribution under unchanged forward wiring, not a
+claim that phase alone caused it or that all memory is stored in these weights.
+
+No condition reaches the gates. The next experiment should continue the intact
+matched-cascade and original brains from their saved acquired states, checking
+whether the useful contribution grows or destabilizes over more cycles before
+adding more circuitry. Distinguish a rhythm-specific correction from a useful
+body–environment relation through a bounded transfer when warranted, without
+hand-retiming the learned preparation. Sixty-six focused tests pass. The full goal remains
+active; there is no accepted new agent version or consciousness result.
+See [the completed kernel experiment](experiments/ACTIVE_SWEEP_2026-09-09.md#completed-kernel-result).
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

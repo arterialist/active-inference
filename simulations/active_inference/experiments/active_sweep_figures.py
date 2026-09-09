@@ -104,7 +104,59 @@ def render_memory(analysis,output):
     return m
 
 
+def render_credit(analysis,output):
+    """Show every seed and timing condition alongside acquired-weight effects."""
+    analysis,output=(Path(p).resolve() for p in (analysis,output))
+    if output.exists():raise FileExistsError(output)
+    summary=json.loads((analysis/'summary.json').read_text())
+    for p,h in summary['sources'].items():
+        if base.digest(p)!=h:raise ValueError('Audited source changed')
+    if len(summary['seeds'])!=4:raise ValueError('Need all four graph seeds')
+    with np.load(analysis/'per-tick.npz') as z:data={k:z[k] for k in z.files}
+    styles={'old':('#777777','Original exponential'), 'mean_only':('#c66b00','Longer exponential'),
+            'shape_only':('#005ca9','Cascade, original mean'), 'matched_cascade':('#813aa0','Cascade, verification mean')}
+    fig,axes=plt.subplots(4,3,figsize=(16,10),sharex='col',layout='constrained')
+    for row,seed in enumerate(summary['seeds']):
+        for condition,(color,label) in styles.items():
+            trace=np.concatenate([data[f's{seed}_{condition}_train'],data[f's{seed}_{condition}_intact']])
+            t=np.arange(len(trace))
+            axes[row,0].plot(t,trace[:,1],color=color,lw=1.15,label=label)
+            axes[row,1].plot(t,trace[:,5]-trace[:,4]/.2,color=color,lw=1.15)
+            effect=data[f's{seed}_{condition}_stroke_effect']
+            axes[row,2].plot(np.arange(len(effect)),effect,color=color,lw=1.15)
+        for gate in (-.008,.008):axes[row,0].axhline(gate,color='#999999',ls=':',lw=.8)
+        axes[row,0].axvline(1024,color='#999999',ls=':',lw=.8)
+        axes[row,1].axvline(1024,color='#999999',ls=':',lw=.8)
+        axes[row,1].axhline(0,color='#999999',lw=.7)
+        axes[row,2].axhline(0,color='#999999',lw=.7)
+        for t in range(0,512,82):axes[row,2].axvline(t,color='#999999',ls=':',lw=.6)
+        axes[row,0].set_ylabel(f'Seed {seed}\nAngle [rad]')
+        axes[row,1].set_ylabel('Prediction minus current force\n[receptor-scale model units]')
+        axes[row,2].set_ylabel('Retained minus reset\nstroke advance [rad]')
+        for col,ax in enumerate(axes[row]):
+            ax.grid(alpha=.12);ax.set_xlim(0,511 if col==2 else 1535)
+            ax.set_xlabel('Ticks since weight intervention' if col==2 else 'Continuous physical tick, 4 ms per tick')
+    for col in range(3):
+        lo=min(ax.get_ylim()[0] for ax in axes[:,col]);hi=max(ax.get_ylim()[1] for ax in axes[:,col])
+        for ax in axes[:,col]:ax.set_ylim(lo,hi)
+    axes[0,0].set_title('Actual movement against resistance')
+    axes[0,1].set_title('Current-force prediction, not delayed teaching error')
+    axes[0,2].set_title('Stored-weight effect in each motor half-cycle\nPositive: further advance; negative: less')
+    axes[0,0].legend(fontsize=8,ncol=2)
+    fig.suptitle('Local learning windows in one unchanged sensorimotor circuit\n'
+                 'All ticks and seeds. Same forward wiring. Continuous adaptation. Gate lines at +/-0.008 rad.',fontsize=13)
+    output.mkdir();path=output/'active-sweep-credit.png';fig.savefig(path,dpi=150);plt.close(fig)
+    m=dict(analysis_sha256=base.digest(analysis/'summary.json'),data_sha256=base.digest(analysis/'per-tick.npz'),
+           producer_sha256=base.digest(__file__),file=path.name,
+           limits='No temporal averaging. Acquisition and intact continuation join at 1024; right column '
+           'compares acquired-state branches and resets its physical reference at each neural half-cycle. '
+           'Current-force residual and stroke advance alone do not establish task success.')
+    (output/'manifest.json').write_text(base.encode(m)+'\n')
+    return m
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('analysis',type=Path);p.add_argument('output',type=Path)
     p.add_argument('--memory',action='store_true')
-    a=p.parse_args();print((render_memory if a.memory else render)(a.analysis,a.output))
+    p.add_argument('--credit',action='store_true')
+    a=p.parse_args();print((render_credit if a.credit else render_memory if a.memory else render)(a.analysis,a.output))

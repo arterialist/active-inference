@@ -349,3 +349,173 @@ The new records and checkpoints occupy approximately 55 MiB; raw evidence
 remains local. All four workers have exited. No live simulation or large suite
 was started. This result narrows a consequential failure; it is not a new
 accepted agent version or completion of the organism research goal.
+
+## Eligibility-kernel experiment: hypothesis and declared comparison
+
+The next experiment changes local learning history without changing forward
+representation. An experimental `CascadeEligibilityNeuron` subclass composes
+the existing magnitude-feedback predictor with a cascade of decaying local
+states. Only selected predictive weight updates use the final cascade state.
+The inherited exponential trace remains observable; all forward integration,
+unselected learning and retrograde messages keep their inherited order.
+
+For each selected input and each unit tick:
+
+```
+z[0,new] = d*z[0,old] + (1-d)*actual_input_arrival
+z[k,new] = d*z[k,old] + (1-d)*z[k-1,new]
+q[new] = clip(q[old] + eta(previous_error)*previous_error*z[last,new], 0, 1)
+```
+
+The cascade has no hold counter or behavioral clock. It is a phenomenological
+intracellular model, not a claim about a particular molecular pathway. Its
+impulse kernel has unit mass and mean age `stages*d/(1-d)`. The stages are
+additional dynamical state, preserved in executable checkpoints. Default
+configuration follows the parent exactly. Core `neuron.py` is unchanged.
+
+[Suvrathan, Payne and Raymond, 2016](https://pubmed.ncbi.nlm.nih.gov/27839999/)
+report region-specific timing of cerebellar plasticity, including sensitivity
+to delayed instruction in the flocculus. The abstract, introduction and figure
+descriptions motivate testing a delay-sensitive window, not this cascade or its
+parameters. The [2018 correction](https://pmc.ncbi.nlm.nih.gov/articles/PMC5777216/)
+concerns an axis label in Figure 1, not changed data. No Purkinje-cell mechanism
+is claimed to have been reproduced.
+
+Four conditions cross kernel shape with mean age, using the same 596-cell
+graph, initial weights, sensors, body, motor rhythm and positive basal rates:
+
+| Condition | Local stages | Mean eligibility age, ticks |
+| --- | --- | --- |
+| Original exponential | 1 | 63.5013 |
+| Longer exponential | 1 | 82.5208 |
+| Cascade, original mean | 8 | 63.5013 |
+| Cascade, verification mean | 8 | 82.5208 |
+
+The original mean is the discrete exponential mean for tau=64. The second
+is calculated from the configured forward verification path: context dendrite,
+predictor membrane, prediction-to-comparator transmission and dendrite,
+comparator membrane, error-receptor transmission and trace, then the convention
+of using the previous completed error. This gives 69 fixed ticks plus mean
+filter ages 3, 7 and 3.5208. It is a held-linear-path calculation, not the
+measured conduction latency of the whole nonlinear, adapting organism.
+
+At the 164-tick motor fundamental, before seeing this experiment's outcomes,
+the calculated kernel phases are -66.72, -71.45, -134.55 and -171.29 degrees
+in table order. The nominal linear verification path is -180.60 degrees.
+Thus a longer exponential barely changes the phase discrepancy. The cascade
+changes it substantially. This predicts a shape effect beyond extending a
+single time constant. It is not a stability proof: rectification, opposite
+prediction branches, changing release, nonstationary inputs and body feedback
+are omitted from that calculation.
+
+Equal kernel mass does not imply equal learning exposure. Their gains at the
+motor fundamental are approximately 0.378, 0.300, 0.673 and 0.531, and their
+temporal widths differ. Error-dependent learning rates and subsequent physical
+trajectories may also diverge. These differences are part of the intervention,
+not hidden behind a claim of equal effective learning rate.
+
+Each condition has 1024 acquisition ticks followed by matched 512-tick intact
+and selected-weight-reset continuations. The original condition must reproduce
+the already retained acquisition and both continuations exactly on every
+pre-existing recorder field. All added intracellular stages are recorded at
+every tick. The independent auditor checks their recurrence, the actual neural
+teaching arrivals, selected source release, physical equations and gate events.
+Four graph seeds are 11, 23, 44 and 77. This is a bounded mechanism comparison,
+not an asymptotic learning or agent-version acceptance claim.
+
+### Completed kernel result
+
+All four workers completed all four conditions and their two acquired-state
+branches. The independent audit checks 32,768 embodied ticks. Within that total,
+8,192 baseline ticks reproduce the previously retained acquisition and both
+memory probes exactly. The default subclass therefore does not covertly change
+the baseline. Six cascade-specific tests and the 66-test focused regression
+set pass. An additional corruption check confirms that a changed comparator
+output is rejected even when recorded learning-error values are left untouched.
+
+The matched cascade changes the *use* of stored weights, not merely their
+magnitude or the existence of a motor effect. In all four seeds, resetting
+selected weights changes prediction at tick 1 and muscle/body motion at tick 3.
+The neural clock remains identical between intact and reset branches. The
+completed half-cycle effects below use the same direction-aware, prestroke
+reference as the preceding memory experiment. Units are microradians, so
+100 in this table means 0.0001 radians, not a large recovery.
+
+| Seed | Positive 0–81 | Negative 82–163 | Positive 164–245 | Negative 246–327 | Positive 328–409 | Negative 410–491 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 11 | +66.7 | +230.6 | -4.6 | +215.5 | +26.0 | +185.4 |
+| 23 | +89.0 | +145.6 | +23.5 | +131.2 | +39.1 | +117.3 |
+| 44 | +191.8 | +49.5 | +142.2 | +48.3 | +133.6 | +61.0 |
+| 77 | +114.6 | +98.8 | +69.9 | +87.6 | +70.1 | +88.5 |
+
+By contrast, the original and longer exponential conditions have negative
+retained-weight effects at every completed positive stroke endpoint. Changing
+shape while keeping the original mean improves this pattern, but seeds 11 and
+23 retain some negative positive-stroke effects. The verification-matched
+cascade has a positive endpoint effect in both directions across three seeds;
+seed 11 retains one small negative effect. This supports the hypothesis that
+the inherited broad learning window was consequential. It does not prove that
+phase alone explains the change, since kernel shape also changes frequency gain
+and effective local exposure.
+
+Endpoints still conceal transient failures. For the matched cascade, the exact
+intervals with *less* stroke advance than the reset branch are:
+
+| Seed | Local tick intervals, end exclusive |
+| --- | --- |
+| 11 | 164–184, 242–246, 328–344, 492–505 |
+| 23 | 164–181, 328–342, 492–505 |
+| 44 | 82–94, 246–259, 410–416 |
+| 77 | None; greater advance throughout 3–511 |
+
+The complete traces retain the favorable intervals too, all other conditions
+and the final incomplete half-cycle. They show a small learned contribution,
+not uniform superiority at every moment. Even with the matched cascade,
+completed intact stroke advances are only about 0.00674–0.00718 radians.
+Every acquisition, intact continuation and reset branch still has zero gate
+crossings. Current-force prediction residuals remain large around rapid motor
+events. The physical challenge is not solved.
+
+The next justified experiment is continued acquisition of the intact matched
+cascade alongside the original baseline, starting from the saved full states.
+This asks whether the useful contribution grows, stabilizes or degrades over
+more sensorimotor cycles. Keep the same resistance and gates, and keep learning
+available. Preserve intermediate executable states and repeat acquired-weight
+interventions. Do not install a host compensation term or change the task to
+turn the present effect into a pass. A longer course is now testing a measured
+beneficial contribution, rather than assuming additional exposure will fix the
+earlier wrong-direction learning. Forward representation remains a separate
+candidate limitation if the contribution saturates or loses specificity.
+
+More acquisition in this one world cannot establish a transferable body model.
+The organism may have learned a useful correction tied to its imposed rhythm.
+Once the contribution warrants a transfer probe, branch acquired state into a
+changed resistance or rhythm without hand-retiming eligibility, retain positive
+adaptation, and compare intact/reset onset and subsequent trajectories. Keep
+this a bounded discriminating test, not another large sweep. The single-hinge
+preparation is an instrument for understanding coupled adaptive populations,
+not the endpoint of the organism project.
+
+### Kernel experiment evidence
+
+The reusable extension is
+`neuron-model/neuron/extensions/experimental/cascade_eligibility.py` in the
+sibling neuron repository. `active_sweep_credit.py` constructs and records the
+factorial comparison; `active_sweep_credit_analysis.py` independently audits
+complete case families. `active_sweep_figures.py --credit` plots continuous
+acquisition/continuation, current-force residual and acquired-weight effects
+for all four seeds without averaging. The visualization uses common seed
+scales and retains contrary intervals rather than selecting favorable strokes.
+
+Local raw records are `.live/research/20260909_active_sweep_credit_seed{seed}`.
+The audit is in `20260909_active_sweep_credit_analysis`, and the figure is
+`20260909_active_sweep_credit_figures/active-sweep-credit.png`. Added cascade
+states increase raw size: the four runs occupy approximately 710 MiB in total,
+with about 11 GiB disk space still available. Raw data remain local. All workers
+have exited; no live agent server or large version-acceptance suite was started.
+
+An exploratory read encountered an archive that was still being written. That
+was an observation race, not a neural or simulation failure. No worker was
+restarted. The completed independent audit waited for all case manifests and
+verified the finalized files. Future consumers must likewise use completion
+evidence rather than treating file existence as a completed recording.

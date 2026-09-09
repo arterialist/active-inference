@@ -58,6 +58,13 @@ and a numerical refinement expose early local release saturation rather than
 establishing a physiological fit. See
 [the branch-local APL findings](LOCAL_APL_FINDINGS_2026-09-10.md).
 
+The [Amin spatial benchmark](AMIN_SPATIAL_BENCHMARK_2026-09-10.md) now reproduces
+all nine published straight-backbone predictions and compares the measured
+stimulus/calcium profiles with a schematic conservative cable. A uniform-input
+diagnostic exposes different spatial operators despite the same nominal decay
+length. This is not yet a physiological fit of the FlyWire APL or an independent
+rerun of the authors' anatomical predictions.
+
 Current distinctions:
 
 | Item | Evidence status |

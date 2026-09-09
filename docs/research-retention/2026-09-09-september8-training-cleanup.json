@@ -1,0 +1,1271 @@
+{
+  "created_utc": "2026-09-09T06:46:24.961Z",
+  "root": "/Users/arterialist/Projects/agi-research/active-inference/.live/research",
+  "authority": "User requested cleanup of old raw data due to disk pressure.",
+  "scope": "Only intermediate training traces in 18 completed September 8 runs. All September 9 work, all checkpoints and all recall/intervention probes excluded.",
+  "retained": "All non-selected files, including first/last training traces, recall/intervention traces, checkpoints, input media, configurations, summaries, audits and code.",
+  "evidence_limit": "Permanent deletion, no backup asserted. Historical summaries are retained but a full training-trajectory re-audit now requires regeneration and reproducibility checks. This supersedes any earlier assertion that all seed-11 raw traces remain available for affected runs.",
+  "files": [
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-001.npz",
+      "bytes": 3413939,
+      "sha256": "4644c21c3831a11f87f1bf7a0ad257ba5e377bb5c15408bce35adc40775dda2e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-002.npz",
+      "bytes": 9720124,
+      "sha256": "d9031b97b8109cf62d8fe448789df8aee5cdb296e846de9b2b7b60aae9b473fb"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-003.npz",
+      "bytes": 3226281,
+      "sha256": "aa358a8e2d4215c404ce7e2d2b316998cc8aac7c2c2893c8ca7851a6d9119798"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-004.npz",
+      "bytes": 10041773,
+      "sha256": "91334277546b9a751dd32c6be3aa0eec2dcaaafc9e762c4e48ac6c252fbc368a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-005.npz",
+      "bytes": 3388235,
+      "sha256": "cca589dab8068897aa70b9bf3ad0a66b1b82f34db0cc66e37fb34b07c97f8dd6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-006.npz",
+      "bytes": 9800993,
+      "sha256": "75967a5506308ab3da89c3c482c25d465a8f72d1e25b4080cfe4cb4e140f7053"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-007.npz",
+      "bytes": 3235034,
+      "sha256": "8dcddc998ec610cedb4a5277e3d551948acb7e366c155fc2edc73fe36dc2e94a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-008.npz",
+      "bytes": 10057233,
+      "sha256": "d1ffb6093851d55b5e460b316d37c8655b1e217bfb75e4817b51c0037b2db8db"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-009.npz",
+      "bytes": 3439484,
+      "sha256": "b902f1f67829a4e8e60fd1d0485616fee7df486cd0060a5dd27803951a02f97b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-010.npz",
+      "bytes": 9785605,
+      "sha256": "a7f5d9e09f06b4cab90c8d568559a02929d30119d6c77d08f92e099d200eb6c8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-011.npz",
+      "bytes": 3202607,
+      "sha256": "a37be4ec75e84d47b0ade5978a89079761dc347e79e74528c42692a394e379d0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-012.npz",
+      "bytes": 9356953,
+      "sha256": "ab7f888de718a7efcbbad61f7c157ac4460870ef8f44809d3c39404f49e08e3a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-013.npz",
+      "bytes": 3258858,
+      "sha256": "1251d4cbb244e407460df0319471078a2f88dfb9402650a17419be6da6d2fb11"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed11/experience-014.npz",
+      "bytes": 10102060,
+      "sha256": "df66f69f923132e715f9f0636fe306d795d900bd0f16a4dbfdb37fe31b5b3992"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-001.npz",
+      "bytes": 3440940,
+      "sha256": "557a0a77abeb8efecfd28e9eb3a1d5a5e99225a492f7eed88d4bc6cde754cbc3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-002.npz",
+      "bytes": 9879635,
+      "sha256": "4eff17dd2af78d4f3f62155bf20d59bb9107194e298de224782b167deef2b5a8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-003.npz",
+      "bytes": 3287335,
+      "sha256": "d19dfd6f207c5fa4b01c9224a06c7e46e23fefffbfa101e5534fd5341c5c9d62"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-004.npz",
+      "bytes": 10013692,
+      "sha256": "ffd10688dd53dceb780280e12a9d88ef26cc14a27c79bbbd157ca7364423ee5a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-005.npz",
+      "bytes": 3453476,
+      "sha256": "dd169b51739c3133e385a9333c774ba8946bc57c88993d8ac85ee048da088be2"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-006.npz",
+      "bytes": 9915024,
+      "sha256": "4f5a9aa5a1e2e3acdcfe4da3b8b2977d6102b7ab7c4c9ad282e4510358d3c14a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-007.npz",
+      "bytes": 3278635,
+      "sha256": "653c51cffab6462545a3b4b17b46b027cac0a4e5a79a3e0fbc00cd0c67f3e5f3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-008.npz",
+      "bytes": 9507563,
+      "sha256": "ff05f88f16e8fd3ea8b9932e9152535e34dde3db9e0cb1d7c88f04a04251bbff"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-009.npz",
+      "bytes": 3238406,
+      "sha256": "1bb323d7cc39bf2d11d6cb913155c7451eecfed98194e8ea3f54c947a08bbaf8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-010.npz",
+      "bytes": 10057326,
+      "sha256": "a473f9bb19eeddf77c2fe682e8ecca39bfb77367579614159f37cba912492d80"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-011.npz",
+      "bytes": 3448319,
+      "sha256": "3bff397c144d3398e9354ba82bc2db11c7c92033c3fedb1faac08640c49886c4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-012.npz",
+      "bytes": 10123776,
+      "sha256": "a0fc9d0d7e89b1644a4e4e9b7f93c8bb5aa7b7d1c81a018deb7e190b119d2c30"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-013.npz",
+      "bytes": 3476278,
+      "sha256": "b7ffb868cc4d4dedd231ad393aaf1576ded0a800aac6c3a7f66ae6aea726bd67"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_paired_seed23/experience-014.npz",
+      "bytes": 10093251,
+      "sha256": "6fc8519776df16b498990e7e14732c3259fcaec205ccbeb06b401c44fb7900a3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-001.npz",
+      "bytes": 3175394,
+      "sha256": "a3dcb5265a98b000a0731f760a3dd30ab3e42bd10258080a00475c71c7a30521"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-002.npz",
+      "bytes": 10138170,
+      "sha256": "fdc28dcd5bfa16e14f97c44e85a23175982425d39bdf9b093d76cf060b768e5e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-003.npz",
+      "bytes": 3440993,
+      "sha256": "29f39c88e8105deba6a2200138eed2619eb7edb8cfe4f9b03aa27cf23886a353"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-004.npz",
+      "bytes": 9657512,
+      "sha256": "e3ebf0620a8961ddad180742954c2304eddcf2d4045050884b8125eeecd7b441"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-005.npz",
+      "bytes": 3192430,
+      "sha256": "d1f69adf19e0e5c2c5a1f8dbcfebb34c0d6b25c39a17f59ae1d2e6f6fb7cd7a2"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-006.npz",
+      "bytes": 10125733,
+      "sha256": "09e669ae10297c4a0fc533d0e0d99448426058396d539894b78cbb95a5199c5e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-007.npz",
+      "bytes": 3456525,
+      "sha256": "cdd09e51034e38b7d9a9aeb092c7e2925dd409695b441637b99e910e5640e71d"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-008.npz",
+      "bytes": 9721597,
+      "sha256": "2805c2bbb35b10ef13f82911219e3fcf730e54db9fcb38ebd16426e7ae33c019"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-009.npz",
+      "bytes": 3244576,
+      "sha256": "218a394d77adf64e1fe1f3744f4759f719401ba57669b79593c333a1207040b0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-010.npz",
+      "bytes": 10104684,
+      "sha256": "5e686763acfde717002c754ac1e6036281cfa0cfac1dc7796a7b6d15f03812bc"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-011.npz",
+      "bytes": 3412522,
+      "sha256": "05da124b87d887a0c56d5d8203d0fb0db8eceeb35ca419028dda119fe984707b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-012.npz",
+      "bytes": 10063306,
+      "sha256": "309ca63f17236b666d21ce3e8564c944576612420d9c99a77fb8407cc8e69870"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-013.npz",
+      "bytes": 3407839,
+      "sha256": "cc93b27472ab9f001960a10d057bb9f57c6aecaa334f43c7bf403bc393e0ac01"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed11/experience-014.npz",
+      "bytes": 9852578,
+      "sha256": "a6a747e85f8df49a29111b6e628bdfb909fa47071e595728949b7027fc58263e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-001.npz",
+      "bytes": 3216298,
+      "sha256": "d62dcc8f9f3e25242957a7d60ef39ffbe50d849f6e03fdd844ee7ea2130a418b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-002.npz",
+      "bytes": 10195589,
+      "sha256": "5fc247db233be5706245042d58480c023ad9e10e7177726de91b39c94bf4f885"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-003.npz",
+      "bytes": 3445374,
+      "sha256": "61d5446a83625fac47ae13834428c1e5656dce8db1b8c1d39ca6369c44a02ee8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-004.npz",
+      "bytes": 9714764,
+      "sha256": "e702ca0efc4838bc74dfcaa081beb0cb873dc44b1df511f16c753b033c8b66ee"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-005.npz",
+      "bytes": 3232408,
+      "sha256": "1d48876cdd346ed850e97e160529500e753de6f1b54bbe456bc38fd4440561d4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-006.npz",
+      "bytes": 10190146,
+      "sha256": "a4c9a3c82d21691c97694c83aad3ee5b5a5316811d573ff74a2de9857bda50c4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-007.npz",
+      "bytes": 3408511,
+      "sha256": "eb188ea949afe4194ae125b9936bc059de4f0c0bac63447c74aedce4ef120c72"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-008.npz",
+      "bytes": 10129278,
+      "sha256": "8a5f3d276d81c4b2156ca2e0fecb2397f9848a81b28d24669789e28151b82b74"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-009.npz",
+      "bytes": 3430801,
+      "sha256": "3bb3c00d75f6165cdd41c79d1fa69856c2d464094ee3f4cfaff6e65dae1c600e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-010.npz",
+      "bytes": 9800419,
+      "sha256": "8e3bc6a16f618af00d9a3401cd8321e7b229a0579d8d659d93764aef7b88ca0b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-011.npz",
+      "bytes": 3233974,
+      "sha256": "5594c3f997d231fdffd1a6ef2f3b0340c0d8df2a3302ed368707e789f844fe7a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-012.npz",
+      "bytes": 9419852,
+      "sha256": "b95a4a4e48c41f85d9ee9ee7be60b34d4d066833066d34b1c689c5350923942c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-013.npz",
+      "bytes": 3314594,
+      "sha256": "7944ea6b4283fb85ca2de67685abd5be788da51000094dd044c4d7a9c0fa0a8c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_bounded_learning_swapped_seed23/experience-014.npz",
+      "bytes": 10234226,
+      "sha256": "3b6c499864a0562dfe812a81206394f8ae823a2ca6e399367fabe618d130cdea"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-001.npz",
+      "bytes": 2422787,
+      "sha256": "6b5f8c144fffa905b591381c9926bef16a7da65a68b39d703b5d4a908ead75a9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-002.npz",
+      "bytes": 7282259,
+      "sha256": "c5fbbe024d8a042550212b3ffa074c63b73c9ec39a0451a403b4fd8ae17e6d7f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-003.npz",
+      "bytes": 2577546,
+      "sha256": "3392f2b108cf7c7421e684ab2b1a48dec94bdf6b2dad500b2b0242af2d6ed9ea"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-004.npz",
+      "bytes": 7185890,
+      "sha256": "25239768048f461dde952637caef177d2375f67a7ff880fcb192b2e821021480"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-005.npz",
+      "bytes": 2445069,
+      "sha256": "d3622403c5ba5764ba254d0192ba14fbd8b2b5b9b54503d69bf8c86ba8524f93"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-006.npz",
+      "bytes": 7316396,
+      "sha256": "9078f5b7442173652f7d66ca67c53f20e1a9ae01f8da878637d2e13e030a768b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-007.npz",
+      "bytes": 2626751,
+      "sha256": "bc86cff190dbc76045115ad9d4976b9bd065e5166e1cfa0acf142ae11f88323a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-008.npz",
+      "bytes": 7214078,
+      "sha256": "4d39dc223dc6ad8ed38d168fa19ee90b053577782e583758b006b783d021b2d6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-009.npz",
+      "bytes": 2448198,
+      "sha256": "7480291ccb6793b42556ec1b544626c771d9ff10b697ba60fa67a35945750013"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-010.npz",
+      "bytes": 7313598,
+      "sha256": "556f3aaa18c778588fa8f67d8d933f34e29f540eb8546e05b8f61c19f0d7c7ad"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-011.npz",
+      "bytes": 2596695,
+      "sha256": "d06b6207d481b03b1aab199de03748de15244d9cb3013832dcdf2948f75f0c66"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-012.npz",
+      "bytes": 7280977,
+      "sha256": "8f111925ba722545142a7c8e7bd0d7ed30f4cd5c34669e7684f34fc977fc2435"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-013.npz",
+      "bytes": 2602842,
+      "sha256": "48b16ed9a36578b0d0ba6f051ffb451f089802c8a56b7f572b1282d20447a304"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_pairing_seed11/experience-014.npz",
+      "bytes": 7293760,
+      "sha256": "e5a69afe9432b1df7407cebdeb65dc717808eb4aeebfd812902bcafad0d64094"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-001.npz",
+      "bytes": 2436073,
+      "sha256": "d3a90792dcf9a081326ca163835507b4406c17bfdd90a244aa230333ab3640dc"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-002.npz",
+      "bytes": 7257040,
+      "sha256": "d7d83c8a0283d8d7a31c01718b0ae4687d052ee4e3b6b98c00704473346f815a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-003.npz",
+      "bytes": 2490442,
+      "sha256": "f8e34613e44448eebffcfbcf964a6d5f41e14eba7034101b6b1dc1d5bb1e4f3b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-004.npz",
+      "bytes": 7055977,
+      "sha256": "23c028817923c8f8fb25b133c07a4cacb9605bb317138d73f80af174985a171c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-005.npz",
+      "bytes": 2534666,
+      "sha256": "ddc231ad35e216672618c0cf511d10796dc0e86e9d1581757aac1a433b6c1899"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-006.npz",
+      "bytes": 7313487,
+      "sha256": "812ff75b964edad20cea11b65519114b1d380b572eda629faebb0eb2a649a5c3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-007.npz",
+      "bytes": 2508739,
+      "sha256": "ba7c250a5cef045263f618292c8b080b898e658e855dcdb293ab3be8866528bf"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-008.npz",
+      "bytes": 7101465,
+      "sha256": "11d9cd67d32d1c7d57b9675f870451c6ea80f745e63b781d0ed3395e5b441554"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-009.npz",
+      "bytes": 2518478,
+      "sha256": "4dbd586fdf43f5f4f41ec523851e7bff8e157c3016ac2a4e1bb22de6977b946e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-010.npz",
+      "bytes": 7164262,
+      "sha256": "967ef92e3a0e4247edac18412f2d117379faa16b09409b0fe9be3e83ecac608b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-011.npz",
+      "bytes": 2473630,
+      "sha256": "4e879561c35c48b7006de780bfcac7adaff69ea055f65d7c4ca154d95d739159"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-012.npz",
+      "bytes": 6930291,
+      "sha256": "33bcc2046d62ff2d175366bf723cf129d6ca7dbd84eb9ec8f062635568eb6996"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-013.npz",
+      "bytes": 2491833,
+      "sha256": "b303332991816a64ea35af2c2924f770f07a243c6b556815444543aa12a4ef14"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_content_swapped_seed11/experience-014.npz",
+      "bytes": 7170734,
+      "sha256": "3f78723360cb52dac9e6b7147fa097ba6ad28d160240c7eadbf25a3ddb3f9751"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-001.npz",
+      "bytes": 3391633,
+      "sha256": "b2c627e8c45087437621a77c2ba92f2f503e979796294d30950718edcde77ab6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-002.npz",
+      "bytes": 9776198,
+      "sha256": "cdd4386f6fced76c127b502d79e71012a3fe3da3db70a2386a2153f8c98bdf9e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-003.npz",
+      "bytes": 3249410,
+      "sha256": "68356bcf6c6be28c8eaf271a8c82e57f45c1b58c2cef114e48200ebda89c0211"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-004.npz",
+      "bytes": 10151790,
+      "sha256": "97f6a979575d0e9fbdb779d7df2ec9b9beb41d94619a6fef236bd966dd288359"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-005.npz",
+      "bytes": 3475330,
+      "sha256": "7ac33a247472aa96c4f427ebbe4735552d8cd6fabe0fca9170b377e6fa2c73ab"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-006.npz",
+      "bytes": 9915496,
+      "sha256": "64c45520b6c5dfa6c2bb44ba58bd3e2b3201ba81c03b343a35cf0462ae7b1f6f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-007.npz",
+      "bytes": 3262125,
+      "sha256": "897fded735d5537ca37eb91d5f75ecd217faf6b7ada97bbde51516ce51a4c118"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-008.npz",
+      "bytes": 10127439,
+      "sha256": "db9acb4d6cb4ef8ed966d488003bc615338b9779420f8a684b3759eaa8b0cc75"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-009.npz",
+      "bytes": 3472171,
+      "sha256": "79a7f6480d9bbaf8757cbd5af949d66bfcdcf9e0e9439651c161c0dd14f66c5a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-010.npz",
+      "bytes": 10082537,
+      "sha256": "211c404da5f5c25c78ab29207fc83d0140dc578c333b59c0703459ef9eb13623"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-011.npz",
+      "bytes": 3362336,
+      "sha256": "97c538b05eada8c84552229158d648cd35e81232a9714efc896c996d3466b84c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-012.npz",
+      "bytes": 9865716,
+      "sha256": "ed44de95d00617b5a3cbbf99ce26f02029e1b8011b01ddc66bb85a16ebb35c8a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-013.npz",
+      "bytes": 3377170,
+      "sha256": "66d095aa08b21d9bb484a3619e6245ca807129d6a18b614ccf3218325e6da2f0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed11/experience-014.npz",
+      "bytes": 10305635,
+      "sha256": "04fd6a0807094fff22d53be60856d700c8bae1168d54c5cd478b1e2c9e9ad5af"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-001.npz",
+      "bytes": 3415045,
+      "sha256": "ebe86afb050d9590a8849018ba6e45d1f5bd8026748233a9945b60963a04927b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-002.npz",
+      "bytes": 9863184,
+      "sha256": "f2b6126bbb31026616223477a462ebbf28d723b4b47fccbcb311de4294fe1b32"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-003.npz",
+      "bytes": 3288506,
+      "sha256": "3f9b558d1191141096cdb5400cd5022ce89a3270ff7392a81f80309a871a55d5"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-004.npz",
+      "bytes": 10068045,
+      "sha256": "8e465260f6c3d3b9a6f36b60626fc53674d6b96db6424f5f19a17ee0c526725e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-005.npz",
+      "bytes": 3428739,
+      "sha256": "4013c7af3d60f93607959bf55a43050c74bf81497b338e3c827ca04064cf6df9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-006.npz",
+      "bytes": 9989054,
+      "sha256": "1b6350a3f8915b71b216e74a19bb6e16b243fec80d05b454ef1b88a8415498bb"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-007.npz",
+      "bytes": 3314929,
+      "sha256": "1ca10ddb67ed94ae56164ca4da51dfa503e6fdd5a77324cd59cafd29e4a0c7de"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-008.npz",
+      "bytes": 9685200,
+      "sha256": "763faf2af98a47570f9e7a07de36e92aaf310b943c1d9f9cca02e36cb1cfe0ff"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-009.npz",
+      "bytes": 3319174,
+      "sha256": "d6dd06cce0cd0e1a31aab0641be77ea20b7c8b2115cc8c81b6741374e7706048"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-010.npz",
+      "bytes": 10158043,
+      "sha256": "8ed1b13ddc200a1998204ad913a956c1b2c8faa72bd1fd92c3a373605c8c91e0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-011.npz",
+      "bytes": 3521001,
+      "sha256": "606a6cb024bcd61766c61b42bcdadccd7c214e92dc14670fdde0e9627fc24b87"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-012.npz",
+      "bytes": 10280345,
+      "sha256": "98c0003b8952b014dbec825fa04b917fa4b543147b246c6a1be60d2dcc68e735"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-013.npz",
+      "bytes": 3506259,
+      "sha256": "b03e68ccd4210dab3386be918312e0973575534d8d28333c8626eb2e067764ad"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_paired_seed23/experience-014.npz",
+      "bytes": 10338366,
+      "sha256": "1e0c79c1b8a0f1b266620d288e5236ec4baeeee5396914afa2f84e86109851dd"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-001.npz",
+      "bytes": 3214561,
+      "sha256": "4bb5c3113180976dfe956d7c7d4076f2cf0606fbb38d1299d9951c8d1aa9b5e6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-002.npz",
+      "bytes": 10172604,
+      "sha256": "c79a56db4a184888c6950fb3a201d88d14ae2ccd6dfc006b379f0e03d4eba67b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-003.npz",
+      "bytes": 3467285,
+      "sha256": "04b3e915dc99383aa55d3a5c66cbf40b10bc8ba72c744c275faa811cb03eff81"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-004.npz",
+      "bytes": 9762656,
+      "sha256": "b87561e42ac0b78fcebe23516ed865c197bee41afca2490884851fad45cfac17"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-005.npz",
+      "bytes": 3269352,
+      "sha256": "98f1368f1894f03d693878d406093de91015f59ab3d4b9d9354747535543e478"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-006.npz",
+      "bytes": 10171688,
+      "sha256": "714e30148e096d371da9a16f44f42d23635fd0f6da79ff303dead9bde35a90b1"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-007.npz",
+      "bytes": 3439985,
+      "sha256": "935d45bc908836eb42751e975d81e60ba421eaa8743ffc80722dd90d284f0b39"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-008.npz",
+      "bytes": 9860096,
+      "sha256": "a5f745fbb8ce6a5fd6864974f05690fc39de951fcdb4b81a838baaf7ece8d6b9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-009.npz",
+      "bytes": 3298050,
+      "sha256": "20d67e9e0460b167ddc916de6a7da21c7181a3da271695652f92057e2d53efbe"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-010.npz",
+      "bytes": 10200641,
+      "sha256": "b41ad508a4d2f1cf69048ed88a91a8f69d2a4614301c569aefb617ffd8c57a65"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-011.npz",
+      "bytes": 3456022,
+      "sha256": "5ecd6882e04ca1cdc3a55301fd83d71880d560e8268d246de899e98eeb4e4092"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-012.npz",
+      "bytes": 10230957,
+      "sha256": "05d0d74396d83b435aa41118298428019e5610609dcefb732c061c48e8f63601"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-013.npz",
+      "bytes": 3481290,
+      "sha256": "c69bf7954639d1052688287824d9c249df6ac00299cdc647ceddac5dac225cc6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed11/experience-014.npz",
+      "bytes": 10165038,
+      "sha256": "37fd2ea2a9c7325d6ad499d2cf6d604282df9969b89fe145b365d34f0a6494ac"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-001.npz",
+      "bytes": 3239971,
+      "sha256": "7538d3578cac3ff0f5f4854a802e23fca0d3b2349dc9c2a353cba231fab01a29"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-002.npz",
+      "bytes": 10205887,
+      "sha256": "12b4903709eee1d30ad3ae27fec80302875588195245b902cfac05a6f6c7357c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-003.npz",
+      "bytes": 3437726,
+      "sha256": "3b3eed3cf686b6c7643d4081a61839f2a7a150d7f24161b5f5da4a93d5a9b6a4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-004.npz",
+      "bytes": 9760646,
+      "sha256": "e0ca38567f050e8635e4bf94b82970c78ca3bdd1a88b9d9838ad62955f4e8fdd"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-005.npz",
+      "bytes": 3236454,
+      "sha256": "f202ec98f68aa10050956ce4a05d2a4ea678a4b17d5ab838e8bd272fdccd0b7f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-006.npz",
+      "bytes": 10206048,
+      "sha256": "feda4d297c03f76904e1ac7b7d4606c60ed0befdfa6546b145d4e98019a76ae0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-007.npz",
+      "bytes": 3445144,
+      "sha256": "35627c2d8c4d1bc90766b02db54c297a7de6433641275477ebb00348035ffd95"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-008.npz",
+      "bytes": 10246743,
+      "sha256": "b312b39fc4b6b1919a9619ff13a095cbabbd33c5135c0a554331a29b4f18c68f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-009.npz",
+      "bytes": 3449532,
+      "sha256": "1c1e3f2fb1d1957e11611eb2aefbb7d243538ebcc1285d651d1d57a7e9a8c9ea"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-010.npz",
+      "bytes": 9921752,
+      "sha256": "2f55f8e6138756af2c8eaae6c8a80da8204d826bf94661ba4f530c319e7af9e2"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-011.npz",
+      "bytes": 3363795,
+      "sha256": "ca2f66f7df37090882cab96690e3e972f661889c379b8270540d2ac753a63ad9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-012.npz",
+      "bytes": 9793299,
+      "sha256": "75d1b6a690c2ff60d05d909efa8b67a2d97d0f567620cb8f8056451df9268e85"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-013.npz",
+      "bytes": 3438223,
+      "sha256": "0cde4b5fa895a76c0e7d4ae3eec7aa7f665c66bdd10fe07b72efc6580ba432b9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_regional_learning_swapped_seed23/experience-014.npz",
+      "bytes": 10390885,
+      "sha256": "ab42620737025924ffaeb61734d7059688d6d9b92c74067e2c11a802127d2c9e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-001.npz",
+      "bytes": 3441027,
+      "sha256": "555ff8fa03cc80717e91741feb654310aa07f5000112f9ac776a8fb6157964f7"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-002.npz",
+      "bytes": 9786625,
+      "sha256": "dd1df697ba3e3b8543f2e5d216987ad0b9945a50af69965a07af44fd3d575941"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-003.npz",
+      "bytes": 3230974,
+      "sha256": "c65ba94058ac30036787c0cba5b97670f55c62a15c2ca9644e672b9229fd9c8c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-004.npz",
+      "bytes": 10040435,
+      "sha256": "1f11eea6a662b88429eafb0364309ee576ed0eaa2311c413fec8f0d8d6bb5c5a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-005.npz",
+      "bytes": 3398729,
+      "sha256": "9e257415c1ae34f8b5c2624da1dd542986bab5839be4b5182fe5293408e41370"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-006.npz",
+      "bytes": 9776240,
+      "sha256": "cf84ff74d7d3c19e7958af171dca0cac23256470295612225bed47d77c4068d4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-007.npz",
+      "bytes": 3221936,
+      "sha256": "2893a3cfa5595329674046b30aaadb2a8c958ce5bbacc814e7b7c487eaf0c595"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-008.npz",
+      "bytes": 10034796,
+      "sha256": "28a8bbeac7535da18d1f867762f4dabb6547cd66b96b9c56db28bab15873a54b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-009.npz",
+      "bytes": 3427570,
+      "sha256": "c484185e6169f0db260ea1a8ad0942c19b5dd7ff32d9862b071eb03bd1888dd8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-010.npz",
+      "bytes": 9769476,
+      "sha256": "2294c0a4b11ac8e50f8eb0ad4820287e71a61b1d5279f5df06f5e14ed3fc88b5"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-011.npz",
+      "bytes": 3216612,
+      "sha256": "66cf9b599c27adc21067f7ae0514745a9b608cb98bc0bc9168b0791b4810eab4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-012.npz",
+      "bytes": 9462998,
+      "sha256": "969d499206bfaa812f59eacb9c5eb6152b07ab46f857ce1149f890d3d85bf39b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-013.npz",
+      "bytes": 3264596,
+      "sha256": "ce64ef548fff28a1e94fa688920ec026859854823a945088c2212b71ef3d0264"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed11/experience-014.npz",
+      "bytes": 10130454,
+      "sha256": "4d798079401de74279483e1e2ac0e0c4421da98a37a61724e1cfc82f1fe82fe5"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-001.npz",
+      "bytes": 3428610,
+      "sha256": "5c4c183243d7808551ea60daa33ee96b03e491f003c39333bbe036f221ee3225"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-002.npz",
+      "bytes": 9910206,
+      "sha256": "d9588b344f5cb0870f0cf5e157fbac6633a1e39c9669f517f4c65eaab3b8d301"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-003.npz",
+      "bytes": 3266366,
+      "sha256": "5e46325a68b36adf5360e3566ee17d1fc66cf23c394ce25e9eeaa1ad389140c3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-004.npz",
+      "bytes": 10078615,
+      "sha256": "19cf23c092b3c484c977707faa0641fdbf69b87f06596f484edf15b5b2525dff"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-005.npz",
+      "bytes": 3475471,
+      "sha256": "43a6e0083bed0d001c41e37d7d6ad535243d332085534bfc2e11723e84013c8e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-006.npz",
+      "bytes": 9910418,
+      "sha256": "f60b0d3d03d944a6c553a64c8066db5394d39ed4acad65374d3fa45176646510"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-007.npz",
+      "bytes": 3255624,
+      "sha256": "a42a03ec4003a949de1fba4de95638da850b2731b1e2e8ccbe5db2079e2626f8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-008.npz",
+      "bytes": 9457782,
+      "sha256": "b598678ad12bf6875984a0fa0f320dcbf3ffbece8b2a166f3f89c8ab0b75f6ec"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-009.npz",
+      "bytes": 3230335,
+      "sha256": "18dec25e9bc2049148c73ada34695b408b133579ef0a57fa98b7a226f1a652ed"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-010.npz",
+      "bytes": 10092817,
+      "sha256": "97661236c3f6749aea6b8fd66a327c14cbad8110903df086a36fe70c9904600f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-011.npz",
+      "bytes": 3478188,
+      "sha256": "d2bbd728b80ac91da052ab19836f2d1668c1efa4e70ef694597dfff15f27cd81"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-012.npz",
+      "bytes": 10141594,
+      "sha256": "ce618f52280a15e5961883674c0e003fdcb538b2299888866cd8f3170fc4c5d6"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-013.npz",
+      "bytes": 3482682,
+      "sha256": "33f5a82d6e6da9def2fe292c5d3b1dab084b4b35baa5e09ca3f0e5deecdefb6b"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_paired_seed23/experience-014.npz",
+      "bytes": 10131037,
+      "sha256": "6b0e1dae3ec1b84d4b8f2d442678a67a9a6446af782d3165883f5a35decdf9db"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-001.npz",
+      "bytes": 3181564,
+      "sha256": "ea84e041508ec1e11076e5ea0bb4c8b1cde077bd647a5bf4eaa7cc5fdd9c3742"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-002.npz",
+      "bytes": 10097662,
+      "sha256": "d0e22a70c20c90c4d148edbfda12e7319f2d3ae3272ee59a186a952f1d4de5a3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-003.npz",
+      "bytes": 3446546,
+      "sha256": "a9ca502d45ffb95620fea3b9c00e53493b99eef0e29565ccd5d84c7910bc55b4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-004.npz",
+      "bytes": 9718774,
+      "sha256": "ec0811472f9dd961bf82b2cf5c59f3be4ace8a59e49d475eaff77bfebfeaf017"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-005.npz",
+      "bytes": 3241439,
+      "sha256": "f46bac1036990f6bacb2115db9c70419de348789a1902aabc635714c98a93722"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-006.npz",
+      "bytes": 10095327,
+      "sha256": "cb32ddcc67f8cd1a99c707aeda13d5ed74974570036100a4f438b030b7443fda"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-007.npz",
+      "bytes": 3421321,
+      "sha256": "72dc3a83995c26439516f0180a8f47f00902822b1a84290e7c0e0d17281b1eea"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-008.npz",
+      "bytes": 9793904,
+      "sha256": "1965e49997031276c99a84bbdd0604980f42b5b5635ca523c95c2cb2cf79da2f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-009.npz",
+      "bytes": 3275157,
+      "sha256": "0bda2f5189c9d4ad22adb8d8838487f5656fd6712ef7ecc446963d6513bf423e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-010.npz",
+      "bytes": 10161450,
+      "sha256": "0beaca3c38a6a20d2cd31cbbbbed10e807b8ea26a65aa371b8c0cec4116b308f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-011.npz",
+      "bytes": 3395677,
+      "sha256": "e8375fc34de07cb7c77330f61b6dc435b13987049ff9723f1895a655243ec594"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-012.npz",
+      "bytes": 9912078,
+      "sha256": "d790ca17a9897e0d3663f58e7c743f71694302c3ffb67d941db945a0c9ba57ac"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-013.npz",
+      "bytes": 3380528,
+      "sha256": "74254a82dd7ac661ae2c09e64d26cfd0b7b61dc9849983a500848ef8ea7f1e61"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed11/experience-014.npz",
+      "bytes": 9816622,
+      "sha256": "9dca3a68ed33bf8136827a6601d3a0ae4f0aa5ad4d8a788498bdc249124759f9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-001.npz",
+      "bytes": 3193449,
+      "sha256": "88fbce3da3a0138d607fda2ffa08d877264ae7268fb3f2c78c10d2b61189cfe4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-002.npz",
+      "bytes": 10181326,
+      "sha256": "391137e311d4e30cafc0a85f49f39f3a8c78765f3fbc6a032a4de731aae92249"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-003.npz",
+      "bytes": 3422505,
+      "sha256": "c4d63d967b1f0d94a46689a77acb2ba1d15a1ff9d3f55d54af10c2688e8ff960"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-004.npz",
+      "bytes": 9705210,
+      "sha256": "6c790aeff56dafdd760df6d0453a24c10e8951d6426290b29b30812f86d2cd07"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-005.npz",
+      "bytes": 3232738,
+      "sha256": "14a3fcd551b994c99a593d0ce3db471e3e5f398bf1bfa4c0b23c96b584a153e2"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-006.npz",
+      "bytes": 10178961,
+      "sha256": "02ac86ed2c94cecdd8b541d7b737f6e3488fcb3a9a30cfffcf0b85260b22a167"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-007.npz",
+      "bytes": 3431954,
+      "sha256": "43ab7e890739ed1ef120f1fb9fcea0fd255ba1e7b4b3e7718f37e41a69debe5f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-008.npz",
+      "bytes": 10140221,
+      "sha256": "f6feb794cbebe22b88fbfca48e4bcb60faa50b8c0a025c58eef4b88437387e3d"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-009.npz",
+      "bytes": 3401831,
+      "sha256": "d7839ae95773fff281f16caaf304095c950d4b57854a6178041d34dcf5a854a3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-010.npz",
+      "bytes": 9816289,
+      "sha256": "012d1814618631e09d2f9261b58c0accc3a0bf645025f14063819e7316ee0222"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-011.npz",
+      "bytes": 3255397,
+      "sha256": "9d5b05705db72fcdc919e8c4ac6b58b08a6b467fce46b8d491568d0fdff3df77"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-012.npz",
+      "bytes": 9400831,
+      "sha256": "fa9877d0a3e585ad8c35ae836fa39aecb51adf92d52c524850fafc8cb7bb088a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-013.npz",
+      "bytes": 3264760,
+      "sha256": "ff8aedfde96f07f0279fcede34627747dca0dfb5e58ba359efd7d853c6b7c458"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_family_swapped_seed23/experience-014.npz",
+      "bytes": 10285062,
+      "sha256": "8167bd07a066eafb7844ea6890b3606d344ea49a260e17dab758ca571a91d021"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-001.npz",
+      "bytes": 3377046,
+      "sha256": "ff85e0879ca4f2dced6f5e0455a67872b03b6095e930a96ca7421d5c38d07c30"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-002.npz",
+      "bytes": 9800122,
+      "sha256": "335d42801ebda308040412f2296ddce0810adfcfaaec6739bf65276091f8a6be"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-003.npz",
+      "bytes": 3263676,
+      "sha256": "f9a8f60261f84a5c50caab4d99107248aa4b250b9a552e71212436d6358d6db1"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-004.npz",
+      "bytes": 10110310,
+      "sha256": "7f9e764d4e954515c9eb26cc0efa7532922e67a7d89c0f6952140a139050b0f1"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-005.npz",
+      "bytes": 3416251,
+      "sha256": "5ac046a5c7ff6816b07bce95ecaf21d88dcd33e32c127d38ddd65f9771144008"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-006.npz",
+      "bytes": 9739061,
+      "sha256": "2bafb61cbb54565400bc57ebfe1b62f7d0c71e9f42a243f13712d533eafdfe7a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-007.npz",
+      "bytes": 3222765,
+      "sha256": "dee2587fac2161bb985cbb51b8f20059e3bc8cfa20b12298a35dedf9b071a97a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-008.npz",
+      "bytes": 10055504,
+      "sha256": "ec5361a5e77f66a15722a737e5e2f8f982f2275a12c425f7c8506c3c2ff3e6ed"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-009.npz",
+      "bytes": 3433325,
+      "sha256": "ab78b044c69289bd12a175268c82db62827e3715f94a3bc2ede015ebffb944c9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-010.npz",
+      "bytes": 9702883,
+      "sha256": "7fb3caa4df694602ca70832567a3080734957c7e2aba439a4fb93fdac67c51dc"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-011.npz",
+      "bytes": 3170216,
+      "sha256": "24f331ab52a297366440fce5878bdc75db04ec05e3a5f1719567c09545dad85f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-012.npz",
+      "bytes": 9231076,
+      "sha256": "77c31b511cf6ae7bd463b43a2a023dad3d3d3c179a51f223705ae2819f54a550"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-013.npz",
+      "bytes": 3208244,
+      "sha256": "06bd73ef7443966aa9567b4845306a18d4d6d4d8d55cfaac2502b8385c50e96a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed11/experience-014.npz",
+      "bytes": 10101990,
+      "sha256": "4e19c25a1cd20c66091ef7884b196fdec0c19bc5a102871b1af96e5a37d3f30f"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-001.npz",
+      "bytes": 3441822,
+      "sha256": "e5bc887790ccae9f5e7b932a4fa6d18531679edfbd2d25b0949c3af768ff43e4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-002.npz",
+      "bytes": 9894025,
+      "sha256": "5214b271b8b8a8daf1459217176dd5d02baf2268be1d3cd64e48ca966a8a4861"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-003.npz",
+      "bytes": 3275270,
+      "sha256": "107090332eee9c640fa37dc8f82f79585d5a85357099352656f7f5eb85cb5e08"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-004.npz",
+      "bytes": 10051319,
+      "sha256": "51a5c3212e162532e1ae37ef9ff36e7967d19df8f7c2a757ae76b134df4209f5"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-005.npz",
+      "bytes": 3453126,
+      "sha256": "70c8c29dcd9079cec3100ef1cf42d59d17868005fe7162f239fc5948fa8d8725"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-006.npz",
+      "bytes": 9891596,
+      "sha256": "dc8636a6813722caffd8b759264d6a2d30c9c674bb3b8ca7b5d7a6ea0f7705f8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-007.npz",
+      "bytes": 3266403,
+      "sha256": "6d021422673c4257b59acbe31b4e199ac2273759844702012e4124f252ed053d"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-008.npz",
+      "bytes": 9387888,
+      "sha256": "3847c91235080c9d9a97662fc045da0ad5f9873fd65ad4fa01fc7f8b3a28bc29"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-009.npz",
+      "bytes": 3235163,
+      "sha256": "6b8a493abd080fbdfad1948bcb3e7e878d573bc8919f0a108daf043c8d5d08d4"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-010.npz",
+      "bytes": 10039261,
+      "sha256": "4cee47e0ef148802d0d9e10bc0067251489cc27516f5b86fabb844b6f27b207e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-011.npz",
+      "bytes": 3474004,
+      "sha256": "5307a2c5440ce63c472b091abd17f00e25256833cfa3bbd8b90d9177d556f2e3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-012.npz",
+      "bytes": 10123214,
+      "sha256": "e13080dceb7aec047e6ba72d9cb1ef63e56d5aea1fbd205b8a35c85a804e73b3"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-013.npz",
+      "bytes": 3458362,
+      "sha256": "e1ef59e5c4fa996c34e7046cc0709d863a4600db530c6465b4bb5b84903d3957"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_paired_seed23/experience-014.npz",
+      "bytes": 10009849,
+      "sha256": "f3dc18130e442d85389b813944bb0b139ecffc2a4a31fecc392d1dba39eeed24"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-001.npz",
+      "bytes": 3204489,
+      "sha256": "08d1a4c9779222fff9569b7a93be44d20faa06d0cbbcd029268d134ac835d054"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-002.npz",
+      "bytes": 10120432,
+      "sha256": "b0b5a5648df3e29ca81e06dc63b15aab1e284059cbd4bc8cfa91141b3fce0a4c"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-003.npz",
+      "bytes": 3432849,
+      "sha256": "05797e42146945268fb2e8f9f0cfc1a15da2cf5fe7914f62dba9f420e8e4ebd8"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-004.npz",
+      "bytes": 9713392,
+      "sha256": "2dc731fbabb0bd92273b1ca926513e3be960c0d53474896887bfdc57793cad72"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-005.npz",
+      "bytes": 3249441,
+      "sha256": "0fa0aa80086b4c2e1b083f1bf43e5b84d3c83bfec7789e9423e0d650b826e2e0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-006.npz",
+      "bytes": 10107988,
+      "sha256": "d9fd22d9e31ba9c1876283541dad05919e95840b37a26a54572f965f3961da0a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-007.npz",
+      "bytes": 3435547,
+      "sha256": "465453bf5e3700c202c9522d9f45020f010882955c41a4c590351be124834dc9"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-008.npz",
+      "bytes": 9728929,
+      "sha256": "1d6735ceb83b3817d03da7ce99c5858eadae2914cc7e401171ea964ff9b57b32"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-009.npz",
+      "bytes": 3217363,
+      "sha256": "dd6ecf248663268ad66bb9b744de137622762316f6443188853338d7ecff88b0"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-010.npz",
+      "bytes": 10064431,
+      "sha256": "6cd758ac9ad54df262b2861ffec74520e0ca93f98821daef0ebb1fdd02b457ac"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-011.npz",
+      "bytes": 3398054,
+      "sha256": "c1f864b35f02e89801b316fa5d896781c80722edf31c6bd6b32534ecf8e44c49"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-012.npz",
+      "bytes": 9964083,
+      "sha256": "3d97c2b9926be5cc8aa9320a462fbe05ce07e1bb09775ec890a90d229bebe8f5"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-013.npz",
+      "bytes": 3353247,
+      "sha256": "ce79afc089cad0d4270f07194792d6d55721d06a6a86ad47af35ac16d4b7b018"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed11/experience-014.npz",
+      "bytes": 9739746,
+      "sha256": "d7e2a8a450cd74b9a3b6d6acdff05ec3e47622d293be643bf51680eb2fc925bc"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-001.npz",
+      "bytes": 3230791,
+      "sha256": "d80acbf8e2ecbdc3f34efbbb416a832e8652c4b8de52ab0f5308a432ed60df28"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-002.npz",
+      "bytes": 10184963,
+      "sha256": "eba6c5d391363adaa84b4aa12823538ee9dac7aa7da04decfc3151c20da76658"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-003.npz",
+      "bytes": 3414289,
+      "sha256": "b44c4f00e9f56ddf0b77d64944340ee3e523349469cbbf54039e3cd27e3ca945"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-004.npz",
+      "bytes": 9696276,
+      "sha256": "7ef8e06acff2c656f0aedc375ad622176dda89adcaf0368d87f934a77053c953"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-005.npz",
+      "bytes": 3217996,
+      "sha256": "ca0f505625a84057eb5e253123075821c24bd37e60cc6526902e899d97802491"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-006.npz",
+      "bytes": 10162362,
+      "sha256": "fab229be5047fdbb1fd638624373cf8cd9613c8fd18f303738753af7303fe8a1"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-007.npz",
+      "bytes": 3407832,
+      "sha256": "e4a6af04d2f93fe7266b51d27474acb8c23d34cba343aa92318d292ae91944fa"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-008.npz",
+      "bytes": 10147435,
+      "sha256": "6535e1456c2b8e29addd94b767a115ed37f43f70f6f57bc9d3ff9e027cbc6f8a"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-009.npz",
+      "bytes": 3394354,
+      "sha256": "f05876a18359958f9ed9e102b9951a60acccb03fc9528f45e9c5b8da5137a2cf"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-010.npz",
+      "bytes": 9796545,
+      "sha256": "2ef019c6935937155c54872a9f2e346976230a9b025e36dc696a6d0b4423600e"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-011.npz",
+      "bytes": 3313779,
+      "sha256": "e1a8d6c7644364c82f248280547d334a6851005a307058370b193ffb76271efd"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-012.npz",
+      "bytes": 9487688,
+      "sha256": "7dc393003dc73253fec1be5b9d97aabf0639a255caa61c8b972af043d6817869"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-013.npz",
+      "bytes": 3297607,
+      "sha256": "b51dfa46cb3469fb621ef95e483d0725dc3f1446c5f73f29c155152bfb867934"
+    },
+    {
+      "path": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/20260908_terminal_shuffled_swapped_seed23/experience-014.npz",
+      "bytes": 10239578,
+      "sha256": "bde3be3081c86a6c71fb6d2202138e7cac448be19285bdf72e185fa3c2071fae"
+    }
+  ],
+  "total_bytes": 1625520150
+}

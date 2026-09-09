@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAULA · dynamical regimes</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main{max-width:1600px}.regime-head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin:24px 0 12px}.regime-head h2{font-size:1.5rem}.regime-head a{font-size:13px}.regime-note{font:16px/1.5 var(--serif);max-width:92ch;margin-bottom:18px}.regime-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.regime-controls label{font-size:13px}#scene{display:block;width:100%;height:640px;touch-action:none;cursor:grab}#scene:active{cursor:grabbing}.regime-stage{position:relative;border-block:1px solid var(--rule);margin-top:16px}.scene-hint{font-size:12px;color:var(--muted);margin:8px 0 0}.regime-reading{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:16px 0 28px}.regime-reading p{font-size:14px;margin:0}.regime-reading h3{font-size:16px;margin:0 0 8px}.regime-future{border-top:1px dashed var(--ink);padding-top:20px;margin-bottom:32px}.regime-future h3{font-size:18px;margin:0 0 8px}.regime-future p{font-size:15px}.regime-legend{display:flex;gap:20px;font-size:13px;margin-top:12px}.blue{color:var(--blue)}.rust{color:var(--rust)}#reading{font:12px/1.6 var(--mono)}#regime-status{font:12px var(--mono)}@media(max-width:700px){#scene{height:520px}.regime-head{display:block}.regime-head a{display:block;margin-top:8px}.regime-reading{grid-template-columns:1fr}.regime-controls{gap:8px}.regime-head h2{font-size:1.25rem}}
+</style>
+<script src="data-loader.js" defer></script><script src="regimes.js" defer></script>
+</head>
+<body>
+<header class="masthead"><h1>PAULA <span>/ dynamics across timescales</span></h1><a href="../index.html">Assessment</a></header>
+<main>
+<div class="regime-head"><h2>Activity changes the conditions for future activity.</h2><a href="populations.html">Open the 1,152-neuron population experiment</a></div>
+<p class="regime-note">A 3D projection of recorded dynamics, not a simulated hierarchy. The stack separates activity, modulation and memory so their timing can be seen together. It does <em>not</em> establish that these are autonomous hierarchical regimes.</p>
+<div class="regime-controls">
+<label>Recording <select id="recording"><option value="feedback-slow">Revisable association</option><option value="feedback-fast">Feedback breakdown</option><option value="recall">Cue timing and recall</option></select></label>
+<label>View <select id="view"><option value="waves">Time ribbons</option><option value="state">State-space trajectories</option></select></label>
+<button id="regime-play" class="primary">Play</button><button id="regime-step">+1 tick</button>
+<button id="regime-orbit">Rotate view</button><button id="regime-reset">Reset view</button>
+<span id="regime-status" role="status">Loading recording…</span>
+</div>
+<div class="regime-stage"><canvas id="scene" aria-label="Rotatable 3D stack of recorded sensory, prediction, modulation and memory dynamics. Exact current values are available below."></canvas></div>
+<p class="scene-hint">Drag to orbit · wheel or pinch to zoom · “Rotate view” is the keyboard alternative. Solid traces are recorded or equation-reconstructed samples. Dotted lines align the selected tick across layers; they are not synaptic connections.</p>
+<div class="regime-legend"><span class="blue">Blue: cue / outcome 0</span><span class="rust">Rust: cue / outcome 1</span><span>Black point: selected tick</span></div>
+<label class="seek-label" for="regime-seek">Recorded tick <output id="regime-tick"></output></label><input id="regime-seek" type="range" min="0" max="19199" step="1" value="11870">
+<div class="event-bar" id="regime-events"></div>
+<div class="regime-reading"><div><h3 id="regime-phase">Selected trial</h3><p id="regime-output"></p></div><div><h3>Values at the shared cursor</h3><div id="reading"></div></div></div>
+<section class="regime-future">
+<h3>The hierarchy is the experiment still to build.</h3>
+<p>A relation between sensory populations must become a usable associative state; that state must influence action; action must change the next sensory encounter; and neural regulation must preserve or revise the joint organization. Those loops are not present in this recording. Two cue labels are not evidence of multimodal association.</p>
+<p>The decisive test is whether an upper regime still distinguishes the lower populations’ relationship when their individual activity distributions are matched, and whether cutting its descending influence removes recovery under a disturbance. A stack of plots, a common clock, or a stable-looking oscillation cannot answer that.</p>
+</section>
+</main>
+</body></html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Recorded dynamics · PAULA research</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="data-loader.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#replay">Skip to replay</a>
+<header class="masthead">
+  <h1>PAULA <span>/ recorded dynamics</span></h1>
+  <a href="regimes.html">3D dynamical view</a>
+</header>
+<main id="replay">
+  <nav class="scenarios" aria-label="Investigations">
+    <button data-scenario="credit" aria-pressed="true">Temporal credit</button>
+    <button data-scenario="feedback" aria-pressed="false">Feedback stability</button>
+    <button data-scenario="recall" aria-pressed="false">Recall &amp; cue timing</button>
+  </nav>
+  <section class="introduction" aria-labelledby="question">
+    <h2 id="question">When correction strengthens the wrong memory</h2>
+    <p id="explanation">Loading recorded evidence…</p>
+  </section>
+  <div class="transport" aria-label="Replay controls">
+    <button id="play" class="primary" disabled>Play replay</button>
+    <button id="back" aria-label="Previous tick" disabled>−1 tick</button>
+    <button id="forward" aria-label="Next tick" disabled>+1 tick</button>
+    <label>Rate <select id="speed"><option value="4">4 ticks/s</option><option value="12" selected>12 ticks/s</option><option value="30">30 ticks/s</option></select></label>
+    <label class="tick-field">Tick <input id="tick-number" type="number" min="0" value="11870" step="1" disabled></label>
+    <output id="status" role="status">Loading</output>
+  </div>
+  <div class="event-bar" id="events" aria-label="Jump to a recorded event"></div>
+  <div id="error" role="alert" hidden></div>
+  <div class="panes" id="panes"></div>
+  <div class="circuit-key">
+    <span>C cue · U outcome · P prediction · E comparator</span>
+    <span><i class="line info"></i> Information →</span>
+    <span><i class="line inhibition"></i> Negative synaptic weight ⊣</span>
+    <span><i class="line mod"></i> Modulation (information = 0)</span>
+    <span>Filled cell = spike on this tick. Select a cell to inspect it.</span>
+  </div>
+  <section class="time-section" aria-labelledby="time-heading">
+    <div class="section-head"><h2 id="time-heading">The experiment, trial by trial</h2><span>Recorded outcomes, not a success score</span></div>
+    <div id="overview"></div>
+    <label class="seek-label" for="seek">Seek every recorded tick <output id="seek-label"></output></label>
+    <input id="seek" type="range" min="0" max="19199" value="11870" step="1" disabled>
+    <div class="timeline-key"><span>Training is hatched; it is not evidence of recall.</span><span class="good">● Correct-only probe</span><span class="bad">× Wrong / both</span><span>○ Silent / insufficient</span></div>
+  </section>
+  <section class="inspection" aria-labelledby="inspection-heading">
+    <div class="section-head">
+      <h2 id="inspection-heading">Inside <span id="selected-name">P0</span></h2>
+      <label>Cell <select id="cell"><option value="5">P0 · prediction 0</option><option value="6">P1 · prediction 1</option><option value="1">C0 · cue 0</option><option value="2">C1 · cue 1</option><option value="3">U0 · outcome 0</option><option value="4">U1 · outcome 1</option><option value="7">E0 · comparator 0</option><option value="8">E1 · comparator 1</option></select></label>
+      <label>Window <select id="zoom"><option value="160">Whole trial</option><option value="48">48 ticks around cursor</option></select></label>
+    </div>
+    <p class="read-note">All plots share a time cursor and scale across recordings. Click a plot to seek. Voltage is reconstructed <em>before</em> the spike reset; recorded post-reset state remains available below. Units are simulator ticks, not milliseconds.</p>
+    <div id="plots" class="panes"></div>
+    <div id="inspectors" class="panes"></div>
+  </section>
+  <details class="evidence" id="evidence">
+    <summary>Evidence, encodings &amp; limits</summary>
+    <div id="provenance"></div>
+    <p>This is a replay of five selected eight-neuron experiments, not a new simulation or an embodied agent. Selection explains mechanisms; it is not a representative acceptance sample. No claim about consciousness follows from these results.</p>
+    <p>Every tick is retained. No smoothing or activity persistence is used. Plot values are held until the next discrete sample, not interpolated. Transport rates only control how quickly recorded ticks appear. A trial result uses its whole record, including ticks after the cursor. “So far” counts use only ticks through the cursor.</p>
+    <p>Solid arrows carry information; a terminal bar denotes a negative target synaptic weight. Dashed feedback carries modulator with zero information. Edge width encodes the magnitude of the current target information weight (clamped for legibility), not spike rate or causal importance. A moving packet is not implied. The four-square weight matrix gives exact numeric cue weights.</p>
+    <p>The diagram is generated from the saved connections. Layout is schematic, not anatomical. Roles label this experimental wiring; the comparator is not a general error detector. Trial schedules and derived classifications never enter the network.</p>
+    <p>Plots show all samples in their displayed window. Reconstructed membrane, threshold, eligibility, and weight changes are explicitly derived from the raw prior state and current tick. The raw record includes dendritic, presynaptic and retrograde queues.</p>
+    <p><a href="data/catalog.json">Export catalog and source hashes</a> · <a href="README.md">Replay documentation</a></p>
+  </details>
+  <footer>PAULA / ALERM investigation · 8 September 2026 · Offline recording, no connection to the live agents</footer>
+</main>
+<noscript>This replay needs JavaScript. The assessment remains available at the link above.</noscript>
+</body>
+</html>

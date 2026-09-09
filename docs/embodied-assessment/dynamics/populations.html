@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PAULA · population experiment</title>
+<link rel="stylesheet" href="style.css">
+<style>
+main{max-width:1500px}.population-intro{margin:24px 0 18px}.population-intro h2{font:32px/1.15 var(--serif);max-width:28ch}.population-intro p{font-size:14px;max-width:88ch}.population-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-block:12px;border-block:1px solid var(--rule)}.population-controls label{gap:8px}.population-layout{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:28px;margin-top:12px}.population-stage{min-width:0}#population-scene{width:100%;height:620px;display:block;touch-action:none;cursor:grab}.population-stage small{display:block;color:var(--muted);font-size:12px}.population-reading{border-left:1px solid var(--rule);padding-left:24px}.population-reading h3{font:22px/1.25 var(--serif);margin:16px 0 8px}.population-reading p{font-size:14px}.population-reading output{font:12px var(--mono)}.stimulus-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.stimulus-pair h4{font-size:13px;margin:0 0 8px}.stimulus-pair canvas{width:100%;height:85px;display:block}.stimulus-pair p{font:11px var(--mono)}#population-events{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}#population-events button{font-size:12px}#population-events button[aria-pressed=true]{background:var(--ink);color:var(--paper)}.activity-rows{margin:20px 0}.activity-row{display:grid;grid-template-columns:180px 1fr 75px;gap:12px;align-items:center;border-bottom:1px solid var(--rule);padding:6px 0}.activity-row label{font-size:12px}.activity-row canvas{width:100%;height:48px;display:block}.activity-row output{font:11px var(--mono);text-align:right}.evidence-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:24px 0}.evidence-grid h3{font-size:16px}.evidence-grid p,.evidence-grid li{font-size:14px}.population-results{width:100%;border-collapse:collapse;font-size:13px}.population-results th,.population-results td{padding:8px;text-align:left;border-bottom:1px solid var(--rule)}#population-details{font:12px/1.6 var(--mono);white-space:pre-wrap}.legend-line{font-size:12px;margin:8px 0}.legend-blue{color:var(--blue)}.legend-rust{color:var(--rust)}#population-status{font:12px var(--mono)}.signal-heading{display:flex;justify-content:space-between;align-items:baseline;margin-top:24px}.signal-heading h3{font-size:18px;margin:0}.signal-heading small{font-size:12px;color:var(--muted)}
+@media(max-width:1100px){.population-layout{grid-template-columns:1fr}.population-reading{border-left:0;padding-left:0;display:grid;grid-template-columns:1fr 1fr;gap:24px}.stimulus-pair{margin-top:0}#population-scene{height:470px}.population-intro{margin:16px 0 12px}.population-intro h2{font-size:28px}}
+@media(max-width:600px){.population-reading,.evidence-grid{grid-template-columns:1fr}.population-intro h2{font-size:26px}#population-scene{height:480px}.activity-row{grid-template-columns:120px 1fr 52px;gap:6px}.activity-row label{font-size:11px}.signal-heading{display:block}.population-controls{gap:8px}.population-controls select{max-width:220px}.population-results{font-size:12px}}
+</style>
+<script src="populations.js" defer></script>
+</head>
+<body>
+<header class="masthead"><h1>PAULA <span>/ populations in interaction</span></h1><a href="regimes.html">Earlier eight-neuron experiments</a></header>
+<main>
+<section class="population-intro"><h2>Does the missing sensation come back?</h2><p>1,152 PAULA neurons. Two sensory populations, a recurrent upper population, neural interfaces and two regulatory populations. This is the first test of the notebook architecture, with actual failures visible. The point cloud is a circuit layout, not anatomy or EEG.</p></section>
+<div id="population-error" role="alert" hidden></div>
+<div class="population-controls">
+<label>Experiment <select id="population-recording"><option value="media-aligned">Real video + original sound</option><option value="media-shifted">Real video + shifted sound</option><option value="intact">Binary-pattern baseline</option><option value="ascending_cut">Baseline: upward connector cut</option><option value="recurrence_cut">Baseline: recurrent pathways cut</option></select></label>
+<button class="primary" id="population-play" disabled>Play</button><button id="population-step" disabled>+1 tick</button>
+<label>Speed <select id="population-speed"><option value="12">12 ticks/s</option><option value="30">30 ticks/s</option><option value="60" selected>60 ticks/s</option><option value="96">96 ticks/s</option></select></label>
+<button id="population-reset">Reset view</button><button id="population-rotate">Rotate view</button>
+<span id="population-status" role="status">Loading the recorded experiment…</span>
+</div>
+<div id="population-events" aria-label="Guided experiment stages"></div>
+<label class="seek-label" for="population-seek">Recorded tick <output id="population-tick"></output></label><input id="population-seek" type="range" min="0" max="2495" step="1" value="1968">
+<section id="media-source" hidden style="border-block:1px solid var(--rule);padding-block:16px">
+<div style="display:flex;gap:24px;align-items:start;flex-wrap:wrap">
+<div style="width:320px;max-width:100%"><video id="source-video" muted playsinline preload="auto" style="width:100%;display:block;background:#24251f;aspect-ratio:16/9" aria-label="The real source video, synchronized to neural replay"></video><p id="source-visibility" style="font-size:12px"></p></div>
+<div style="flex:1;min-width:230px"><h3 id="source-condition" style="font:22px var(--serif);margin:0 0 8px">Real audiovisual input</h3><p id="source-state" style="font-size:14px"></p><button id="source-sound" aria-pressed="false" style="margin-top:8px">Enable source sound</button><audio id="source-audio" preload="auto"></audio><canvas id="source-spectrum" aria-label="Original soundtrack spectrum with current audio-time cursor" style="display:block;width:100%;height:72px;margin-top:10px"></canvas><small style="font-size:11px">Original soundtrack frequency activity · not generated neural audio</small></div>
+</div>
+<p style="font-size:11px;max-width:none">Source: <a href="https://commons.wikimedia.org/wiki/File:Labrador_barking_on_command.theora.ogv">Labrador barking on command</a>, Sadie Campbell / Nonlinearmind, 2011. <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>. Resized/transcoded; includes speech. Sound plays only when supplied to the network.</p>
+</section>
+<div class="population-layout">
+<section class="population-stage" aria-label="Population activity">
+<canvas id="population-scene" aria-label="Rotatable 3D layout of the recorded PAULA populations. Textual activity readings and waveforms follow."></canvas>
+<div class="legend-line">Black flash: firing now · <span class="legend-blue">Blue: recent firing</span> · <span class="legend-rust">Rust: local neuromodulator</span> · Grey: quiet</div>
+<small>Drag to rotate. Wheel to zoom. Click a neuron to inspect it. Positions stay fixed; only recorded activity changes. Connecting lines show pathways, not animated signals.</small>
+</section>
+<aside class="population-reading">
+<div><h3 id="population-phase">The experimental question</h3><p id="population-explanation">After paired experience, present half of the visual features with no tactile input. Does the tactile population re-enter the paired response?</p><p><output id="population-outcome"></output></p></div>
+<div><div class="stimulus-pair"><section><h4>Visual input</h4><canvas id="stimulus-vision" aria-label="Actual visual feature input"></canvas><p id="stimulus-vision-label"></p></section><section><h4>Tactile input</h4><canvas id="stimulus-touch" aria-label="Actual tactile feature input"></canvas><p id="stimulus-touch-label"></p></section></div><p style="font-size:12px;color:var(--muted)">These are binary feature masks, not recognized shapes. Dark tiles mark this tick’s external pulse; outlines show the presented pattern.</p><h3>Selected neuron</h3><label>Neuron <input id="population-neuron" type="number" min="1" max="1152" value="193" style="width:90px"></label><pre id="population-details"></pre></div>
+</aside>
+</div>
+<div class="signal-heading"><h3>The same activity, through time</h3><small>Fraction firing per tick · fixed vertical range 0–100% · last 192 ticks</small></div>
+<div class="activity-rows" id="population-waves"></div>
+<div class="evidence-grid">
+<section><h3>What this recording establishes</h3><div id="population-findings"></div></section>
+<section><h3>What it does not establish</h3><p>Populations interacting is not enough to demonstrate hierarchical learning. A response to an incomplete cue could be caused by the initial wiring; a supervisor could respond to activity rather than surprise. The controls test these alternatives.</p><p>No simulator-calculated classification, phase estimate or prediction error enters the upper population or supervisors. All basal plasticity remains positive. The local plasticity-rate receptor is an explicitly experimental PAULA extension.</p><p>The missing tests include a learned action–perception contingency, generalization across input timings, and robust regulation across new seeds and sustained exposure. This preparation is not the full architecture from the notebook.</p></section>
+</div>
+<details class="evidence"><summary>Recording, measurement and reproduction</summary><p id="population-provenance"></p><p>The display keeps every tick but uses float32 presentation values. Research chunks retain float64 cellular observables, terminal output and, for the main run, every incoming information weight at every tick. Queues and all other plastic fields are not recorded every tick; the final full state, configuration, stimuli and source hashes are retained. Waveforms and template comparisons are read-only measurements.</p><p>Node placement is a fixed population layout. There is no fitted manifold, invented sine wave, brain-shaped mesh, or claim that this is biological EEG.</p></details>
+<footer>Read-only local replay. Opening this page does not run a neural simulation or restart V1–V4.</footer>
+</main>
+</body></html>

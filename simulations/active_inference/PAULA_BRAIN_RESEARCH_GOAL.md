@@ -1250,6 +1250,28 @@ for full-tick evidence, limits, exact replay counts and four-seed physical
 figures. Fifty-one focused tests pass. No long sweep or live simulation was
 started. The full organism and consciousness-research goal remains active.
 
+## Continuation: an action-dependent world now reaches learning
+
+The 596-cell active-sweep composition reuses the PAULA motor rhythm and
+predictive learner, adds velocity receptors and mixed motor/proprioceptive
+context, and changes the physical world to spring-plus-movement-dependent
+resistance. No new neuron equation or host motor policy was added. The four-seed
+preflight completed 16,384 independently audited embodied ticks. The free world
+supports 6–10 alternating gate crossings; both loaded neural variants complete
+zero. The rhythm remains intact, so the challenge is physical compensation,
+not a dead motor oscillator.
+
+Actuator omission now removes movement-derived force and selected learning
+events while retaining the neural rhythm and positive adaptation. Actual
+body differences at tick 42 propagate through raw sensors at 43, delayed input
+at 107, neural errors at 111 and selected weight changes at 112 in all four
+seeds. The missing movement-to-learning dependency is therefore present in
+this preparation. Useful adaptive control is not: prediction is weak and
+often wrong-signed relative to the current environmental load. Temporal
+representation and credit remain to be separated through matched acquired-state
+interventions. See [active-sweep evidence and limits](experiments/ACTIVE_SWEEP_2026-09-09.md).
+All preflight workers are terminal; no follow-on sweep or live server is running.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

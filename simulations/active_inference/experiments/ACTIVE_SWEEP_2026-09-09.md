@@ -811,3 +811,139 @@ renderer was corrected without changing experiments or their audits.
 The new raw records occupy about 587 MiB. There is 9.3 GiB free, all simulation
 workers have exited, and neither the live-agent servers nor the version matrix
 was started. This result accepts no new agent version.
+
+### Returning resistance, declared before execution
+
+Resume the released/intact state at global tick 5328 and reinstate added drag
+0.8. Retain its body position and velocity, the 64-sample sensory history,
+all other neural state and continuing adaptation. Four weight conditions run
+1024 ticks each: current released-experience weights, actual pre-removal weights
+from tick 4304, same-age weights from the matched still-loaded branch at 5328,
+and zeroed selected weights. The latter three are diagnostic interventions,
+not mechanisms available to the organism. The current branch is its actual
+continuation through a recurring environmental condition.
+
+First replay 64 unchanged released ticks exactly against the recorded
+uninterrupted continuation. Reuse the longer 328-tick released reference to
+check the sensory latency of the resistance return. Every return branch gets
+a full-tick neural/physical audit and an executable final checkpoint. There is
+no change cue, externally computed teaching signal or alteration of the gates.
+
+The question is whether experience acquired after release interferes with or
+assists the returning loaded condition, and how that changes within strokes
+as adaptation continues. Compare actual trajectories, signed prediction,
+current-force residuals, neural teaching and selected-weight effects. Gate
+failure remains a failure even if a diagnostic contribution improves. Because
+the loaded task has not been solved, this cannot measure savings as a reduced
+time to successful reacquisition. An absent benefit within 1024 ticks would
+not establish permanent erasure of all previous experience.
+
+`active_sweep_return.py` adds 16,640 ticks over four workers, including 256
+replay ticks. The artifact limit remains 384 MiB per seed and a 3 GiB free-space
+reserve. This extends the retained organism course; it does not rerun the
+version matrix or start a live-agent server.
+
+The main text and methods of [Smith, Ghazizadeh and Shadmehr, 2006](https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.0040179)
+provide a useful interpretive distinction. Their human force-field experiment
+found recovery of an earlier response under an error clamp after behavioral
+extinction. Their model distinguishes interacting learning/retention timescales,
+but does not uniquely identify two anatomical populations: parallel and cascaded
+linear realizations can have identical input-output behavior, and cellular
+mechanisms are also discussed. This motivates retained-state interventions,
+not importing their trial-based fitted equations as a PAULA learning rule.
+Our return to drag is neither an error clamp nor a reproduction of that result.
+The supplementary model analyses have not been reviewed here.
+
+There is also a separate task-interface limitation. The sweep gates are
+observers, not a bodily resource or afferent. Returning resistance can reveal
+prediction interference, but does not by itself provide a neural reason to
+sustain larger sweeps. The repository already has `body/energy_budget.py` and
+`arbitration/energy_feedback.py`; the latter is explicitly a fixed low-energy
+muscle inhibitor, not an acquired task drive. Simply attaching an energy cost
+could favor silence. A next composition must link useful physical interaction
+to a bodily need as well as its cost, and test both links causally. This is a
+task/architecture hypothesis, not a claim that the present learning is invalid
+or that resource regulation automatically supplies general agency.
+
+### Completed return: retained influence survives, but no weight history repairs the task
+
+All sixteen 1024-tick return branches and four 64-tick released replays finished.
+The independent analyzer audited 16,640 ticks, including 256 exact replay ticks.
+Thirty focused tests passed, including return interventions with the old sensory
+queue retained. No neuron equations, graph, adaptation parameters or gates changed.
+Each continuation ends at global tick 6352; no live server or version matrix ran.
+
+Every return branch records zero new gate crossings. This includes the actual
+continuation, actual pre-removal weights, same-age still-loaded weights and
+selected-weight reset. Restoring a historical predictor is therefore not a
+sufficient repair in this acquired brain/body state. The world-change chronology
+again matches across seeds: body and raw afferents at local tick 0, delivered
+input at 64, cells at 65, teaching at 68, and selected weights at 69. Weight
+interventions instead first affect weights at 0, cells at 1, body at 3, and
+delivered input and teaching at 68.
+
+The retained current weights have not become useless. Against reset, they
+increase the advance at all 44 completed stroke endpoints, eleven per seed.
+These are differences relative to each branch's own pre-stroke angle; the
+initial partial stroke is not included. The final 80-tick partial stroke is
+retained in the trace but excluded from the completed-stroke count.
+
+| Seed | Completed current stroke advance, rad | Current-minus-reset endpoint effect, microrad | Intervals with less advance than reset, local ticks, end exclusive |
+| --- | --- | --- | --- |
+| 11 | 0.007050–0.007521 | +468.3 to +654.0 | 42–61, 124–131, 288–290, 452–458, 616–618, 780–785, 944–946 |
+| 23 | 0.006922–0.007345 | +337.9 to +497.0 | 42–57, 124–131, 288–296, 452–457, 616–617, 780–785, 944–951 |
+| 44 | 0.007021–0.007446 | +309.5 to +581.0 | 42–62, 206–209, 370–377, 534–538, 698–700, 862–865 |
+| 77 | 0.007034–0.007326 | +329.4 to +462.5 | 42–56 |
+
+The adverse onset intervals are part of the result. Larger endpoint advances
+do not make the approximately 0.007-radian strokes sufficient for gates separated
+by 0.016 radians. Nor do they establish accurate prediction: current-force
+residuals repeatedly favor the reset branch between brief opposite intervals.
+All interval boundaries for every error and advance contrast are recorded in
+the independent `summary.json`, alongside every-sample arrays. No passing
+label is inferred from the endpoint count.
+
+The two historical controls give different effects. Against pre-removal q,
+the current q initially strengthens negative strokes and weakens positive
+ones in every seed. Those endpoint differences generally contract over the
+course, while the physical sweep positions remain different. In seed 44,
+for example, the prior-weight branch's final positive maximum is 0.007590 rad,
+versus 0.005558 with current weights; neither reaches the positive gate, and
+its final negative minimum is already above zero. Nearer a single gate is not
+recovery of the alternating task. Similar stroke distances do not imply the
+same continuing body state.
+
+The same-age loaded weights initially strengthen negative strokes relative
+to current weights. Later they generally strengthen both directions, but
+their physical position and error profiles still differ from the actual
+pre-removal donor. This prevents treating either donor as an interchangeable
+"correct old memory." They carry different acquisition histories and are
+being inserted into a common later state. Neither donor is a full historical
+brain restoration.
+
+Thus the return does not establish erasure or spontaneous recovery. It shows
+continued useful selected-weight influence, history-dependent interference,
+ongoing readaptation and persistent failure of the whole task. The experiments
+do not yet distinguish every contribution of earlier versus released-world
+experience inside the current weights, or measure a formal savings effect.
+
+The next composition should make useful interaction consequential to bodily
+maintenance, rather than continue treating an observer-only sweep amplitude
+as if it were already the organism's objective. Retain this imperfect predictor
+and its actual state. Give resource acquisition or transport a physical causal
+path, expose the resulting organ state through afferents, and compare intact
+neural regulation with matched pathway cuts. Cost alone is insufficient: the
+existing energy inhibitor could otherwise make immobility look successful.
+The test must require action to maintain the body and must separately reject
+excessive expenditure and silent failure. This proposed direction addresses
+composition of learned prediction with regulation; it does not accept a new
+agent version or redefine the broader artificial-organism goal.
+
+The saved roots are `.live/research/20260909_active_sweep_return_seed{seed}`;
+independent analysis is in `20260909_active_sweep_return_analysis`. The figure
+`20260909_active_sweep_return_figures/active-sweep-return.png` preserves every
+sample on shared seed scales, including gate bounds, negative effects and
+all four physical continuations. Its source is `active_sweep_figures.py --return`.
+The raw records occupy about 471 MiB; 7.9 GiB was free after the run. All four
+workers are terminal. These are bounded causal experiments, not long-term
+survival validation.

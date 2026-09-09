@@ -154,3 +154,15 @@ def test_world_removal_has_delayed_neural_effect_and_audited_readaptation(tmp_pa
     match_initial(late,age_control,weights=False)
     np.testing.assert_array_equal(age_control['weights_initial'],loaded['weights'][-1])
     assert transfer_audit(age_control,cfg,g,features,0.)==0.
+    # Returning resistance preserves the released afferent queue, not the
+    # loaded world's old sensory state. Only its declared weight donor changes.
+    for donor in (None, acquired['weights'][-1], loaded['weights'][-1],
+                  np.zeros_like(loaded['weights'][-1])):
+        n,body,delay=restore(late_neural,late_physical)
+        if donor is not None:replace_weights(n,g,donor)
+        returned=record_credit(n,body,delay,features,g,128)
+        match_initial(late,returned,weights=donor is None)
+        assert transfer_audit(returned,cfg,g,features,.8)==0.
+        np.testing.assert_array_equal(returned['drive'][:64],late['drive'][:64])
+        assert not np.array_equal(returned['drive'][64],late['drive'][64])
+        if donor is not None:np.testing.assert_array_equal(returned['weights_initial'],donor)

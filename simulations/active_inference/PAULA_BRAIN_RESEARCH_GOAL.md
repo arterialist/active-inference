@@ -1381,6 +1381,32 @@ Use this to establish where conditional memory and neural regulation become
 necessary, rather than adding them solely because a diagram has an upper layer.
 The full organism objective remains active and unachieved.
 
+## Continuation: returning resistance separates retained influence from task recovery
+
+All four seeds completed return-to-resistance probes with current, actual
+pre-removal, same-age still-loaded and reset predictive weights. Every branch
+starts in the same released body and other neural state, retaining sensory
+history and adaptation. The independent audit checked 16,640 ticks, including
+256 exact replay ticks; 30 focused tests passed. All workers exited.
+
+No branch completes a gate crossing. Nevertheless, retained current weights
+increase all 44 completed stroke advances relative to reset, with recorded
+harmful onset intervals. Their influence survives the return, but is too small
+to solve the loaded task. Historical weight transplants alter directional
+balance, prediction residuals and sweep position without repairing it. This
+is not evidence that previous memory was wholly erased, nor a demonstration
+of spontaneous recovery or savings. See [the completed return findings](experiments/ACTIVE_SWEEP_2026-09-09.md#completed-return-retained-influence-survives-but-no-weight-history-repairs-the-task).
+
+A task-interface gap now matters more than another weight-timing adjustment:
+the sweep gates are observer criteria, with no bodily resource consequence.
+The current preparation learns physical relations but has no corresponding
+maintenance need that demands sufficient sweeping. Existing body energy and
+neural feedback components can be reused, but cost alone can favor silence.
+The next composition should couple useful physical interaction to a bodily
+resource, retain the imperfect predictor, and test neural regulation of both
+resource maintenance and expenditure. Require the physical and neural paths
+to matter under matched cuts. The broader goal remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

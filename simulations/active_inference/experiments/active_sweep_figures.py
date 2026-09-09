@@ -295,6 +295,54 @@ def render_transfer(analysis,output,age_control=None):
     return manifest
 
 
+def render_return(analysis,output):
+    """Show positional failure and the full sign-changing memory contrasts."""
+    analysis,output=(Path(p).resolve() for p in (analysis,output))
+    if output.exists():raise FileExistsError(output)
+    m=json.loads((analysis/'summary.json').read_text())
+    for p,h in m['sources'].items():
+        if base.digest(p)!=h:raise ValueError('Audited source changed: '+p)
+    if m['seeds']!=[11,23,44,77]:raise ValueError('Need all four seeds')
+    with np.load(analysis/'per-tick.npz') as z:data={k:z[k] for k in z.files}
+    fig,axes=plt.subplots(4,3,figsize=(17,11),sharex=True,layout='constrained')
+    styles={'current':('#813aa0','-','Released-experience weights'),
+            'prior':('#777777',':','Actual pre-removal weights'),
+            'same-age':('#111111','--','Same-age loaded weights'),
+            'reset':('#b66a13','-.','Reset selected weights')}
+    for row,seed in enumerate(m['seeds']):
+        for kind,(color,ls,label) in styles.items():
+            a=data[f's{seed}_{kind}']; t=np.arange(len(a))
+            axes[row,0].plot(t,a[:,1],color=color,ls=ls,lw=1.2,label=label)
+            if kind=='current':continue
+            axes[row,1].plot(t,data[f's{seed}_vs_{kind}_error'],color=color,ls=ls,lw=1.,label='Current minus '+kind)
+            axes[row,2].plot(t,data[f's{seed}_vs_{kind}_stroke']*1000,color=color,ls=ls,lw=1.)
+        for gate in (-.008,.008):axes[row,0].axhline(gate,color='#555555',ls='--',lw=.7)
+        for col in (1,2):axes[row,col].axhline(0,color='#aaaaaa',lw=.7)
+        axes[row,0].set_ylabel(f'Seed {seed}\nJoint angle [rad]')
+        axes[row,1].set_ylabel('Absolute force-error difference\n[receptor-scale units]')
+        axes[row,2].set_ylabel('Stroke-advance difference\n[milliradians]')
+        for ax in axes[row]:
+            ax.grid(alpha=.12);ax.set_xlim(0,1023);ax.set_xlabel('Ticks since resistance returned')
+    for col in range(3):
+        lo=min(ax.get_ylim()[0] for ax in axes[:,col]);hi=max(ax.get_ylim()[1] for ax in axes[:,col])
+        for ax in axes[:,col]:ax.set_ylim(lo,hi)
+    axes[0,0].set_title('Same returning body, four weight histories')
+    axes[0,1].set_title('Current weights minus each comparison\nNegative: smaller error. Positive: larger.')
+    axes[0,2].set_title('Current weights minus each comparison\nLarger stroke is not necessarily better control')
+    h,l=axes[0,0].get_legend_handles_labels();h2,l2=axes[0,1].get_legend_handles_labels()
+    fig.legend(h+h2,l+l2,loc='outside lower center',ncol=4,fontsize=9)
+    fig.suptitle('What survives when the earlier physical constraint returns?\n'
+                 'Every tick. No change cue. All branches continue adapting. 4 ms per tick.',fontsize=13)
+    output.mkdir();path=output/'active-sweep-return.png';fig.savefig(path,dpi=160);plt.close(fig)
+    report=dict(analysis_sha256=base.digest(analysis/'summary.json'),data_sha256=base.digest(analysis/'per-tick.npz'),
+                producer_sha256=base.digest(__file__),file=path.name,
+                limits='No averaging. Late errors use each moving branch own environmental force. '
+                'Stroke differences use each branch own pre-stroke angle and omit the initial incomplete stroke. '
+                'Weight donor interventions do not establish spontaneous recall or erasure of other stored state.')
+    (output/'manifest.json').write_text(base.encode(report)+'\n')
+    return report
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('analysis',type=Path);p.add_argument('output',type=Path)
     p.add_argument('--memory',action='store_true')
@@ -302,7 +350,9 @@ if __name__=='__main__':
     p.add_argument('--acquisition',type=Path,help='Earlier kernel analysis for the continuing-acquisition comparison')
     p.add_argument('--transfer',action='store_true')
     p.add_argument('--age-control',type=Path)
+    p.add_argument('--return',dest='returning',action='store_true')
     a=p.parse_args()
-    print(render_transfer(a.analysis,a.output,a.age_control) if a.transfer else
+    print(render_return(a.analysis,a.output) if a.returning else
+          render_transfer(a.analysis,a.output,a.age_control) if a.transfer else
           render_acquisition(a.analysis,a.output,a.acquisition) if a.acquisition else
           (render_credit if a.credit else render_memory if a.memory else render)(a.analysis,a.output))

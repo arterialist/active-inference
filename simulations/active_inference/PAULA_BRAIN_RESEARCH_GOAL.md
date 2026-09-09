@@ -1227,6 +1227,29 @@ Retain positive learning and native return paths. The full mammal-level,
 multimodal, reasoning, acting and consciousness-research objective remains
 active and unachieved; this experiment is one tested connection within it.
 
+## Continuation: bodily regulation is not yet regulation of the learner
+
+The 592-cell neural-reference preparation completed its four-seed normal/reversal
+screen and matched-state interventions. Its signed eligibility changes actual
+synaptic write allocation, but does not repair joint audiovisual recall in the
+short screen. Disabling it slightly improves posture in the acquired-state
+probe; valid local equations do not establish useful autonomous regulation.
+
+A new sensory-substitution experiment separates internal feedback from bodily
+reafference. Across sixteen seed/pair cases, changed bodily feedback affects
+joint neurons, muscles and movement but leaves predictive outputs, selected
+weights and errors exactly unchanged over all 96 ticks. The late error change
+persists under identical delivered sensory input. The imposed load is independent
+of action and the proprioceptive path supplies a separate restoring reflex.
+The next structural target is an action- and body-state-dependent consequence,
+with a task that requires movement, rather than further optimizing this passive
+cue-to-load association as though it completed a sensorimotor learner.
+
+See [the completed reference/intervention findings](experiments/ELIGIBILITY_REFERENCE_2026-09-09.md)
+for full-tick evidence, limits, exact replay counts and four-seed physical
+figures. Fifty-one focused tests pass. No long sweep or live simulation was
+started. The full organism and consciousness-research goal remains active.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

@@ -12,6 +12,17 @@ from .eligibility_reference_probe import verify_learning
 from .magnitude_feedback_analysis import verify_returns
 from .opponent_context_analysis import read_record
 from .body_state_memory_analysis import intervals
+from .eligibility_reference_pool_audit import audit_pools
+
+
+def opposed_writes(data):
+    """Actual changes impossible under a positive native rate at THIS fixed state.
+
+    Restrict to currently driven positive inputs. This is not a proof that a
+    differently regulated native network cannot reach useful future behavior.
+    """
+    delta=np.diff(np.concatenate((data['weights_initial'][None],data['weights'])),axis=0)
+    return (delta*data['errors'][:,:,0,None]<0)&(data['arrivals']>0)
 
 
 def verify_checkpoint_family(manifest, checkpoints):
@@ -74,6 +85,7 @@ def analyze(roots,output):
                 seen.add(identity)
                 z=read_record(root,row,dict(groups=g),learning_auditor=verify_learning)
                 verify_returns(z);verify_stimuli(z,features,row,row['reverse'])
+                pool_audit=audit_pools(z,cfg)
                 if len(z['body'])!=(364 if row['kind']=='training' else 96):raise ValueError('Wrong duration')
                 if not np.array_equal(z['basal_eta'],[1e-5*scale]*2) or not np.array_equal(z['reference_strength'],[strength]*2):
                     raise ValueError('Recorded parameters differ from graph')
@@ -108,13 +120,18 @@ def analyze(roots,output):
                             raise ValueError('Unmatched full-state weight intervention')
                         controls[key]=state
                 name=f's{seed}_{Path(row["file"]).stem}';tr=trajectory(z,g);traces[name]=tr
+                traces[name+'_pool_residual']=pool_audit['residual']
+                traces[name+'_pool_checked']=pool_audit['checked']
+                opposed=opposed_writes(z);traces[name+'_opposed_writes']=opposed
                 checked+=len(tr)
                 traces[name+'_eligibility_extrema']=np.stack((z['effective_eligibility'].min(2),z['effective_eligibility'].max(2)),axis=2)
                 pool_ids=list(z['pool_ids']);ids=list(z['neuron_ids'])
                 pool=z['cells'][:,[ids.index(n) for n in pool_ids],base.FIELDS.index('O')]
                 traces[name+'_pool_output']=pool
                 pool_observations.append(dict(trace=name,negative_eligibility=intervals(np.any(z['effective_eligibility']<0,axis=(1,2))),
-                    active_reference=intervals(np.any(z['reference_arrivals']>0,axis=(1,2)))))
+                    active_reference=intervals(np.any(z['reference_arrivals']>0,axis=(1,2))),
+                    opposed_write_intervals=intervals(np.any(opposed,axis=(1,2))),
+                    opposed_write_count=int(opposed.sum())))
                 if row['kind']!='training':
                     cases.append(dict(seed=seed,condition=condition,identity=identity,trace=name,
                         correct_prediction=intervals(tr[:,8]>0),wrong_prediction=intervals(tr[:,8]<0)))
@@ -130,8 +147,8 @@ def analyze(roots,output):
     output.mkdir();np.savez_compressed(output/'per-tick.npz',**traces)
     result=dict(cases=cases,reference_pathways=pool_observations,checked_ticks=checked,seeds=sorted(seeds),sources=sources,
         producer_sha256=base.digest(__file__),limits='Complete declared course, not sufficient duration by itself. '
-        'Selected updates and reference releases independently checked. Pool intracellular equations not '
-        'independently reconstructed; their states and all incoming weights retained. '
+        'Selected updates and reference releases independently checked. Reference weights reconstructed '
+        'from local tick 1 and soma/output from tick 2; earlier in-flight history explicitly unchecked. '
         'No learned supervision, order generalization, semantic recognition or consciousness established.')
     (output/'summary.json').write_text(base.encode(result)+'\n')
     print(base.encode(dict(seeds=result['seeds'],checked_ticks=checked,cases=len(cases))),flush=True)

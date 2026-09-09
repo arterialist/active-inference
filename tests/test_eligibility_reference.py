@@ -66,13 +66,22 @@ def test_embodied_record_audits_and_observer_does_not_change_state(tmp_path):
     from simulations.active_inference.experiments.eligibility_reference_probe import record,verify_learning
     from simulations.active_inference.experiments import crossed_av_world as world
     from simulations.active_inference.experiments.opponent_context import AfferentDelay
-    net,g,selected,_=fixture(tmp_path);control=deepcopy(net)
+    net,g,selected,cfg=fixture(tmp_path);control=deepcopy(net)
     rng=np.random.default_rng(11)
     features=[dict(visual=rng.uniform(0,.5,(300,96)),auditory=rng.uniform(0,.5,(300,96))) for _ in (0,1)]
     z=record(net,base.Arm(),AfferentDelay(64),features,g,selected,0,1,ticks=96)
     expected=world.course(control,base.Arm(),features,g,selected,0,1,ticks=96,delay=AfferentDelay(64))
     for key in expected:np.testing.assert_array_equal(z[key],expected[key])
     assert verify_learning(z)<2e-12
+    from simulations.active_inference.experiments.eligibility_reference_pool_audit import audit_pools
+    checked=audit_pools(z,cfg)
+    assert checked['checked'][:1].sum()==0
+    assert checked['checked'][2:].all()
+    for field,column in [('pool_weights',None),('cells',base.FIELDS.index('S')),('cells',base.FIELDS.index('O'))]:
+        bad={k:v.copy() for k,v in z.items()}
+        if column is None:bad[field][30,0,0]+=.01
+        else:bad[field][30,list(z['neuron_ids']).index(z['pool_ids'][0]),column]+=.01
+        with pytest.raises(ValueError,match='intracellular'):audit_pools(bad,cfg)
     for field in ('reference_arrivals','reference_trace','effective_eligibility','weights','eta'):
         bad={k:v.copy() for k,v in z.items()};bad[field][70]+=.01
         with pytest.raises(ValueError):verify_learning(bad)
@@ -107,3 +116,10 @@ def test_independent_audit_requires_each_executable_checkpoint():
     verify_checkpoint_family(m,checkpoints)
     for bad in (checkpoints[:-1],checkpoints+[checkpoints[0]]):
         with pytest.raises(ValueError,match='checkpoint family'):verify_checkpoint_family(m,bad)
+
+
+def test_opposed_write_requires_an_actual_change_and_positive_input():
+    from simulations.active_inference.experiments.eligibility_reference_analysis import opposed_writes
+    z=dict(weights_initial=np.array([[.2,.3]]),weights=np.array([[[.3,.2]],[[.3,.4]]]),
+           errors=np.array([[[-1.,0.,0.]],[[1.,0.,0.]]]),arrivals=np.array([[[1.,1.]],[[1.,0.]]]))
+    np.testing.assert_array_equal(opposed_writes(z),[[[True,False]],[[False,False]]])

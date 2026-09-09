@@ -525,6 +525,29 @@ feedback fanout. Dividing fanout or lowering a rate can delay a failure without
 repairing it. A temporary restoration is a causal diagnostic, not an autonomous
 solution; keep plasticity active and verify any repair in the coupled brain.
 
+## RULE 24 — A BODY LOOP DOES NOT AUTOMATICALLY CLOSE THE LEARNING LOOP
+
+When a learning change alters action and later neural error, do not infer that
+the error changed because of the action's physical consequences. A delayed
+internal prediction path can produce the same chronology. Branch the acquired
+state, replay identical bodily afferents while letting the actual body move,
+and retain the real sensors separately from delivered inputs. Verify unchanged
+replay first. This sensory substitution is a diagnostic, never a host policy.
+
+The 9 September eligibility-reference experiment found that bodily feedback
+changed joint neurons, muscles and motion in all sixteen seed/pair cases, but
+did not change predictor output, selected weights or learning error within
+96 ticks. Error changes persisted with identical sensory input. The external
+load was independent of action, and the joint pathway fed only a restoring
+reflex. This identified separable learning and body-control loops, despite
+their being drawn as one embodied network.
+
+Inspect return equations as well as forward edges. An input-local return need
+not transmit a different input's contribution to the same neuron's membrane.
+State the observed time horizon and intervention limits. Make consequential
+sensorimotor coupling a task requirement before calling improved exogenous
+prediction an acquired model of the organism's own action.
+
 ## WHERE TO LOOK
 
 - **`ROADMAP.md`** — status, the 8 numbered failures (F1-F8), and the ordered Phase 0-4 plan

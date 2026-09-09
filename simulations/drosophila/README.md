@@ -52,8 +52,11 @@ pair table has no synapse locations. A separate spatial snapshot now locates
 all 128,435 linked APL contacts and exactly matches all 6,315 incident pair
 counts. It also retains 42,572 connectors with no linked partner. See
 [the spatial findings and reproduction commands](SPATIAL_FINDINGS_2026-09-10.md).
-A localized model still needs an explicit intracellular hypothesis, not
-arbitrary extra APL neurons. The current PAULA execution remains global graded.
+An opt-in passive-cable extension now uses those contacts within one APL neuron.
+The global graded model remains the default reference. Full-tick comparisons
+and a numerical refinement expose early local release saturation rather than
+establishing a physiological fit. See
+[the branch-local APL findings](LOCAL_APL_FINDINGS_2026-09-10.md).
 
 Current distinctions:
 
@@ -61,12 +64,12 @@ Current distinctions:
 | --- | --- |
 | Neuron identity and directed pair counts | Imported from the pinned FlyWire-derived tables. Anatomical reconstructions have their own uncertainty. Weak one-count pairs are retained. |
 | Cell labels | Pinned annotation release. `cell_class` identifies all KCs; a nonempty `cell_type` is not required. |
-| APL spatial anatomy | Public CATMAID m783 snapshot, 360,309 tree nodes. Linked contact counts match the pair table exactly; coordinates, original source rows and open connectors are retained separately. Not yet used by the neural dynamics. |
+| APL spatial anatomy | Public CATMAID m783 snapshot, 360,309 tree nodes. Linked contact counts match the pair table exactly. Used by the opt-in local cable; coordinates, source rows and open connectors remain separately auditable. |
 | Neurotransmitters | Predicted transmitter/confidence and known-transmitter/source fields remain separate. |
 | Forward sign | Uses the Shiu table's `Excitatory` model column, not a measured receptor effect. |
 | Initial strength | Assumed linear conversion, `sign × count × 0.02`, on postsynaptic information only. No per-edge fitting or clipping. |
 | Timing | One network tick plus two dendritic ticks. No physical duration assigned to a tick; no inferred axonal length. |
-| PAULA dynamics | Ordinary PAULA, with the existing global graded extension for APL. Shared integration and threshold parameters are execution defaults, not fly measurements. |
+| PAULA dynamics | Ordinary PAULA, with global graded APL by default or an opt-in local passive cable. Shared integration, thresholds and cable electrical properties are assumptions, not fly measurements. |
 | Adaptation | Native postsynaptic and retrograde rules remain enabled at weak positive rates. They are not a validated fly learning rule. Graded APL inherits spike-timing machinery without a spiking clock. |
 | Experimental input | A separate zero-delay input per selected neuron. It is explicitly not an anatomical synapse. |
 | Composition | Global biological/PAULA identities survive different cuts. Cut-edge records support future reunion. State-preserving reunion has not been implemented or tested here. |
@@ -167,6 +170,12 @@ the blocked cell's `O` can remain positive. It must not be displayed as delivere
 release.
 
 ## Next physiological test
+
+The branch-local implementation and matched release-block controls now execute,
+but the first response already caps some local releases. Finer time steps do
+not remove that effect. Current density, local release, spatial stimulation and
+observation models need physiological constraints before more inhibition can
+be interpreted as a better fit.
 
 Obtain an empirically grounded odor-to-PN input mapping before claiming odor
 decorrelation. Test multiple odors and similar mixtures, with liveness and

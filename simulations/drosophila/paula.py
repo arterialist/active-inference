@@ -10,6 +10,7 @@ from __future__ import annotations
 from collections import Counter
 from dataclasses import asdict, dataclass
 import math
+from pathlib import Path
 
 import numpy as np
 
@@ -22,6 +23,7 @@ from neuron.neuron import (  # noqa: E402
     PresynapticPoint, PresynapticOutputVector,
 )
 from neuron.extensions.graded import GradedNeuron  # noqa: E402
+from neuron.extensions.experimental.passive_cable import LocalCableGradedNeuron  # noqa: E402
 from simulations.connectome_loader import _assemble_network  # noqa: E402
 
 PORT_CAPACITY = 2**12
@@ -49,10 +51,13 @@ class Dynamics:
     apl_representation: str = "global_graded"
     apl_graded_gain: float = 0.01
     apl_release_max: float = 1.0
+    # Experimental passive cable hypothesis, not measured APL parameters.
+    # Amin et al. (2020) discuss Rm/Ra = 0.025 m for their spatial fit.
+    apl_cable_rm_over_ra_um: float = 25000.0
 
     def validate(self):
         for name in ("weight_per_count", "lambda_ticks", "threshold", "cooldown_threshold",
-                     "eta_post", "eta_retro", "apl_graded_gain", "apl_release_max"):
+                     "eta_post", "eta_retro", "apl_graded_gain", "apl_release_max", "apl_cable_rm_over_ra_um"):
             value = getattr(self, name)
             if not math.isfinite(value) or value <= 0:
                 raise ValueError(f"{name} must be finite and positive")
@@ -62,7 +67,7 @@ class Dynamics:
             value = getattr(self, name)
             if type(value) is not int or value < minimum:
                 raise ValueError(f"{name} must be an integer >= {minimum}")
-        if self.apl_representation not in {"global_graded", "spiking_null"}:
+        if self.apl_representation not in {"global_graded", "spiking_null", "local_cable"}:
             raise ValueError("Unknown APL representation")
 
 
@@ -85,9 +90,13 @@ class Preparation:
         self.network.set_external_input(self.root_to_id[root], self.drive_ports[root], info)
 
 
-def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics()) -> Preparation:
+def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Path | None = None) -> Preparation:
     graph.validate()
     dynamics.validate()
+    if dynamics.apl_representation == "local_cable" and spatial is None:
+        raise ValueError("Local cable requires a verified spatial analysis directory")
+    if spatial is not None and dynamics.apl_representation != "local_cable":
+        raise ValueError("Spatial analysis supplied without selecting local_cable")
     pre_inside, post_inside = graph.membership()
     # A cut must not change the native num_inputs-dependent plasticity bounds.
     # Retain ports for EVERY incident pair, even when the other neuron is absent.
@@ -110,7 +119,7 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics()) -> Preparation
         annotation = graph.nodes[root]["annotation"]
         metadata = {"flywire_root_id": root, "annotation": annotation.copy(),
                     "identity_namespace": "FlyWire783/Shiu_global_index"}
-        graded = annotation["hemibrain_type"] == "APL" and dynamics.apl_representation == "global_graded"
+        graded = annotation["hemibrain_type"] == "APL" and dynamics.apl_representation in {"global_graded", "local_cable"}
         if graded:
             metadata.update(graded_gain=dynamics.apl_graded_gain, graded_S0=0.0,
                             graded_max=dynamics.apl_release_max)
@@ -121,6 +130,8 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics()) -> Preparation
             eta_post=dynamics.eta_post, eta_retro=dynamics.eta_retro,
         )
         neuron_class = GradedNeuron if graded else Neuron
+        if graded and dynamics.apl_representation == "local_cable":
+            neuron_class = LocalCableGradedNeuron
         cell = neuron_class(nid, params, log_level="CRITICAL", metadata=metadata)
         # Construct explicit coefficients without the helpers' random defaults.
         # Terminal distances are unused by the base release equations. Do not
@@ -157,6 +168,15 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics()) -> Preparation
             incoming_boundary.append((int(edge[8]), pre, post, synapse))
         else:
             outgoing_boundary.append((int(edge[8]), pre, terminal, post))
+    spatial_assumptions = None
+    if dynamics.apl_representation == "local_cable":
+        from .spatial_paula import configure_local_apl
+        apl_roots = [r for r in root_to_id if graph.nodes[r]["annotation"]["hemibrain_type"] == "APL"]
+        if len(apl_roots) != 1:
+            raise ValueError("This spatial preparation requires exactly one APL")
+        root = apl_roots[0]
+        spatial_assumptions = configure_local_apl(neurons[root_to_id[root]], root, graph, spatial,
+                                                 drive_ports[root], dynamics.apl_cable_rm_over_ra_um)
     network = _assemble_network(neurons, connections)
     network.record_history = False
     actual_cache_edges = sum(map(len, network.network.fast_connection_cache.values()))
@@ -177,7 +197,8 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics()) -> Preparation
         "count_conversion": "source_model_sign * synapse_count * weight_per_count on postsynaptic info only",
         "release": "initial positive unit terminal coefficient; one distinct terminal per directed pair; native retrograde adaptation active",
         "plasticity": "native legacy_multiplicative postsynaptic and native retrograde, weak positive rates; no claim of biological calibration or sign invariance",
-        "apl_limit": "global graded approximation, lacks measured local integration; inherited timing plasticity is not a non-spiking cellular learning model",
-        "spatial_limit": "pair counts only, no contact positions or axonal propagation model",
+        "apl_limit": "experimental passive branch-local graded release; inherited global timing plasticity is not a non-spiking cellular learning model" if spatial_assumptions else "global graded approximation, lacks measured local integration; inherited timing plasticity is not a non-spiking cellular learning model",
+        "spatial_limit": "APL contacts located, other cells remain pair aggregates; no calcium or measured timing calibration" if spatial_assumptions else "pair counts only, no contact positions or axonal propagation model",
+        **({"spatial": spatial_assumptions} if spatial_assumptions else {}),
         "experimental_input": "one additional unit-weight zero-delay input per selected neuron, not claimed as anatomy",
     })

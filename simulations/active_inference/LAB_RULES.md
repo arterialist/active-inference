@@ -548,6 +548,29 @@ State the observed time horizon and intervention limits. Make consequential
 sensorimotor coupling a task requirement before calling improved exogenous
 prediction an acquired model of the organism's own action.
 
+## RULE 25 — CONSTRUCTION MUST PRESERVE THE ACTUAL INPUT STATE
+
+When attaching a population to an acquired network, inspect consumed inputs,
+pending events and cache reconstruction as part of the intervention. An old
+bootstrap value in a backing dictionary can differ from the authoritative
+vectorized input state. Rebuilding that cache can replay a startup pulse even
+when the driver reports zero new input and every old neuron object survives.
+
+The 9 September organ-feedback experiment demonstrated this across four seeds.
+A stale cache rebuild and a declared second pulse produced identical full
+records; synchronizing before rebuilding reproduced unchanged continuation.
+The extra wave appeared after 40 ticks and changed the body two ticks later.
+Record actual receiving-port values, including the sum of external and recurrent
+inputs when they share a port. An exact replay of an already-confounded initial
+state proves repeatability, not validity of the original construction.
+
+This does not make native plastic return pathways a nuisance to remove. Once
+construction is controlled, their contribution remains a legitimate causal
+question. A zero forward weight and a clamped sensory signal test different
+relationships. Keep both the physical measurements and any experimentally
+substituted inputs in the record. See `ventilation_reseed_probe.py` and
+`VENTILATION_REGULATION_2026-09-09.md` for evidence and unresolved scope.
+
 ## WHERE TO LOOK
 
 - **`ROADMAP.md`** — status, the 8 numbered failures (F1-F8), and the ordered Phase 0-4 plan

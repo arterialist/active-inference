@@ -1427,6 +1427,31 @@ that fixed-gain alternative while retaining the acquired predictive state and
 active adaptation. See [the physical-necessity screen](experiments/VENTILATION_2026-09-09.md).
 The full artificial-organism objective remains active and unachieved.
 
+## Continuation: corrected organ feedback contributes, but tonic recruitment also passes
+
+Seven existing-form PAULA cells now compose with the actual acquired 596-cell
+brain and its continuing body. No core neuron equation changed. An unintended
+startup pulse initially confounded the experiment: graph installation rebuilt
+an external-input cache from a stale bootstrap dictionary. Four-seed explicit
+re-kick and safe-rebuild comparisons identify that cause exactly. Construction
+now preserves the authoritative consumed input state; the old shared runtime
+and other installation callers remain separately identified audit targets.
+
+All sixteen corrected 1024-tick courses finish with independent added-path,
+learning and body checks. Intact feedback avoids oxygen and energy deficits;
+oxygen-output cuts restore oxygen failure in all four seeds. However, tonic
+recruitment also passes, and the energy alarm stays silent. The environment
+does not yet require adaptive organ regulation. Thirty-seven focused tests
+pass; four initial-checkpoint replay prefixes are exact. All workers exited.
+
+The next discriminating test is a same-topology organ-input clamp, followed by
+bodily conditions that distinguish useful responsive recruitment from fixed
+extra drive. Preserve native plastic return pathways and actual physical
+measurements. Do not treat lower gas throughput as proven energy efficiency,
+or an unused energy regulator as a demonstrated capability. See the
+[completed findings](experiments/VENTILATION_REGULATION_2026-09-09.md).
+The full artificial-organism objective remains active and unachieved.
+
 ## Literature leads checked on 8 September 2026
 
 [Cogitate Consortium, 2025](https://www.nature.com/articles/s41586-025-08888-1)

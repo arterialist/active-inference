@@ -2,11 +2,11 @@ import numpy as np
 import pytest
 
 from simulations.drosophila.connectome import Subgraph
-from simulations.drosophila.gain_reunion import reunion_cut,target_bindings,pathway_bindings,filter_forward,initialize_feedback_gain
+from simulations.drosophila.gain_reunion import reunion_cut,target_bindings,pathway_bindings,filter_forward,initialize_feedback_gain,window_lateral_command,initialize_regulator_afferent_gain
 from neuron.neuron import RetrogradeSignalEvent
 from simulations.drosophila.ln_gain import PN, LN
 from simulations.drosophila.paula import build_paula
-from simulations.drosophila.gain_reunion_analysis import first_difference,port_groups,audit_pathway_events,audit_feedback_gain
+from simulations.drosophila.gain_reunion_analysis import first_difference,port_groups,audit_pathway_events,audit_feedback_gain,audit_command_shift,regulator_pulses
 
 
 def test_scope_preserves_incident_ports_and_makes_other_ln_exclusion_explicit():
@@ -140,3 +140,78 @@ def test_feedback_audit_checks_actual_weights_against_measured_pairs(tmp_path):
     with pytest.raises(AssertionError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings})
     spec["scale"]=.5;spec["changed_by_learning"]=0
     with pytest.raises(ValueError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings})
+
+
+def test_lateral_windows_are_charge_matched_and_do_not_change_sensory_commands():
+    from simulations.drosophila.ln_gain import commands
+    original,_=commands(42,100,80,11,trials=1)
+    assert window_lateral_command(original,None) is original
+    early=window_lateral_command(original,(200,300))
+    late=window_lateral_command(original,(600,700))
+    assert early[:,-1].sum()==late[:,-1].sum()==320.
+    assert np.count_nonzero(early[:,-1])==8
+    np.testing.assert_array_equal(early[200:300,-1],late[600:700,-1])
+    np.testing.assert_array_equal(early[:,:-1],original[:,:-1])
+    np.testing.assert_array_equal(late[:,:-1],original[:,:-1])
+    assert not np.any(early[300:,-1]) and not np.any(late[:600,-1])
+    for bad in ((300,200),(0,3000),(-1,300),(0.,300)):
+        with pytest.raises(ValueError):window_lateral_command(original,bad)
+    assert audit_command_shift(early,late)=={"pulses":8,"shift_ticks":400,"injected_current_sum":320.}
+    bad=late.copy();bad[0,0]=1
+    with pytest.raises(AssertionError):audit_command_shift(early,bad)
+    bad=late.copy();bad[606,-1]=39
+    with pytest.raises(AssertionError):audit_command_shift(early,bad)
+    bad=late.copy();bad[606,-1]=0;bad[607,-1]=40
+    with pytest.raises(ValueError):audit_command_shift(early,bad)
+
+
+def test_pulse_annotation_uses_preceding_spike_not_current_spike():
+    data={"soma":np.zeros((8,1,3)),"command":np.zeros((8,1)),"source_current":np.zeros((8,1,2))}
+    data["soma"][[1,4],0,1]=1
+    data["command"][[2,4,7],0]=40
+    structure={"roots":np.array([LN]),"source_roots":np.array([LN])}
+    rows=regulator_pulses(data,structure,3)
+    assert [r["ticks_since_previous_spike"] for r in rows]==[1,3,3]
+    assert [r["cooldown_prevents_spike"] for r in rows]==[True,False,False]
+    assert [r["fired"] for r in rows]==[False,True,False]
+
+
+def test_regulator_afferent_scale_changes_only_measured_internal_sensory_receivers():
+    from types import SimpleNamespace as NS
+    nodes={PN:{"annotation":{"hemibrain_type":"DL5_adPN"}},LN:{"annotation":{"hemibrain_type":"lLN2F_b"}},
+           "101":{"annotation":{"hemibrain_type":"ORN_DL5"}},"102":{"annotation":{"hemibrain_type":"ORN_DL5"}}}
+    edges=np.array([[101,int(LN),1,2,10,1,10,0,0],[101,int(PN),1,3,20,1,20,0,1],
+                    [int(PN),int(LN),3,2,5,1,5,0,2],[102,int(LN),4,2,10,1,10,0,3]])
+    ln_ports={0:NS(u_i=NS(info=.75)),1:NS(u_i=NS(info=.375)),2:NS(u_i=NS(info=.75))}
+    pn_ports={0:NS(u_i=NS(info=1.5))}
+    prep=NS(edge_bindings=np.array([[0,1,0,2,0],[1,1,1,3,0],[2,3,0,2,1]]),
+            network=NS(network=NS(neurons={2:NS(postsynaptic_points=ln_ports),3:NS(postsynaptic_points=pn_ports)})))
+    graph=Subgraph(("101",LN,PN),nodes,edges,{})
+    _,before,after=initialize_regulator_afferent_gain(prep,graph,1.)
+    np.testing.assert_array_equal(before,after)
+    bindings,before,after=initialize_regulator_afferent_gain(prep,graph,4.)
+    assert bindings[:,0].tolist()==[0]
+    np.testing.assert_array_equal(after,before*4.)
+    assert [p.u_i.info for p in ln_ports.values()]==[3.,.375,.75]
+    assert pn_ports[0].u_i.info==1.5
+    for bad in (0,-1,float('inf'),float('nan')):
+        with pytest.raises(ValueError):initialize_regulator_afferent_gain(prep,graph,bad)
+
+
+def test_afferent_audit_rejects_a_false_scale_or_pair(tmp_path):
+    from simulations.drosophila.prisco import digest
+    nodes={"101":{"annotation":{"hemibrain_type":"ORN_DL5"}},LN:{"annotation":{"hemibrain_type":"lLN2F_b"}}}
+    graph=Subgraph(("101",LN),nodes,np.array([[101,int(LN),1,2,10,1,10,0,0]]),{})
+    bindings=np.array([[0,1,0,2,0]])
+    np.savez(tmp_path/'regulator-afferent-initial.npz',bindings=bindings,reference_weights=[.75],initial_weights=[1.5])
+    np.savez(tmp_path/'regulator-afferent-final.npz',weights=[1.50001])
+    spec={"scale":2.,"pairs":1,"changed_by_learning":1,
+          "initial_sha256":digest(tmp_path/'regulator-afferent-initial.npz'),
+          "final_sha256":digest(tmp_path/'regulator-afferent-final.npz')}
+    meta={"regulator_afferent_initialization":spec,"assumptions":{"parameters":{"weight_per_count":.075}}}
+    result=audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings},afferent=True)
+    assert result['scale']==2. and result['changed_by_learning']==1
+    spec['scale']=4.
+    with pytest.raises(AssertionError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings},afferent=True)
+    spec['scale']=2.;spec['pairs']=2
+    with pytest.raises(ValueError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings},afferent=True)

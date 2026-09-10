@@ -31,6 +31,9 @@ PATHWAYS = ("none", "positive_LN_to_LN", "positive_LN_to_target_PN",
 
 def reunion_cut(graph, scope):
     if scope == "full": return graph
+    if scope == "isolated":
+        from .ln_gain import select
+        return select(graph)
     if scope == "antennal":
         roots=tuple(r for r in graph.selected if graph.nodes[r]["annotation"]["cell_class"] in
             ("olfactory","ALLN","ALPN") and graph.nodes[r]["annotation"]["hemibrain_type"]!="APL")
@@ -99,9 +102,43 @@ def initialize_feedback_gain(prep,graph,scale):
     return bindings,np.array(before),np.array(after)
 
 
+def regulator_afferent_bindings(prep,graph):
+    rows={int(e[8]) for e in graph.edges if str(e[1])==LN and e[5]>0
+          and graph.nodes[str(e[0])]["annotation"]["hemibrain_type"]=="ORN_DL5"}
+    return np.array([e for e in prep.edge_bindings if int(e[0]) in rows],dtype=np.int64).reshape(-1,5)
+
+
+def initialize_regulator_afferent_gain(prep,graph,scale):
+    """Sensitivity of measured sensory inputs to the regulator, before tick zero.
+
+    No added connection, prescribed regulator firing, or online gain adjustment.
+    The default is an exact no-op. This is not a physiological strength fit.
+    """
+    if not np.isfinite(scale) or scale<=0:raise ValueError("Afferent gain must be positive and finite")
+    bindings=regulator_afferent_bindings(prep,graph)
+    if not len(bindings):raise ValueError("No measured sensory afferents to regulator")
+    before=[];after=[]
+    for _,_,_,target,port in bindings:
+        point=prep.network.network.neurons[int(target)].postsynaptic_points[int(port)]
+        if point.u_i.info<=0:raise ValueError("Selected sensory receptor is not positive")
+        before.append(point.u_i.info)
+        if scale!=1.:point.u_i.info*=scale
+        after.append(point.u_i.info)
+    return bindings,np.array(before),np.array(after)
+
+
+def window_lateral_command(command, window):
+    if window is None:return command
+    if len(window)!=2 or any(type(t) is not int for t in window) or not 0<=window[0]<window[1]<=len(command):
+        raise ValueError("Invalid lateral electrode window")
+    result=command.copy()
+    result[:window[0],-1]=0.;result[window[1]:,-1]=0.
+    return result
+
+
 def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1.,
         direct=50.,lateral=80.,seed=11,lesion="intact",chunk=250,
-        pathway="none",block_start=600,feedback_scale=1.):
+        pathway="none",block_start=600,feedback_scale=1.,lateral_window=None,regulator_afferent_scale=1.):
     if output.exists():raise FileExistsError(output)
     if type(chunk) is not int or chunk<1:raise ValueError("Invalid chunk size")
     if shutil.disk_usage(output.parent).free < 512*1024**2:
@@ -115,6 +152,7 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     has_apl=any(graph.nodes[r]["annotation"]["hemibrain_type"]=="APL" for r in graph.selected)
     prep,pn=prepare_inhibited(graph,intrinsic,tail,LN,gain,100.,spatial=spatial if has_apl else None)
     feedback_bindings,feedback_before,feedback_initial=initialize_feedback_gain(prep,graph,feedback_scale)
+    afferent_bindings,afferent_before,afferent_initial=initialize_regulator_afferent_gain(prep,graph,regulator_afferent_scale)
     roots=list(prep.root_to_id)
     cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in roots]
     orns=[r for r in roots if graph.nodes[r]["annotation"]["hemibrain_type"]=="ORN_DL5"]
@@ -125,6 +163,7 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     ln_id=prep.root_to_id[LN]; blocked=blocked_terminals(prep,graph,lesion)
     pn_terminals,pn_ports=target_bindings(prep,orns,pn.id)
     command,epochs=commands(len(orns),direct,lateral,seed,trials=1)
+    command=window_lateral_command(command,lateral_window)
     ticks=len(command)
     if type(block_start) is not int or not 0 <= block_start < ticks:
         raise ValueError("Intervention onset outside recorded ticks")
@@ -149,6 +188,8 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
         np.savez_compressed(f,bindings=path_bindings)
     with (output/"feedback-initial.npz").open("xb") as f:
         np.savez_compressed(f,bindings=feedback_bindings,reference_weights=feedback_before,initial_weights=feedback_initial)
+    with (output/"regulator-afferent-initial.npz").open("xb") as f:
+        np.savez_compressed(f,bindings=afferent_bindings,reference_weights=afferent_before,initial_weights=afferent_initial)
     arrays={};start=0
     native_hillock,native_tick=Neuron._hillock_current,Neuron.tick
     target_hillock=type(pn)._hillock_current
@@ -223,9 +264,21 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     feedback_final=np.array([prep.network.network.neurons[int(target)].postsynaptic_points[int(port)].u_i.info
                              for _,_,_,target,port in feedback_bindings])
     with (output/"feedback-final.npz").open("xb") as f:np.savez_compressed(f,weights=feedback_final)
+    afferent_final=np.array([prep.network.network.neurons[int(target)].postsynaptic_points[int(port)].u_i.info
+                            for _,_,_,target,port in afferent_bindings])
+    with (output/"regulator-afferent-final.npz").open("xb") as f:np.savez_compressed(f,weights=afferent_final)
     result={"schema":1,"scope":scope,"ticks":ticks,"chunks":chunks,"source_hashes":hashes,
         "structure_sha256":digest(output/"structure.npz"),"anatomy":graph.summary(),"assumptions":prep.assumptions,
         "gain":gain,"direct":direct,"lateral":lateral,"seed":seed,"lesion":lesion,"epochs":epochs,"apl_present":has_apl,
+        "lateral_window":list(lateral_window) if lateral_window is not None else None,
+        "lateral_command_pulses":int(np.count_nonzero(command[:,-1])),
+        "lateral_injected_current_sum":float(command[:,-1].sum()),
+        "regulator_afferent_initialization":{"scale":regulator_afferent_scale,"pairs":len(afferent_bindings),
+            "initial_sha256":digest(output/"regulator-afferent-initial.npz"),
+            "final_sha256":digest(output/"regulator-afferent-final.npz"),
+            "changed_by_learning":int(np.count_nonzero(afferent_final!=afferent_initial)),
+            "action":"scale only initial internal ORN_DL5-to-identified-regulator receiving info weights; native ongoing learning and all connections retained",
+            "status":"uncalibrated sensory recruitment strength hypothesis, not measured physiology"},
         "feedback_initialization":{"scale":feedback_scale,"pairs":len(feedback_bindings),
             "initial_sha256":digest(output/"feedback-initial.npz"),"final_sha256":digest(output/"feedback-final.npz"),
             "changed_by_learning":int(np.count_nonzero(feedback_final!=feedback_initial)),
@@ -256,7 +309,7 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ("graph","intrinsic","tail","spatial","output"):p.add_argument(name,type=Path)
-    p.add_argument("--scope",choices=("full","consumers","antennal"),default="full")
+    p.add_argument("--scope",choices=("full","consumers","antennal","isolated"),default="full")
     p.add_argument("--gain",type=float,default=1.)
     p.add_argument("--direct",type=float,default=50.)
     p.add_argument("--lateral",type=float,default=80.)
@@ -265,10 +318,12 @@ def main():
     p.add_argument("--pathway",choices=PATHWAYS,default="none")
     p.add_argument("--block-start",type=int,default=600)
     p.add_argument("--feedback-scale",type=float,default=1.)
+    p.add_argument("--lateral-window",nargs=2,type=int,metavar=("START","STOP"))
+    p.add_argument("--regulator-afferent-scale",type=float,default=1.)
     a=p.parse_args()
     run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,scope=a.scope,gain=a.gain,direct=a.direct,
         lateral=a.lateral,seed=a.seed,lesion=a.lesion,pathway=a.pathway,block_start=a.block_start,
-        feedback_scale=a.feedback_scale)
+        feedback_scale=a.feedback_scale,lateral_window=a.lateral_window,regulator_afferent_scale=a.regulator_afferent_scale)
 
 
 if __name__=="__main__":main()

@@ -50,8 +50,18 @@ preparation under controlled inhibitory-cell stimulation. Low participation of
 other populations and the imposed regulator command remain explicit limits;
 this is not autonomous gain control or a functional mushroom-body memory.
 Removing that command restores persistent activity despite stronger subsequent
-inhibitory-cell firing. The next question is timely neural recruitment versus
-continued external assistance, not whether the regulator can fire at all.
+inhibitory-cell firing.
+The [matched timing test](REGULATOR_TIMING_2026-09-10.md) now shows that eight
+early pulses do not replace sustained assistance. Equal-dose delayed pulses
+alter voltage but no spike train: the regulator is already firing at its
+cooldown-limited cadence. The [sensory recruitment experiment](REGULATOR_RECRUITMENT_2026-09-10.md)
+tests stronger initial receiving weights on its measured sensory afferents,
+with no regulator electrode and no added connection. A scale chosen in isolation
+preserves response and recovery at sensory command 100 in both the 424-cell and
+3,005-cell preparations, but fails at command 50. Selective output controls
+separate sensory gain from collective stability; all-output blockade restores
+persistent activity. This is an electrode-free operating point and a measured
+limit, not robust gain control or a new agent default.
 
 The [fixed-gain reunion test](GAIN_REUNION_2026-09-10.md) shows that the local
 sensory gate still executes correctly in 3,005 connected cells, but recurrent

@@ -1,0 +1,158 @@
+{
+  "source_sha256": "7c30822a1900dd115c1e5438b4bf2519a8638851016629ae0b596fe9d4092776",
+  "source": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/flywire783/memory-ingestion-comparison-20260910",
+  "manifest_sha256": "87b8cd18c94035e63786bc2d4aa42a05a85958988d4789af288b161ea9846162",
+  "acquisition_summary_sha256": "a37faa31d3fcb30f4bf7f63e3fcafddc9f3d41585b4883d9931de19e53e9d5cb",
+  "acquisition_checkpoint_sha256": "d8d99f901167d87a5a65587e27b9f6a003219ae3f2499b1bbcbcb7247a1f7615",
+  "completed_acquisition_ticks": 10600,
+  "acquisition_ingested_j": 7.904000000000002,
+  "acquisition_stored_energy_gain_j": -3.630029725672401,
+  "retained_old_terminal_minimum": 7.73225431767561e-07,
+  "original_memory_change": {
+    "A": 0.2710265648744075,
+    "B": 0.0,
+    "C": 0.0
+  },
+  "predictor_mean_weights_by_cue": {
+    "A": 0.0028508012944720444,
+    "B": 0.0,
+    "C": 0.0
+  },
+  "incomplete_lead_in_completed_ticks": 11,
+  "failure_replays": {
+    "intact": {
+      "completed_ticks": 11,
+      "failing_tick": 31411,
+      "exception": "Invalid eligibility flow",
+      "failing_terminals": [
+        {
+          "cell": 8124,
+          "root": "720575940609836898",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 88,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 30354,
+              "source_port": 68,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        },
+        {
+          "cell": 45631,
+          "root": "720575940620810316",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 65,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 30354,
+              "source_port": 354,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        },
+        {
+          "cell": 64047,
+          "root": "720575940624041545",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 62,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 137162,
+              "source_port": 497,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        }
+      ],
+      "dropped_new_projection_events": 0
+    },
+    "cut": {
+      "completed_ticks": 11,
+      "failing_tick": 31411,
+      "exception": "Invalid eligibility flow",
+      "failing_terminals": [
+        {
+          "cell": 8124,
+          "root": "720575940609836898",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 88,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 30354,
+              "source_port": 68,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        },
+        {
+          "cell": 45631,
+          "root": "720575940620810316",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 65,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 30354,
+              "source_port": 354,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        },
+        {
+          "cell": 64047,
+          "root": "720575940624041545",
+          "group": "alpha1",
+          "cue": "A",
+          "terminal": 62,
+          "before_retrograde": 2.392030751252605e-07,
+          "after_retrograde": -6.079736181163753e-08,
+          "eta_retro": 1e-06,
+          "incoming": [
+            {
+              "source": 137162,
+              "source_port": 497,
+              "error_info": -0.3000004291534424
+            }
+          ]
+        }
+      ],
+      "dropped_new_projection_events": 316
+    }
+  },
+  "pre_failure_original_soma_terminals_and_body_exact_between_replays": true,
+  "learned_persistent_comparison": null,
+  "action_coupling_run": false,
+  "interpretation": "Eight prescribed acquisition presentations completed. The shared A-food lead-in then failed after 11 completed ticks when native signed retrograde updates made three old alpha1 A terminals negative. TerminalCreditNeuron requires nonnegative release. The same failure and old-cell/body trajectory occur when every added comparison projection is forward-cut from the retained acquisition state. Predictor A weights increased, but persistent omission signaling and behavioral adaptation were not assessed. Stop at this bound; no clipping, gain change, extra exposure or action coupling was applied.",
+  "next_decision": "Resolve the domain compatibility between native signed presynaptic return updates and the opt-in nonnegative terminal-credit composition in a separately declared version before extending this preparation's lifespan. Do not silently repair the accepted checkpoints or treat the incomplete lead-in as a negative behavioral result.",
+  "limits": "The diagnostic cut is applied after acquisition and does not undo its history. The new graph has no forward projection into the original circuit during acquisition; returning events from its predictor address dedicated new KC terminals. This failure concerns continued operation beyond the accepted A-to-B bound and leaves that recorded result unchanged.",
+  "incomplete_artifact_hashes": {
+    "context.npy": "a02412e16d8b342582468e9999d844e6a37a8e49480e29e01416657bff4ea3f4",
+    "release.npy": "a1b59cddf6a26a47b109b4b6a1ebcdd0b06c3728518b5a34278fcae992706266",
+    "soma.npy": "dd4a7747024ffec9bec4b0283d00b7da815258ffe96cbf2267a94b27ff1fd0b7",
+    "weights.npy": "1da4cd6b289028501648d4c439242a34ad95a85ff98fbb2709ae453f2bd91a74",
+    "body.npy": "1e283a19e3767aa4653cc8684a3ba18fa3f209035f06e98f01f1ef8e5e3c6530",
+    "arrivals.npy": "1a6bf463045b4d259e7b7d7069d61aaf3c78db004b2f80d4323dcefbacf0dc08",
+    "prediction_weights.npy": "983ae26d513acf44eaa6a79a17ac492ccf91c045d9120687dc5b982a18311a08",
+    "comparison.npy": "4875f19bc19d560340f6ae5f93eaa16fe0cf229026fa2b2276925aee6bd56cba"
+  }
+}

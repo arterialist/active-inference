@@ -66,13 +66,50 @@ supply the existing local error receptors. PAM activity cannot serve as
 independent outcome evidence because learned feedback already drives it.
 Use zero predictor rate boost, audit matched delays, and first test prediction
 of ongoing contact rate. An onset transient is not evidence of a missed future
-reward. This proposed engineered extension has not been built or validated here.
+reward. The bounded construction and its interrupted verification are recorded
+below.
 
 Only verified, cue-dependent prediction would warrant coupling to action and
 measuring retained energy alongside intake. Nutrient prediction alone cannot
 represent energetic cost. A-only revision of B would additionally need a
 demonstrated retrieval route or shared outcome representation. The accepted
 A-to-B result and its runtime sources remain unchanged.
+
+## Ingestion comparison continuation
+
+`ingestion_comparison.py` adds the four declared cells using existing PAULA
+dynamics. Actual ingestion supplies the independent afferent. All cue KCs
+receive separate new output terminals into the predictor, whose contextual
+weights start at zero with `prediction_boost=0`. Construction preserves the
+original cellular state apart from those added terminals. The proposed action
+route was specified before execution as unit inhibitory dendrites from the
+negative comparison to SMP108; it was never installed in the research run.
+
+The fixed acquisition completed eight 200-tick A-with-food presentations and
+the declared blank intervals. A predictor weights grew to a mean of 0.002851;
+B and C predictor weights stayed zero. Existing B and C memory terminals were
+unchanged. The following shared A-food lead-in failed after eleven completed
+ticks, before the planned food/omission comparison could begin.
+
+Three old alpha1 A terminals crossed from 2.392e-7 to -6.080e-8 under native
+retrograde updates. Native presynaptic return allows signed release, whereas
+the opt-in terminal-credit rule requires nonnegative release and raises
+`Invalid eligibility flow`. This is a conflict between the two update domains,
+not evidence of a failed behavioral response or a rounding error to discard.
+Forward-cutting all new comparison projections from the retained acquisition
+state reproduces the same failing terminals, tick, and preceding original
+cellular and physical trajectories. That intervention does not undo acquisition
+history; during acquisition the addition has no forward route into old cells,
+and its returning events address only the dedicated new KC terminals.
+
+The [audited continuation record](evidence/ingestion-comparison.json) preserves
+the completed checkpoint, incomplete-array hashes, and both failure replays.
+`ingestion_analysis.py` reproduces the diagnosis. Persistent learned omission
+signaling and action adaptation remain **unassessed**. There was no clipping,
+extra exposure, gain change, or action run. The next decision is to resolve
+signed-return/nonnegative-credit compatibility in an explicitly separate
+composition before extending this preparation further. The accepted A-to-B
+reference and its runtime sources remain unchanged.
 
 ## Reusing acquired B as a teacher for C
 

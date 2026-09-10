@@ -37,6 +37,14 @@ PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
 
+The [DL5 antennal-lobe reunion](ANTENNAL_REUNION_2026-09-10.md) now adds the
+actual ORN and local-interneuron neighborhood to the original PN/KC/APL graph.
+Six full-tick recordings separate short-term terminal depression, recurrent
+recruitment, a single-cell release lesion and transmitter-polarity uncertainty.
+One identified LN's release is necessary for the first train's broad recurrent
+regime in this model. Blocking it is a diagnostic, not a reconstructed solution;
+the intact circuit still lacks physiological and behavioral acceptance.
+
 [Lin et al., 2014](https://doi.org/10.1038/nn.3660) provides the first experimental
 targets. Its Figure 3 tests KC activation and KC-output blockade against APL
 responses. Figures 4 and 5 test APL activation/blockade, KC activity, sparseness

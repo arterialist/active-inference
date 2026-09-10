@@ -25,6 +25,7 @@ from neuron.neuron import (  # noqa: E402
 from neuron.extensions.graded import GradedNeuron  # noqa: E402
 from neuron.extensions.experimental.passive_cable import LocalCableGradedNeuron  # noqa: E402
 from neuron.extensions.experimental.input_current import InputCurrentNeuron  # noqa: E402
+from neuron.extensions.experimental.release_depression import DepressingReleaseNeuron  # noqa: E402
 from simulations.connectome_loader import _assemble_network  # noqa: E402
 
 PORT_CAPACITY = 2**12
@@ -106,10 +107,25 @@ class PNCurrentKernel:
     normalization: str = "area"
 
 
+@dataclass(frozen=True)
+class ORNReleaseDepression:
+    """Explicit ORN-to-ALPN terminal hypothesis; never enabled by default."""
+    source_roots: tuple[str, ...]
+    depletion_fraction: float
+    recovery_ticks: float
+
+
 def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Path | None = None,
-                current_kernel: PNCurrentKernel | None = None) -> Preparation:
+                current_kernel: PNCurrentKernel | None = None,
+                release_depression: ORNReleaseDepression | None = None) -> Preparation:
     graph.validate()
     dynamics.validate()
+    depressing_roots = set(release_depression.source_roots) if release_depression else set()
+    if release_depression is not None:
+        if (not depressing_roots or len(depressing_roots) != len(release_depression.source_roots)
+                or not depressing_roots <= set(graph.selected)
+                or any(graph.nodes[r]["annotation"]["cell_class"] != "olfactory" for r in depressing_roots)):
+            raise ValueError("Release depression requires distinct selected olfactory sources")
     if current_kernel is not None:
         if (current_kernel.target_root not in graph.selected
                 or graph.nodes[current_kernel.target_root]["annotation"]["cell_class"] != "ALPN"):
@@ -157,6 +173,8 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
             neuron_class = LocalCableGradedNeuron
         if current_kernel is not None and root == current_kernel.target_root:
             neuron_class = InputCurrentNeuron
+        if root in depressing_roots:
+            neuron_class = DepressingReleaseNeuron
         cell = neuron_class(nid, params, log_level="CRITICAL", metadata=metadata)
         # Construct explicit coefficients without the helpers' random defaults.
         # Terminal distances are unused by the base release equations. Do not
@@ -174,6 +192,8 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
     bindings = []
     incoming_boundary, outgoing_boundary = [], []
     filtered_ports, filtered_rows = [], []
+    depressing_terminals = {r: [] for r in depressing_roots}
+    depressing_rows = {r: [] for r in depressing_roots}
     for edge, weight, has_pre, has_post in zip(edges, weights, pre_inside, post_inside, strict=True):
         pre, post = int(edge[2]), int(edge[3])
         if has_pre:
@@ -181,6 +201,9 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
             next_output[pre] += 1
             neurons[pre].presynaptic_points[terminal] = PresynapticPoint(
                 PresynapticOutputVector(info=1.0, mod=np.zeros(2)), u_i_retro=1.0)
+            if str(edge[0]) in depressing_roots and graph.nodes[str(edge[1])]["annotation"]["cell_class"] == "ALPN":
+                depressing_terminals[str(edge[0])].append(terminal)
+                depressing_rows[str(edge[0])].append(int(edge[8]))
         if has_post:
             synapse = next_input[post]
             next_input[post] += 1
@@ -202,6 +225,9 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
         cell = neurons[root_to_id[current_kernel.target_root]]
         cell.configure_current_kernel(filtered_ports, current_kernel.decay_ticks,
                                       current_kernel.peak_fractions, current_kernel.normalization)
+    for root in depressing_roots:
+        neurons[root_to_id[root]].configure_release_depression(depressing_terminals[root],
+            release_depression.depletion_fraction, release_depression.recovery_ticks)
     spatial_assumptions = None
     if dynamics.apl_representation == "local_cable":
         from .spatial_paula import configure_local_apl
@@ -226,6 +252,11 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
                        np.asarray(incoming_boundary, dtype=np.int64).reshape(-1, 4),
                        np.asarray(outgoing_boundary, dtype=np.int64).reshape(-1, 4), {
         "parameters": asdict(dynamics), "physical_seconds_per_tick": None,
+        "release_depression": None if release_depression is None else {
+            **asdict(release_depression), "terminals": depressing_terminals, "source_rows": depressing_rows,
+            "scope": "all ALPN-directed terminals of explicitly selected olfactory neurons, including absent boundary targets",
+            "mechanism": "native forward coefficient times available fraction, then multiplicative depletion; exponential recovery; native adaptation remains enabled",
+            "limit": "single effective resource per terminal; no distinct fast/slow pools, receptor identification or presynaptic inhibition"},
         "cleft_delay_ticks": 1,
         "boundary_condition": "outside neurons absent; incoming boundary ports undriven, outgoing boundary terminals disconnected; all incident ports and native input-count-dependent bounds retained",
         "count_conversion": "source_model_sign * synapse_count * weight_per_count on postsynaptic info only",

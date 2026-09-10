@@ -43,6 +43,16 @@ PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
 
+The [conditional sensory-gain assay](LN_GAIN_CONTROL_2026-09-10.md) now tests
+42 ORNs, their PN and an identified inhibitory LN under independent sensory
+and lateral-cell commands. Local terminal regulation produces a PN gain shift
+that requires LN→ORN transmission and preserves ongoing native adaptation.
+The strong setting separates high inputs but suppresses the weakest input;
+the weak setting retains weak responses but still saturates. This is an
+isolated functional mechanism with declared parameters, not autonomous public-
+odor normalization or reunited-brain acceptance. Its next tests are appropriate
+upstream drive and survival of the function with PN/KC/APL partners active.
+
 The [early-versus-late LN lesion](LN_RECRUITMENT_TIMING_2026-09-10.md) separates
 recruitment from maintenance. Blocking the same cell before stimulation prevents
 broad recruitment, while blocking it at tick 600 leaves 169 LNs firing during

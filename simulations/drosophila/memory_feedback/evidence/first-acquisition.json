@@ -1,0 +1,604 @@
+{
+  "anatomy": {
+    "selected_neurons": 77,
+    "boundary_neurons": 5958,
+    "internal": {
+      "directed_pairs": 1045,
+      "synapses": 6140
+    },
+    "incoming_boundary": {
+      "directed_pairs": 14858,
+      "synapses": 103668
+    },
+    "outgoing_boundary": {
+      "directed_pairs": 12700,
+      "synapses": 82382
+    },
+    "classes": {
+      "Kenyon_Cell": 64,
+      "DAN": 8,
+      "": 2,
+      "MBON": 2,
+      "MBIN": 1
+    },
+    "internal_motif_synapses": {
+      " -> ": 49,
+      " -> APL": 3,
+      " -> DAN": 1,
+      "APL -> ": 1,
+      "APL -> DAN": 30,
+      "APL -> Kenyon_Cell": 1409,
+      "APL -> MBON": 160,
+      "DAN -> APL": 22,
+      "DAN -> DAN": 14,
+      "DAN -> Kenyon_Cell": 87,
+      "DAN -> MBON": 450,
+      "Kenyon_Cell -> APL": 1377,
+      "Kenyon_Cell -> DAN": 195,
+      "Kenyon_Cell -> Kenyon_Cell": 679,
+      "Kenyon_Cell -> MBON": 1374,
+      "MBON -> ": 19,
+      "MBON -> APL": 43,
+      "MBON -> DAN": 72,
+      "MBON -> Kenyon_Cell": 50,
+      "MBON -> MBON": 105
+    }
+  },
+  "courses": {
+    "native-paired": {
+      "record": "memory-native-paired-spaced-20260910",
+      "ticks": 10120,
+      "retained_weight": {
+        "A": 0.613447788760465,
+        "C": 0.6343417632392399
+      },
+      "weight_change_during_retention": 0.0,
+      "test_responses": {
+        "A": {
+          "name": "retained_A",
+          "begin": 8920,
+          "end": 9120,
+          "spikes": {
+            "MBON07": 6,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.05310650907262485,
+          "max_dopamine": 2.2721717269166626e-10,
+          "weight_mean": 0.685961121400551,
+          "energy_j": 83.61727291077787,
+          "seconds": 51.527523542012204
+        },
+        "C": {
+          "name": "retained_C",
+          "begin": 9520,
+          "end": 9720,
+          "spikes": {
+            "MBON07": 6,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.053215829916464445,
+          "max_dopamine": 1.1227668951731917e-11,
+          "weight_mean": 0.7468544325873128,
+          "energy_j": 83.13430134004616,
+          "seconds": 54.716137375013204
+        }
+      },
+      "dopamine_at_retained_A": 2.2721717269166626e-10,
+      "SMP108_total_spikes": 0,
+      "SMP108_max_S": 0.05994910001754761,
+      "sign_changes": [],
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "maximum_energy_debt": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "records_sha256": {
+        "manifest.json": "d8d5d0536a659c406fa4dd8dc333c22f7351cfad38a5d7bbd0d4a246105d557e",
+        "summary.json": "999f8eb9778d1638b788382a7f89453339acfdc192747c6530e7413a6890b853",
+        "soma.npy": "8761cc639c6bcd1e044cbd2b181b5cb73ec39cb36fb573ee043df2c49c09db10",
+        "modulation.npy": "2119e580e3d96115ee8e90b144474372beefb0a3c321dfab7eff1b48d3dca366",
+        "weights.npy": "17370abd8a5fd2b52e0b544404a86939195b63236b98636109d04121166c1d75",
+        "release.npy": "d58c12e6865dad2853c7522ce90fc17461cb4ad6b18ceedb98c4bd5260aa6bb8",
+        "physical.npy": "a5bb1b0bc96df60411b777eb2b0511754e8edce88ed112fa5722e098edea94a3",
+        "identities.npz": "61b597dbcbc02d97e97a08a30f22b4072ee210c289cecfb51193fd2a40732bd6",
+        "retention.paula": "d2ba3b24e259e56af436adaa2975cbd2d6964d405360fb672a793a298fc78863",
+        "retention-body.npz": "ddb04132672134fa4abf98686336e16b224b85b55af4965d1dffb4fd204623ca"
+      }
+    },
+    "native-unpaired": {
+      "record": "memory-native-unpaired-spaced-20260910",
+      "ticks": 10120,
+      "retained_weight": {
+        "A": 0.613447788760465,
+        "C": 0.6343417632392399
+      },
+      "weight_change_during_retention": 0.0,
+      "test_responses": {
+        "A": {
+          "name": "retained_A",
+          "begin": 8920,
+          "end": 9120,
+          "spikes": {
+            "MBON07": 6,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.053102999962493076,
+          "max_dopamine": 4.6129161568389446e-08,
+          "weight_mean": 0.685961121400551,
+          "energy_j": 83.61726548730006,
+          "seconds": 51.55941383300524
+        },
+        "C": {
+          "name": "retained_C",
+          "begin": 9520,
+          "end": 9720,
+          "spikes": {
+            "MBON07": 6,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.053112038476704065,
+          "max_dopamine": 2.279418183825619e-09,
+          "weight_mean": 0.7468544325873128,
+          "energy_j": 83.13430020200666,
+          "seconds": 54.735394792005536
+        }
+      },
+      "dopamine_at_retained_A": 4.6129161568389446e-08,
+      "SMP108_total_spikes": 0,
+      "SMP108_max_S": 0.05994910001754761,
+      "sign_changes": [],
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "maximum_energy_debt": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "records_sha256": {
+        "manifest.json": "10f650f3db96325fe4370956ef4f674bb8f7ff69c2cd42b0d76c3ce6bcbb6313",
+        "summary.json": "f04be1de0be856d3f6a9195088037754046fc63b9b1e247fcffa105ce19873ff",
+        "soma.npy": "346bbe5725e7bfd8118f8e1a5b1e53453949679c693160de0c653f730a1c7ba3",
+        "modulation.npy": "d6e91749f85911bd7989f444b7e969e1f7688f8b8e6f0f8d34fe162529b3b1c7",
+        "weights.npy": "17370abd8a5fd2b52e0b544404a86939195b63236b98636109d04121166c1d75",
+        "release.npy": "d58c12e6865dad2853c7522ce90fc17461cb4ad6b18ceedb98c4bd5260aa6bb8",
+        "physical.npy": "a7bc0152fa80bb72f2c9f1204e6ff275f95c9d8d525d2a4f1c13d8389b22f425",
+        "identities.npz": "61b597dbcbc02d97e97a08a30f22b4072ee210c289cecfb51193fd2a40732bd6",
+        "retention.paula": "b06d99823ba5bc440436666b04125d92b89704ffe392b03541ffac2afced4315",
+        "retention-body.npz": "c83d3d24db1a1019068aba09f3cd3a1b4c4b5a1d2c499762a95f58addf186073"
+      }
+    },
+    "hebb-paired": {
+      "record": "memory-hebb-paired-spaced-20260910",
+      "ticks": 10120,
+      "retained_weight": {
+        "A": 0.6189372075218849,
+        "C": 0.8988780522098316
+      },
+      "weight_change_during_retention": 0.0,
+      "test_responses": {
+        "A": {
+          "name": "retained_A",
+          "begin": 8920,
+          "end": 9120,
+          "spikes": {
+            "MBON07": 83,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 6
+          },
+          "mean_angle": 0.05259953095644498,
+          "max_dopamine": 2.2721717269166626e-10,
+          "weight_mean": 0.8522933373469098,
+          "energy_j": 83.61785459628176,
+          "seconds": 51.42566875000193
+        },
+        "C": {
+          "name": "retained_C",
+          "begin": 9520,
+          "end": 9720,
+          "spikes": {
+            "MBON07": 132,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.05159060538351936,
+          "max_dopamine": 1.1227668951731917e-11,
+          "weight_mean": 0.8780583989805155,
+          "energy_j": 83.13502874959164,
+          "seconds": 54.62603349999699
+        }
+      },
+      "dopamine_at_retained_A": 2.2721717269166626e-10,
+      "SMP108_total_spikes": 0,
+      "SMP108_max_S": 0.059949107468128204,
+      "sign_changes": [
+        {
+          "source": "720575940617302365",
+          "target": "720575940652390134",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 3308001,
+          "initial": -1.1,
+          "retained": 0.705834459014125
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940617302365",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7241903,
+          "initial": -1.6,
+          "retained": 1.1633752705242364e-10
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940652390134",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7242475,
+          "initial": -1.6,
+          "retained": 1.1633615493827338e-10
+        },
+        {
+          "source": "720575940652390134",
+          "target": "720575940617302365",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 14934463,
+          "initial": -1.0,
+          "retained": 0.7026832299757237
+        }
+      ],
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "maximum_energy_debt": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "records_sha256": {
+        "manifest.json": "bc88f57d0e3e4d712fa94b4002a122c3020a3cfa0e314ce45c6c01e12c74ad3b",
+        "summary.json": "16be4fddbc163ec6a4f3b7fe5d8d0bbac8954adb98af44ea6d72900c6c9eb23c",
+        "soma.npy": "a5c9a87db732d5874dba4baa6a49db159b450778d3e27e2f89645a0f8cda759e",
+        "modulation.npy": "2119e580e3d96115ee8e90b144474372beefb0a3c321dfab7eff1b48d3dca366",
+        "weights.npy": "0f23a4a148e13e4d65c1074d7237ff12e2cb874b95122a3737a678735cb022de",
+        "release.npy": "1bad9cbeac48bf6ccffaa883f95ca8579565ee76b70481db086230671838ac3c",
+        "physical.npy": "c9a5831b660be23621741d94fcc798c715908649c7df1113bdc94713f57507ff",
+        "identities.npz": "61b597dbcbc02d97e97a08a30f22b4072ee210c289cecfb51193fd2a40732bd6",
+        "retention.paula": "c4ec21ba71d80e3d0b410c69e7122abff0a14391df2d85e890fc810cf5df96b6",
+        "retention-body.npz": "cfa708dad2440319208da92ad4de9c3ef51683968082f24bf126b069865a5fbd"
+      }
+    },
+    "hebb-unpaired": {
+      "record": "memory-hebb-unpaired-spaced-20260910",
+      "ticks": 10120,
+      "retained_weight": {
+        "A": 0.8829838210272158,
+        "C": 0.886884694811797
+      },
+      "weight_change_during_retention": 0.0,
+      "test_responses": {
+        "A": {
+          "name": "retained_A",
+          "begin": 8920,
+          "end": 9120,
+          "spikes": {
+            "MBON07": 132,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 6
+          },
+          "mean_angle": 0.051822376987354105,
+          "max_dopamine": 4.6129161568389446e-08,
+          "weight_mean": 0.9136217444791528,
+          "energy_j": 83.61795596589288,
+          "seconds": 47.409934125011205
+        },
+        "C": {
+          "name": "retained_C",
+          "begin": 9520,
+          "end": 9720,
+          "spikes": {
+            "MBON07": 132,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.05144262158881259,
+          "max_dopamine": 2.279418183825619e-09,
+          "weight_mean": 0.9416522452706528,
+          "energy_j": 83.13506762257487,
+          "seconds": 51.055957792006666
+        }
+      },
+      "dopamine_at_retained_A": 4.6129161568389446e-08,
+      "SMP108_total_spikes": 0,
+      "SMP108_max_S": 0.059949107468128204,
+      "sign_changes": [
+        {
+          "source": "720575940617302365",
+          "target": "720575940652390134",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 3308001,
+          "initial": -1.1,
+          "retained": 0.8303181517074993
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940617302365",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7241903,
+          "initial": -1.6,
+          "retained": 1.1479985521737978e-10
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940652390134",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7242475,
+          "initial": -1.6,
+          "retained": 1.149167549678291e-10
+        },
+        {
+          "source": "720575940652390134",
+          "target": "720575940617302365",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 14934463,
+          "initial": -1.0,
+          "retained": 0.8316305466333636
+        }
+      ],
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "maximum_energy_debt": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "records_sha256": {
+        "manifest.json": "1907755eb83ef535980b2db3101e9e1caee1fa1f83afc714d769f6e3d3445ef2",
+        "summary.json": "fe6306202f390397d3cb9f4a8f07beb0c30cd6241ea1e0cbc9ccd13a526d239e",
+        "soma.npy": "f3a533dbb4e644f732f3e49278ff5bb31fa94fbc472bc17d057fdccff874531a",
+        "modulation.npy": "d6e91749f85911bd7989f444b7e969e1f7688f8b8e6f0f8d34fe162529b3b1c7",
+        "weights.npy": "097e89c26aebc8fcd58a3730f0cba3ff96b1cb88244c94d4d51ce9b9d04d3d38",
+        "release.npy": "a584e67f23198d4b0ae6f7a4c7bf406660d4dbe574f75f04b672f6eb6b9672de",
+        "physical.npy": "625c4b5eacf0e66f7f2d84198c770b1d1de99f4fd8f4e83abd75dd567652e09c",
+        "identities.npz": "61b597dbcbc02d97e97a08a30f22b4072ee210c289cecfb51193fd2a40732bd6",
+        "retention.paula": "505c2735d52c5cce57127cd2a03bc698bba3d813c27585959545e59b951ee01c",
+        "retention-body.npz": "c8fc9105929b290085a77f9542036465388210817a85fbd2d1f2b0e21a9efb09"
+      }
+    },
+    "hebb-receptor-block": {
+      "record": "memory-hebb-receptor-block-spaced-20260910",
+      "ticks": 10120,
+      "retained_weight": {
+        "A": 0.8830033774459191,
+        "C": 0.8989374195074991
+      },
+      "weight_change_during_retention": 0.0,
+      "test_responses": {
+        "A": {
+          "name": "retained_A",
+          "begin": 8920,
+          "end": 9120,
+          "spikes": {
+            "MBON07": 132,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 6
+          },
+          "mean_angle": 0.051881493145884965,
+          "max_dopamine": 0.0,
+          "weight_mean": 0.9196531582290721,
+          "energy_j": 83.61794741195416,
+          "seconds": 47.222736291994806
+        },
+        "C": {
+          "name": "retained_C",
+          "begin": 9520,
+          "end": 9720,
+          "spikes": {
+            "MBON07": 132,
+            "PAM11": 0,
+            "SMP353": 7,
+            "SMP108": 0,
+            "APL": 7
+          },
+          "mean_angle": 0.05138927878988156,
+          "max_dopamine": 0.0,
+          "weight_mean": 0.9447302463456906,
+          "energy_j": 83.13507553793855,
+          "seconds": 50.82973149999452
+        }
+      },
+      "dopamine_at_retained_A": 0.0,
+      "SMP108_total_spikes": 0,
+      "SMP108_max_S": 0.059949107468128204,
+      "sign_changes": [
+        {
+          "source": "720575940617302365",
+          "target": "720575940652390134",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 3308001,
+          "initial": -1.1,
+          "retained": 0.8552859762816925
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940617302365",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7241903,
+          "initial": -1.6,
+          "retained": 1.1629710703327159e-10
+        },
+        {
+          "source": "720575940624547622",
+          "target": "720575940652390134",
+          "source_type": "APL",
+          "target_type": "MBON07",
+          "source_row": 7242475,
+          "initial": -1.6,
+          "retained": 1.1629515519401209e-10
+        },
+        {
+          "source": "720575940652390134",
+          "target": "720575940617302365",
+          "source_type": "MBON07",
+          "target_type": "MBON07",
+          "source_row": 14934463,
+          "initial": -1.0,
+          "retained": 0.856449549706623
+        }
+      ],
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "maximum_energy_debt": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "records_sha256": {
+        "manifest.json": "88e771b60d0c59fcdf6bb07db526c3b9a73ff04d365b29cc20fa08c09c869d2c",
+        "summary.json": "a22e50427c096fb4c8cc0c32e69828b2e464e0f99fafd5678cfa1a75987f08cb",
+        "soma.npy": "dbb80b9bda6ef5b11b43a4dba4ec9db9bb68082c04306822c30bfe91c12676db",
+        "modulation.npy": "39650e587758178e51aea00d86106a24151f2cb7f4a35146cbaece197714d4d4",
+        "weights.npy": "976e9a6e94bc040513579f621ee8d2875b78f337e708d9b04e5e321c1e2049e2",
+        "release.npy": "4188d450df494f9eb3ebb393e92cca929e65dab6e63bb972d12aa7b7d70d0fbe",
+        "physical.npy": "8f89a1506d74f4805ef0ffa3024ac2d1d43fa17a1362464f5baa1e7f30752520",
+        "identities.npz": "61b597dbcbc02d97e97a08a30f22b4072ee210c289cecfb51193fd2a40732bd6",
+        "retention.paula": "f0412152707d14621d84e32f16987dc7adf70fe8b79a50055b58acf8ef2b6170",
+        "retention-body.npz": "91d614bce965141270a3afc1e5fc2fc143fed09ed1323d6e2d92efdc42cbc6bc"
+      }
+    }
+  },
+  "expression": {
+    "paired-sham-A": {
+      "cue": "A",
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "spikes": {
+        "MBON07": 83,
+        "PAM11": 0,
+        "SMP353": 7,
+        "SMP108": 0,
+        "APL": 6
+      },
+      "mean_angle": 0.05259953095644498,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": true,
+      "trace_sha256": "b415c050715749c77951499c4f32560839d2cd2ed81bdcdef7944d388d129807",
+      "record": "memory-expression-paired-sham-A-20260910"
+    },
+    "unpaired-sham-A": {
+      "cue": "A",
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "spikes": {
+        "MBON07": 132,
+        "PAM11": 0,
+        "SMP353": 7,
+        "SMP108": 0,
+        "APL": 6
+      },
+      "mean_angle": 0.051822376987354105,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": true,
+      "trace_sha256": "f508535e100c6825cdb631cf5b72ce47e74bce0979032a54aecd97db3a09f38a",
+      "record": "memory-expression-unpaired-sham-A-20260910"
+    },
+    "paired-unpairedweights-A": {
+      "cue": "A",
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "spikes": {
+        "MBON07": 132,
+        "PAM11": 0,
+        "SMP353": 7,
+        "SMP108": 0,
+        "APL": 6
+      },
+      "mean_angle": 0.0517379126502925,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "9d374799a5079c394bcad91e4987fa7bef18bdd96ef4b36ecc4529e8c20971c6",
+      "record": "memory-expression-paired-unpairedweights-A-20260910"
+    },
+    "unpaired-pairedweights-A": {
+      "cue": "A",
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "spikes": {
+        "MBON07": 81,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 6
+      },
+      "mean_angle": 0.0526882418631644,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "8f0209adc9d5a01e577d9f4cb342f393d1ad5d386e0845a6f3146b9405b4c127",
+      "record": "memory-expression-unpaired-pairedweights-A-20260910"
+    },
+    "paired-sham-C": {
+      "cue": "C",
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "spikes": {
+        "MBON07": 132,
+        "PAM11": 0,
+        "SMP353": 7,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.0517379126502925,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "3fa0a231a8594e6929b568307dbcce1032da38c56a1388c154467d0492047a6b",
+      "record": "memory-expression-paired-sham-C-20260910"
+    },
+    "paired-unpairedweights-C": {
+      "cue": "C",
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "spikes": {
+        "MBON07": 132,
+        "PAM11": 0,
+        "SMP353": 7,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.0517379126502925,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "4bcf44b4b5ed279da32fe8440ac4dee78414e957b02c824e3fdfd42df9491f7a",
+      "record": "memory-expression-paired-unpairedweights-C-20260910"
+    }
+  },
+  "native_pairing_weights_exactly_equal": true,
+  "conclusion": "Pairing-dependent stored coefficient effects with an existing alternative PAULA rule, but no accepted useful movement or second-order learning. The alternative also reverses four imported inhibitory current signs.",
+  "limits": [
+    "One deterministic anatomical selection and cue order; no population inference",
+    "Controlled KC currents, unfitted dopamine assignment and engineered hinge motor boundary",
+    "Retention measured in model ticks; no biological duration claim",
+    "Expression probes remain adaptive and their final responses include new within-probe learning",
+    "Student compartment is outside the running cut; second-order hypothesis is untested"
+  ],
+  "analysis_source_sha256": "0159fd10928aac79f36d337d72a705d288b681809c318f2ae419dfed2bac0be5"
+}

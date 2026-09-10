@@ -1,0 +1,323 @@
+{
+  "courses": {
+    "paired": {
+      "record": "memory-selected-paired-20260910",
+      "rule": {
+        "rule": "input_selected_existing_reward_hebb",
+        "MBON_eta_post": 0.01,
+        "dopamine_receptor_enabled": true,
+        "dopamine": "M[1], unit release on measured PAM11->MBON07 pairs; receiving adapt=count*0.02; original fast current retained",
+        "native": "Unchanged legacy_multiplicative equation and threshold/window modulation",
+        "dopamine_hebb": "Existing reward_hebb equation, kappa=-10, rh_decay=1. Dopamine suppresses its positive coincidence term; active-port decay remains. No new equation.",
+        "limits": "Soma-wide dopamine at MBON, no KC-terminal compartment model or dopamine receptor fit; inhibitory-input sign changes are measured, not prevented",
+        "equation": "Unchanged reward_hebb at selected KC->MBON inputs, legacy_multiplicative everywhere else",
+        "reason": "Whole-cell alternative reversed reciprocal current signs in the first comparison",
+        "limit": "An explicit rule-location hypothesis; still soma-wide dopamine and no biological timing fit",
+        "selected_memory_pairs": 128
+      },
+      "retained_weight": {
+        "A": 0.6189371801734189,
+        "C": 0.8988779807250298
+      },
+      "sign_changes_at_retention": [],
+      "SMP108_spikes": 0,
+      "SMP108_max_S": 0.059949103742837906,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 6,
+          "PAM11": 0,
+          "SMP353": 8,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.05321059514385773,
+        "max_dopamine": 2.2721717269166626e-10,
+        "weight_mean": 0.8522932206400569,
+        "energy_j": 83.61741128646537,
+        "seconds": 49.84312358300667
+      },
+      "retained_C": {
+        "name": "retained_C",
+        "begin": 9520,
+        "end": 9720,
+        "spikes": {
+          "MBON07": 20,
+          "PAM11": 0,
+          "SMP353": 8,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.05294712256318256,
+        "max_dopamine": 1.1227668951731917e-11,
+        "weight_mean": 0.8780585076924343,
+        "energy_j": 83.1344909563453,
+        "seconds": 53.469806333014276
+      },
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "sources": {
+        "manifest.json": "404641aa5ea40664d66311a47424276f95460e7fe35b8ec9e14884bade2f0720",
+        "summary.json": "0c492f744e786aa666a3dbf6c98c57b15ba178dfc957de2b87ddafbd054e3d07",
+        "weights.npy": "a4766cfd2499fec6b683813332dea3aabc0ff2af15f710283b03cdea373563bb",
+        "release.npy": "e1a4d4521d49e4906aef76d783dfb212c3e295f9363acab65b86fa8c25effe06",
+        "soma.npy": "473d7a20ce53edeff7b33881d63fed4421818e326eafd5476907eac9a336b5ed",
+        "physical.npy": "c775e15f877f83d0d908ee89da6e07d6fe89a2ddb1b7275e05bd55f8fdb24a49",
+        "modulation.npy": "2119e580e3d96115ee8e90b144474372beefb0a3c321dfab7eff1b48d3dca366",
+        "retention.paula": "9af4327ba99126f977f54955f30e186aca2ec185f0b7463d9ed28b0097cfa5f7"
+      }
+    },
+    "unpaired": {
+      "record": "memory-selected-unpaired-20260910",
+      "rule": {
+        "rule": "input_selected_existing_reward_hebb",
+        "MBON_eta_post": 0.01,
+        "dopamine_receptor_enabled": true,
+        "dopamine": "M[1], unit release on measured PAM11->MBON07 pairs; receiving adapt=count*0.02; original fast current retained",
+        "native": "Unchanged legacy_multiplicative equation and threshold/window modulation",
+        "dopamine_hebb": "Existing reward_hebb equation, kappa=-10, rh_decay=1. Dopamine suppresses its positive coincidence term; active-port decay remains. No new equation.",
+        "limits": "Soma-wide dopamine at MBON, no KC-terminal compartment model or dopamine receptor fit; inhibitory-input sign changes are measured, not prevented",
+        "equation": "Unchanged reward_hebb at selected KC->MBON inputs, legacy_multiplicative everywhere else",
+        "reason": "Whole-cell alternative reversed reciprocal current signs in the first comparison",
+        "limit": "An explicit rule-location hypothesis; still soma-wide dopamine and no biological timing fit",
+        "selected_memory_pairs": 128
+      },
+      "retained_weight": {
+        "A": 0.8829837702510569,
+        "C": 0.886884653514966
+      },
+      "sign_changes_at_retention": [],
+      "SMP108_spikes": 0,
+      "SMP108_max_S": 0.059949103742837906,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 22,
+          "PAM11": 0,
+          "SMP353": 8,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.05302365720719673,
+        "max_dopamine": 4.6129161568389446e-08,
+        "weight_mean": 0.9136218177470653,
+        "energy_j": 83.61744887816788,
+        "seconds": 49.97379454100155
+      },
+      "retained_C": {
+        "name": "retained_C",
+        "begin": 9520,
+        "end": 9720,
+        "spikes": {
+          "MBON07": 18,
+          "PAM11": 0,
+          "SMP353": 8,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.05298790486757646,
+        "max_dopamine": 2.279418183825619e-09,
+        "weight_mean": 0.941652469078838,
+        "energy_j": 83.13453753480681,
+        "seconds": 53.580042000015965
+      },
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "sources": {
+        "manifest.json": "b90d53d5f0763846f9a00e112a8f198022e62f5bb71f491b216f06bb9c92da58",
+        "summary.json": "461770607a618654f95e6ce46bb4f6ebab007709b720e238d3fa244d0ccf0f86",
+        "weights.npy": "55694386b4a78cecebe4592a1b2ad5140d41aeed11b70d94024e44726db059f4",
+        "release.npy": "2b2eef5c58db4ea59cf7a6c0e1e22e829ed93a78f8913ca23d7e117c00ac4adf",
+        "soma.npy": "4775e5e93b6cfad5ab179a62406efa4629d0dbd197a7ade83bb1d13083317fd1",
+        "physical.npy": "941faf7a24065781d00812674b2fe95be4d24e4ccf6579f539bb37351394eb5f",
+        "modulation.npy": "d6e91749f85911bd7989f444b7e969e1f7688f8b8e6f0f8d34fe162529b3b1c7",
+        "retention.paula": "713cf753b3659b60cd1b87484825ed8afdaf7deb3df713c62bf34f1ced4b7f63"
+      }
+    },
+    "receptor-block": {
+      "record": "memory-selected-receptor-block-20260910",
+      "rule": {
+        "rule": "input_selected_existing_reward_hebb",
+        "MBON_eta_post": 0.01,
+        "dopamine_receptor_enabled": false,
+        "dopamine": "M[1], unit release on measured PAM11->MBON07 pairs; receiving adapt=count*0.02; original fast current retained",
+        "native": "Unchanged legacy_multiplicative equation and threshold/window modulation",
+        "dopamine_hebb": "Existing reward_hebb equation, kappa=-10, rh_decay=1. Dopamine suppresses its positive coincidence term; active-port decay remains. No new equation.",
+        "limits": "Soma-wide dopamine at MBON, no KC-terminal compartment model or dopamine receptor fit; inhibitory-input sign changes are measured, not prevented",
+        "equation": "Unchanged reward_hebb at selected KC->MBON inputs, legacy_multiplicative everywhere else",
+        "reason": "Whole-cell alternative reversed reciprocal current signs in the first comparison",
+        "limit": "An explicit rule-location hypothesis; still soma-wide dopamine and no biological timing fit",
+        "selected_memory_pairs": 128
+      },
+      "retained_weight": {
+        "A": 0.8830033266690658,
+        "C": 0.8989373438615706
+      },
+      "sign_changes_at_retention": [],
+      "SMP108_spikes": 0,
+      "SMP108_max_S": 0.059949103742837906,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 23,
+          "PAM11": 0,
+          "SMP353": 8,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.052919074005957877,
+        "max_dopamine": 0.0,
+        "weight_mean": 0.9196532145767495,
+        "energy_j": 83.61751339750812,
+        "seconds": 49.71363720900263
+      },
+      "retained_C": {
+        "name": "retained_C",
+        "begin": 9520,
+        "end": 9720,
+        "spikes": {
+          "MBON07": 20,
+          "PAM11": 0,
+          "SMP353": 7,
+          "SMP108": 0,
+          "APL": 7
+        },
+        "mean_angle": 0.05303662474835345,
+        "max_dopamine": 0.0,
+        "weight_mean": 0.9447305334993648,
+        "energy_j": 83.13455831797104,
+        "seconds": 53.32497683400288
+      },
+      "delivered_j": 0.96,
+      "digested_j": 0.96,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "sources": {
+        "manifest.json": "8fe25be0e626bf362676711a53eb36e8196c1a39b6868a5874b995280815665d",
+        "summary.json": "0dcaf2d36646d52c308a525f3490d82b9bfa9d989db7e649c2b82f7df46c250f",
+        "weights.npy": "e3606f1685bac737de9c9b1d4a22b9f91628f06e36fa001d185f62fca21dba05",
+        "release.npy": "460df81377e6a04074ed0c97263404fc52f6d571b9e028628ba35022d1a22fa8",
+        "soma.npy": "2dc0db8e6680487fb2ea9a425dc31039ccd9e762b98c28ff812b7817142f7671",
+        "physical.npy": "9dc82524f50128997f90d9fe3aef069c4963bdcd12bac6d238f4df7eb3fc3640",
+        "modulation.npy": "39650e587758178e51aea00d86106a24151f2cb7f4a35146cbaece197714d4d4",
+        "retention.paula": "ac7a7277d3d2d0c25b6cf875d9b334349177dda1e6fccc853f4cc63efbc2e417"
+      }
+    }
+  },
+  "probes": {
+    "paired-sham-A": {
+      "cue": "A",
+      "spikes": {
+        "MBON07": 6,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.05321059514385773,
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": true,
+      "trace_sha256": "f17d136176d9b85a9451c80768d42a3ca9fac40417d98f6d9fb6e9dd64634704",
+      "record": "memory-selected-expression-paired-sham-A-20260910"
+    },
+    "unpaired-sham-A": {
+      "cue": "A",
+      "spikes": {
+        "MBON07": 22,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.05302365720719673,
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": true,
+      "trace_sha256": "dad109f4352825331a7f15b85b5a5c57dce98c45f3771b570354aca82133ebd3",
+      "record": "memory-selected-expression-unpaired-sham-A-20260910"
+    },
+    "paired-unpairedweights-A": {
+      "cue": "A",
+      "spikes": {
+        "MBON07": 23,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.05291395116211243,
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "eabfa828f98dece59ab8bd4e148e1b3f00efb7f3d7dd75dd8acfbacd8f2b1820",
+      "record": "memory-selected-expression-paired-unpairedweights-A-20260910"
+    },
+    "unpaired-pairedweights-A": {
+      "cue": "A",
+      "spikes": {
+        "MBON07": 5,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.0532105913556347,
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "a91775ee5e5fc86098e02537c3ce1b1e089bb545ab27c186231bce4d1a6cf240",
+      "record": "memory-selected-expression-unpaired-pairedweights-A-20260910"
+    },
+    "paired-sham-C": {
+      "cue": "C",
+      "spikes": {
+        "MBON07": 21,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.0530319565979587,
+      "changed_receiving": 0,
+      "changed_release": 0,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "db9af3d0baee08c000f4614e3280a031bc147c4dfe6781f3220989191e657807",
+      "record": "memory-selected-expression-paired-sham-C-20260910"
+    },
+    "paired-unpairedweights-C": {
+      "cue": "C",
+      "spikes": {
+        "MBON07": 21,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 0,
+        "APL": 7
+      },
+      "mean_angle": 0.05293946605855235,
+      "changed_receiving": 128,
+      "changed_release": 128,
+      "changed_weights_during_probe": 64,
+      "exact_A_sham_replay": null,
+      "trace_sha256": "af4b47f293bd0eb0177e8fe6c1d3f5ce221a10da75bbac60cae7d14a0440a890",
+      "record": "memory-selected-expression-paired-unpairedweights-C-20260910"
+    }
+  },
+  "analysis_source_sha256": "e18fb3a9c14e89aa22b95028bd7457c300268c07de4df21fdd1759cfb94b3f87",
+  "conclusion": "Restricting the existing alternative equation to memory inputs preserves imported internal current signs and retains causal cue-memory expression. Useful movement and the teaching route remain unresolved; no second-order trial."
+}

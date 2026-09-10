@@ -286,6 +286,97 @@ uv run --no-sync --with cloudpickle==3.1.2 python \
   simulations/drosophila/memory_feedback/evidence/body-context
 ```
 
+## Continuous feeding without scheduled returns
+
+`continuous_portions.py` replaces unlimited food with a finite physical
+transducer. Contact at or above 0.04 rad permits the existing 0.008 J ingestion
+quantum, up to 0.8 J per portion. Once depleted, a portion replenishes only when
+the hinge withdraws to or below 0.02 rad. The environment does not replenish on
+a timer, signal an action phase, or reset the body or neurons between attempts.
+Cue A remains present throughout 5,000 consecutive ticks, or 20 model seconds.
+Inventory flags are recorded for audit and never supplied to the controller.
+
+The earlier 600-tick omission record never crossed below 0.22268 rad. Its late
+mean drive would balance the spring near 0.21747 rad. A body-only diagnostic
+from that endpoint, with no new motor output but the existing muscle decay,
+crosses 0.04 rad after 309 ticks and 0.02 rad after 363 ticks. Withdrawal is
+mechanically available; the short record cannot decide whether the continuing
+neural system will organize it. The continuous experiment starts from the
+later accepted `retention-food-body` state, preserving its acquired expectation.
+
+One matched control erases only the predictor's 64 nonzero contextual weights
+at that starting state. Original KC-to-MBON memory, other neural state, random
+generators, body state and initial inventory are exact between arms. Both keep
+native learning and the unit omission-to-action projection active. The erased
+predictor can learn again during the task. This isolates the contribution of
+the initial stored expectation, not all learning or all feedback dynamics.
+
+| Continuous measurement | Expectation retained | Initially erased |
+| --- | ---: | ---: |
+| Portions acquired | 7 | 1 |
+| Physical replenishments | 6 | 0 |
+| Food acquired, J | 5.600 | 0.800 |
+| Total physical expenditure, J | 6.060233 | 5.716449 |
+| Energy + gut change, J | -0.460233 | -4.916449 |
+| Lowest angle after first depletion, rad | 0.011861 | 0.275535 |
+
+The retained branch disengages and reaches again without scheduled cue blanks.
+Replenishments occur at ticks 713, 1473, 2228, 2982, 3736 and 4490. The erased
+branch remains beyond the collection boundary after exhausting its first
+portion. Restoring the erased starting coefficients independently reproduces
+the retained branch's complete initial neural and random-generator state.
+Every recorded inventory transition is checked against actual pre-step angle
+and accepted ingestion; neural and body clocks both advance continuously.
+
+This is a causal contribution of learned expectation to termination and renewed
+acquisition in the fixed feedback circuit. It resolves the uncertainty left by
+the short omission record. It does not demonstrate acquisition of an action
+sequence: a feedback oscillation whose operating regime depends on learned
+coefficients remains compatible with the result.
+
+Renewal also fails the predeclared positive-energy criterion. Its 6.060233 J
+expenditure comprises 4.000 J basal demand, 0.949067 J activation cost and
+1.111166 J metabolic cost of positive mechanical work. The comparative energy
+benefit over erasure is 4.456216 J, but the retained system still loses stored
+energy. This is not merely an unfortunate stopping phase: all five complete
+replenishment-to-replenishment intervals lose energy, by 0.086071–0.108920 J
+per 0.8 J portion. Later cycles last about 3.016 model seconds. The budget is
+the existing illustrative hinge/gut accounting, including no neural metabolic
+charge; neither arm incurs unmet demand or overflow. Self-maintaining feeding
+is therefore not established by this bounded result.
+
+The [audited continuous record](evidence/continuous-portions/continuous-portions.json)
+and [full-run figure](evidence/continuous-portions/continuous-portions.png)
+preserve both the demonstrated renewal and the energy deficit. The
+[matched 3D replay](evidence/continuous-portions/continuous-portions-replay.mp4)
+uses these new records, showing the first depletion, withdrawal and renewed
+collection, followed by a labelled later interval. It uses the same camera,
+quarter speed and actual saved poses; omitted intervals and the full-run
+energy losses are explicit. The [replay receipt](evidence/continuous-portions/continuous-portions-replay.json)
+pins its sources. No longer exposure, gain change or new controller follows
+this comparison. Physical checkpoints retain inventory as well as hinge and
+organ state; restore these with `continuous_portions.restore`.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuous_portions prepare \
+  .live/research/flywire783 .live/research/flywire783/memory-continuous-portions-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuous_portions retained \
+  .live/research/flywire783 .live/research/flywire783/memory-continuous-portions-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuous_portions erased \
+  .live/research/flywire783 .live/research/flywire783/memory-continuous-portions-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuous_portions_analysis \
+  .live/research/flywire783 .live/research/flywire783/memory-continuous-portions-20260910 \
+  simulations/drosophila/memory_feedback/evidence/continuous-portions
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuous_portions_replay \
+  .live/research/flywire783/memory-continuous-portions-20260910 \
+  simulations/drosophila/memory_feedback/evidence/continuous-portions
+```
+
 ## Reusing acquired B as a teacher for C
 
 The accepted A-to-B result is a completed building block. One additional,

@@ -1,0 +1,66 @@
+{
+  "source_sha256": "fd229a0c4df5fc0d832f87cc4b7feabf02320dfae6e86ad6381db1106f17f41a",
+  "source": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/flywire783/memory-continuous-portions-20260910",
+  "manifest_sha256": "e5e9d61b7427236073a3381eb0d267758e71b0e08a32c8dc11fd24d693eaba38",
+  "records": [
+    {
+      "record": "retained",
+      "summary_sha256": "97fd746b64ae2b246c7fac0e0b29f821e2d93840352e5e53b57383ac49c554ce",
+      "body_sha256": "777557609358f9f6ee5329c267cd0d9ea7f2fdd1c3562bfc1da9aa0627cf4fe6",
+      "environment_sha256": "8e3acbc79930503ef79041adb829a60a64bd6ecf0d96241b3743d759e6e0c554"
+    },
+    {
+      "record": "erased",
+      "summary_sha256": "c02103de7e4fbcf28af059753529534c16c1197efa539c2ebc9a87c6df6fceab",
+      "body_sha256": "18ac80da6e3c3a551625d778a4751ce3cf6d041159514ab447834542f3ab2c3e",
+      "environment_sha256": "c8cbc4255e0b1822bc1b13be1ca5282242cd63a6e63999e2669fb6498e7bc905"
+    }
+  ],
+  "renderer": "Existing LoadedHinge XML and mujoco.Renderer; saved qpos/qvel/control; mj_forward only",
+  "body_xml_sha256": "50a6454059f0280d4059238f415879167ae2029914d62409a7658659348a4cea",
+  "mujoco_version": "3.5.0",
+  "camera": {
+    "lookat": [
+      0.125,
+      0,
+      0
+    ],
+    "distance": 0.55,
+    "azimuth": 90,
+    "elevation": -90
+  },
+  "dt": 0.004,
+  "fps": 62.5,
+  "playback_speed": 0.25,
+  "angular_amplification": 1,
+  "physics_steps": 0,
+  "neural_steps": 0,
+  "stages": [
+    {
+      "title": "First depletion, withdrawal and renewed collection",
+      "start_tick": 0,
+      "stop_tick_exclusive": 1000,
+      "rendered_poses": 1000,
+      "final_hold_seconds": 0.992
+    },
+    {
+      "title": "Later renewal under the same continuous cue",
+      "start_tick": 3700,
+      "stop_tick_exclusive": 4500,
+      "rendered_poses": 800,
+      "final_hold_seconds": 0.992
+    }
+  ],
+  "full_record_results": {
+    "retained": {
+      "food_j": 5.599999999999997,
+      "energy_gain_j": -0.4602327517196727
+    },
+    "erased": {
+      "food_j": 0.7999999999999996,
+      "energy_gain_j": -4.916448686519516
+    }
+  },
+  "movie_sha256": "3780c479f079c07071804f475ec5acb8583bce02c60446c410d0ebf28d4be983",
+  "scope": "Two matched continuously simulated branches. Ticks1000:3700 and4500:5000 are not shown; no acquisition or state reset occurred at chapter boundaries. All visible poses are actual records, with no interpolation or amplification. Food is an angle-gated finite transducer, not a rendered object; hinge is not a fly locomotion reconstruction. E change is energy+gut relative to each original matched start."
+}

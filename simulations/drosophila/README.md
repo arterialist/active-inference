@@ -54,6 +54,13 @@ Late LN-to-LN transmission blockade roughly halves LN recovery firing but leaves
 PN persistence. Blocking those LN inputs only onto the target PN stops its
 recovery firing while also removing its continuing sensory response. Neither
 reduced population counts nor a quiet output certifies functional restoration.
+The completed two-factor follow-up blocks PN-to-LN feedback alone or together
+with LN-to-LN excitation. Neither block alone ends persistence. Together they
+eliminate LN recovery firing while retaining target-PN stimulus responses.
+This identifies interacting sustaining routes, not a proposed permanent lesion
+or an intact circuit repair. The cited transmitter-prediction paper also flags
+antennal-LN serotonin/dopamine labels as uncertain, constraining the next
+physiological interpretation of these paths.
 
 The [conditional sensory-gain assay](LN_GAIN_CONTROL_2026-09-10.md) now tests
 42 ORNs, their PN and an identified inhibitory LN under independent sensory

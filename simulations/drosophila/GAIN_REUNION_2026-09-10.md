@@ -133,6 +133,51 @@ They identify necessary delivery to this PN and a contribution of LN-to-LN
 transmission to population maintenance. They do not identify a minimal
 sustaining loop, prove indefinite persistence, or establish a functional repair.
 
+## Two routes can sustain the unwanted activity
+
+Two further completed courses block positive-model PN-to-LN transmission, or
+the union of that pathway and positive-model LN-to-LN transmission. Together
+with the intact and LN-only conditions they form a two-factor intervention.
+All four share the same past until tick 600 and the same ongoing stimulation.
+
+| Positive LN→LN blocked | Positive PN→LN blocked | LN recovery spikes | LNs firing in recovery | Target PN stimulus spikes after block | Target PN recovery spikes |
+| --- | --- | ---: | ---: | ---: | ---: |
+| No | No | 43,060 | 169 | 147 | 168 |
+| Yes | No | 20,543 | 111 | 153 | 172 |
+| No | Yes | 38,710 | 154 | 146 | 167 |
+| Yes | Yes | 0 | 0 | 52 | 2 |
+
+Neither individual block ends the target PN's persistence. Combining them does,
+while preserving a response to continuing sensory input. The combined course's
+last ORN spike is at 1199, its last LN spike at 1193, and its last PN spike at
+1217. It retains 41 target-PN spikes during the settled stimulus interval
+800–1199. This is different from the earlier target-only block, which silenced
+the output despite continuing stimulation.
+
+This establishes conditional dependence in the modeled circuit. PN-to-LN
+transmission is required to maintain the broad activity when positive-model
+LN-to-LN transmission is absent; either remaining network can sustain substantial
+activity when only the other route is blocked. It does not establish that either
+pathway is sufficient without the other retained connections or identify a
+minimal cycle. The result also does not separate synaptic adaptation from fast
+state as the origin of recruitment. Learning remains active in all conditions.
+
+The PN-only block selects 8,108 measured pairs from 158 source cells. The combined
+block selects the disjoint union of 16,957 pairs from 278 sources. Each new run
+matches 1,956,000 pre-intervention values and all commands against intact. Both
+first change neural state and spikes at tick 603. The PN-only course withholds
+2,720,305 forward events. The combined course withholds only 23,203 because the
+network stops generating the sustained releases that would otherwise follow.
+Independent target receiving replay and gate/routing checks pass throughout
+both 2,200-tick courses.
+
+The combined lesion is a diagnostic reference, not the proposed final circuit.
+It retains the controlled LN electrode and removes broad classes of functional
+transmission. It has not demonstrated autonomous lateral normalization, odor
+identity discrimination, multi-intensity robustness or learning. It shows that
+the present persistent activity can be ended through recurrent input to LNs
+without disabling the target's sensory response or resetting neural state.
+
 ## Biological interpretation and next functional bottleneck
 
 The source graph's positive/negative column is a model assumption, not a
@@ -149,11 +194,19 @@ developing inhibition between LNs. Our homogeneous recurrent coupling is not
 a reconstruction of those diverse mechanisms. A repair must preserve useful
 responses to changing inputs, rather than merely make this network quiet.
 
-The next question is what sustains the remaining active LNs without their
-positive-model LN-to-LN inputs. PN-to-LN feedback is one candidate, not a result
-of the present tests. The repair target is stimulus-dependent recurrent drive
-and regulation together. Simply reducing all excitation, strengthening the
-sensory gate, or cutting input to the consumer is not supported as a solution.
+The PN feedback test above resolves the earlier question of why positive-model
+LN-to-LN blockade alone did not end persistence. The repair target is now the
+joint dynamics of both recurrent routes and their recruitment of inhibition.
+Simply strengthening the sensory gate or cutting input to the consumer is not
+supported as a solution. Broad permanent pathway removal would evade the
+composition problem rather than reconstruct a functional biological circuit.
+
+[Yaksi and Wilson, 2010](https://www.sciencedirect.com/science/article/pii/S0896627310006847)
+found PN-to-excitatory-LN transmission with chemical and electrical components.
+Excitatory LNs also drove inhibitory LNs, giving that network opposing effects
+on PN output. This supports studying feedback and inhibition together. It does
+not establish an electrical connection for each of our chemically reconstructed
+pairs, nor map their recorded cells to these specific FlyWire identities.
 
 The five largest positive-model LN contributions to target-PN recovery remain
 unchanged after the LN-to-LN block. Their roots are `720575940611671506`,
@@ -166,6 +219,23 @@ transmitter, source-model sign and measured postsynaptic action are different
 evidence categories. Fast positive current is not justified by the sign column
 alone.
 
+This uncertainty is explicitly discussed in the prediction paper, not merely
+an objection inferred from our simulation. [Eckstein et al., 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11106717/)
+identify antennal LNs as a difficult case. They suggest that local neurons
+predicted as serotonergic or dopaminergic should often instead be GABAergic or
+cholinergic, with morphology supporting the latter in many cases. Serotonin
+was their least reliable transmitter class. The five cells above have retained
+confidence scores between 0.297 and 0.359. These scores are not independent
+receptor measurements.
+
+The imported binary signs also need their own provenance. [Shiu et al., 2024](https://www.nature.com/articles/s41586-024-07763-9)
+assigned inhibition when a majority of presynaptic sites voted for GABA or
+glutamate, and placed monoaminergic predictions in the excitatory category.
+That convention helps explain why a binary model sign and the separate
+annotation's winning transmitter label need not match. It is not a justification
+for assigning every connection identical fast current dynamics. Nor would it
+justify turning every serotonin-predicted LN into a neuromodulatory neuron.
+
 ## Evidence and reproduction
 
 Local recordings are under `.live/research/flywire783/`:
@@ -176,6 +246,8 @@ Local recordings are under `.live/research/flywire783/`:
 - `dl5-gain-reunion-antennal-50-20260910/`
 - `dl5-gain-antennal-recurrent-block600-20260910/`
 - `dl5-gain-antennal-target-block600-20260910/`
+- `dl5-gain-antennal-pn-feedback-block600-20260910/`
+- `dl5-gain-antennal-ln-pn-feedback-block600-20260910/`
 
 Each contains chunked tick recordings, structure, a run manifest and a
 `comparison/` directory with receiving replays and analysis. Source hashes are
@@ -190,6 +262,8 @@ boundary cut explicit. `--pathway positive_LN_to_LN` or
 `--pathway positive_LN_to_target_PN`, with `--block-start 600`, defines the late
 intervention. Analysis accepts `--reference` pointing to the intact course and
 checks pre-intervention parity, anatomical bindings and transmission counts.
+The two-factor follow-up uses `--pathway positive_PN_to_LN` and
+`--pathway positive_LN_or_PN_to_LN` with the same onset and intact reference.
 
 No learning, memory, behavioral or consciousness capability is established by
 these reunion experiments. They identify why an isolated functional component

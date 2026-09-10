@@ -73,12 +73,16 @@ def test_recurrent_block_selects_only_declared_internal_positive_model_pairs():
     edges=np.array([[101,int(LN),1,3,10,1,10,0,0],
         [101,int(PN),1,2,10,1,10,0,1], [int(LN),101,3,1,10,-1,-10,0,2],
         [101,202,1,5,10,1,10,0,3], [202,int(LN),5,3,10,1,10,0,4],
-        [101,203,1,6,10,1,10,0,5]],dtype=np.int64)
-    bindings=np.array([[i,1,i,3,0] for i in range(5)],dtype=np.int64)
+        [101,203,1,6,10,1,10,0,5],
+        [int(PN),int(LN),2,3,10,1,10,0,6],
+        [int(PN),101,2,1,10,-1,-10,0,7]],dtype=np.int64)
+    bindings=np.array([[i,1,i,3,0] for i in (0,1,2,3,4,6,7)],dtype=np.int64)
     graph=Subgraph(roots[:-1],nodes,edges,{})
     prep=SimpleNamespace(edge_bindings=bindings)
     np.testing.assert_array_equal(pathway_bindings(prep,graph,"positive_LN_to_LN"),bindings[[0]])
     np.testing.assert_array_equal(pathway_bindings(prep,graph,"positive_LN_to_target_PN"),bindings[[1]])
+    np.testing.assert_array_equal(pathway_bindings(prep,graph,"positive_PN_to_LN"),bindings[[5]])
+    np.testing.assert_array_equal(pathway_bindings(prep,graph,"positive_LN_or_PN_to_LN"),bindings[[0,5]])
     assert pathway_bindings(prep,graph,"none").shape==(0,5)
     with pytest.raises(ValueError):pathway_bindings(prep,graph,"all_excitation")
     returning=RetrogradeSignalEvent.__new__(RetrogradeSignalEvent)

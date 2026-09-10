@@ -25,6 +25,9 @@ from .presynaptic_prepare import prepare_inhibited, PresynapticInhibitionNeuron
 from .prisco import digest, dump_new
 from neuron.neuron import RetrogradeSignalEvent
 
+PATHWAYS = ("none", "positive_LN_to_LN", "positive_LN_to_target_PN",
+            "positive_PN_to_LN", "positive_LN_or_PN_to_LN")
+
 
 def reunion_cut(graph, scope):
     if scope == "full": return graph
@@ -57,15 +60,20 @@ def pathway_bindings(prep, graph, pathway):
     This is an experimental transmission block, not a sign correction or a
     claim about receptor physiology. Anatomical bindings remain unchanged.
     """
-    if pathway not in ("none", "positive_LN_to_LN", "positive_LN_to_target_PN"):
+    if pathway not in PATHWAYS:
         raise ValueError("Unknown recurrent pathway intervention")
     rows = set()
     for e in graph.edges:
         source, target = graph.nodes[str(e[0])]["annotation"], graph.nodes[str(e[1])]["annotation"]
-        if pathway == "none" or e[5] <= 0 or source["cell_class"] != "ALLN" or source["hemibrain_type"] == "APL":
+        if pathway == "none" or e[5] <= 0 or source["hemibrain_type"] == "APL":
             continue
-        if ((pathway == "positive_LN_to_LN" and target["cell_class"] == "ALLN" and target["hemibrain_type"] != "APL")
-                or (pathway == "positive_LN_to_target_PN" and str(e[1]) == PN)):
+        source_ln=source["cell_class"]=="ALLN"
+        source_pn=source["cell_class"]=="ALPN"
+        target_ln=target["cell_class"]=="ALLN" and target["hemibrain_type"]!="APL"
+        if ((pathway == "positive_LN_to_LN" and source_ln and target_ln)
+                or (pathway == "positive_PN_to_LN" and source_pn and target_ln)
+                or (pathway == "positive_LN_or_PN_to_LN" and (source_ln or source_pn) and target_ln)
+                or (pathway == "positive_LN_to_target_PN" and source_ln and str(e[1]) == PN)):
             rows.add(int(e[8]))
     return np.array([e for e in prep.edge_bindings if int(e[0]) in rows], dtype=np.int64).reshape(-1, 5)
 
@@ -228,7 +236,7 @@ def main():
     p.add_argument("--lateral",type=float,default=80.)
     p.add_argument("--seed",type=int,default=11)
     p.add_argument("--lesion",choices=("intact","LN_to_ORN_block","LN_to_PN_block","LN_release_block"),default="intact")
-    p.add_argument("--pathway",choices=("none","positive_LN_to_LN","positive_LN_to_target_PN"),default="none")
+    p.add_argument("--pathway",choices=PATHWAYS,default="none")
     p.add_argument("--block-start",type=int,default=600)
     a=p.parse_args()
     run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,scope=a.scope,gain=a.gain,direct=a.direct,

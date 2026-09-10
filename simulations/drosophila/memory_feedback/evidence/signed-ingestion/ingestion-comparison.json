@@ -1,0 +1,565 @@
+{
+  "source_sha256": "7c30822a1900dd115c1e5438b4bf2519a8638851016629ae0b596fe9d4092776",
+  "source": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/flywire783/memory-ingestion-signed-20260910",
+  "manifest_sha256": "ecea963ff11098bb7a7e5b55c8057e0e8942120562540d86d6bcef989261aed7",
+  "verification_sha256": "144d03e50d023f9969a5a923852f9ff389979d6f094b84cb534193378b6baffa",
+  "learned_persistent_comparison": true,
+  "late_negative_means": {
+    "food": [
+      0.0,
+      0.0
+    ],
+    "omission": [
+      0.06643119007349015,
+      0.06539367015163104
+    ],
+    "erased": [
+      0.0011576243272672098,
+      0.0011395433843911936
+    ],
+    "untrained": [
+      0.0007496438850648702,
+      0.0007379208528436721
+    ]
+  },
+  "action": {
+    "omission-intact": {
+      "ingested_j": 0.0,
+      "stored_energy_gain_j": -0.5916348572623349,
+      "energy_demand_j": 0.591634857262811,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 0.11163485726281092,
+      "motor_output_sum": 26.0,
+      "maximum_angle": 0.5603561883959813,
+      "gate": {
+        "cut": false,
+        "observed": 572,
+        "removed": 0
+      },
+      "summary_sha256": "889b112af13936439440e60356707c0e2cd8986c1d5db740ee5e9d09d8712d1c",
+      "retained_food_probes": {
+        "A": {
+          "ingested_j": 0.6080000000000001,
+          "stored_energy_gain_j": 0.28442386839986966,
+          "energy_demand_j": 0.3235761315999035,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.1635761315999035,
+          "motor_output_sum": 19.0,
+          "maximum_angle": 0.16635146398222236,
+          "gate": {
+            "cut": false,
+            "observed": 129,
+            "removed": 0
+          },
+          "summary_sha256": "fcee584184a949474671c9d9b062760b277b00e9dfd71f76f076fda33ddb45b0"
+        },
+        "B": {
+          "ingested_j": 0.8400000000000003,
+          "stored_energy_gain_j": 0.502355011732945,
+          "energy_demand_j": 0.33764498826671385,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.17764498826671385,
+          "motor_output_sum": 21.0,
+          "maximum_angle": 0.2158155543068506,
+          "gate": {
+            "cut": false,
+            "observed": 99,
+            "removed": 0
+          },
+          "summary_sha256": "6fccad6a4e7a3af6c9990611c67feeba1bd1081b04b8ccd748877b2644b48b51"
+        },
+        "C": {
+          "ingested_j": 0.8080000000000003,
+          "stored_energy_gain_j": 0.47808231702386195,
+          "energy_demand_j": 0.32991768297577195,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.16991768297577195,
+          "motor_output_sum": 20.0,
+          "maximum_angle": 0.2058941965084446,
+          "gate": {
+            "cut": false,
+            "observed": 103,
+            "removed": 0
+          },
+          "summary_sha256": "f4b9b5865c74a166ecd2129cf3a16d1f344a3ebe11b0bb0f434afde1c909d99f"
+        }
+      },
+      "original_memory_maximum_change_since_acquisition": {
+        "A": 0.000255584716796875,
+        "B": 0.0,
+        "C": 0.0
+      }
+    },
+    "omission-cut": {
+      "ingested_j": 0.0,
+      "stored_energy_gain_j": -0.7277492747162739,
+      "energy_demand_j": 0.7277492747163379,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 0.24774927471633784,
+      "motor_output_sum": 52.0,
+      "maximum_angle": 0.6170314334933344,
+      "gate": {
+        "cut": true,
+        "observed": 572,
+        "removed": 572
+      },
+      "summary_sha256": "176d1d65cf3b3ef7b195d53cdc4069a32fe6697ebb3dd59f0652b6493554b290",
+      "retained_food_probes": {
+        "A": {
+          "ingested_j": 1.0000000000000002,
+          "stored_energy_gain_j": 0.47373768271936,
+          "energy_demand_j": 0.5262623172803025,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.36626231728030245,
+          "motor_output_sum": 31.0,
+          "maximum_angle": 0.3538101920615972,
+          "gate": {
+            "cut": true,
+            "observed": 80,
+            "removed": 80
+          },
+          "summary_sha256": "2436d5d578306aa919fd1a0e235ed670ff1fea5c015e4756e09182c7e305d4bd"
+        },
+        "B": {
+          "ingested_j": 0.8400000000000003,
+          "stored_energy_gain_j": 0.5019811216829595,
+          "energy_demand_j": 0.33801887831662825,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.17801887831662824,
+          "motor_output_sum": 21.0,
+          "maximum_angle": 0.21614987898379998,
+          "gate": {
+            "cut": true,
+            "observed": 99,
+            "removed": 99
+          },
+          "summary_sha256": "c14f474fb329da4bd2502be306038a476ba09f1865b0453ea866aa58cb9439a1"
+        },
+        "C": {
+          "ingested_j": 0.8000000000000003,
+          "stored_energy_gain_j": 0.48105677379756173,
+          "energy_demand_j": 0.31894322620197,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.15894322620197002,
+          "motor_output_sum": 20.0,
+          "maximum_angle": 0.1981871968365559,
+          "gate": {
+            "cut": true,
+            "observed": 104,
+            "removed": 104
+          },
+          "summary_sha256": "999b288e05bdfa66f236e5669ba11ba8699837db48b4ea307b64b4c6ce936212"
+        }
+      },
+      "original_memory_maximum_change_since_acquisition": {
+        "A": 0.000255584716796875,
+        "B": 0.0,
+        "C": 0.0
+      }
+    },
+    "food-intact": {
+      "ingested_j": 4.800000000000001,
+      "stored_energy_gain_j": 3.177332212154866,
+      "energy_demand_j": 1.6226677878423033,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 1.1426677878423033,
+      "motor_output_sum": 114.0,
+      "maximum_angle": 1.05547346370293,
+      "gate": {
+        "cut": false,
+        "observed": 0,
+        "removed": 0
+      },
+      "summary_sha256": "b297936073d99c1e262009dd90a82bd25cfc4dba9fd7348f77d31cfef12a017e",
+      "retained_food_probes": {
+        "A": {
+          "ingested_j": 0.0,
+          "stored_energy_gain_j": -0.16226438486866357,
+          "energy_demand_j": 0.16226438486876305,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.002264384868763042,
+          "motor_output_sum": 1.0,
+          "maximum_angle": 0.018638642161399488,
+          "gate": {
+            "cut": false,
+            "observed": 195,
+            "removed": 0
+          },
+          "summary_sha256": "96a2d3978410b8e2256dde2b2bdaeab1d7d098c8f8f2ce28dcb87dc8220b7086"
+        },
+        "B": {
+          "ingested_j": 0.8400000000000003,
+          "stored_energy_gain_j": 0.501098529768484,
+          "energy_demand_j": 0.3389014702311286,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.1789014702311286,
+          "motor_output_sum": 21.0,
+          "maximum_angle": 0.21690262434231578,
+          "gate": {
+            "cut": false,
+            "observed": 0,
+            "removed": 0
+          },
+          "summary_sha256": "7df5807811d87be25f1a074e342eed4c35d6f9688b3724882255a99878ccccce"
+        },
+        "C": {
+          "ingested_j": 0.8000000000000003,
+          "stored_energy_gain_j": 0.480242817059505,
+          "energy_demand_j": 0.319757182940009,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.15975718294000898,
+          "motor_output_sum": 20.0,
+          "maximum_angle": 0.19893994219507147,
+          "gate": {
+            "cut": false,
+            "observed": 0,
+            "removed": 0
+          },
+          "summary_sha256": "dabebf8a7c223d2942b5221beced1f3aaa45f7b7446e746b538e710a65f5bf99"
+        }
+      },
+      "original_memory_maximum_change_since_acquisition": {
+        "A": 0.000255584716796875,
+        "B": 0.0,
+        "C": 0.0
+      }
+    },
+    "food-cut": {
+      "ingested_j": 4.800000000000001,
+      "stored_energy_gain_j": 3.177332212154866,
+      "energy_demand_j": 1.6226677878423033,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 1.1426677878423033,
+      "motor_output_sum": 114.0,
+      "maximum_angle": 1.05547346370293,
+      "gate": {
+        "cut": true,
+        "observed": 0,
+        "removed": 0
+      },
+      "summary_sha256": "86d3fe636f3da109ee118b94b058fd133da6de109b91967f76a97ad0a83373f9",
+      "retained_food_probes": {
+        "A": {
+          "ingested_j": 1.0000000000000002,
+          "stored_energy_gain_j": 0.4722943777076125,
+          "energy_demand_j": 0.5277056222918048,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.3677056222918048,
+          "motor_output_sum": 31.0,
+          "maximum_angle": 0.3545629374201129,
+          "gate": {
+            "cut": true,
+            "observed": 76,
+            "removed": 76
+          },
+          "summary_sha256": "3d9a56f7bafe15f329bcec698374206b5c5e4819989b35183f3c75187ff3bbde"
+        },
+        "B": {
+          "ingested_j": 0.8400000000000003,
+          "stored_energy_gain_j": 0.501098529768484,
+          "energy_demand_j": 0.3389014702311286,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.1789014702311286,
+          "motor_output_sum": 21.0,
+          "maximum_angle": 0.21690262434231578,
+          "gate": {
+            "cut": true,
+            "observed": 0,
+            "removed": 0
+          },
+          "summary_sha256": "39ec17be6643aa9f8132c4452df4d294b96ebc4cebeb83679851a4341105c5bd"
+        },
+        "C": {
+          "ingested_j": 0.8000000000000003,
+          "stored_energy_gain_j": 0.480242817059505,
+          "energy_demand_j": 0.319757182940009,
+          "unmet_j": 0.0,
+          "spill_j": 0.0,
+          "positive_work_and_activation_cost_j": 0.15975718294000898,
+          "motor_output_sum": 20.0,
+          "maximum_angle": 0.19893994219507147,
+          "gate": {
+            "cut": true,
+            "observed": 0,
+            "removed": 0
+          },
+          "summary_sha256": "b5822135591b8e5cc05f24ccf730d399a7babb61a8224576e59d7502d488da78"
+        }
+      },
+      "original_memory_maximum_change_since_acquisition": {
+        "A": 0.000255584716796875,
+        "B": 0.0,
+        "C": 0.0
+      }
+    }
+  },
+  "original_memory_after_comparison_acquisition": {
+    "A": {
+      "maximum_terminal_change": 0.2710265648744075,
+      "mean_before": 0.36513301209604637,
+      "mean_after": 0.14599036358366188
+    },
+    "B": {
+      "maximum_terminal_change": 0.0,
+      "mean_before": 0.9696541896857176,
+      "mean_after": 0.9696541896857176
+    },
+    "C": {
+      "maximum_terminal_change": 0.0,
+      "mean_before": 0.990421037849137,
+      "mean_after": 0.990421037849137
+    }
+  },
+  "predictor_acquisition": {
+    "initial_maximum": 0.0,
+    "final_maximum": 0.0028508012944720444,
+    "final_mean_by_cue": {
+      "A": 0.0028508012944720444,
+      "B": 0.0,
+      "C": 0.0
+    }
+  },
+  "action_start_sha256": "94829a48f5d3ca716b9ffb35baef169bc37d83eeaeb661e1a4e2e23a1370b0b8",
+  "action_wiring": {
+    "edges": [
+      {
+        "source": 138246,
+        "terminal": 4094,
+        "target": 102264,
+        "port": 1076,
+        "birth_weight": -1.0,
+        "family": "omission_action"
+      }
+    ],
+    "role": "Negative comparison inhibits each existing SMP108 cell through a distinct unit-weight negative dendrite, after comparison verification only.",
+    "scope": "Added receiving port expands each SMP108 input count and learning-window upper bound. Original experimental cue ports keep their old indices. Both contrast arms have exactly this same constructed state."
+  },
+  "omission_energy_benefit_j": 0.13611441745393904,
+  "retained_A_food_change_j": -0.3920000000000001,
+  "retained_B_food_change_j": 0.0,
+  "retained_cue_energy_changes_j": {
+    "A": -0.18931381431949035,
+    "B": 0.00037389004998544806
+  },
+  "ongoing_food_energy_change_j": 0.0,
+  "bounded_joint_criterion": false,
+  "interpretation": "The learned omission comparison persists and its fixed inhibitory action route saves energy while food is absent. The same route delays subsequent A-guided food collection and fails the joint criterion. Original A memory remains functionally available when that route is cut, as shown by its same-state terminal substitution. The comparison works; blanket inhibition does not provide adequate continued use of the retained memory.",
+  "limits": "One retained preparation, ongoing contact-rate expectation, one predeclared unit inhibitory action route. No future-outcome timing, subjective disappointment, A-only revision of B, anatomical reconstruction of the added cells, or energetic-cost prediction is established. The original accepted A-to-B reference is unchanged.",
+  "signed_variant": {
+    "source_sha256": "510b9ce1503e14e9fd187860bf061468b31e51ba8539c7c0d9402ac8074891cf",
+    "driver_sha256": "28c1c8ecfa13d01fa401ab7a22189407664138fa8b646eb7e81e39334a07da74",
+    "conversion": {
+      "converted_cells": 274,
+      "all_other_state_and_rng_exact": true,
+      "domain": "Signed information coefficient; native return and positive-arrival receiving filter retained. Credit contracts magnitude on either sign. Negative q is not inhibitory transmitter release."
+    },
+    "scope": "Scientific course starts at the accepted A/B reference, not the failed near-boundary state. Same fixed protocol and all existing parameters; signed pure-depression domain is the sole terminal-rule change."
+  },
+  "signed_analysis_sha256": "821889dc9b4adf512f1b5c7813e470e3dfda972133cc676842b82d890af0cf06",
+  "compatibility_check_only": {
+    "manifest_sha256": "4bbbf0a04a51441566bef1ba14f57ef11661f371ad96430921d921319d6000fd",
+    "summary_sha256": "2b5239216c8ee579838c76428141dcc3d5e20419943abf31a742d108381c134c",
+    "completed_ticks": 200,
+    "minimum_terminal": -2.5593979557925195e-07,
+    "ingested_j": 1.0080000000000002,
+    "limit": "Separate near-boundary checkpoint migration, not the source of the scientific acquisition"
+  },
+  "fresh_acquisition_matches_original_positive_domain": {
+    "context.npy": true,
+    "release.npy": true,
+    "soma.npy": true,
+    "weights.npy": true,
+    "body.npy": true,
+    "arrivals.npy": true,
+    "prediction_weights.npy": true,
+    "comparison.npy": true
+  },
+  "signed_terminal_occupancy": {
+    "acquisition": {
+      "minimum": 7.73225431767561e-07,
+      "final_negative_count": 0
+    },
+    "action-food-cut": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "action-food-intact": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "action-omission-cut": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "action-omission-intact": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "availability-erased": {
+      "minimum": 0.3785460164882994,
+      "final_negative_count": 0
+    },
+    "availability-retained": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "comparison-start": {
+      "minimum": -2.5593979557925195e-07,
+      "final_negative_count": 64
+    },
+    "probe-food-cut-A": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-food-cut-B": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-food-cut-C": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-food-intact-A": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-food-intact-B": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-food-intact-C": {
+      "minimum": -9.823047687389053e-11,
+      "final_negative_count": 74
+    },
+    "probe-omission-cut-A": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "probe-omission-cut-B": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "probe-omission-cut-C": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "probe-omission-intact-A": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "probe-omission-intact-B": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "probe-omission-intact-C": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "retention-food-cut": {
+      "minimum": -1.0642423156738707e-10,
+      "final_negative_count": 74
+    },
+    "retention-food-intact": {
+      "minimum": -1.0642423156738707e-10,
+      "final_negative_count": 74
+    },
+    "retention-omission-cut": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "retention-omission-intact": {
+      "minimum": -7.275157221480582e-08,
+      "final_negative_count": 74
+    },
+    "verify-erased": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "verify-food": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "verify-omission": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 74
+    },
+    "verify-untrained": {
+      "minimum": -7.875197785674059e-08,
+      "final_negative_count": 64
+    }
+  },
+  "signed_interpretation": "Credit contracts the magnitude of native signed information. Native positive-arrival filtering remains, so negative single-source release is ineffective, not biological inhibition. The variant does not establish restoration of silent terminals or a transmitter-level reconstruction.",
+  "original_A_memory_availability": {
+    "receipt_sha256": "5d40c1a62c41864e26cf24192ea3b97b981bca0676a7ef66e95b10cf084909eb",
+    "interpretation": "Same post-omission state, with new omission-to-action traffic cut in both probes. Replace only original A-to-MBON terminal coefficients with the matched unpaired donor to test whether that memory remains functionally available. This intervention is a causal diagnostic, not an online learning rule.",
+    "conditions": {
+      "retained": {
+        "ingested_j": 1.0080000000000002,
+        "stored_energy_gain_j": 0.4748324447770642
+      },
+      "erased": {
+        "ingested_j": 0.7120000000000002,
+        "stored_energy_gain_j": 0.4264939593527828
+      }
+    }
+  },
+  "A_return_contact_ticks": {
+    "omission-intact": 124,
+    "omission-cut": 75
+  },
+  "continued_food_control_A_return": {
+    "intact": {
+      "ingested_j": 0.0,
+      "stored_energy_gain_j": -0.16226438486866357,
+      "energy_demand_j": 0.16226438486876305,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 0.002264384868763042,
+      "motor_output_sum": 1.0,
+      "maximum_angle": 0.018638642161399488,
+      "gate": {
+        "cut": false,
+        "observed": 195,
+        "removed": 0
+      },
+      "summary_sha256": "96a2d3978410b8e2256dde2b2bdaeab1d7d098c8f8f2ce28dcb87dc8220b7086"
+    },
+    "cut": {
+      "ingested_j": 1.0000000000000002,
+      "stored_energy_gain_j": 0.4722943777076125,
+      "energy_demand_j": 0.5277056222918048,
+      "unmet_j": 0.0,
+      "spill_j": 0.0,
+      "positive_work_and_activation_cost_j": 0.3677056222918048,
+      "motor_output_sum": 31.0,
+      "maximum_angle": 0.3545629374201129,
+      "gate": {
+        "cut": true,
+        "observed": 76,
+        "removed": 76
+      },
+      "summary_sha256": "3d9a56f7bafe15f329bcec698374206b5c5e4819989b35183f3c75187ff3bbde"
+    }
+  },
+  "continued_food_control_recorded_states_exact_before_return_probe": {
+    "action-food": true,
+    "retention-food": true
+  },
+  "next_decision": "Stop this unit-pathway contrast without retuning. The next organizational question is how to distinguish loss of ongoing food contact from the action needed to obtain contact again. A contact-rate mismatch alone does not decide whether movement should stop.",
+  "figure_sha256": "ad4f3fba65cef21215fdf638ac4576530660bdd78beff89317d8bfc0beac62dc"
+}

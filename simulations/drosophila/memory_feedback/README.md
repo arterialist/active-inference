@@ -111,6 +111,64 @@ signed-return/nonnegative-credit compatibility in an explicitly separate
 composition before extending this preparation further. The accepted A-to-B
 reference and its runtime sources remain unchanged.
 
+## Signed-information continuation and action use
+
+`signed_terminal_credit.py` resolves the demonstrated domain conflict in a
+separate class. The same pure-depression flow, `q' = q exp(-eta*d*x)`, contracts
+the magnitude of native signed information on either side of zero. Positive
+coefficients use the original exact-flow arithmetic; native return and its
+signed bounds remain unchanged. This is not nonnegative transmitter release.
+Native receivers process only positive incoming information, so negative
+single-source release is ineffective, not biological inhibition. The variant
+does not add recovery learning for silent terminals or change dopamine sensing.
+
+The failed near-boundary state was used only for a labelled compatibility
+check. The scientific course restarted from the accepted A/B reference with
+the same fixed acquisition and comparison bounds. Every recorded acquisition
+array exactly matches the earlier positive-domain course. The signed variant
+then completes the previously failing presentation and the omission tests.
+
+During continued A without food, the late negative comparison averages
+0.06643 and 0.06539 in two successive windows. Corresponding predictor-erasure
+controls are 0.001158 and 0.001140; the untrained-cue controls are 0.000750 and
+0.000738. Continued food produces zero negative output. Thus the learned
+comparison persists beyond the excluded propagation transients. Adaptation
+continues in every condition, including the memory-substitution probes.
+
+The one predeclared unit inhibitory projection to SMP108 produces a mixed
+physical result. Each matched arm starts from the same learned state, with
+only forward traffic on that new projection cut in the control.
+
+| Physical measurement | Path intact | Path cut |
+| --- | ---: | ---: |
+| Energy + gut change during omission, J | -0.591635 | -0.727749 |
+| A food after omission and retention, J | 0.608 | 1.000 |
+| A energy + gut gain in that probe, J | 0.284424 | 0.473738 |
+| B food after omission and retention, J | 0.840 | 0.840 |
+| Food during continued-food control, J | 4.800 | 4.800 |
+| A food after continued-food control and retention, J | 0.000 | 1.000 |
+
+The path saves 0.136114 J during omission but delays subsequent A contact from
+tick 75 to tick 124. It also blocks A collection after the continued-food
+control, despite identical recorded states before those return probes.
+The fixed inhibitory policy therefore fails the joint behavioral criterion.
+
+Original A memory remains usable. From the same post-omission state with new
+inhibition cut, A yields 1.008 J of food and 0.474832 J of retained energy gain.
+Replacing only the original A-to-MBON terminals with the matched unpaired
+coefficients reduces these to 0.712 J and 0.426494 J. The action-use failure
+cannot be attributed to erasure of that original memory.
+
+The [signed continuation audit](evidence/signed-ingestion/ingestion-comparison.json)
+and [figure](evidence/signed-ingestion/ingestion-comparison.png) retain the
+comparison, physical outcomes, memory-availability intervention, and separate
+compatibility provenance. Stop this fixed contrast without retuning. The next
+organizational question is how to distinguish lost ongoing contact from the
+action needed to obtain contact again. A contact-rate mismatch alone does not
+decide whether movement should stop. This does not establish timed future
+reward expectation, A-only revision of B, or a biological reconstruction of
+the added circuit. The accepted A-to-B reference and failed records are intact.
+
 ## Reusing acquired B as a teacher for C
 
 The accepted A-to-B result is a completed building block. One additional,

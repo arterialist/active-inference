@@ -1,0 +1,132 @@
+{
+  "source_sha256": "1f7cba3d8ca7a0c0e90a3edc3e3a18baf7f7bfa8a25c27898cce7e5b215742fc",
+  "source": "/Users/arterialist/Projects/agi-research/active-inference/.live/research/flywire783/memory-body-context-20260910",
+  "renderer": "Existing LoadedHinge XML and mujoco.Renderer; qpos, qvel and control copied from saved records; mj_forward only",
+  "body_xml_sha256": "50a6454059f0280d4059238f415879167ae2029914d62409a7658659348a4cea",
+  "mujoco_version": "3.5.0",
+  "camera": {
+    "lookat": [
+      0.125,
+      0,
+      0
+    ],
+    "distance": 0.55,
+    "azimuth": 90,
+    "elevation": -90
+  },
+  "dt": 0.004,
+  "fps": 62.5,
+  "playback_speed": 0.25,
+  "angular_amplification": 1,
+  "physics_steps": 0,
+  "neural_steps": 0,
+  "stages": [
+    {
+      "title": "Food removed while A continues",
+      "records": [
+        {
+          "record": "action-omission-body",
+          "summary_sha256": "12a36e1a046e164308f14666f7f7c72ee30fbdfeaed179906f14cb3cbc72c9ce",
+          "body_sha256": "4d3bcf7fc0afef8117208d120574c164213b807d79f6501d45a9344d6529f403",
+          "initial_organs": [
+            69.67918303497125,
+            0.0,
+            9.8719999999998,
+            30.192816965083033,
+            0.0,
+            0.0,
+            9.8719999999998
+          ]
+        },
+        {
+          "record": "action-omission-bypass",
+          "summary_sha256": "2f29fdf78fdcd2294e6e08ab83c49f0dedae588ee19699c352f449fc6479b21b",
+          "body_sha256": "4d3bcf7fc0afef8117208d120574c164213b807d79f6501d45a9344d6529f403",
+          "initial_organs": [
+            69.67918303497125,
+            0.0,
+            9.8719999999998,
+            30.192816965083033,
+            0.0,
+            0.0,
+            9.8719999999998
+          ]
+        }
+      ],
+      "ticks": 600,
+      "final_hold_seconds": 0.992
+    },
+    {
+      "title": "A food return after omission + 1000 blank ticks",
+      "records": [
+        {
+          "record": "probe-omission-body-A",
+          "summary_sha256": "8f1d110c989ffee623f879bc38fbad4ebed53db3bf44992c79cbbc3de6186b28",
+          "body_sha256": "5bec569817b0ea5ef4f6942e0b2047d8005c8d141f91214c33ef278b90b69213",
+          "initial_organs": [
+            68.28751878087238,
+            0.0,
+            9.8719999999998,
+            31.5844812191856,
+            0.0,
+            0.0,
+            9.8719999999998
+          ]
+        },
+        {
+          "record": "probe-omission-bypass-A",
+          "summary_sha256": "8eeb8b0ce4cf78f339c9de3509b156f60067b83f3aff9d8fdb1acfa2f8b0fe02",
+          "body_sha256": "cf4da02fce571eb872ec53e48b5c65f167cf4ce00c15918594721c8cb3292b72",
+          "initial_organs": [
+            68.28751878087238,
+            0.0,
+            9.8719999999998,
+            31.5844812191856,
+            0.0,
+            0.0,
+            9.8719999999998
+          ]
+        }
+      ],
+      "ticks": 200,
+      "final_hold_seconds": 0.992
+    },
+    {
+      "title": "A return after continued-food control + 1000 blank ticks",
+      "records": [
+        {
+          "record": "probe-food-body-A",
+          "summary_sha256": "8b7052243da515a8cc36bef696fbc3ca9793d81f5d48c84f31a1b4ae26c4b24d",
+          "body_sha256": "b28d6cd80c36fcd631f041b2ad415b770b4bc027e22ee76190c46208c6563cd4",
+          "initial_organs": [
+            72.04674792629704,
+            0.0,
+            14.67199999999927,
+            32.62525207375478,
+            0.0,
+            0.0,
+            14.67199999999927
+          ]
+        },
+        {
+          "record": "probe-food-bypass-A",
+          "summary_sha256": "5d8898c6d0090e1fe48181c418bd6566e5616778edbe3b7e7736541584b38cf4",
+          "body_sha256": "902c434cc70692e21a6f108311e038274e1ae755293578f9453d7d7076d112e1",
+          "initial_organs": [
+            72.04674792629704,
+            0.0,
+            14.67199999999927,
+            32.62525207375478,
+            0.0,
+            0.0,
+            14.67199999999927
+          ]
+        }
+      ],
+      "ticks": 200,
+      "final_hold_seconds": 0.992
+    }
+  ],
+  "movie_sha256": "ca4dd0952d6a50f43cdc08d7a745a9f2d97d1c64054803f89fd1be5d8742a239",
+  "scope": "Matched branches from one learned origin. Each return uses its own post-retention state; chapter jumps do not imply a continuous filmed trajectory. All frames are recorded poses, with no interpolation or scale amplification."
+}

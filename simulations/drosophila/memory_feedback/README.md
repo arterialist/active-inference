@@ -225,6 +225,67 @@ or gain search followed this contrast. General spatial relationships, a learned
 contact boundary and future-outcome timing remain untested. The accepted and
 failed preparations remain identifiable and unchanged.
 
+The [successful matched 3D replay](evidence/body-context/body-context-success-replay.mp4)
+shows the body-dependent and bypassed arms during established food loss and
+their subsequent A returns. It uses the saved hinge poses, the same camera and
+quarter-speed playback, with no physics steps, interpolation or angle
+amplification. Both arms retain unit omission-to-action inhibition. The run,
+record, model time and camera are labelled; chapter jumps omit the blank
+retention interval. The [replay receipt](evidence/body-context/body-context-success-replay.json)
+pins every body record and the renderer. This is the successful comparison,
+separate from the earlier cue-only failure replay.
+
+## One changed collection boundary: initial feasibility screen
+
+The next proposed challenge moved the ingestion boundary from 0.04 to 0.08 rad
+while keeping the retained controller, sensory calibration and body mechanics.
+This is an angle-gated collection transducer, not a localized food object.
+`collection_boundary.py` changes only its physical contact condition and starts
+from the saved `retention-food-body` state; no acquisition is repeated.
+
+The steady unit-event coincidence features saturate between 0.051061958 and
+0.051062044 rad at the retained coefficients. Reaches extend well beyond this,
+so mechanical reachability is distinct from position resolution at the
+predictor input. The position afferent, propagation delays, membrane states,
+eight-tick predictor context, four-tick error trace and native adaptation still
+carry history. The plateau does not prove full-state indistinguishability or
+a general inability to adapt.
+
+| Initial A food probe | Original 0.04 rad boundary | Moved 0.08 rad boundary |
+| --- | ---: | ---: |
+| Food collected, J | 0.992 | 0.720 |
+| Energy + gut gain, J | 0.474508 | 0.331296 |
+| First ingestion tick | 76 | 110 |
+| Maximum angle, rad | 0.346512 | 0.253708 |
+
+The original reference and new probe start from the same retained state.
+Useful feeding survives the changed boundary on the first visit. Learning
+remains active: the largest predictor-weight change before first ingestion
+is 6.810e-6. This is neither a frozen-controller test nor evidence of learning
+the exact new location.
+
+The [audited screen](evidence/body-context/collection-boundary-screen.json)
+closes this branch at the initial probe. The optional exposure courses were
+not run, and no boundary search or new spatial architecture followed. The
+larger question—how learned associations and outcome regulation support
+adaptive action when existing behavior ceases to work—remains open. Immediate
+feeding here does not establish that challenge, and feature saturation alone
+does not answer it negatively.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.collection_boundary initial \
+  .live/research/flywire783 \
+  .live/research/flywire783/memory-collection-boundary-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.collection_boundary_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence/body-context
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.body_context_success_replay \
+  .live/research/flywire783/memory-body-context-20260910 \
+  simulations/drosophila/memory_feedback/evidence/body-context
+```
+
 ## Reusing acquired B as a teacher for C
 
 The accepted A-to-B result is a completed building block. One additional,

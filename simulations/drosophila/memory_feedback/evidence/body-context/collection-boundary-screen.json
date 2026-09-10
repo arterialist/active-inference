@@ -1,0 +1,63 @@
+{
+  "source_sha256": "25a8670694a47270d394b20b266d1e2539c4fefd37871bdfab74bef2737df85c",
+  "manifest_sha256": "8bed95e426823df04be5305acf76576ed5302c5acec02ac7c308911fbe5501cf",
+  "environment_sha256": "e9478872956e14537b3a0b1a37df64b9bdfc76b44d4b6dad8c9bff7df6dddbcd",
+  "screen": {
+    "source_sha256": "c06eeea5ba6ffc17357d89a853075facd9fb068365ed13fd3c796c8f2a6606fd",
+    "parent": ".live/research/flywire783/memory-body-context-20260910/retention-food-body",
+    "parent_checkpoint_sha256": "0982dcf12edb5bd97ec5b155eda9af75760e2590ebe5d37f07c476093f015567",
+    "parent_body_sha256": "f85e10a108900a975d4959ead87718b68de88ac89b1fea27084d8b586fd21f6e",
+    "composition_sha256": "0e07ec7f609d0fc455b9a7b97de8bceb1b2ded5b19e7d82d5839fd8c64429d14",
+    "original_angle": 0.04,
+    "relocated_angle": 0.08,
+    "saturation_angles_rad": {
+      "min": 0.0510619580745697,
+      "max": 0.05106204375624657
+    },
+    "saturation_scope": "Steady unit KC event at retained coefficients. Common gate dendritic attenuation cancels. Transient traces, delays and native coefficient changes remain; this is not a proof of trajectory equivalence.",
+    "predictor_context_tau_ticks": 8.0,
+    "predictor_error_tau_ticks": 4.0,
+    "predictor_eta_post": 1e-05,
+    "predictor_rate_boost": 0.0,
+    "bound": "One .04 to .08 rad collection-boundary move; unchanged sensory scaling, features and controller. Initial 200-tick A probe from saved retention-food-body, separate from any continuation. If warranted, exactly eight A-food200/blank1000 exposures plus final blank1000 in relocated and original-boundary arms; independent post-retention A/B200 probes in relocated environment. No threshold or gain search.",
+    "interpretation": "This can test coarse experience-dependent feeding adjustment, not learning a precise location beyond the coincidence-feature saturation. Immediate useful feeding would weaken the case that this move requires adaptation."
+  },
+  "original": {
+    "record": ".live/research/flywire783/memory-body-context-20260910/probe-food-body-A",
+    "summary_sha256": "8b7052243da515a8cc36bef696fbc3ca9793d81f5d48c84f31a1b4ae26c4b24d",
+    "body_sha256": "b28d6cd80c36fcd631f041b2ad415b770b4bc027e22ee76190c46208c6563cd4",
+    "comparison_sha256": "83bb83c567a2f18044d8417263f97f2b46cbc7f6c0e67f46fd3de39bd10b6661",
+    "prediction_weights_sha256": "3e2b4bb9134509c085e0224d8c91339f1710b1ee3a5401d69f5663a80f73d8f8",
+    "ingested_j": 0.9920000000000002,
+    "stored_energy_gain_j": 0.4745081624407419,
+    "first_ingestion_tick": 76,
+    "maximum_angle_rad": 0.3465124564090083,
+    "pre_first_contact_negative_mean": 0.007342788337585884,
+    "maximum_predictor_weight_change_before_first_ingestion": 4.341558518016278e-07,
+    "maximum_predictor_weight_change_during_probe": 0.00030105895741993835,
+    "adaptation_active": true,
+    "ticks": 200
+  },
+  "relocated_initial": {
+    "record": ".live/research/flywire783/memory-collection-boundary-20260910/initial-A",
+    "summary_sha256": "e318fc953bee27545f8ace7267407d229e5c73e9486fc51b7a194bbe03a441bf",
+    "body_sha256": "c217d18ba148625bc275deb66d701083b9f311a73328a9eb596f69cd67bdd953",
+    "comparison_sha256": "7e73bf70a02efb92849ac966a272f44d1317df7f2b1f6519f88013496aeb2203",
+    "prediction_weights_sha256": "9e724017ed3db5bc5ed5eb6481cef729339fd76433b0d8b516550c371f0995cc",
+    "ingested_j": 0.7200000000000002,
+    "stored_energy_gain_j": 0.33129647894251946,
+    "first_ingestion_tick": 110,
+    "maximum_angle_rad": 0.25370801868502046,
+    "pre_first_contact_negative_mean": 0.028641096838294865,
+    "maximum_predictor_weight_change_before_first_ingestion": 6.809751707892962e-06,
+    "maximum_predictor_weight_change_during_probe": 0.0001949140182676912,
+    "adaptation_active": true,
+    "ticks": 200
+  },
+  "initial_selected_and_predictor_coefficients_exact": true,
+  "completed_exposure_courses": 0,
+  "decision": "Withdraw this move as a demonstrated spatial-relearning challenge. It already permits useful feeding in the initial probe; no after-experience or frozen-policy causal contrast was performed.",
+  "representation": "The min(KC, position) readout has a steady unit-event ceiling near .051062 rad. It does not supply a resolved positional basis between that angle and the .08 rad boundary. The position afferent, delays, membrane state, predictor context/error traces and native adaptation still carry history. Saturation alone therefore does not prove full-state indistinguishability or an inability to adapt.",
+  "consequence": "A later change could reflect coarse nutrient-expectation updating or other ongoing adaptation, not necessarily learning a relocated collection boundary. The 200-tick probe establishes immediate useful closed-loop feeding with learning active, not success of a frozen controller. It is not a negative learning-rule result.",
+  "remaining_question": "Experience-dependent adjustment in this environment remains untested. The optional matched exposure modes are unexecuted; neither another boundary nor a new spatial representation was tried."
+}

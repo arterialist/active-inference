@@ -215,3 +215,25 @@ def test_afferent_audit_rejects_a_false_scale_or_pair(tmp_path):
     with pytest.raises(AssertionError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings},afferent=True)
     spec['scale']=2.;spec['pairs']=2
     with pytest.raises(ValueError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings},afferent=True)
+
+
+def test_regulator_branches_form_disjoint_internal_ln_and_pn_factors():
+    from types import SimpleNamespace as NS
+    kinds={LN:("ALLN","lLN2F_b"),PN:("ALPN","DL5_adPN"),"101":("ALLN","other_LN"),
+           "102":("ALPN","other_PN"),"103":("olfactory","ORN_DL5"),"104":("ALLN","APL"),
+           "105":("ALLN","boundary_LN")}
+    nodes={r:{"annotation":{"cell_class":c,"hemibrain_type":t}} for r,(c,t) in kinds.items()}
+    targets=(PN,"101","102","103","104","105")
+    edges=np.array([[int(LN),int(t),1,j+2,10,-1,10,0,j] for j,t in enumerate(targets)])
+    # Last pair is a boundary projection, deliberately not internally bound.
+    bindings=np.array([[j,1,j,j+2,0] for j in range(5)])
+    graph=Subgraph(tuple(r for r in kinds if r!="105"),nodes,edges,{})
+    prep=NS(edge_bindings=bindings)
+    ln=pathway_bindings(prep,graph,"regulator_to_LN")
+    pn=pathway_bindings(prep,graph,"regulator_to_PN")
+    both=pathway_bindings(prep,graph,"regulator_to_LN_and_PN")
+    assert ln[:,0].tolist()==[1]
+    assert pn[:,0].tolist()==[0,2]
+    assert both[:,0].tolist()==[0,1,2]
+    assert not set(ln[:,0])&set(pn[:,0])
+    assert set(both[:,0])==set(ln[:,0])|set(pn[:,0])

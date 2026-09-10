@@ -211,14 +211,17 @@ def compare_pathway(reference,directory,graph,meta,data,structure):
     if len(selected)!=spec["pairs"] or len(set(selected[:,1]))!=spec["sources"]:
         raise ValueError("Different declared intervention size")
     parity=0
+    first_withheld=np.flatnonzero(data["pathway_events"][:,0]!=data["pathway_events"][:,1])
+    shared_stop=int(first_withheld[0]) if len(first_withheld) else start
     for key,values in old.items():
         if key=="pathway_events":continue
-        np.testing.assert_array_equal(values[:start],data[key][:start]);parity+=values[:start].size
+        np.testing.assert_array_equal(values[:shared_stop],data[key][:shared_stop]);parity+=values[:shared_stop].size
     np.testing.assert_array_equal(old["command"],data["command"])
     event_audit=audit_pathway_events(data["pathway_events"],start)
     roots=structure["roots"].tolist()
     result={"reference_manifest_sha256":digest(reference/"analysis.json"),"intervention":spec,
         "pre_intervention_exact_values":parity,"events":event_audit,
+        "shared_recorded_past_stop":shared_stop,
         "first_state_difference":first_difference(old["soma"],data["soma"]),
         "first_spike_difference":first_difference(old["soma"][:,:,1],data["soma"][:,:,1]),
         "cells_with_changed_spikes":int(np.any(old["soma"][:,:,1]!=data["soma"][:,:,1],axis=0).sum()),
@@ -352,6 +355,8 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
             "Gate/routing and PN replay checks do not verify all unrecorded intracellular states or fit physiology."]}
     if reference is not None:
         result["closed_loop_pathway_test"]=compare_pathway(reference,directory,graph,meta,data,structure)
+    if meta.get("pathway_intervention",{}).get("pathway","none")!="none":
+        result["limits"].append("Isolated comparison is the intact functional reference; the pathway intervention's causal comparison uses a matched connected reference.")
     if "feedback_initialization" in meta:
         result["feedback_gain_audit"]=audit_feedback_gain(directory,graph,meta,structure)
     if "regulator_afferent_initialization" in meta:

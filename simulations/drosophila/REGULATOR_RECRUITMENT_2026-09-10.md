@@ -160,3 +160,100 @@ is `dl5-regulator-afferent2-intact-full-20260910`. The matched controls use
 intervention onset, event counts and first per-tick differences for each lesion.
 Forward-event counts include attempted events on disconnected boundary terminals;
 they are not counts of affected internal synapses or evidence of effect size.
+
+## Follow-up declared before the branch recordings
+
+At the existing high-input operating point, the next three recordings block
+the regulator's internal outputs to ALLNs, to all ALPNs, or to both populations.
+The original intact course supplies the fourth condition. ORN-directed output
+remains available in all four conditions. APL and disconnected boundary targets
+are excluded from these branch selections. Source identity, not a new inferred
+transmitter label, selects the regulator. Forward events are withheld from
+tick zero; native return events and ongoing learning remain enabled.
+
+This is a two-factor loss-of-function experiment, not a repair or a claim that
+the two populations are independent modules. If only one branch block causes
+persistence, it identifies a conditional requirement at this operating point.
+If both single blocks recover but the joint block does not, the outcome is
+consistent with compensating routes and requires further interventions. No
+conclusion is selected from target-PN totals alone. All population traces and
+the complete recovery period are inspected. The isolated gain preparation is
+an intact functional reference, not a test of all the newly included LN/PN
+partners.
+
+## Completed branch test: the local-neuron branch preserves recovery
+
+The measured regulator projects to 93 internal ALLNs through 5,182 counted
+contacts and 137 internal ALPNs through 1,436 contacts. These selections are
+disjoint; the joint intervention is their exact union. Every selected pair has
+a negative source-model sign. This does not establish receptor identity.
+
+| Forward output blocked, sensory 100 | PN stimulus spikes | PN recovery spikes | All LN recovery spikes | Last LN / PN spike |
+| --- | ---: | ---: | ---: | --- |
+| None | 219 | 5 | 0 | 1193 / 1259 |
+| Regulator to ALLNs | 287 | 244 | 29,300 | 2199 / 2199 |
+| Regulator to all ALPNs | 220 | 5 | 2 | 1201 / 1277 |
+| Regulator to both populations | 294 | 236 | 29,367 | 2199 / 2199 |
+
+All conditions have zero ORN recovery spikes. In the failed LN-branch and
+joint-branch conditions, mean sensory release fraction during recovery is about
+0.0492. The sensory gate has not disappeared or failed its recurrence equation;
+the connected network remains active in spite of it. The ALPN-branch control
+recovers with almost the intact target response. This establishes a conditional
+requirement for the identified regulator-to-ALLN branch in this preparation.
+It does not show that all 93 contacts are necessary, that the ALPN branch is
+generally dispensable, or that the lower-input failure has been repaired.
+
+The complete recorded history is identical until the first withheld release at
+tick 213. The first state differences occur at 216. The LN-branch and joint
+controls first change spikes at 221, in lLN2T_b root `720575940616169578` and
+il3LN6 root `720575940623636701`. This is an early change in the recurrent
+population, not an effect inferred only from final output counts. Native return
+events, learning, incident ports and all unblocked forward paths remain enabled.
+
+The two earliest changed cells also expose an interpretation limit. lLN2T_b
+has a curated acetylcholine annotation, despite a low-confidence serotonin
+prediction; its source-model sign is positive. il3LN6 has a curated GABA
+annotation but a positive source-model sign. The latter belongs to the
+previously documented sign-uncertainty group. The earlier negative-current
+sensitivity control did not resolve persistence in a different preparation,
+but that does not establish robustness of this new branch result to polarity
+assumptions. These cells must not both be presented as biologically established
+excitatory neurons. The present causal claim concerns the retained source-sign
+model, and needs that distinction before further biological interpretation.
+
+The new records are `dl5-regulator-branch-{ln,pn,both}-20260910` under the same
+research directory. Each analysis includes the matched connected reference via
+`--reference`. `dl5-regulator-branch-factorial-20260910.json` retains the four
+conditions, anatomical counts, exact selection union, recovery trajectories and
+causal comparisons. The runner's three new `regulator_to_*` pathway choices
+select measured internal pairs by source identity and target population. They
+do not change the default intact preparation.
+
+## Physiological direction after this result
+
+Inhibitory-to-excitatory-LN coupling is supported by paired fly recordings;
+the same work also shows that excitatory LNs recruit inhibitory LNs. That is
+a relevant reciprocal motif, rather than a reason to model inhibition only at
+the principal output neuron. The present 93-pair intervention is not a
+quantitative reproduction of those recorded cell pairs.
+[Yaksi and Wilson, 2010](https://pmc.ncbi.nlm.nih.gov/articles/PMC2954501/).
+
+Muscarinic regulation offers a specific candidate for replacing an assumed
+constant recruitment gain with local, activity-dependent dynamics. Fly work
+found mAChR-A effects on inhibitory-LN odor responses; later receptor
+manipulations connected voltage-dependent potentiation to habituation.
+[Rozenfeld et al., 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6900217/),
+[Rozenfeld et al., 2021](https://www.nature.com/articles/s41467-021-27593-x).
+This motivates testing a receptor-level PAULA mechanism against physiological
+interventions before introducing it into this loop. It does not justify an
+observer-controlled learning rate, a universal muscarinic gain constant, or
+assigning that receptor to this FlyWire cell without further evidence. A
+network-level improvement would then have to survive the lower-input challenge
+and preserve sensory function, with ongoing adaptation still enabled.
+
+One assembly limitation also remains explicit: the existing presynaptic gate
+reads only the identified regulator's receptors and affects ALPN-directed ORN
+terminals. Other inhibitory sources and ORN-to-LN terminals are not included in
+that mechanism. Their ordinary somatic interactions remain in the network.
+This is a hypothesis boundary, not a claim of complete presynaptic physiology.

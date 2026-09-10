@@ -26,7 +26,8 @@ from .prisco import digest, dump_new
 from neuron.neuron import RetrogradeSignalEvent
 
 PATHWAYS = ("none", "positive_LN_to_LN", "positive_LN_to_target_PN",
-            "positive_PN_to_LN", "positive_LN_or_PN_to_LN")
+            "positive_PN_to_LN", "positive_LN_or_PN_to_LN",
+            "regulator_to_LN", "regulator_to_PN", "regulator_to_LN_and_PN")
 
 
 def reunion_cut(graph, scope):
@@ -68,6 +69,13 @@ def pathway_bindings(prep, graph, pathway):
     rows = set()
     for e in graph.edges:
         source, target = graph.nodes[str(e[0])]["annotation"], graph.nodes[str(e[1])]["annotation"]
+        if pathway.startswith("regulator_to_"):
+            target_ln=target["cell_class"]=="ALLN" and target["hemibrain_type"]!="APL"
+            target_pn=target["cell_class"]=="ALPN"
+            if str(e[0])==LN and ((target_ln and pathway in ("regulator_to_LN","regulator_to_LN_and_PN"))
+                    or (target_pn and pathway in ("regulator_to_PN","regulator_to_LN_and_PN"))):
+                rows.add(int(e[8]))
+            continue
         if pathway == "none" or e[5] <= 0 or source["hemibrain_type"] == "APL":
             continue
         source_ln=source["cell_class"]=="ALLN"

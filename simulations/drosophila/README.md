@@ -62,6 +62,11 @@ preserves response and recovery at sensory command 100 in both the 424-cell and
 separate sensory gain from collective stability; all-output blockade restores
 persistent activity. This is an electrode-free operating point and a measured
 limit, not robust gain control or a new agent default.
+The follow-up branch factorial locates a conditional stabilizing role in the
+regulator's 93 local-neuron targets: blocking those outputs produces persistent
+activity despite an active sensory gate, whereas blocking its 137 PN targets
+still permits recovery. This remains conditional on the imported source signs;
+one of the earliest changed cells has a curated-GABA/positive-model discrepancy.
 
 The [fixed-gain reunion test](GAIN_REUNION_2026-09-10.md) shows that the local
 sensory gate still executes correctly in 3,005 connected cells, but recurrent

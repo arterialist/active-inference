@@ -1,0 +1,289 @@
+{
+  "source_sha256": "882317cab998732ebd194d0753f13274cf7dcac0a348b7325a379acd2a4cc666",
+  "input_soma_sha256": {
+    "intact": "1547a8a79cb5cedf5db85060cbbcd2ec1994c13bf029ccd4e79aead1e951814a",
+    "cut": "78a2b97a4dd3bc5bec6f7dc43b78a34d7dc5cdbdfa744599e4e31d1815eaf720"
+  },
+  "parent_manifest_sha256": "38c442aa59920f60e2f3374548018460a6a65b54e422f2ab46f6abbbbe62686b",
+  "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+  "phase": {
+    "name": "pair0_A",
+    "begin": 160,
+    "end": 360,
+    "cue": "A",
+    "spikes": {
+      "MBON07": 0,
+      "PAM11": 0,
+      "SMP353": 8,
+      "SMP108": 17,
+      "APL": 15,
+      "MBON04": 0,
+      "PAM07": 0,
+      "PAM08": 12
+    },
+    "max_angle": 0.2964754210939138,
+    "feedback_events": 576,
+    "removed_events": 0
+  },
+  "targets": [
+    {
+      "root": "720575940605113376",
+      "observed_A_spikes": 0,
+      "multiplier": 1.785015138817153,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.04959847033023834,
+      "projection_delta": 0.5324333161115646
+    },
+    {
+      "root": "720575940605280201",
+      "observed_A_spikes": 8,
+      "multiplier": 1.0,
+      "tick": null
+    },
+    {
+      "root": "720575940608071435",
+      "observed_A_spikes": 0,
+      "multiplier": 3.4081864013514873,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.09279649704694748,
+      "projection_delta": 0.26618365198373795
+    },
+    {
+      "root": "720575940611918578",
+      "observed_A_spikes": 0,
+      "multiplier": 3.5945801939276376,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.04318128898739815,
+      "projection_delta": 0.266183715313673
+    },
+    {
+      "root": "720575940612755618",
+      "observed_A_spikes": 0,
+      "multiplier": 3.6912813953600985,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.017440907657146454,
+      "projection_delta": 0.2661837413907051
+    },
+    {
+      "root": "720575940614991221",
+      "observed_A_spikes": 0,
+      "multiplier": 7.251289637857854,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.03497191518545151,
+      "projection_delta": 0.13308364897966385
+    },
+    {
+      "root": "720575940619251416",
+      "observed_A_spikes": 0,
+      "multiplier": 3.669222429877322,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.02331269346177578,
+      "projection_delta": 0.26618372835218906
+    },
+    {
+      "root": "720575940619823536",
+      "observed_A_spikes": 0,
+      "multiplier": 3.691230510419978,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.017454514279961586,
+      "projection_delta": 0.26618372462689877
+    },
+    {
+      "root": "720575940621617286",
+      "observed_A_spikes": 0,
+      "multiplier": 7.331381668186918,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.02431308478116989,
+      "projection_delta": 0.13308363407850266
+    },
+    {
+      "root": "720575940622384227",
+      "observed_A_spikes": 0,
+      "multiplier": 7.3389118745250705,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.023311005905270576,
+      "projection_delta": 0.1330836247652769
+    },
+    {
+      "root": "720575940622387981",
+      "observed_A_spikes": 0,
+      "multiplier": 1.2373638626860808,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.011663057841360569,
+      "projection_delta": 0.7987439846619964
+    },
+    {
+      "root": "720575940624545940",
+      "observed_A_spikes": 0,
+      "multiplier": 2.4547625649383,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.019812554121017456,
+      "projection_delta": 0.39930030703544617
+    },
+    {
+      "root": "720575940625898633",
+      "observed_A_spikes": 0,
+      "multiplier": 3.6217267137252853,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.03595524653792381,
+      "projection_delta": 0.2661837376654148
+    },
+    {
+      "root": "720575940627110931",
+      "observed_A_spikes": 0,
+      "multiplier": 2.488517415238375,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.006334303878247738,
+      "projection_delta": 0.39930027816444635
+    },
+    {
+      "root": "720575940627644584",
+      "observed_A_spikes": 0,
+      "multiplier": 3.5273390232350605,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.06107991188764572,
+      "projection_delta": 0.26618368178606033
+    },
+    {
+      "root": "720575940628836412",
+      "observed_A_spikes": 0,
+      "multiplier": 7.435209585615419,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.010495385155081749,
+      "projection_delta": 0.1330836210399866
+    },
+    {
+      "root": "720575940629190615",
+      "observed_A_spikes": 0,
+      "multiplier": 7.3938363414528805,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.01600136235356331,
+      "projection_delta": 0.13308363780379295
+    },
+    {
+      "root": "720575940629379415",
+      "observed_A_spikes": 0,
+      "multiplier": 7.280559132168687,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.031076841056346893,
+      "projection_delta": 0.13308361917734146
+    },
+    {
+      "root": "720575940630500293",
+      "observed_A_spikes": 0,
+      "multiplier": 3.4737239435910103,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.07535121589899063,
+      "projection_delta": 0.2661837264895439
+    },
+    {
+      "root": "720575940630684943",
+      "observed_A_spikes": 4,
+      "multiplier": 1.0,
+      "tick": null
+    },
+    {
+      "root": "720575940631184439",
+      "observed_A_spikes": 0,
+      "multiplier": 3.6912813953600985,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.017440907657146454,
+      "projection_delta": 0.2661837413907051
+    },
+    {
+      "root": "720575940642733216",
+      "observed_A_spikes": 0,
+      "multiplier": 7.382913712648849,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.01745498552918434,
+      "projection_delta": 0.13308363780379295
+    },
+    {
+      "root": "720575940642744264",
+      "observed_A_spikes": 0,
+      "multiplier": 3.674945247687971,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.021789420396089554,
+      "projection_delta": 0.266183715313673
+    },
+    {
+      "root": "720575940646564916",
+      "observed_A_spikes": 0,
+      "multiplier": 7.448744844912933,
+      "tick": 141,
+      "threshold": 1.0,
+      "background": 0.008694126270711422,
+      "projection_delta": 0.13308361265808344
+    }
+  ],
+  "candidates": [
+    {
+      "multiplier": 1,
+      "providers": 2,
+      "contact_weighted_coverage": {
+        "A": 0.030120481927710843,
+        "B": 0.1393939393939394,
+        "C": 0.15286624203821655
+      }
+    },
+    {
+      "multiplier": 2,
+      "providers": 4,
+      "contact_weighted_coverage": {
+        "A": 0.05421686746987952,
+        "B": 0.2545454545454545,
+        "C": 0.17834394904458598
+      }
+    },
+    {
+      "multiplier": 4,
+      "providers": 16,
+      "contact_weighted_coverage": {
+        "A": 0.5602409638554217,
+        "B": 0.7090909090909091,
+        "C": 0.7515923566878981
+      }
+    },
+    {
+      "multiplier": 8,
+      "providers": 24,
+      "contact_weighted_coverage": {
+        "A": 0.7048192771084337,
+        "B": 0.8545454545454545,
+        "C": 0.8980891719745223
+      }
+    }
+  ],
+  "proposed": {
+    "multiplier": 4,
+    "providers": 16,
+    "contact_weighted_coverage": {
+      "A": 0.5602409638554217,
+      "B": 0.7090909090909091,
+      "C": 0.7515923566878981
+    }
+  },
+  "total_source_efficacy": 256,
+  "limit": "Held-input first-crossing estimates for currently silent cells, not coupled-network predictions or measured fly efficacies. The explicit coverage criterion is at least half of each cue's anatomical KC-to-MBON04 contact mass within providers' measured KC footprint. A uniform source-efficacy hypothesis must be tested from birth with paired and unpaired nutrients before any memory-transfer claim."
+}

@@ -17,9 +17,12 @@ stores a release-dependent direct memory and preserves useful A-guided feeding
 through continuing unrewarded B-before-A exposure. A source-specific efficacy
 hypothesis now permits a small teacher-dependent change at B terminals, but
 acquired B action remains unestablished. Broader primary teaching resolves the
-student-output inhibition of A's teacher pathway. The remaining checks address
-unequal controlled cues and the physical readout's insensitivity to student
-memory in the tested state.
+student-output inhibition of A's teacher pathway. Balanced cue codes and explicit
+student sensory and motor interfaces now give imposed B-terminal depression a
+physical response range. Two pairings produce a small teacher-memory-dependent
+B-terminal change without a B movement benefit. Eight pairings increase
+depression but preserve identical B movement against feedback block. The next
+comparison tests broader recruitment through the same measured feedback pairs.
 The overall research objective remains active; completion of the earlier
 bounded experiment was not completion of that objective.
 
@@ -41,6 +44,124 @@ this attribution relies on the accepted record and implementation, not a fresh
 re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
+
+## Student interfaces and a causal A benefit
+
+![Student interfaces and retained A benefit](evidence/student-interface.png)
+
+The original physical readout did not respond even to imposed complete B
+terminal depression. `student_interface.py` applies the existing equal
+cue-presence current to SMP108 as well as SMP353, and reads SMP108 activity
+through the same muscle and hinge. These are explicit experimental input and
+output boundaries. Internal anatomical pairs and their contact counts remain
+unchanged. [Yamada et al., Figure 5 and Figure 7 supplement 1](https://elifesciences.org/articles/79042/figures)
+report odor responses and activation-evoked upwind movement at SMP108. They
+also find SMP108 dispensable for the conditioned steering they tested. This
+assay therefore does not reconstruct a necessary fly motor pathway.
+
+A diagnostic separates the two interfaces. Adding cue input alone yields only
+0.01575 radians of B movement after imposed complete gamma4 B depression.
+Reading SMP108 gives 0.11699 radians with unchanged B coefficients and 0.20741
+with imposed zero release. The neural, receiving-weight and terminal-release
+trajectories match exactly across the two motor mappings. The larger movement
+is an expression bound, not acquired memory.
+
+Two full courses apply both interfaces from birth. Paired A acquisition yields
+1.000 J of feeding after retention; displaced nutrients yield 0.704 J. Replacing
+only A's alpha1 and gamma4 terminal releases with the unpaired values reduces
+the paired response to 0.704 J. Transferring the paired values restores 1.000 J
+in the unpaired preparation. The paired sham reproduces its original neural
+and physical trajectories exactly. Stored energy plus gut contents rises by
+0.54308 J with the retained A coefficients and 0.42973 J after removal. C feeding
+remains 0.800 J in both parents. Adaptation continues in every probe. These
+results establish a useful retained A memory in this preparation, with a
+nonzero untrained response. They do not add a first-order capability beyond
+the project's earlier accepted work.
+
+Two nutrient-free B-before-A pairings lower mean gamma4 B release to
+0.99735141, compared with 1.00003362 when measured SMP108-to-student-DAN events
+are blocked during acquisition. Removing only stored A terminal changes
+before the same continuation gives 0.99849744, close to the unpaired parent's
+0.99849743. Thus A memory adds depression beyond the feedback recruited by
+untrained cues. Displacing A in time gives 0.99897373. All five retained B
+probes emit nine SMP108 spikes. The intact and feedback-blocked physical B
+trajectories match exactly. Small differences across the other branches can
+come from inherited physical state and do not establish B memory expression.
+
+The [audited evidence](evidence/student-interface.json) records checkpoint and
+trajectory hashes, the A-only intervention, and the interface diagnostics.
+The A removal preserves all other serialized neural and random-generator
+state exactly. The first accumulation test repeats B-before-A eight times,
+keeping each cue, gap, recovery and final retention duration unchanged.
+`repeated_course.py` compares intact and blocked feedback. The completed result
+is described below. More exposure alone is not success.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.student_interface \
+  .live/research/flywire783/memory-balanced-codes-20260910 \
+  .live/research/flywire783/memory-interface-paired-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.interface_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.repeated_course \
+  .live/research/flywire783/memory-interface-paired-20260910 \
+  .live/research/flywire783/memory-interface-eight-intact-20260910
+```
+
+The focused memory and anatomy checks pass, 48 tests. Shared disk pressure
+required transparent APFS compression of 329 completed `.npy` files.
+`compress_records.py` verified each logical SHA-256 before replacement and
+reclaimed 6,735,134,720 allocated bytes. Paths, NumPy memory-map access and
+record contents remain unchanged; checkpoints and active records were excluded.
+The ignored raw directory holds the per-file audit. New repeated courses
+reserve at least 4 GiB beyond their estimated allocation for concurrent work.
+
+## Repetition reveals limited feedback coverage
+
+![Repeated exposure and expression bounds](evidence/repeated-interface.png)
+
+Eight B-before-A pairings reduce mean B-to-MBON04 release to 0.98973816,
+versus 1.00013447 with acquisition feedback blocked. The retained B physical
+trajectories and SMP108 output events still match exactly. Both branches keep
+1.000 J of A feeding. Every acquisition tick is nutrient-free and retains
+positive native receiving and returning learning rates.
+
+Feedback changes five of 32 B terminals. Three feed the MBON04 that emits eight
+spikes in the B probe and carry 10.92% of its selected B receiving weight. Two
+feed the silent MBON04 and carry 21.74%. Imposing zero release only at those
+five terminals changes B output from nine to ten SMP108 spikes and maximum
+angle from 0.11699 to 0.12960 radians. Zeroing all 32 B terminals instead yields
+17 spikes and 0.20741 radians. Every bound starts from the same intact retained
+neural and physical state; its sham replays exactly. These are interventions,
+not learned responses or proof of what arbitrarily long training would do.
+
+A fixed fourfold projection of the observed log-depression, corresponding to
+32 versus eight pairings under fixed feedback, still gives nine SMP108 spikes
+and exactly the original movement. That result does not justify another long
+exposure run by itself. The [repetition audit](evidence/repeated-interface.json)
+records both complete courses, each expression bound, all trace hashes and
+the per-output coverage calculation.
+
+The first A presentation recruits two of the 24 student dopamine cells with
+measured SMP108 input. The [recruitment calculation](evidence/recruitment-coverage.json)
+uses intact-minus-blocked somatic traces to estimate the first threshold
+crossing for currently silent providers. It then maps their measured KC inputs
+to each cue's KC-to-MBON04 contact mass. A uniform fourfold increase over the
+existing efficacy is the smallest tested doubling predicted to cover at least
+half of that mass for every cue. Estimated coverage becomes 56.0% for A, 70.9%
+for B and 75.2% for C, with 16 recruited providers. These are held-input
+estimates; recurrence and adaptation can invalidate them.
+
+`coverage_efficacy.py` therefore tests total source efficacy 256 from birth,
+with paired and displaced primary nutrients. It changes only the existing 24
+SMP108-to-PAM07/PAM08 receiving coefficients. The graph, counts, signs, credit
+kinetics, native adaptation and sensory/physical interfaces stay fixed. This
+is an outcome-informed engineering hypothesis about a failed preparation,
+not a measured fly gain or a positive second-order result. The overall goal
+still requires retained B behavior causally dependent on stored A memory,
+measured feedback and the acquired B coefficients.
 
 ## Local terminal credit and continuing memory
 

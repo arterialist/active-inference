@@ -1,0 +1,2144 @@
+{
+  "source_sha256": "659c2654412607cd56dcae7f75b6aee2afa7215e533d37eec6c0221497721fba",
+  "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+  "courses": {
+    "intact": {
+      "receiver": "memory-interface-paired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "6122ff3e88be8b834de6a7569a1850fd04f7dfe6cb1f095c2394c3ae3c27de9d",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07291967659932204,
+          "feedback_events": 168,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08804476586411562,
+          "feedback_events": 168,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2964754210939138,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.33267008324657943,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270308387140054,
+          "feedback_events": 744,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802019932182607,
+          "feedback_events": 744,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969885866078726,
+          "feedback_events": 1152,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331030076812948,
+          "feedback_events": 1152,
+          "removed_events": 0
+        },
+        {
+          "name": "pair2_B",
+          "begin": 2720,
+          "end": 2860,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270378465584085,
+          "feedback_events": 1320,
+          "removed_events": 0
+        },
+        {
+          "name": "pair2_gap",
+          "begin": 2860,
+          "end": 2880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802097782460061,
+          "feedback_events": 1320,
+          "removed_events": 0
+        },
+        {
+          "name": "pair2_A",
+          "begin": 2880,
+          "end": 3080,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.29698916778993817,
+          "feedback_events": 1728,
+          "removed_events": 0
+        },
+        {
+          "name": "pair2_recovery",
+          "begin": 3080,
+          "end": 4080,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034223659871,
+          "feedback_events": 1728,
+          "removed_events": 0
+        },
+        {
+          "name": "pair3_B",
+          "begin": 4080,
+          "end": 4220,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.072703786004156,
+          "feedback_events": 1896,
+          "removed_events": 0
+        },
+        {
+          "name": "pair3_gap",
+          "begin": 4220,
+          "end": 4240,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802097912897612,
+          "feedback_events": 1896,
+          "removed_events": 0
+        },
+        {
+          "name": "pair3_A",
+          "begin": 4240,
+          "end": 4440,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969891682877398,
+          "feedback_events": 2304,
+          "removed_events": 0
+        },
+        {
+          "name": "pair3_recovery",
+          "begin": 4440,
+          "end": 5440,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226613849,
+          "feedback_events": 2304,
+          "removed_events": 0
+        },
+        {
+          "name": "pair4_B",
+          "begin": 5440,
+          "end": 5580,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270378600574946,
+          "feedback_events": 2472,
+          "removed_events": 0
+        },
+        {
+          "name": "pair4_gap",
+          "begin": 5580,
+          "end": 5600,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.0880209791304276,
+          "feedback_events": 2472,
+          "removed_events": 0
+        },
+        {
+          "name": "pair4_A",
+          "begin": 5600,
+          "end": 5800,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969891682880396,
+          "feedback_events": 2880,
+          "removed_events": 0
+        },
+        {
+          "name": "pair4_recovery",
+          "begin": 5800,
+          "end": 6800,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615003,
+          "feedback_events": 2880,
+          "removed_events": 0
+        },
+        {
+          "name": "pair5_B",
+          "begin": 6800,
+          "end": 6940,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 3048,
+          "removed_events": 0
+        },
+        {
+          "name": "pair5_gap",
+          "begin": 6940,
+          "end": 6960,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 3048,
+          "removed_events": 0
+        },
+        {
+          "name": "pair5_A",
+          "begin": 6960,
+          "end": 7160,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 3456,
+          "removed_events": 0
+        },
+        {
+          "name": "pair5_recovery",
+          "begin": 7160,
+          "end": 8160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 3456,
+          "removed_events": 0
+        },
+        {
+          "name": "pair6_B",
+          "begin": 8160,
+          "end": 8300,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 3624,
+          "removed_events": 0
+        },
+        {
+          "name": "pair6_gap",
+          "begin": 8300,
+          "end": 8320,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 3624,
+          "removed_events": 0
+        },
+        {
+          "name": "pair6_A",
+          "begin": 8320,
+          "end": 8520,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 4032,
+          "removed_events": 0
+        },
+        {
+          "name": "pair6_recovery",
+          "begin": 8520,
+          "end": 9520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 4032,
+          "removed_events": 0
+        },
+        {
+          "name": "pair7_B",
+          "begin": 9520,
+          "end": 9660,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 4200,
+          "removed_events": 0
+        },
+        {
+          "name": "pair7_gap",
+          "begin": 9660,
+          "end": 9680,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 4200,
+          "removed_events": 0
+        },
+        {
+          "name": "pair7_A",
+          "begin": 9680,
+          "end": 9880,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 12
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 4608,
+          "removed_events": 0
+        },
+        {
+          "name": "pair7_recovery",
+          "begin": 9880,
+          "end": 10880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 4608,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 10880,
+          "end": 11880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.00053412689460467,
+          "feedback_events": 4608,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.11698597075861943,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 9,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 3
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 1.0000000000000002,
+          "max_angle": 0.3258020375525223,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 546,
+            "SMP353": 3,
+            "SMP108": 28,
+            "APL": 16,
+            "MBON04": 7,
+            "PAM07": 756,
+            "PAM08": 1894
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 4608,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Bounded repeated B-before-A acquisition with continuing adaptation and no nutrients. Increased exposure alone is not evidence of teacher-dependent B behavior.",
+      "artifacts": {
+        "modulation.npy": "1b16fbb4f3a6060df6069a5c9cf33697890ec08dc85a95e4849f9d22f773f162",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "4ee47dbaf30696284e93b925b3bfb9376b0213275c9ca992ce4aa3cc3b460172",
+        "soma.npy": "1547a8a79cb5cedf5db85060cbbcd2ec1994c13bf029ccd4e79aead1e951814a",
+        "weights.npy": "9409318e2c6d0adc7d16173164e21a9fcb23b704561abb94cb58fdb615de2609",
+        "retention.paula": "e6483fd72e071b9c97490a1720d5b8c9123069ab7e717757a3c7d6e77d46be23",
+        "retention-body.npz": "3f26d55cf8e2ce29e6bf5340eb5a5be5b1da1b38482efbcbe760999480243b9b",
+        "body.npy": "6ab72add3ebcc8726465c89790ad0e06690c62b62572692109a7533c08f81220",
+        "probe-B.npz": "240500f6b2c3f2a8a8c1ac0c039d7bd162445353268de862b6ff7552b6862df9",
+        "probe-A.npz": "85eee53099f5c7bb6db22503bb292007069050271c40fc4bf38527a92c909ab2"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "student_interface_sha256": "d6d5191e1c5c6f274cc5c70b8ec1b43b0ddf96db023ab20b01ee21236cdbf3f7",
+      "pairings": 8,
+      "repetition_driver_sha256": "853a114dfa63117017c0390bb1fbf4d5fd05dd166aacc4fb67d07fc66a1589b4",
+      "mean_B_release": 0.9897381612449323,
+      "B_release_after_each_pair": [
+        0.9986686371156697,
+        0.9973514061085089,
+        0.996048262721564,
+        0.9947590540305048,
+        0.9934836224785943,
+        0.9922217260021121,
+        0.9909732888209002,
+        0.9897381612449323
+      ],
+      "record": "memory-interface-eight-intact-20260910",
+      "summary_sha256": "b14850f1e9da5f4cd226069567ff886bf2b964aef4625fb9639cb21d3fe814e7"
+    },
+    "cut": {
+      "receiver": "memory-interface-paired-20260910",
+      "cut": true,
+      "displaced": false,
+      "input_checkpoint_sha256": "6122ff3e88be8b834de6a7569a1850fd04f7dfe6cb1f095c2394c3ae3c27de9d",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07291967659932204,
+          "feedback_events": 168,
+          "removed_events": 168
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08804476586411562,
+          "feedback_events": 168,
+          "removed_events": 168
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2964754210939138,
+          "feedback_events": 576,
+          "removed_events": 576
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.33267008324657943,
+          "feedback_events": 576,
+          "removed_events": 576
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270308387140054,
+          "feedback_events": 744,
+          "removed_events": 744
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802019932182607,
+          "feedback_events": 744,
+          "removed_events": 744
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969885866078726,
+          "feedback_events": 1152,
+          "removed_events": 1152
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331030076812948,
+          "feedback_events": 1152,
+          "removed_events": 1152
+        },
+        {
+          "name": "pair2_B",
+          "begin": 2720,
+          "end": 2860,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270378465584085,
+          "feedback_events": 1320,
+          "removed_events": 1320
+        },
+        {
+          "name": "pair2_gap",
+          "begin": 2860,
+          "end": 2880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802097782460061,
+          "feedback_events": 1320,
+          "removed_events": 1320
+        },
+        {
+          "name": "pair2_A",
+          "begin": 2880,
+          "end": 3080,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.29698916778993817,
+          "feedback_events": 1728,
+          "removed_events": 1728
+        },
+        {
+          "name": "pair2_recovery",
+          "begin": 3080,
+          "end": 4080,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034223659871,
+          "feedback_events": 1728,
+          "removed_events": 1728
+        },
+        {
+          "name": "pair3_B",
+          "begin": 4080,
+          "end": 4220,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.072703786004156,
+          "feedback_events": 1896,
+          "removed_events": 1896
+        },
+        {
+          "name": "pair3_gap",
+          "begin": 4220,
+          "end": 4240,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802097912897612,
+          "feedback_events": 1896,
+          "removed_events": 1896
+        },
+        {
+          "name": "pair3_A",
+          "begin": 4240,
+          "end": 4440,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969891682877398,
+          "feedback_events": 2304,
+          "removed_events": 2304
+        },
+        {
+          "name": "pair3_recovery",
+          "begin": 4440,
+          "end": 5440,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226613849,
+          "feedback_events": 2304,
+          "removed_events": 2304
+        },
+        {
+          "name": "pair4_B",
+          "begin": 5440,
+          "end": 5580,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270378600574946,
+          "feedback_events": 2472,
+          "removed_events": 2472
+        },
+        {
+          "name": "pair4_gap",
+          "begin": 5580,
+          "end": 5600,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0880209791304276,
+          "feedback_events": 2472,
+          "removed_events": 2472
+        },
+        {
+          "name": "pair4_A",
+          "begin": 5600,
+          "end": 5800,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969891682880396,
+          "feedback_events": 2880,
+          "removed_events": 2880
+        },
+        {
+          "name": "pair4_recovery",
+          "begin": 5800,
+          "end": 6800,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615003,
+          "feedback_events": 2880,
+          "removed_events": 2880
+        },
+        {
+          "name": "pair5_B",
+          "begin": 6800,
+          "end": 6940,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 3048,
+          "removed_events": 3048
+        },
+        {
+          "name": "pair5_gap",
+          "begin": 6940,
+          "end": 6960,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 3048,
+          "removed_events": 3048
+        },
+        {
+          "name": "pair5_A",
+          "begin": 6960,
+          "end": 7160,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 3456,
+          "removed_events": 3456
+        },
+        {
+          "name": "pair5_recovery",
+          "begin": 7160,
+          "end": 8160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 3456,
+          "removed_events": 3456
+        },
+        {
+          "name": "pair6_B",
+          "begin": 8160,
+          "end": 8300,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 3624,
+          "removed_events": 3624
+        },
+        {
+          "name": "pair6_gap",
+          "begin": 8300,
+          "end": 8320,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 3624,
+          "removed_events": 3624
+        },
+        {
+          "name": "pair6_A",
+          "begin": 8320,
+          "end": 8520,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 4032,
+          "removed_events": 4032
+        },
+        {
+          "name": "pair6_recovery",
+          "begin": 8520,
+          "end": 9520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 4032,
+          "removed_events": 4032
+        },
+        {
+          "name": "pair7_B",
+          "begin": 9520,
+          "end": 9660,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 7,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07270378600575088,
+          "feedback_events": 4200,
+          "removed_events": 4200
+        },
+        {
+          "name": "pair7_gap",
+          "begin": 9660,
+          "end": 9680,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.08802097913042885,
+          "feedback_events": 4200,
+          "removed_events": 4200
+        },
+        {
+          "name": "pair7_A",
+          "begin": 9680,
+          "end": 9880,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 17,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.2969891682880397,
+          "feedback_events": 4608,
+          "removed_events": 4608
+        },
+        {
+          "name": "pair7_recovery",
+          "begin": 9880,
+          "end": 10880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.3331034226615002,
+          "feedback_events": 4608,
+          "removed_events": 4608
+        },
+        {
+          "name": "retention",
+          "begin": 10880,
+          "end": 11880,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.00053412689460467,
+          "feedback_events": 4608,
+          "removed_events": 4608
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.11698597075861943,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 9,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 3
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 1.0000000000000002,
+          "max_angle": 0.3258020375525223,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 546,
+            "SMP353": 3,
+            "SMP108": 28,
+            "APL": 16,
+            "MBON04": 7,
+            "PAM07": 756,
+            "PAM08": 1894
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 4608,
+      "removed_events": 4608,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Bounded repeated B-before-A acquisition with continuing adaptation and no nutrients. Increased exposure alone is not evidence of teacher-dependent B behavior.",
+      "artifacts": {
+        "modulation.npy": "1b16fbb4f3a6060df6069a5c9cf33697890ec08dc85a95e4849f9d22f773f162",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "33867d466f08129d52db73f3f4796682030f168b8595ff2efabbf4099d742e35",
+        "soma.npy": "78a2b97a4dd3bc5bec6f7dc43b78a34d7dc5cdbdfa744599e4e31d1815eaf720",
+        "weights.npy": "0f1ce4fb21bf220ea14c147eaddd5ef927ad89834c8aec69862e9efa324c2add",
+        "retention.paula": "fb3aa8242afb6d42a05c73f5429b09775e013057c31774f484cfd8d427e92114",
+        "retention-body.npz": "3f26d55cf8e2ce29e6bf5340eb5a5be5b1da1b38482efbcbe760999480243b9b",
+        "body.npy": "6ab72add3ebcc8726465c89790ad0e06690c62b62572692109a7533c08f81220",
+        "probe-B.npz": "ea7c2daa224cd406b9299d4bfd4a8e773f22e0553dc66d3a3a3f1f2104aae795",
+        "probe-A.npz": "3cc8623d5637bdeec45faca99bc9e7f6433874532d0304fe9136b3d701609028"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "student_interface_sha256": "d6d5191e1c5c6f274cc5c70b8ec1b43b0ddf96db023ab20b01ee21236cdbf3f7",
+      "pairings": 8,
+      "repetition_driver_sha256": "853a114dfa63117017c0390bb1fbf4d5fd05dd166aacc4fb67d07fc66a1589b4",
+      "mean_B_release": 1.0001344680786133,
+      "B_release_after_each_pair": [
+        1.0000168085098267,
+        1.0000336170196533,
+        1.00005042552948,
+        1.0000672340393066,
+        1.0000840425491333,
+        1.00010085105896,
+        1.0001176595687866,
+        1.0001344680786133
+      ],
+      "record": "memory-interface-eight-cut-20260910",
+      "summary_sha256": "e2848cf731649f6b50a7a99c115c80f84ea58b347dfba5ffc8f60cf612a46841"
+    }
+  },
+  "bounds": {
+    "sham": {
+      "receiver": "memory-interface-paired-20260910",
+      "state": "memory-interface-eight-intact-20260910",
+      "donor": "memory-interface-paired-20260910",
+      "donor_state": "memory-interface-eight-cut-20260910",
+      "cue": "B",
+      "well": false,
+      "targets": [
+        "MBON04"
+      ],
+      "changes": [],
+      "changed_receiving_by_intervention": 0,
+      "source_sha256": "9f140a58903ebe6f1e857ea2f101b37538b22189e2f967061cc3ee7beaeb5160",
+      "input_checkpoint_sha256": "e6483fd72e071b9c97490a1720d5b8c9123069ab7e717757a3c7d6e77d46be23",
+      "donor_checkpoint_sha256": "fb3aa8242afb6d42a05c73f5429b09775e013057c31774f484cfd8d427e92114",
+      "trace_sha256": "6c10cc5a5fa3b8311d706a3a9e619b8095a62a5009684a3d49c469200071f3e8",
+      "exact_sham": null,
+      "well_j": 0.0,
+      "max_angle": 0.11698597075861943,
+      "first_contact_tick": 95,
+      "spikes": {
+        "MBON07": 24,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 9,
+        "APL": 14,
+        "MBON04": 8,
+        "PAM07": 0,
+        "PAM08": 3
+      },
+      "expression_bound": {
+        "all_other_runtime_state_exact": true,
+        "mode": "sham",
+        "reached_count": 5,
+        "candidate_count": 32,
+        "reached_source_rows": [
+          560095,
+          2571721,
+          5621475,
+          12496173,
+          15048376
+        ],
+        "tolerance": 1e-06
+      },
+      "bound_driver_sha256": "781f8e2b4313637c74cfd507297411c9b4ad69b4174bc67eb06cbc71ea0c79d9",
+      "limit": "Imposed zero release at selected terminals with all other initial state preserved and adaptation continuing. This is not acquired behavior or proof that repeated training reaches the imposed state.",
+      "record": "memory-interface-eight-bound-sham-20260910"
+    },
+    "reached": {
+      "receiver": "memory-interface-paired-20260910",
+      "state": "memory-interface-eight-intact-20260910",
+      "donor": "memory-interface-paired-20260910",
+      "donor_state": "memory-interface-eight-cut-20260910",
+      "cue": "B",
+      "well": false,
+      "targets": [
+        "MBON04"
+      ],
+      "changes": [
+        {
+          "source_row": 560095,
+          "before": 0.9741871254680811,
+          "after": 0.0
+        },
+        {
+          "source_row": 2571721,
+          "before": 0.96921654962963,
+          "after": 0.0
+        },
+        {
+          "source_row": 5621475,
+          "before": 0.9083211524791523,
+          "after": 0.0
+        },
+        {
+          "source_row": 12496173,
+          "before": 0.9083159388869139,
+          "after": 0.0
+        },
+        {
+          "source_row": 15048376,
+          "before": 0.9076894021631179,
+          "after": 0.0
+        }
+      ],
+      "changed_receiving_by_intervention": 0,
+      "source_sha256": "9f140a58903ebe6f1e857ea2f101b37538b22189e2f967061cc3ee7beaeb5160",
+      "input_checkpoint_sha256": "e6483fd72e071b9c97490a1720d5b8c9123069ab7e717757a3c7d6e77d46be23",
+      "donor_checkpoint_sha256": "fb3aa8242afb6d42a05c73f5429b09775e013057c31774f484cfd8d427e92114",
+      "trace_sha256": "15582296435708b41bf5c8dd552b6d325b651c618eb4cafcc69de4e7febf6e7e",
+      "exact_sham": null,
+      "well_j": 0.0,
+      "max_angle": 0.12960007589013,
+      "first_contact_tick": 94,
+      "spikes": {
+        "MBON07": 24,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 10,
+        "APL": 14,
+        "MBON04": 7,
+        "PAM07": 0,
+        "PAM08": 4
+      },
+      "expression_bound": {
+        "all_other_runtime_state_exact": true,
+        "mode": "reached",
+        "reached_count": 5,
+        "candidate_count": 32,
+        "reached_source_rows": [
+          560095,
+          2571721,
+          5621475,
+          12496173,
+          15048376
+        ],
+        "tolerance": 1e-06
+      },
+      "bound_driver_sha256": "781f8e2b4313637c74cfd507297411c9b4ad69b4174bc67eb06cbc71ea0c79d9",
+      "limit": "Imposed zero release at selected terminals with all other initial state preserved and adaptation continuing. This is not acquired behavior or proof that repeated training reaches the imposed state.",
+      "record": "memory-interface-eight-bound-reached-20260910"
+    },
+    "all": {
+      "receiver": "memory-interface-paired-20260910",
+      "state": "memory-interface-eight-intact-20260910",
+      "donor": "memory-interface-paired-20260910",
+      "donor_state": "memory-interface-eight-cut-20260910",
+      "cue": "B",
+      "well": false,
+      "targets": [
+        "MBON04"
+      ],
+      "changes": [
+        {
+          "source_row": 330313,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 421688,
+          "before": 1.00018310546875,
+          "after": 0.0
+        },
+        {
+          "source_row": 431717,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 560095,
+          "before": 0.9741871254680811,
+          "after": 0.0
+        },
+        {
+          "source_row": 955686,
+          "before": 0.9996337890625,
+          "after": 0.0
+        },
+        {
+          "source_row": 1047309,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 1591854,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 2571721,
+          "before": 0.96921654962963,
+          "after": 0.0
+        },
+        {
+          "source_row": 2805712,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 4017663,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 5228734,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 5621475,
+          "before": 0.9083211524791523,
+          "after": 0.0
+        },
+        {
+          "source_row": 6030599,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 6425997,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 7063793,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 7449923,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 7659261,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 8116882,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 8356380,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 8633373,
+          "before": 1.0003204345703125,
+          "after": 0.0
+        },
+        {
+          "source_row": 8903700,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 8988222,
+          "before": 0.9996795654296875,
+          "after": 0.0
+        },
+        {
+          "source_row": 9404387,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 9591931,
+          "before": 1.0003204345703125,
+          "after": 0.0
+        },
+        {
+          "source_row": 9767604,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 10416881,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 12496173,
+          "before": 0.9083159388869139,
+          "after": 0.0
+        },
+        {
+          "source_row": 13895400,
+          "before": 1.0003204345703125,
+          "after": 0.0
+        },
+        {
+          "source_row": 13989918,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 14729054,
+          "before": 1.0003662109375,
+          "after": 0.0
+        },
+        {
+          "source_row": 14895705,
+          "before": 0.9996566772460938,
+          "after": 0.0
+        },
+        {
+          "source_row": 15048376,
+          "before": 0.9076894021631179,
+          "after": 0.0
+        }
+      ],
+      "changed_receiving_by_intervention": 0,
+      "source_sha256": "9f140a58903ebe6f1e857ea2f101b37538b22189e2f967061cc3ee7beaeb5160",
+      "input_checkpoint_sha256": "e6483fd72e071b9c97490a1720d5b8c9123069ab7e717757a3c7d6e77d46be23",
+      "donor_checkpoint_sha256": "fb3aa8242afb6d42a05c73f5429b09775e013057c31774f484cfd8d427e92114",
+      "trace_sha256": "5b950ed7da251409e83dfee0ae3d0660924aff0e18ec44fe3a602106055b5d49",
+      "exact_sham": null,
+      "well_j": 0.0,
+      "max_angle": 0.20740589606526522,
+      "first_contact_tick": 81,
+      "spikes": {
+        "MBON07": 24,
+        "PAM11": 0,
+        "SMP353": 1,
+        "SMP108": 17,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 12
+      },
+      "expression_bound": {
+        "all_other_runtime_state_exact": true,
+        "mode": "all",
+        "reached_count": 5,
+        "candidate_count": 32,
+        "reached_source_rows": [
+          560095,
+          2571721,
+          5621475,
+          12496173,
+          15048376
+        ],
+        "tolerance": 1e-06
+      },
+      "bound_driver_sha256": "781f8e2b4313637c74cfd507297411c9b4ad69b4174bc67eb06cbc71ea0c79d9",
+      "limit": "Imposed zero release at selected terminals with all other initial state preserved and adaptation continuing. This is not acquired behavior or proof that repeated training reaches the imposed state.",
+      "record": "memory-interface-eight-bound-all-20260910"
+    }
+  },
+  "B_body_exact": true,
+  "B_output_events_exact": true,
+  "coverage": {
+    "720575940620464321": {
+      "B_terminals": 22,
+      "reached_terminals": 3,
+      "B_probe_spikes": 8,
+      "reached_source_rows": [
+        560095,
+        5621475,
+        12496173
+      ],
+      "reached_fraction_of_receiving_weight": 0.10924374117979758,
+      "retained_weighted_release_reduction": 0.007839088537565986
+    },
+    "720575940628734376": {
+      "B_terminals": 10,
+      "reached_terminals": 2,
+      "B_probe_spikes": 0,
+      "reached_source_rows": [
+        2571721,
+        15048376
+      ],
+      "reached_fraction_of_receiving_weight": 0.21739130725223982,
+      "retained_weighted_release_reduction": 0.013309695676475108
+    }
+  },
+  "bound_sham_replay_exact": true,
+  "fourfold_projection": {
+    "receiver": "memory-interface-paired-20260910",
+    "state": "memory-interface-eight-intact-20260910",
+    "donor": "memory-interface-paired-20260910",
+    "donor_state": "memory-interface-eight-cut-20260910",
+    "cue": "B",
+    "well": false,
+    "targets": [
+      "MBON04"
+    ],
+    "changes": [
+      {
+        "source_row": 560095,
+        "before": 0.9741871254680811,
+        "cut": 1.0003662109375,
+        "after": 0.8996891857687466
+      },
+      {
+        "source_row": 2571721,
+        "before": 0.96921654962963,
+        "cut": 0.9996566772460938,
+        "after": 0.8833456429012884
+      },
+      {
+        "source_row": 5621475,
+        "before": 0.9083211524791523,
+        "cut": 1.0003662109375,
+        "after": 0.6799557783764537
+      },
+      {
+        "source_row": 12496173,
+        "before": 0.9083159388869139,
+        "cut": 1.0003662109375,
+        "after": 0.6799401672387517
+      },
+      {
+        "source_row": 15048376,
+        "before": 0.9076894021631179,
+        "cut": 0.9996566772460938,
+        "after": 0.6795109281410562
+      }
+    ],
+    "changed_receiving_by_intervention": 0,
+    "source_sha256": "9f140a58903ebe6f1e857ea2f101b37538b22189e2f967061cc3ee7beaeb5160",
+    "input_checkpoint_sha256": "e6483fd72e071b9c97490a1720d5b8c9123069ab7e717757a3c7d6e77d46be23",
+    "donor_checkpoint_sha256": "fb3aa8242afb6d42a05c73f5429b09775e013057c31774f484cfd8d427e92114",
+    "trace_sha256": "01e69bcb974c646923473d081a73f55a6a39acd67d14543346ae3f7756517e5a",
+    "exact_sham": null,
+    "well_j": 0.0,
+    "max_angle": 0.11698597075861943,
+    "first_contact_tick": 95,
+    "spikes": {
+      "MBON07": 24,
+      "PAM11": 0,
+      "SMP353": 0,
+      "SMP108": 9,
+      "APL": 14,
+      "MBON04": 8,
+      "PAM07": 0,
+      "PAM08": 3
+    },
+    "projection": {
+      "log_depression_multiplier": 4,
+      "source_sha256": "ab909703f6e13281c054c4d44e17a50478ba7d0ef3f4e6d62cb66fe8b8ebeb0b",
+      "limit": "Imposed 32/8 exposure extrapolation at the eight-pairing retained state. It is not learned memory or a prediction of the full coupled course with changing neural activity."
+    },
+    "record": "memory-interface-eight-projection-20260910"
+  },
+  "conclusion": "Eight pairings increase feedback-dependent B-terminal depression but leave retained B physical trajectories exactly unchanged against feedback block. A feeding remains 1.000 J. Only five of 32 B-to-MBON04 terminals show a depressive feedback contrast. Imposed complete depression of those five changes SMP108 output from nine to ten spikes, versus 17 when all 32 are zeroed. These expression bounds are not acquired B behavior. The fixed fourfold log-depression projection is also diagnostic, not a full-course outcome."
+}

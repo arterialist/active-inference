@@ -1,0 +1,34 @@
+{
+  "source_sha256": "860c0a0589368db5a02466fbc0338999df554965601e9c814ccedaddcfb45991",
+  "birth": {
+    "paired": {
+      "reference": "memory-interface-paired-20260910",
+      "candidate": "memory-coverage-paired-20260910",
+      "changed_pairs": 24,
+      "all_other_runtime_state_exact": true,
+      "body_exact": true,
+      "reference_checkpoint_sha256": "8158d47a2233e3b6e895ea4900671a977d286304a20f0830997202b4e315b93d",
+      "candidate_checkpoint_sha256": "291043635248cef658c6224872660fe1ecf080154bbc6b531270750a8f5c65d3"
+    },
+    "unpaired": {
+      "reference": "memory-interface-unpaired-20260910",
+      "candidate": "memory-coverage-unpaired-20260910",
+      "changed_pairs": 24,
+      "all_other_runtime_state_exact": true,
+      "body_exact": true,
+      "reference_checkpoint_sha256": "8158d47a2233e3b6e895ea4900671a977d286304a20f0830997202b4e315b93d",
+      "candidate_checkpoint_sha256": "9226425b74f264ef53d05f5cc8cb79b405381b429e23910af46234ba9aba6cc8"
+    }
+  },
+  "courses": {
+    "paired": {
+      "record": "memory-coverage-paired-20260910",
+      "completed": false
+    },
+    "unpaired": {
+      "record": "memory-coverage-unpaired-20260910",
+      "completed": false
+    }
+  },
+  "limit": "Birth-state specificity and direct acquisition only. Second-order behavior and teacher-memory dependence require subsequent nutrient-free continuations and causal expression controls. Incomplete courses carry no outcome claim."
+}

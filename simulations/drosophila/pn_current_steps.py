@@ -46,7 +46,7 @@ def step_course(levels=(25., 50., 75., 100.), duration=1000, gap=1000):
     return command, epochs
 
 
-def prepare(graph, intrinsic, tail, *, spatial=None, release_depression=None):
+def prepare(graph, intrinsic, tail, *, spatial=None, release_depression=None, electrical_roots=()):
     """Change only the identified PN, before any tick, and document overrides."""
     root, _ = dl5_cut(graph)
     if intrinsic["root"] != root:
@@ -59,7 +59,7 @@ def prepare(graph, intrinsic, tail, *, spatial=None, release_depression=None):
     dynamics = Dynamics(weight_per_count=.075, apl_representation="local_cable" if spatial else "global_graded")
     spec = PNCurrentKernel(root, "ORN_DL5", tuple(tail["decay_ms"]), tuple(tail["peak_fractions"]), "peak")
     prep = build_paula(graph, dynamics, spatial=spatial, current_kernel=spec,
-                       release_depression=release_depression)
+                       release_depression=release_depression, electrical_roots=electrical_roots)
     target = prep.network.network.neurons[prep.root_to_id[root]]
     target.params.lambda_param = proposal["lambda_ms"]  # Explicit nominal 1 ms/tick hypothesis.
     mappings = {int(e[0]): int(e[4]) for e in prep.edge_bindings if int(e[3]) == target.id}

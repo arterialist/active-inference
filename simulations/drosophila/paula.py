@@ -26,6 +26,7 @@ from neuron.extensions.graded import GradedNeuron  # noqa: E402
 from neuron.extensions.experimental.passive_cable import LocalCableGradedNeuron  # noqa: E402
 from neuron.extensions.experimental.input_current import InputCurrentNeuron  # noqa: E402
 from neuron.extensions.experimental.release_depression import DepressingReleaseNeuron  # noqa: E402
+from neuron.extensions.experimental.electrical import ElectricalNeuron, ElectricalCurrentNeuron  # noqa: E402
 from simulations.connectome_loader import _assemble_network  # noqa: E402
 
 PORT_CAPACITY = 2**12
@@ -117,10 +118,17 @@ class ORNReleaseDepression:
 
 def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Path | None = None,
                 current_kernel: PNCurrentKernel | None = None,
-                release_depression: ORNReleaseDepression | None = None) -> Preparation:
+                release_depression: ORNReleaseDepression | None = None,
+                electrical_roots: tuple[str, ...] = ()) -> Preparation:
     graph.validate()
     dynamics.validate()
     depressing_roots = set(release_depression.source_roots) if release_depression else set()
+    if (len(set(electrical_roots)) != len(electrical_roots)
+            or not set(electrical_roots) <= set(graph.selected)):
+        raise ValueError("Electrical input requires distinct explicitly selected cells")
+    if set(electrical_roots) & depressing_roots or any(
+            graph.nodes[r]["annotation"]["hemibrain_type"] == "APL" for r in electrical_roots):
+        raise ValueError("Electrical input with APL or release depression is not yet validated")
     if release_depression is not None:
         if (not depressing_roots or len(depressing_roots) != len(release_depression.source_roots)
                 or not depressing_roots <= set(graph.selected)
@@ -175,7 +183,11 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
             neuron_class = InputCurrentNeuron
         if root in depressing_roots:
             neuron_class = DepressingReleaseNeuron
+        if root in electrical_roots:
+            neuron_class = ElectricalCurrentNeuron if neuron_class is InputCurrentNeuron else ElectricalNeuron
         cell = neuron_class(nid, params, log_level="CRITICAL", metadata=metadata)
+        if root in electrical_roots:
+            cell.configure_electrical_input()
         # Construct explicit coefficients without the helpers' random defaults.
         # Terminal distances are unused by the base release equations. Do not
         # write them into the shared `distances` dict and overwrite input delays.
@@ -252,6 +264,12 @@ def build_paula(graph: Subgraph, dynamics: Dynamics = Dynamics(), *, spatial: Pa
                        np.asarray(incoming_boundary, dtype=np.int64).reshape(-1, 4),
                        np.asarray(outgoing_boundary, dtype=np.int64).reshape(-1, 4), {
         "parameters": asdict(dynamics), "physical_seconds_per_tick": None,
+        **({"electrical_input": {
+            "roots": list(electrical_roots), "leak_conductance": 1.,
+            "junctions": "none inferred; caller must explicitly supply junctions and step through ElectricalCoupling",
+            "voltage": "native reset somatic S, not an action-potential waveform or dendritic voltage",
+            "units": "shared abstract conductance/current; relative leaks default to one, not measured"}}
+           if electrical_roots else {}),
         "release_depression": None if release_depression is None else {
             **asdict(release_depression), "terminals": depressing_terminals, "source_rows": depressing_rows,
             "scope": "all ALPN-directed terminals of explicitly selected olfactory neurons, including absent boundary targets",

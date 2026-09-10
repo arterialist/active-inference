@@ -26,6 +26,7 @@ from neuron.extensions.experimental.release_depression import DepressingReleaseN
 from neuron.extensions.experimental.input_current import InputCurrentNeuron
 from neuron.extensions.experimental.passive_cable import LocalCableGradedNeuron
 from neuron.neuron import RetrogradeSignalEvent
+from neuron.extensions.experimental.electrical import ElectricalCoupling
 
 CONDITIONS = ("no_depression", "depressing", "depressing_ln_block")
 
@@ -46,7 +47,8 @@ def pulse_course(n):
     return command,epochs
 
 
-def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, chunk=500, stop_tick=None):
+def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, chunk=500, stop_tick=None,
+        junction=None):
     if condition not in CONDITIONS or type(chunk) is not int or chunk < 1:
         raise ValueError("Invalid condition/chunk")
     if output.exists():
@@ -64,7 +66,18 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
         raise ValueError("Need reconstructed ORNs and ALLNs, not promoted boundary stubs")
     spec=ORNReleaseDepression(orns,0. if condition=="no_depression" else .22,893.)
     random.seed(0)
-    prep,target=prepare(graph,intrinsic,tail,spatial=spatial,release_depression=spec)
+    electrical_roots=() if junction is None else tuple(junction[:2])
+    prep,target=prepare(graph,intrinsic,tail,spatial=spatial,release_depression=spec,
+                        electrical_roots=electrical_roots)
+    stepper=prep.network
+    electrical_cells=[]
+    if junction is not None:
+        if len(junction)!=3:
+            raise ValueError("Need exactly two roots and one declared conductance")
+        electrical_cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in electrical_roots]
+        stepper=ElectricalCoupling(prep.network,[(electrical_cells[0].id,electrical_cells[1].id,junction[2])])
+        prep.assumptions["electrical_junction"]={"roots":list(electrical_roots),"g":junction[2],
+            "status":"hypothetical somatic electrical contact; not inferred from chemical counts or established for these identities"}
     cells=[prep.network.network.neurons[i] for i in prep.root_to_id.values()]
     roots=list(prep.root_to_id)
     source_cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in orns]
@@ -80,6 +93,8 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
         Path(__file__).with_name("pn_current_steps.py"),Path(__file__).with_name("spatial_paula.py"),
         Path(inspect.getfile(Neuron)),Path(inspect.getfile(DepressingReleaseNeuron)),
         Path(inspect.getfile(InputCurrentNeuron)),Path(inspect.getfile(LocalCableGradedNeuron))]
+    if junction is not None:
+        file_sources.append(Path(inspect.getfile(ElectricalCoupling)))
     hashes={str(p.resolve()):digest(p) for p in file_sources}
     output.mkdir(parents=True)
     with (output/"structure.npz").open("xb") as f:
@@ -145,9 +160,12 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
                 "pn_post_weight":np.zeros((n,len(initial_post))),
                 "pn_terminal_weight":np.zeros((n,len(initial_terminal))),
                 "ln_events":np.zeros((n,len(lns),3),dtype=np.int32),"apl":np.zeros((n,3))}
+            if junction is not None:
+                arrays["electrical"]=np.zeros((n,2,9))
             for tick in range(start,stop):
                 row=tick-start
-                prep.network.run_tick()
+                before=[float(c.S) for c in electrical_cells]
+                stepper.run_tick()
                 arrays["soma"][row]=[[float(c.S),float(c.O),float(c.F_avg)] for c in cells]
                 arrays["pn_intrinsic"][row]=[target.t_ref,target.r,target.b,target.total_current]
                 arrays["pn_post_weight"][row]=[p.u_i.info for p in target.postsynaptic_points.values()]
@@ -159,6 +177,9 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
                         ("release_native","release_native_amplitude"),("release_effective","release_effective_amplitude")):
                         arrays[name][row,sec]=getattr(c,attribute)
                 arrays["apl"][row]=[float(apl.cable.voltage.min()),float(apl.cable.voltage.max()),float(apl.terminal_release.max(initial=0))]
+                for i,c in enumerate(electrical_cells):
+                    arrays["electrical"][row,i]=[before[i],c.S,c.electrical_native_current,
+                        c.electrical_current,c.O,c.F_avg,c.t_ref,c.r,c.b]
             if any(not np.isfinite(a).all() for a in arrays.values()):
                 raise ValueError("Nonfinite recording")
             filename=f"ticks-{start:06d}-{stop:06d}.npz"
@@ -188,6 +209,11 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
             "ALLN-to-ORN inhibition is still somatic in this adapter, not physiological presynaptic release regulation.",
             "Other neuron classes and synaptic gains remain uncalibrated; added anatomy is not physiological validation."],
         "claim":"Reunited neural train diagnostic and explicit simple-depression control; not odor or behavioral reproduction"}
+    if junction is not None:
+        result["recording"]["electrical"]={"roots":list(electrical_roots),
+            "fields":["S_before","S_after","chemical_current","electrical_current","O","F_avg","t_ref","r","b"],
+            "pn_intrinsic_total_current":"retains chemical-only current; electrical current is separate"}
+        result["limits"].append("The added passive electrical contact is hypothetical; no electrical anatomy, conductance, or LN intrinsic calibration was established.")
     dump_new(output/"analysis.json",result)
     return result
 
@@ -198,8 +224,10 @@ def main():
         p.add_argument(name,type=Path)
     p.add_argument("condition",choices=CONDITIONS)
     p.add_argument("--stop-tick",type=int)
+    p.add_argument("--junction",nargs=3,metavar=("ROOT_A","ROOT_B","G"))
     a=p.parse_args()
-    run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,a.condition,stop_tick=a.stop_tick)
+    junction=None if a.junction is None else (a.junction[0],a.junction[1],float(a.junction[2]))
+    run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,a.condition,stop_tick=a.stop_tick,junction=junction)
 
 
 if __name__=="__main__":main()

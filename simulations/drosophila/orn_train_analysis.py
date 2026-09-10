@@ -65,6 +65,8 @@ def audit_resources(available,used,native,effective,source_spikes,offsets,deplet
 
 def analyze_condition(graph,intrinsic,tail,directory):
     manifest=json.loads((directory/"analysis.json").read_text())
+    if "electrical_junction" in manifest["assumptions"]:
+        raise ValueError("Electrical recordings require the extension-aware electrical_analysis audit")
     if not manifest["complete_course"] or manifest["ticks"]!=4200:
         raise ValueError("A partial smoke run cannot pass a complete-course analysis")
     if manifest["assumptions"]["release_depression"]["recovery_ticks"]!=893.:

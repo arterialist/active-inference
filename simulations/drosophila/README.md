@@ -37,6 +37,12 @@ PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
 
+The [PN/LN paired transmission assay](PN_LN_ELECTRICAL_2026-09-10.md) separates
+chemical release from an explicitly hypothetical electrical contact. Forty-eight
+recorded conditions show subthreshold voltage transfer, finite-window direction
+differences and feedback through a nonspiking partner. These are model findings,
+not evidence that the selected FlyWire pair has the assumed gap junction.
+
 The [DL5 antennal-lobe reunion](ANTENNAL_REUNION_2026-09-10.md) now adds the
 actual ORN and local-interneuron neighborhood to the original PN/KC/APL graph.
 Six full-tick recordings separate short-term terminal depression, recurrent

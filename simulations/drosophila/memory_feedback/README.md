@@ -11,11 +11,200 @@ flies or evidence of consciousness.
 The files live in the existing active-inference repository. They do not change
 the sensory preparation, its regulator experiments, or neuron-model defaults.
 
-The completed bounded comparison establishes a stored, causally expressed cue
-effect with continued adaptation and preserved imported inhibitory signs. It
-does not establish useful movement or recruitment of the teaching route.
-The [rule-location comparison below](#restricting-the-rule-to-memory-inputs)
-is the latest result. The second-order experiment remains untested.
+The bounded transfer experiment is complete with a specific negative result.
+The small preparation can express a retained A memory as feeding. In the
+composed preparation, however, feedback events never recruit the student
+dopamine cells, and B-before-A does not produce memory-mediated B behavior.
+Cutting that feedback preserves the original A feeding response but changes
+neither the selected learning trajectories nor subsequent movement. Continued
+cue exposure also removes A-guided movement in both branches.
+
+First-order learning and memory-dependent movement were already accepted
+project capabilities. The [July research record](../../active_inference/RESEARCH_LOG.md#2026-07-30--paula-mushroom-body-counterconditioning-changes-embodied-food-approach-r-local-learned-avoidance)
+and [earlier embodied experiment](../../active_inference/experiments/embodied_mb_food_avoidance_causal.py)
+describe physical-contact teaching and learned food avoidance across four
+seeds, with an output-specific intervention restoring collection while
+preserving learned neural activity. The July raw artifact is absent locally;
+this attribution relies on the accepted record and implementation, not a fresh
+re-audit. Reconstructing first-order learning here is a prerequisite, not a new
+scientific capability. The additional result is the tested failure to compose
+it with the identified candidate teaching route under the declared boundaries.
+
+## Completed transfer test and stopping point
+
+![Recorded prerequisite and transfer failure](evidence/bounded-transfer.png)
+
+The [numerical evidence](evidence/bounded-transfer.json) contains source and
+artifact hashes, full phase summaries, coefficient measurements, and exact
+intact-versus-cut comparisons. Raw records remain in the existing ignored
+`.live/research/flywire783/` directory. The stages below retain the earlier
+negative results as part of the bounded comparison, rather than presenting
+every intermediate failure as the current outcome.
+
+### First-order feeding prerequisite
+
+`feeding.py` keeps the 77-cell cut and existing PAULA equations. Equal
+cue-presence input to SMP353 replaces the earlier continuous tonic input.
+This is an explicit experimental approximation to the omitted odor-related
+inputs, not reconstructed lateral-horn activity. SMP353 and SMP108 use existing
+threshold parameters divided by 32. That factor is the next power of two above
+the single-event transmission requirement for the measured 48-contact
+SMP353-to-SMP108 connection. It was calculated before behavioral execution,
+not fitted to feeding outcomes. Other cells retain their declared parameters.
+
+The body is one passive MuJoCo hinge driven by filtered SMP353 spikes through
+a fixed gain of four. Food enters the gut only when the existing physical
+angle reaches a fixed 0.04-radian well. The transducer has no cue identity or
+action target. Pump conditioning precedes the contact-dependent test. One
+model tick advances the body by 0.004 seconds; that mapping is engineering and
+does not calibrate PAULA to fly learning times.
+
+After two direct pairings and 1,000 blank retention ticks, A reaches food and
+ingests 0.440 J. From the same retained state, replacing selected KC-to-MBON
+receiving and corresponding release coefficients with those from unpaired
+training prevents contact and ingestion. Transferring paired coefficients to
+the unpaired preparation restores 0.440 J ingestion. C from the paired retained
+state does not reach food. All 64 active selected receiving coefficients
+continue changing during these probes. The A sham replays the full original
+somatic and physical trajectory exactly.
+
+A dry A probe recruits seven SMP353 and seven SMP108 spikes with no food or
+PAM11 spikes. Thus an acquired cue response can reach the candidate teaching
+interneuron without a concurrent primary outcome. This does not establish
+successful teaching downstream. The later sequential feeding probes are also
+not clean discrimination tests: eating changes organs, dopamine and memory,
+and residual physical contact can continue across cue boundaries. The fresh
+checkpoint branches above separate those effects.
+
+### Student composition fails before transfer
+
+`student_anatomy.py` adds the measured gamma4 candidate compartment, reaching
+235 cells. It includes two MBON04 cells with measured input to SMP108, their
+27 PAM07/PAM08 providers, 96 ranked gamma KCs, their APL cells, and 32 new
+alpha/beta KCs for B. A and C retain their original alpha/beta codes; each cue
+also has a disjoint gamma code. This is a controlled rank-based sample, not
+natural odor selectivity. Both sides are included where measured connections
+cross. All 3,362 internal directed pairs, representing 15,416 contacts, execute;
+9,078 outside cells retain boundary identities and incident pairs. All counts
+come from the pinned FlyWire materialization, not the separate hemibrain
+specimen used in the motivating biological studies.
+
+The first unbounded student run stopped at tick 219. Three weak positive KC
+inputs had crossed zero under the selected additive rule. The bounded
+comparison applies PAULA's existing zero lower-bound semantics only to those
+selected excitatory memory ports. A cell-wide zero bound would destroy
+inhibitory inputs. `nonnegative_rule.py` preserves their native signed learning
+and permits zeroed memory ports to recover under a later positive update.
+No eligibility dynamics, positive weight floor or reward-dependent reset was
+added. Partial unbounded records are excluded from completed-course results.
+
+The two completed bounded courses show a nonfunctional student compartment.
+Across all 10,120 ticks, MBON04, PAM07 and PAM08 emit no spikes. Their largest
+recorded somatic states are 0.383, 0.055 and 0.133, below native threshold 1.
+All 64 previously exposed gamma A/C memory inputs are zero by retention.
+Native student inputs and the selected rule therefore fail to maintain an
+active student output under these boundaries.
+
+Composition also weakens first-order discrimination. Retained paired A ingests
+0.496 J and unpaired A ingests 0.272 J. The latter must not be described as a
+memory-free preparation or a successful paired-only feeding criterion.
+
+### B-before-A and projection interruption
+
+`second_order.py` resumes each direct-training retention checkpoint before
+any feeding probe. Two trials present B for 140 ticks, a 20-tick blank, A for
+200 ticks, and 1,000 recovery ticks. Another 1,000 blank ticks precede expression.
+No nutrients or food well are available anywhere in this acquisition course.
+The environment supplies controlled cue currents and equal cue-presence input;
+it gives no B reward, association, target action or student-DAN current. All
+ordinary adaptation remains enabled, with minimum positive receiving and
+returning rates of 1e-8 and 1e-6 respectively.
+
+Four branches test intact feedback, interrupted feedback, a temporal control
+with a 1,000-tick B-to-A gap and matched total exposure and duration, and intact
+feedback after unpaired first-order training. The last directory has the
+historical shorthand `no-A-memory`; its actual condition is unpaired nutrients,
+not an assertion that no cue memory exists.
+
+The interruption removes only arriving forward events on the 11 measured
+SMP108-to-PAM07/PAM08 pairs. It preserves all anatomical connections, reciprocal
+events, intrinsic adaptation and motor readout. Before B training, the same
+intervention removes 77 events during an A feeding probe while preserving
+0.496 J ingestion, all teacher/motor somatic states, the physical trajectory
+and selected receiving coefficients exactly. Its intact sham also reproduces
+the original recorded A probe exactly. This validates the separation between
+the candidate teaching projection and original A expression.
+
+During B acquisition the cut removes 374 events. Student dopamine cells and
+MBON04 remain silent with or without it. Student modulation stays exactly zero.
+The intact and cut selected receiving weights, release coefficients and physical
+trajectories match exactly throughout acquisition and retention. Small student
+subthreshold differences establish that the projection has neural effects;
+they never become a teaching signal in this preparation.
+
+All 32 gamma B receiving coefficients fall from mean 0.09875 to zero in every
+condition. They are all zero after 68 ticks of the first B presentation,
+before the first A starts at tick 160. That loss also occurs with displaced B/A timing and unpaired
+first-order nutrients, and is unchanged by interrupting feedback. It is an
+exposure-driven consequence of the selected rule in silent cells, not evidence
+that A memory teaches B. B subsequently produces zero SMP353 motor spikes in
+every branch, despite 16 SMP108 spikes. An active interneuron alone is not a
+successful teaching or movement result.
+
+A expression also fails after this continuing unrewarded course. A produces
+zero motor spikes and no feeding in both intact and cut branches. Its selected
+receiving coefficients change from mean 0.618937 to 0.902938. The A-expression
+traces match exactly between those branches, so the interruption did not cause
+the loss. This documents a storage-state change and loss of expression; it does
+not prove complete memory erasure or motor paralysis. No coefficient rescue
+after B was used to separate every possible source of that later loss.
+
+The failure is localized enough to stop this composition test: forward feedback
+does not recruit student dopamine, the student input rule suppresses its weak
+inputs without a teaching signal, and ongoing cue exposure does not preserve
+useful A expression. The tested intervention preserves original A feeding but
+has no effect on transfer because there is no effective downstream teacher.
+This is not evidence against second-order conditioning in flies or a general
+impossibility result for PAULA. It is one deterministic, engineered preparation
+and a bounded set of causal branches. No further threshold search, expanded
+circuit or new learning equation is justified by this result alone.
+
+The 34 focused anatomical, physical, checkpoint-continuation, selected-rule and
+projection-intervention tests pass. They verify implementation contracts; the
+recorded courses and counterfactual trajectories support the scientific
+statements. Observed process memory during concurrent transfer runs was about
+241-279 MiB per Python process, with disk-backed course arrays. This is an
+operating observation, not a controlled performance benchmark.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.feeding \
+  .live/research/flywire783/memory-alpha1-cut-20260910 \
+  .live/research/flywire783/memory-feeding-paired-20260910
+# Repeat with --unpaired and a distinct output for its matched control.
+uv run --no-sync python -m simulations.drosophila.memory_feedback.student_anatomy \
+  .live/research/flywire783 \
+  .live/research/flywire783/memory-alpha1-cut-20260910 \
+  .live/research/flywire783/memory-alpha1-gamma4-cut-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.student_course \
+  .live/research/flywire783/memory-alpha1-gamma4-cut-20260910 \
+  .live/research/flywire783/memory-student-paired-bounded-20260910
+# Repeat with --unpaired and the student-unpaired-bounded output.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.second_order \
+  .live/research/flywire783/memory-student-paired-bounded-20260910 \
+  .live/research/flywire783/memory-second-intact-20260910
+# Use --cut for the projection intervention, --displaced for the temporal control.
+# Use the student-unpaired-bounded receiver for the first-order control.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.gate_expression \
+  .live/research/flywire783/memory-student-paired-bounded-20260910 \
+  .live/research/flywire783/memory-gate-expression-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.transfer_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
 
 ## Biological choice and limits
 

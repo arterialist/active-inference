@@ -1,0 +1,1589 @@
+{
+  "courses": {
+    "native": {
+      "record": "memory-student-paired-bounded-20260910",
+      "graph_sha256": "1b8b52dbab16707a4415c05897045067accb0e86d023faa223720e429f6dcb96",
+      "parameters": {
+        "student_eta_post": 0.01,
+        "DAN_sensitivity": 1.0
+      },
+      "complete_ticks": 10120,
+      "pre_food_ticks": 8920,
+      "pre_food_roles": {
+        "MBON07": {
+          "spikes": 117,
+          "max_S": 1.0132335424423218,
+          "max_M1": 0.4245611543929279
+        },
+        "PAM11": {
+          "spikes": 336,
+          "max_S": 3.914421796798706,
+          "max_M1": 0.0
+        },
+        "SMP353": {
+          "spikes": 18,
+          "max_S": 0.031057221814990044,
+          "max_M1": 0.0
+        },
+        "SMP108": {
+          "spikes": 18,
+          "max_S": 0.0,
+          "max_M1": 0.0
+        },
+        "APL": {
+          "spikes": 101,
+          "max_S": 5.327699184417725,
+          "max_M1": 0.0
+        },
+        "MBON04": {
+          "spikes": 0,
+          "max_S": 0.3829108476638794,
+          "max_M1": 0.0
+        },
+        "PAM07": {
+          "spikes": 0,
+          "max_S": 0.054749492555856705,
+          "max_M1": 0.0
+        },
+        "PAM08": {
+          "spikes": 0,
+          "max_S": 0.13338935375213623,
+          "max_M1": 0.0
+        }
+      },
+      "student_pairs": 96,
+      "zero_student_weights_at_retention": 64,
+      "minimum_student_weight": 0.0,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 3,
+          "PAM11": 168,
+          "SMP353": 7,
+          "SMP108": 7,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.08427884463254946,
+        "pump_j": 0.0,
+        "well_j": 0.496,
+        "energy_j": 84.08235214573749,
+        "seconds": 130.2145634579938
+      },
+      "source_hashes": {
+        "manifest.json": "9d94030e599b26aeb2b203d24b7edf02088aee1905e1161e4428a675790ba9fd",
+        "summary.json": "b3e4431ef257d19f72d2630748e8f1d0d7824ba027e4ee64ef9aee2d2028c1fa",
+        "retention.paula": "03820233a62a431b346c262f0d404c1a56455a43f008453506a5cd5f8a7dedce",
+        "identities.npz": "519d09441ee71825b5b42b8844814b88e077cc7bac06fb595db476483abd6a51",
+        "soma.npy": "8be0dcad5c86ff3dcf17d0231624055b5cf2fe57edbec3ae3b93c559a9c2f12a",
+        "weights.npy": "f8c824030de71cf462eb811657870a6528321354c88472f9ed438ae0da818873",
+        "modulation.npy": "8e8b41a9873fc154152539777e028568e6f8acfe43b5e7d75605d7f404bdcf13",
+        "body.npy": "4a87584e84964bfc9913a691e3d224e5e31821aebc5d621de1765cff753ad111"
+      }
+    },
+    "slow": {
+      "record": "memory-viability-slow-20260910",
+      "graph_sha256": "1b8b52dbab16707a4415c05897045067accb0e86d023faa223720e429f6dcb96",
+      "parameters": {
+        "slow_receiving": true,
+        "sensitive_DAN": false,
+        "student_eta_post": 1e-05,
+        "conservative_eta_upper": 2.819548872180451e-05,
+        "minimum_birth_weight": 0.06,
+        "maximum_birth_weight": 0.52,
+        "derivation": "Next lower power of ten satisfying eta*140*(1+max_birth_weight) <= 0.1*min_birth_weight",
+        "DAN_sensitivity": 1.0,
+        "scope": "Birth-only existing parameters. eta_post applies to all MBON04 inputs; eta_retro remains positive and unchanged. DAN gain reuses the output-cell sensitivity, not a biological calibration.",
+        "limit": "No delayed eligibility exists in the selected update. Retention and feedback specificity must be checked separately; a live DAN alone is insufficient.",
+        "source_sha256": "485380947c80724d45b85167af5156f673c0137b28c954e0ee2cee5a95a0cb12"
+      },
+      "complete_ticks": 10120,
+      "pre_food_ticks": 8920,
+      "pre_food_roles": {
+        "MBON07": {
+          "spikes": 117,
+          "max_S": 1.0132335424423218,
+          "max_M1": 0.4245611543929279
+        },
+        "PAM11": {
+          "spikes": 336,
+          "max_S": 3.914421796798706,
+          "max_M1": 0.0
+        },
+        "SMP353": {
+          "spikes": 18,
+          "max_S": 0.031057221814990044,
+          "max_M1": 0.0
+        },
+        "SMP108": {
+          "spikes": 18,
+          "max_S": 0.0,
+          "max_M1": 0.0
+        },
+        "APL": {
+          "spikes": 101,
+          "max_S": 5.327699184417725,
+          "max_M1": 0.0
+        },
+        "MBON04": {
+          "spikes": 0,
+          "max_S": 0.8842619061470032,
+          "max_M1": 0.0
+        },
+        "PAM07": {
+          "spikes": 0,
+          "max_S": 0.054749492555856705,
+          "max_M1": 0.0
+        },
+        "PAM08": {
+          "spikes": 0,
+          "max_S": 0.13338935375213623,
+          "max_M1": 0.0
+        }
+      },
+      "student_pairs": 96,
+      "zero_student_weights_at_retention": 0,
+      "minimum_student_weight": 0.05783999069379519,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 3,
+          "PAM11": 168,
+          "SMP353": 7,
+          "SMP108": 7,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.08427884463254946,
+        "pump_j": 0.0,
+        "well_j": 0.496,
+        "energy_j": 84.08235214573749,
+        "seconds": 185.48014779100777
+      },
+      "source_hashes": {
+        "manifest.json": "461d18c327767bfa6cb74e9431c8c2877cea285058d3dfde2d82e99fd7854223",
+        "summary.json": "545d87ccb4efcc7f4fe45292d64aa684de90b62b3360ed903349bf04efaa5659",
+        "retention.paula": "d65bf33513f66996dac580b8f4bfe61dfddc4eec5806e49d42305ec10f736590",
+        "identities.npz": "519d09441ee71825b5b42b8844814b88e077cc7bac06fb595db476483abd6a51",
+        "soma.npy": "2a6b878e13f96819dc826a3731fb0ddb6ad9b8a6b6e153eca40d7a339f1b9b8f",
+        "weights.npy": "d417eb2ec77e105b4888819a0885c9e8071dbd22c8912dea0c70ec471d2d4747",
+        "modulation.npy": "8e8b41a9873fc154152539777e028568e6f8acfe43b5e7d75605d7f404bdcf13",
+        "body.npy": "4a87584e84964bfc9913a691e3d224e5e31821aebc5d621de1765cff753ad111"
+      }
+    },
+    "sensitive": {
+      "record": "memory-viability-sensitive-20260910",
+      "graph_sha256": "1b8b52dbab16707a4415c05897045067accb0e86d023faa223720e429f6dcb96",
+      "parameters": {
+        "slow_receiving": false,
+        "sensitive_DAN": true,
+        "student_eta_post": 0.01,
+        "conservative_eta_upper": 2.819548872180451e-05,
+        "minimum_birth_weight": 0.06,
+        "maximum_birth_weight": 0.52,
+        "derivation": "Next lower power of ten satisfying eta*140*(1+max_birth_weight) <= 0.1*min_birth_weight",
+        "DAN_sensitivity": 32.0,
+        "scope": "Birth-only existing parameters. eta_post applies to all MBON04 inputs; eta_retro remains positive and unchanged. DAN gain reuses the output-cell sensitivity, not a biological calibration.",
+        "limit": "No delayed eligibility exists in the selected update. Retention and feedback specificity must be checked separately; a live DAN alone is insufficient.",
+        "source_sha256": "485380947c80724d45b85167af5156f673c0137b28c954e0ee2cee5a95a0cb12"
+      },
+      "complete_ticks": 10120,
+      "pre_food_ticks": 8920,
+      "pre_food_roles": {
+        "MBON07": {
+          "spikes": 116,
+          "max_S": 1.0075139999389648,
+          "max_M1": 0.4245611543929279
+        },
+        "PAM11": {
+          "spikes": 336,
+          "max_S": 3.914412498474121,
+          "max_M1": 0.0
+        },
+        "SMP353": {
+          "spikes": 18,
+          "max_S": 0.031193217262625694,
+          "max_M1": 0.0
+        },
+        "SMP108": {
+          "spikes": 18,
+          "max_S": 0.01459087710827589,
+          "max_M1": 0.0
+        },
+        "APL": {
+          "spikes": 101,
+          "max_S": 5.360931396484375,
+          "max_M1": 0.0
+        },
+        "MBON04": {
+          "spikes": 0,
+          "max_S": 0.4434347450733185,
+          "max_M1": 0.09217126053589819
+        },
+        "PAM07": {
+          "spikes": 87,
+          "max_S": 0.031214740127325058,
+          "max_M1": 0.0
+        },
+        "PAM08": {
+          "spikes": 1097,
+          "max_S": 0.031239474192261696,
+          "max_M1": 0.0
+        }
+      },
+      "student_pairs": 96,
+      "zero_student_weights_at_retention": 64,
+      "minimum_student_weight": 0.0,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 3,
+          "PAM11": 168,
+          "SMP353": 7,
+          "SMP108": 7,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 7,
+          "PAM08": 165
+        },
+        "max_angle": 0.08427890996349503,
+        "pump_j": 0.0,
+        "well_j": 0.496,
+        "energy_j": 84.08220402620904,
+        "seconds": 184.5730525830004
+      },
+      "source_hashes": {
+        "manifest.json": "9680c9f5594856da7e1545239e9fe2e1cdfdaac34897de5937aa7d24a2927ac8",
+        "summary.json": "613278100ae4f50000fea09dd6a4183eff30dbc4a00752b47830bf550df29faa",
+        "retention.paula": "497c000f59162d2dde02391497e565f1ff8e004932fd591ad3844aa049f7ffe8",
+        "identities.npz": "519d09441ee71825b5b42b8844814b88e077cc7bac06fb595db476483abd6a51",
+        "soma.npy": "1874601133d233e28b723da6c22a77069b67cb38c7803a31c3d4b9f57f760efd",
+        "weights.npy": "38c5cd4703ebf152cbd121e711fdf07057cf390b4380f26c3fb5a2a787f3e2f7",
+        "modulation.npy": "264cd32099dea7cbcabf04d9fe07bf086bc13b310923b19f8c23757ce87652e0",
+        "body.npy": "0afb7a9cfa4c198b4fb8fb3a98aa75b3c2794813e54c7d3c73b3c85af7e25ac0"
+      }
+    },
+    "combined": {
+      "record": "memory-viability-combined-20260910",
+      "graph_sha256": "1b8b52dbab16707a4415c05897045067accb0e86d023faa223720e429f6dcb96",
+      "parameters": {
+        "slow_receiving": true,
+        "sensitive_DAN": true,
+        "student_eta_post": 1e-05,
+        "conservative_eta_upper": 2.819548872180451e-05,
+        "minimum_birth_weight": 0.06,
+        "maximum_birth_weight": 0.52,
+        "derivation": "Next lower power of ten satisfying eta*140*(1+max_birth_weight) <= 0.1*min_birth_weight",
+        "DAN_sensitivity": 32.0,
+        "scope": "Birth-only existing parameters. eta_post applies to all MBON04 inputs; eta_retro remains positive and unchanged. DAN gain reuses the output-cell sensitivity, not a biological calibration.",
+        "limit": "No delayed eligibility exists in the selected update. Retention and feedback specificity must be checked separately; a live DAN alone is insufficient.",
+        "source_sha256": "485380947c80724d45b85167af5156f673c0137b28c954e0ee2cee5a95a0cb12"
+      },
+      "complete_ticks": 10120,
+      "pre_food_ticks": 8920,
+      "pre_food_roles": {
+        "MBON07": {
+          "spikes": 116,
+          "max_S": 1.0075266361236572,
+          "max_M1": 0.4245611543929279
+        },
+        "PAM11": {
+          "spikes": 336,
+          "max_S": 3.9144134521484375,
+          "max_M1": 0.0
+        },
+        "SMP353": {
+          "spikes": 18,
+          "max_S": 0.031193217262625694,
+          "max_M1": 0.0
+        },
+        "SMP108": {
+          "spikes": 17,
+          "max_S": 0.023494213819503784,
+          "max_M1": 0.0
+        },
+        "APL": {
+          "spikes": 101,
+          "max_S": 5.361733436584473,
+          "max_M1": 0.0
+        },
+        "MBON04": {
+          "spikes": 6,
+          "max_S": 1.0038927793502808,
+          "max_M1": 0.09208446701394733
+        },
+        "PAM07": {
+          "spikes": 87,
+          "max_S": 0.031214740127325058,
+          "max_M1": 0.0
+        },
+        "PAM08": {
+          "spikes": 1094,
+          "max_S": 0.031239472329616547,
+          "max_M1": 0.0
+        }
+      },
+      "student_pairs": 96,
+      "zero_student_weights_at_retention": 0,
+      "minimum_student_weight": 0.058264768174086094,
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 3,
+          "PAM11": 168,
+          "SMP353": 7,
+          "SMP108": 5,
+          "APL": 14,
+          "MBON04": 2,
+          "PAM07": 7,
+          "PAM08": 163
+        },
+        "max_angle": 0.08364800625307782,
+        "pump_j": 0.0,
+        "well_j": 0.496,
+        "energy_j": 84.08236458862528,
+        "seconds": 186.3288001670153
+      },
+      "source_hashes": {
+        "manifest.json": "98a3e304fed6cf9cab2400acc5d77d5cff598d65069ffa48d8f80e68e5c94d60",
+        "summary.json": "8815beed21af3194dfce69ae6335e0363a5b236a140dfb008d4f96583245ef5a",
+        "retention.paula": "cd121fabd70bc25973fae0f6e08d17ac94d6b8b6b59c1dce6410b35d36001423",
+        "identities.npz": "519d09441ee71825b5b42b8844814b88e077cc7bac06fb595db476483abd6a51",
+        "soma.npy": "269f46e19eb3bee70bb423f6b8a661abfc6bf1aac3fe4d88ee921603ffc57164",
+        "weights.npy": "7f47e053b2db143234f2e016570649bad105ccfea068ae84b3fec4a941a96510",
+        "modulation.npy": "a3cd37e1ed70c727a9129312aa351d456383c7562da49eb90b7c982c27ffbb31",
+        "body.npy": "8fad06fccbe0f72fb9983824c22898ef0a17a22293add6d80a5eb29fde0d9993"
+      }
+    }
+  },
+  "probes": {
+    "sensitive": {
+      "receiver": "memory-viability-sensitive-20260910",
+      "input_checkpoint_sha256": "497c000f59162d2dde02391497e565f1ff8e004932fd591ad3844aa049f7ffe8",
+      "source_sha256": "88639ff922104aac5a59cc887961f8b08e981dd224e53a00231ca5885401c1ee",
+      "probes": {
+        "A-intact": {
+          "cue": "A",
+          "cut": false,
+          "observed_events": 77,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.08427890996349503,
+          "roles": {
+            "MBON07": {
+              "spikes": 3,
+              "max_S": 0.9499112963676453,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10223910212516785,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 7,
+              "max_S": 0.03106616623699665,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 7,
+              "max_S": 0.010401157662272453,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.283766269683838,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.03735548257827759,
+              "max_M1": 0.07813466461074273
+            },
+            "PAM07": {
+              "spikes": 7,
+              "max_S": 0.031113123521208763,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 165,
+              "max_S": 0.031231194734573364,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "b838e920fa99f50652729ea1aa1c1a0cf6d3900597397327facff81d0e3e53ac"
+        },
+        "A-cut": {
+          "cue": "A",
+          "cut": true,
+          "observed_events": 77,
+          "removed_events": 77,
+          "nutrient_j": 0.0,
+          "max_angle": 0.08427890996349503,
+          "roles": {
+            "MBON07": {
+              "spikes": 3,
+              "max_S": 0.9499112963676453,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10224083811044693,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 7,
+              "max_S": 0.03106616623699665,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 7,
+              "max_S": 0.010953143239021301,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.283044815063477,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.036843832582235336,
+              "max_M1": 0.07731000762829948
+            },
+            "PAM07": {
+              "spikes": 7,
+              "max_S": 0.031113123521208763,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 163,
+              "max_S": 0.031231194734573364,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "31c5d3379142a3205837f9f78528f413b878275f3d1e10581507a74402a4c409"
+        },
+        "B-intact": {
+          "cue": "B",
+          "cut": false,
+          "observed_events": 275,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.10241488470304129,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.4554250240325928,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13789360225200653,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030933506786823273,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 25,
+              "max_S": 0.03037732094526291,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 6.853121757507324,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.22851257026195526,
+              "max_M1": 0.06339533306695198
+            },
+            "PAM07": {
+              "spikes": 5,
+              "max_S": 0.031050322577357292,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 162,
+              "max_S": 0.031149936839938164,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "bdfc4524a4c1083a4c123e0bc6ece078e04dc4dd65b965573cf2f801c78153f4"
+        },
+        "B-cut": {
+          "cue": "B",
+          "cut": true,
+          "observed_events": 275,
+          "removed_events": 275,
+          "nutrient_j": 0.0,
+          "max_angle": 0.10220630881462085,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.4554250240325928,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13789531588554382,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030963584780693054,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 25,
+              "max_S": 0.043261364102363586,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 6.851722240447998,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.2281084656715393,
+              "max_M1": 0.058480569076319766
+            },
+            "PAM07": {
+              "spikes": 5,
+              "max_S": 0.031050322577357292,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 144,
+              "max_S": 0.031150072813034058,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "091a212c979c4c89e601e0e23db65d62788faa2bf2ea1b622a76d1906a0a9f0f"
+        },
+        "C-intact": {
+          "cue": "C",
+          "cut": false,
+          "observed_events": 44,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.04272707282445034,
+          "roles": {
+            "MBON07": {
+              "spikes": 15,
+              "max_S": 1.0136951208114624,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.16021226346492767,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 4,
+              "max_S": 0.031216716393828392,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 4,
+              "max_S": 0.01084924302995205,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.108135223388672,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.04566888138651848,
+              "max_M1": 0.08016517437021187
+            },
+            "PAM07": {
+              "spikes": 22,
+              "max_S": 0.03121461346745491,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 196,
+              "max_S": 0.031235983595252037,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "c7be3b4cfac8a0c211d9268fe317832fa226a30557c2d45be4e513b6ee3244dd"
+        },
+        "C-cut": {
+          "cue": "C",
+          "cut": true,
+          "observed_events": 44,
+          "removed_events": 44,
+          "nutrient_j": 0.0,
+          "max_angle": 0.04272707282445034,
+          "roles": {
+            "MBON07": {
+              "spikes": 15,
+              "max_S": 1.0136951208114624,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.1602129340171814,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 4,
+              "max_S": 0.031216716393828392,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 4,
+              "max_S": 0.01084924302995205,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.1075663566589355,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.04566888138651848,
+              "max_M1": 0.0798632448360804
+            },
+            "PAM07": {
+              "spikes": 22,
+              "max_S": 0.030373074114322662,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 191,
+              "max_S": 0.031246677041053772,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "fd4cc637bd76da71fa71681e238489b95c9de11afeac8a653411242137eb77c8"
+        }
+      },
+      "limit": "Independent diagnostic branches with continuing adaptation. B is novel; recruitment by B alone cannot establish memory-mediated teaching."
+    },
+    "combined": {
+      "receiver": "memory-viability-combined-20260910",
+      "input_checkpoint_sha256": "cd121fabd70bc25973fae0f6e08d17ac94d6b8b6b59c1dce6410b35d36001423",
+      "source_sha256": "88639ff922104aac5a59cc887961f8b08e981dd224e53a00231ca5885401c1ee",
+      "probes": {
+        "A-intact": {
+          "cue": "A",
+          "cut": false,
+          "observed_events": 55,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.08364800625307782,
+          "roles": {
+            "MBON07": {
+              "spikes": 3,
+              "max_S": 0.94991135597229,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10224337875843048,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 7,
+              "max_S": 0.03106616623699665,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 5,
+              "max_S": 0.0240330770611763,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.281437873840332,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 2,
+              "max_S": 0.9998131394386292,
+              "max_M1": 0.07730018505261671
+            },
+            "PAM07": {
+              "spikes": 7,
+              "max_S": 0.031113123521208763,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 163,
+              "max_S": 0.031231194734573364,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "93210101f9a87038f6f6f271479b9e7df8f0e9da185d2182758754ceed849ee0"
+        },
+        "A-cut": {
+          "cue": "A",
+          "cut": true,
+          "observed_events": 55,
+          "removed_events": 55,
+          "nutrient_j": 0.0,
+          "max_angle": 0.08364800625307782,
+          "roles": {
+            "MBON07": {
+              "spikes": 3,
+              "max_S": 0.94991135597229,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10224255174398422,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 7,
+              "max_S": 0.03106616623699665,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 5,
+              "max_S": 0.024846795946359634,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.28151273727417,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 2,
+              "max_S": 1.0004065036773682,
+              "max_M1": 0.0766810920683324
+            },
+            "PAM07": {
+              "spikes": 7,
+              "max_S": 0.031113123521208763,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 162,
+              "max_S": 0.031231194734573364,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "c950a629036f0bfedaa5d2bcb47894dee6e3e2981411725e1fb96b289c80c0a8"
+        },
+        "B-intact": {
+          "cue": "B",
+          "cut": false,
+          "observed_events": 275,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.10241488470304129,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.4554250240325928,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13789360225200653,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030933504924178123,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 25,
+              "max_S": 0.03037732094526291,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 6.853121757507324,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5930262207984924,
+              "max_M1": 0.06340350723645156
+            },
+            "PAM07": {
+              "spikes": 5,
+              "max_S": 0.031050322577357292,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 162,
+              "max_S": 0.031149936839938164,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "606ff1dfbb3780b8d0a902c932c58fb74979d397970f05b1c6d39d113cf979da"
+        },
+        "B-cut": {
+          "cue": "B",
+          "cut": true,
+          "observed_events": 275,
+          "removed_events": 275,
+          "nutrient_j": 0.0,
+          "max_angle": 0.10220630881462085,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.4554250240325928,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13789530098438263,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030963582918047905,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 25,
+              "max_S": 0.043261364102363586,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 6.851722240447998,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5947700142860413,
+              "max_M1": 0.058487703028939346
+            },
+            "PAM07": {
+              "spikes": 5,
+              "max_S": 0.031050322577357292,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 144,
+              "max_S": 0.031150072813034058,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "6a518cf301f0d175e0a15a808996a5d1488c215a04fdcb44971a78f663d72da7"
+        },
+        "C-intact": {
+          "cue": "C",
+          "cut": false,
+          "observed_events": 44,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.04272707282445034,
+          "roles": {
+            "MBON07": {
+              "spikes": 15,
+              "max_S": 1.0136951208114624,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.16021226346492767,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 4,
+              "max_S": 0.031216716393828392,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 4,
+              "max_S": 0.010849235579371452,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.108135223388672,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 1.0004769563674927,
+              "max_M1": 0.08018399454008814
+            },
+            "PAM07": {
+              "spikes": 22,
+              "max_S": 0.03121461346745491,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 196,
+              "max_S": 0.031235981732606888,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "9635cf1a69ffe7b5bddeab372e82e448fd44c76aba91df851821aa1e54a14f17"
+        },
+        "C-cut": {
+          "cue": "C",
+          "cut": true,
+          "observed_events": 44,
+          "removed_events": 44,
+          "nutrient_j": 0.0,
+          "max_angle": 0.04272707282445034,
+          "roles": {
+            "MBON07": {
+              "spikes": 15,
+              "max_S": 1.0136951208114624,
+              "max_M1": 2.2721717269166626e-10
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.1602129340171814,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 4,
+              "max_S": 0.031216716393828392,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 4,
+              "max_S": 0.010849235579371452,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.1075663566589355,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.997042715549469,
+              "max_M1": 0.0798820538944751
+            },
+            "PAM07": {
+              "spikes": 22,
+              "max_S": 0.030373074114322662,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 191,
+              "max_S": 0.031246677041053772,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "b4c05541e7d46ebb6f46fe3bccb477081c179f06f09a9ecfe17ab9d4712d0153"
+        }
+      },
+      "limit": "Independent diagnostic branches with continuing adaptation. B is novel; recruitment by B alone cannot establish memory-mediated teaching."
+    }
+  },
+  "source_sha256": "0b7d7ed4de32f86ab7f3ce8f305bea680bec3909422b76f9649a9f95002a7a68",
+  "interpretation": "Slower receiving adaptation preserves all student inputs. Greater DAN sensitivity recruits dopamine but also responds strongly to novel B and control C, including with feedback cut. Together they yield six student MBON spikes before feeding and two in the retained A probe. These are viability gains, not memory-mediated transfer. The next decision concerns input-specific teaching efficacy and delayed local credit; a global DAN sensitivity change is insufficient.",
+  "mechanism_limit": {
+    "source": "input_rule.py: MemoryInputRuleNeuron.tick, pending includes only positive current input_buffer arrivals",
+    "verified_test": "tests/test_drosophila_student_viability.py::test_existing_selected_rule_has_no_delayed_credit_without_new_arrival",
+    "statement": "After B input ends, a later local dopamine state cannot change that selected weight without another B arrival. Positive rates alone do not create delayed credit.",
+    "existing_extensions": "EligibilityTraceNeuron requires postsynaptic spikes. PredictiveReceptorNeuron has contextual/error traces but requires graded release, two opponent zero-throughput error ports and bounded dynamics; it is not a drop-in replacement for this measured spiking MBON/DAN circuit.",
+    "biological_motivation": "Hige et al. 2015 demonstrated dopamine-paired KC-to-MBON depression while suppressing MBON spikes in gamma1pedc. This motivates testing a local heterosynaptic mechanism, but does not identify gamma4 parameters or validate the present composition.",
+    "source_url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4674068/"
+  },
+  "receptor_location_audit": {
+    "providers": [
+      {
+        "root": "720575940604479590",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 10
+      },
+      {
+        "root": "720575940605113376",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 4,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940605280201",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 13,
+        "to_gamma_KC_contacts": 6,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940608071435",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 12,
+        "to_MBON04_contacts": 14
+      },
+      {
+        "root": "720575940610430254",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 14,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940610569028",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 9,
+        "to_MBON04_contacts": 7
+      },
+      {
+        "root": "720575940611918578",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940612623474",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 8,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940612755618",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 16,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940612857878",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 9,
+        "to_MBON04_contacts": 4
+      },
+      {
+        "root": "720575940614991221",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 10
+      },
+      {
+        "root": "720575940616986769",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 16
+      },
+      {
+        "root": "720575940617242841",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 12,
+        "to_MBON04_contacts": 11
+      },
+      {
+        "root": "720575940617553809",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940617903643",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940619251416",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 3,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940619299054",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 10,
+        "to_MBON04_contacts": 18
+      },
+      {
+        "root": "720575940619402576",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940619823536",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 4,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940619844261",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 4,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940620341931",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 11,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940621085622",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940621216982",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 15,
+        "to_MBON04_contacts": 6
+      },
+      {
+        "root": "720575940621617286",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 14
+      },
+      {
+        "root": "720575940622107869",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 3,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940622338269",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 4,
+        "to_MBON04_contacts": 14
+      },
+      {
+        "root": "720575940622384227",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 12,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940622387981",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 6,
+        "to_gamma_KC_contacts": 3,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940623398524",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 10
+      },
+      {
+        "root": "720575940624545940",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 3,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940624629223",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 6,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940625568186",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 10,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940625898633",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940627110931",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 3,
+        "to_gamma_KC_contacts": 1,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940627194501",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940627644584",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 11
+      },
+      {
+        "root": "720575940627680516",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 10,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940628094663",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 4,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940628836412",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 5,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940629190615",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 13,
+        "to_MBON04_contacts": 4
+      },
+      {
+        "root": "720575940629379415",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 26,
+        "to_MBON04_contacts": 2
+      },
+      {
+        "root": "720575940629564286",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 2,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940630076887",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 11,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940630465398",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 8,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940630500293",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 14,
+        "to_MBON04_contacts": 8
+      },
+      {
+        "root": "720575940630684943",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 9,
+        "to_gamma_KC_contacts": 6,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940630892631",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 2,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940631184439",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940631576903",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 3,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940633573783",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 10,
+        "to_MBON04_contacts": 2
+      },
+      {
+        "root": "720575940634475119",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 3,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940638548021",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 8,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940642603464",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 10,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940642733216",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 14,
+        "to_MBON04_contacts": 2
+      },
+      {
+        "root": "720575940642744264",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 2,
+        "to_gamma_KC_contacts": 9,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940643543200",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 14,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940643950190",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 8,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940644747828",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 11,
+        "to_MBON04_contacts": 13
+      },
+      {
+        "root": "720575940646564916",
+        "type": "PAM08",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 1,
+        "to_gamma_KC_contacts": 4,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940646582836",
+        "type": "PAM08",
+        "side": "right",
+        "in_cut": true,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 8,
+        "to_MBON04_contacts": 1
+      },
+      {
+        "root": "720575940647165828",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 12,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940649658745",
+        "type": "PAM07",
+        "side": "left",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 0
+      },
+      {
+        "root": "720575940658674049",
+        "type": "PAM07",
+        "side": "right",
+        "in_cut": false,
+        "SMP108_contacts": 0,
+        "to_gamma_KC_contacts": 7,
+        "to_MBON04_contacts": 0
+      }
+    ],
+    "total_providers": 63,
+    "included_providers": 27,
+    "gamma_KC_contacts": 539,
+    "included_gamma_KC_contacts": 277,
+    "SMP108_contacts": 66,
+    "included_SMP108_contacts": 30,
+    "inference": "Selecting DANs by direct MBON04 afferents omits measured DAN-to-KC routes. These boundary records motivate reviewing receptor location before increasing arbitrary gain; they do not prove all omitted cells are needed."
+  }
+}

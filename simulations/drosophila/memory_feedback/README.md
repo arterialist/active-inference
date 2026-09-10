@@ -11,7 +11,14 @@ flies or evidence of consciousness.
 The files live in the existing active-inference repository. They do not change
 the sensory preparation, its regulator experiments, or neuron-model defaults.
 
-The bounded transfer experiment is complete with a specific negative result.
+Research has resumed from the bounded negative transfer result. The latest
+[student-viability comparison](#student-viability-and-the-next-mechanism-decision)
+preserves student inputs and permits sparse student output using existing
+parameters. It does not yet produce a selective memory-mediated teacher.
+The overall research objective remains active; completion of the earlier
+bounded experiment was not completion of that objective.
+
+The earlier bounded transfer experiment completed with a specific negative result.
 The small preparation can express a retained A memory as feeding. In the
 composed preparation, however, feedback events never recruit the student
 dopamine cells, and B-before-A does not produce memory-mediated B behavior.
@@ -30,7 +37,113 @@ re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
 
-## Completed transfer test and stopping point
+## Student viability and the next mechanism decision
+
+![Student survival and feedback specificity](evidence/student-viability.png)
+
+`student_viability.py` compares the prior course with three new courses using
+existing parameters, all assigned at birth and unchanged across phases. One
+slows MBON04 receiving adaptation from 0.01 to 1e-5. A conservative initialization
+calculation chooses that rate so 140 worst-case unit arrivals cannot consume
+more than 10% of the weakest 0.06 birth input under the unmodulated negative
+update. The next lower power of ten is used. This calculation is not a bound
+under every future recurrent or modulated state. A second condition applies
+the existing output sensitivity factor of 32 to student dopamine-cell
+thresholds. The third combines them. It is a two-factor mechanism comparison,
+not a behavior-optimized parameter search. Anatomy, cue codes, equations and
+external currents are identical across the four courses.
+
+The [hashed evidence](evidence/student-viability.json) separates measurements
+before the food well becomes available from later feeding. Of the 96 student
+memory inputs, only 32 unexposed B inputs remain positive in the reference and
+sensitivity-only courses. Slower receiving adaptation preserves all 96, with
+minimum retained weights 0.057840 in the slow-only course and 0.058265 in the
+combined course. All receiving and returning adaptation stays enabled; the
+slower receiving rate applies to all MBON04 inputs, not only its selected
+memory inputs.
+
+Sensitivity alone recruits 1,184 student dopamine spikes before feeding, but
+MBON04 remains silent and its previously exposed inputs still collapse. Slower
+adaptation alone preserves the inputs but recruits no student dopamine or
+MBON04 spikes. The combination permits 1,181 student dopamine spikes and six
+MBON04 spikes before feeding, followed by two MBON04 spikes during retained A.
+All three modified courses retain 0.496 J ingestion during the A feeding probe.
+These are improvements in the viability of the composed cells, not evidence
+of a new association or delayed teaching.
+
+`viability_probe.py` then branches from the pre-feeding retention checkpoint
+for independent dry A, B and C probes, with and without the measured feedback
+projection. There is no pump or food well. In the combined condition, A evokes
+170 student dopamine spikes with feedback and 169 with it cut. Novel B evokes
+167 and 149; C evokes 218 and 213. The cut removes 55, 275 and 44 forward events
+respectively. Thus most recruited dopamine activity survives removal of the
+candidate teaching projection. Increasing all dopamine cells' sensitivity
+does not create a selective A-memory teacher. Novel B also evokes eight motor
+spikes before any second-order training, so that movement cannot be counted as
+a learned B response. Student MBON04 still emits no spikes during B or C.
+
+The existing selected learning equation has a separate timing limitation.
+It enumerates only input ports with a positive arrival in the current tick.
+After a B input stops, a later local dopamine state cannot update that input
+without another B arrival. The new focused test verifies this with positive
+receiving and returning rates and a nonzero later dopamine state. This is a
+limitation of the selected rule, not of every PAULA extension. The available
+`EligibilityTraceNeuron` adds pre/post spike timing traces, while
+`PredictiveReceptorNeuron` has contextual and signed-error traces but requires
+graded release and two opponent zero-throughput error receptors. Neither is
+an unchanged drop-in replacement for the present spiking MBON/DAN circuit.
+
+The earlier mushroom-body code already documents the destructive effect of
+unreinforced Hebbian updates and an explicit tonic plasticity gate. That
+baseline remains relevant. Its fully shut gate is not adopted here as a
+substitute for the requested continuing ordinary adaptation. Slower positive
+adaptation is enough to remove the current student's early input collapse,
+but supplies neither delayed credit nor a selective teaching signal.
+
+A read-only boundary audit changes the next architectural decision. The
+current student selection includes 27 PAM07/PAM08 cells chosen for direct
+MBON04 afferents. Counting providers to the 96 selected gamma KCs as well
+identifies 63 cells. The included cells carry 277 of 539 measured provider-to-KC
+contacts, and receive 30 of 66 SMP108 contacts onto that provider set. Thirteen
+excluded providers have both SMP108 input and output onto the selected gamma
+KCs. Their identities and counts are retained in the evidence. This does not
+prove all excluded cells belong in the executable cut. It shows that a
+selection based on the DAN-to-MBON surrogate does not cover the measured
+DAN-to-KC routes that matter to a presynaptic learning-site hypothesis.
+
+[Hige et al., 2015](https://pmc.ncbi.nlm.nih.gov/articles/PMC4674068/) found
+dopamine-paired depression of KC-to-MBON transmission even when MBON spikes
+were suppressed, in the aversive gamma1pedc compartment. That result motivates
+examining heterosynaptic learning at KC outputs; it does not specify gamma4
+receptor kinetics or validate this model. The next bounded line should examine
+the actual DAN-to-KC routes and the local state needed for delayed teaching,
+with a comparison against the current rule. Any new receptor/eligibility
+composition must remain opt-in, retain ordinary adaptation and reciprocal
+signaling, and demonstrate its timing and memory-specific causal effects
+before being credited with functional transfer. A global dopamine sensitivity
+increase has now been tested and is insufficient for that purpose.
+
+The 35 focused tests pass, including the arrival-only credit limitation.
+No default neuron dynamics, sensory-study files or manuscript files changed.
+The earlier stopping point below belongs to the previous bounded experiment;
+it does not stop the continuing research goal.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.student_viability \
+  .live/research/flywire783/memory-alpha1-gamma4-cut-20260910 \
+  .live/research/flywire783/memory-viability-combined-20260910 --slow --sensitive
+# Use only --slow or only --sensitive with the matching distinct output name.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.viability_probe \
+  .live/research/flywire783/memory-viability-combined-20260910 \
+  .live/research/flywire783/memory-viability-probe-combined-20260910
+# Repeat for the sensitivity-only receiver and probe output.
+uv run --no-sync python -m simulations.drosophila.memory_feedback.viability_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
+
+## Earlier completed transfer test and stopping point
 
 ![Recorded prerequisite and transfer failure](evidence/bounded-transfer.png)
 

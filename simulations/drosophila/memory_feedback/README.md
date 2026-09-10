@@ -447,12 +447,25 @@ timing comparison rather than a guarantee of stronger direct learning. The
 174 configured cells change only that parameter at birth. Restoring their
 original decay time in diagnostic copies produces byte-identical serialized
 neural and RNG state. The paired direct course retains A feeding at 0.440 J,
-versus zero for unpaired nutrients. Nutrient-free transfer controls with this
-longer trace are now running.
+versus zero for unpaired nutrients.
+
+The longer-trace transfer comparison is complete and does not improve B
+learning. Learned A produces six SMP108 spikes per presentation, down from
+eight, and no student dopamine spikes. All three continuing conditions end at
+exactly the same mean B release, 1.000033617020. A feeding remains 0.440 J after
+both intact and projection-cut acquisition, while B produces no motor or
+SMP108 spikes. A useful action alone therefore does not guarantee an effective
+teacher signal. Changing the normalized trace's buildup also changes the
+learned A state, so this comparison cannot isolate B credit duration. The
+shorter-trace preparation remains the reference for the next expression-boundary
+test; the longer trace is not adopted as a successful fix.
 
 [The balanced-code audit](evidence/balanced-codes.json) records the four
 continuations, the repeated expression diagnostic, teacher event times, the
-isolated birth-parameter check and both completed longer-trace direct courses.
+isolated birth-parameter check and the completed longer-trace courses and
+continuations. The next step is a separate causal check of cue-presence input
+at SMP108 and the physical readout, using the validated shorter-trace
+preparation and preserving all measured connectivity.
 
 ```sh
 uv run --no-sync --with cloudpickle==3.1.2 python \

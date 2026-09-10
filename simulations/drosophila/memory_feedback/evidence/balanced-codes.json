@@ -1,5 +1,5 @@
 {
-  "source_sha256": "684ef233e8cbf0ac7ec3a2921fca105fdc87d75eab4d7687b6b444d0389e5ae0",
+  "source_sha256": "81e08db7518753fd78ce253e9be387f172924eed389d87ea6c5c56970ac28457",
   "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
   "courses": {
     "paired": {
@@ -2196,7 +2196,7 @@
       "tau64": 0.06912249904327114,
       "tau256": 0.5127490421990961
     },
-    "status": "Direct courses completed; nutrient-free continuing comparisons started. Their outcomes are not included here."
+    "status": "Direct and intact/cut/unpaired continuing courses completed. No student dopamine recruitment remains during the continuing course."
   },
   "window_direct_courses": {
     "paired": {
@@ -2282,5 +2282,1267 @@
       }
     }
   },
-  "conclusion": "Anatomy-based cue reassignment removes B's autonomous feedback in this panel while preserving retained A feeding. The four student dopamine spikes during acquisition now occur only during learned A, and disappear in the unpaired and projection-cut controls. B still does not acquire action. Even imposed zero gamma4 B release leaves SMP108 silent in the balanced dry probe, so the student-expression input/output boundaries also need reassessment. Recorded teacher arrival times motivate a separate longer-eligibility comparison, with direct acquisition rechecked because normalized EMA buildup also changes."
+  "window_continuation": {
+    "intact": {
+      "receiver": "memory-window-paired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "fb65be6c6e303682c4a69bac53c245779d289b37746b340bc45eba0ccd2051c4",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 2.697963596535367e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -5.272462452794035e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 8,
+            "PAM11": 0,
+            "SMP353": 6,
+            "SMP108": 6,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07052997947147324,
+          "feedback_events": 144,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.09454101568519752,
+          "feedback_events": 144,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.00015776236986545026,
+          "feedback_events": 144,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -8.740916422231157e-05,
+          "feedback_events": 144,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 8,
+            "PAM11": 0,
+            "SMP353": 6,
+            "SMP108": 6,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07068084697140031,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0946639886773146,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0001517942167552742,
+          "feedback_events": 288,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": -2.592320671751003e-06,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.44000000000000006,
+          "max_angle": 0.06103531726185509,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 18,
+            "PAM11": 247,
+            "SMP353": 4,
+            "SMP108": 11,
+            "APL": 15,
+            "MBON04": 4,
+            "PAM07": 342,
+            "PAM08": 855
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 288,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "6f6dc8d3c60b5d2b11d0c1ca4980e64a3925326b8fb847c628667aa632f680c3",
+        "soma.npy": "3dd24816044ba24166fcc1382f7b8c08c4b2de45d9ca0b8381301fb8665ebdf8",
+        "weights.npy": "9562b10becaf5f97ec2ac0756512c61d2423a44a834f36d270c5bc2211f87dd2",
+        "retention.paula": "fb861711a630ff69c7f98480e524c4d73afeed8de1d074c268a571a85164c0a6",
+        "retention-body.npz": "27bbc9d7d62ac133b7c7885d63f5fc5a4d6b982b5751ee42cbb605b5c752561d",
+        "body.npy": "b0e9f5f347161bdf83d748e80f91145ac399d0d0d2700411b7c9694d445dbc8f",
+        "probe-B.npz": "ecc0607b9b541540d761f313c7bee1553649fa732b3d5632ae598151d505cd45",
+        "probe-A.npz": "4d269a78972302c750796f439588e76544ad178f9a91a7a081a7f7d5b5ef102e"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-window-second-intact-20260910",
+      "summary_sha256": "66f07bd9c14bbe5482e7e75ede1eeb4f4f903fe4ae52430a2188acb00df0eb47",
+      "release": {
+        "MBON07_A": {
+          "before": 0.5854206095047683,
+          "retained": 0.5854719658382237
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9245165623724461,
+          "retained": 0.9245165623724461
+        },
+        "MBON04_A": {
+          "before": 0.5216011125683082,
+          "retained": 0.5216317698359489
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.0000336170196533
+        },
+        "MBON04_C": {
+          "before": 0.9104948416352272,
+          "retained": 0.9104948416352272
+        }
+      },
+      "course_spikes": {
+        "MBON07": 50,
+        "PAM11": 0,
+        "SMP353": 12,
+        "SMP108": 12,
+        "APL": 54,
+        "MBON04": 12,
+        "PAM07": 0,
+        "PAM08": 0
+      }
+    },
+    "cut": {
+      "receiver": "memory-window-paired-20260910",
+      "cut": true,
+      "displaced": false,
+      "input_checkpoint_sha256": "fb65be6c6e303682c4a69bac53c245779d289b37746b340bc45eba0ccd2051c4",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 2.697963596535367e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -5.272462452794035e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 8,
+            "PAM11": 0,
+            "SMP353": 6,
+            "SMP108": 6,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07052997947147324,
+          "feedback_events": 144,
+          "removed_events": 144
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.09454101568519752,
+          "feedback_events": 144,
+          "removed_events": 144
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.00015776236986545026,
+          "feedback_events": 144,
+          "removed_events": 144
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -8.740916422231157e-05,
+          "feedback_events": 144,
+          "removed_events": 144
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 8,
+            "PAM11": 0,
+            "SMP353": 6,
+            "SMP108": 6,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.07068084697140031,
+          "feedback_events": 288,
+          "removed_events": 288
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0946639886773146,
+          "feedback_events": 288,
+          "removed_events": 288
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0001517942167552742,
+          "feedback_events": 288,
+          "removed_events": 288
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": -2.592320671751003e-06,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.44000000000000006,
+          "max_angle": 0.06103531726185509,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 18,
+            "PAM11": 247,
+            "SMP353": 4,
+            "SMP108": 11,
+            "APL": 15,
+            "MBON04": 4,
+            "PAM07": 342,
+            "PAM08": 855
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 288,
+      "removed_events": 288,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "6f6dc8d3c60b5d2b11d0c1ca4980e64a3925326b8fb847c628667aa632f680c3",
+        "soma.npy": "11f5127479a91be64684eb894bbf3ed44b427d75d738d58621f3a25401870395",
+        "weights.npy": "9562b10becaf5f97ec2ac0756512c61d2423a44a834f36d270c5bc2211f87dd2",
+        "retention.paula": "14809fdba5e334b32b9f7f7b0d9aada61327b6d714b54698331a6e71887bc6c0",
+        "retention-body.npz": "27bbc9d7d62ac133b7c7885d63f5fc5a4d6b982b5751ee42cbb605b5c752561d",
+        "body.npy": "b0e9f5f347161bdf83d748e80f91145ac399d0d0d2700411b7c9694d445dbc8f",
+        "probe-B.npz": "7d91eea00675e77550bb190b30e58805ff6a5b003e970296a3b4cb122c1aa04c",
+        "probe-A.npz": "9b5a87a34feb5fd5202d68b8d4c7a07d20f9d5ff790189241fc2fa81b0a4f7df"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-window-second-cut-20260910",
+      "summary_sha256": "2d8a10085c788e952d314b088467b39980643f60d34a7ece42c7a6dfa4f987c6",
+      "release": {
+        "MBON07_A": {
+          "before": 0.5854206095047683,
+          "retained": 0.5854719658382237
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9245165623724461,
+          "retained": 0.9245165623724461
+        },
+        "MBON04_A": {
+          "before": 0.5216011125683082,
+          "retained": 0.5216317698359489
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.0000336170196533
+        },
+        "MBON04_C": {
+          "before": 0.9104948416352272,
+          "retained": 0.9104948416352272
+        }
+      },
+      "course_spikes": {
+        "MBON07": 50,
+        "PAM11": 0,
+        "SMP353": 12,
+        "SMP108": 12,
+        "APL": 54,
+        "MBON04": 12,
+        "PAM07": 0,
+        "PAM08": 0
+      }
+    },
+    "unpaired": {
+      "receiver": "memory-window-unpaired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "d4472371c325481ef7205691119533ee73516cc91764624d3ef5eecd5c684985",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.0,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.0,
+          "max_angle": 0.0,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 0,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "b6bed631c6f83267665695f74a683bbbe3843447cd63cdba0426d103600849fd",
+        "soma.npy": "d29691f3fb79786feff9531934b7f5ec287851ae5e1ace730d78810a11456d1a",
+        "weights.npy": "265d242e54499f0ed33beed79439911eb1a4953ce1d43303c7b4b462a19adbb7",
+        "retention.paula": "e58192d04f655e567fa94f00df29c5fb0ddab702af4cec2a97d2a128548ec6ce",
+        "retention-body.npz": "04ff2023d9114f43d0f52fba70ccc14c8a6d6336031da9eeb1d8404b2e98acc2",
+        "body.npy": "b237bbec6a16917976e2450bff3b42d0d880c0f3f947b49519ddfffc0bfbd4d4",
+        "probe-B.npz": "60ad192b188c177f0fc7148a84ebf8b915f21c001fc2a89391f430070d7b1f74",
+        "probe-A.npz": "e23d015ab754ea851e5dc0bfd8521c5e374693184736dfe3bf3f7fe038ddb5b0"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-window-second-unpaired-20260910",
+      "summary_sha256": "0c9b40f4ad6761bff5f11177fa1cc4ee9c9f26f4ecf8c588e74ae8e9138d1188",
+      "release": {
+        "MBON07_A": {
+          "before": 0.9888907980113365,
+          "retained": 0.9889984605833888
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9989014398306608,
+          "retained": 0.9989014398306608
+        },
+        "MBON04_A": {
+          "before": 0.9870884404640572,
+          "retained": 0.9871499836444855
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.0000336170196533
+        },
+        "MBON04_C": {
+          "before": 0.9985758159309626,
+          "retained": 0.9985758159309626
+        }
+      },
+      "course_spikes": {
+        "MBON07": 84,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 54,
+        "MBON04": 28,
+        "PAM07": 0,
+        "PAM08": 0
+      }
+    }
+  },
+  "conclusion": "Anatomy-based cue reassignment removes B's autonomous feedback in this panel while preserving retained A feeding. The four student dopamine spikes during acquisition now occur only during learned A, and disappear in the unpaired and projection-cut controls. B still does not acquire action. Even imposed zero gamma4 B release leaves SMP108 silent in the balanced dry probe, so the student-expression input/output boundaries also need reassessment. The longer-eligibility comparison retains weaker A feeding but loses student dopamine recruitment, so it does not establish a benefit for B credit. Because normalized EMA buildup changes direct acquisition too, it is not an isolated test of B credit duration. The next unresolved stage is the student-expression input/output boundary."
 }

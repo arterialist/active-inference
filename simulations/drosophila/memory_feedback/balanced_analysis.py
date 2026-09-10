@@ -87,7 +87,7 @@ def run(base, output):
         configured_cells=count, all_other_birth_state_exact=exact,
         reference_birth_sha256=sha256(parent/"birth.paula"), changed_birth_sha256=sha256(window/"birth.paula"),
         completed_trace_fraction_after_171_ticks={"tau64": float(np.exp(-171/64)), "tau256": float(np.exp(-171/256))},
-        status="Direct courses completed; nutrient-free continuing comparisons started. Their outcomes are not included here.")
+        status="Direct and intact/cut/unpaired continuing courses completed. No student dopamine recruitment remains during the continuing course.")
     result["window_direct_courses"] = {}
     for name in ("paired", "unpaired"):
         p = base/f"memory-window-{name}-20260910"
@@ -99,11 +99,24 @@ def run(base, output):
             retained_A=next(ph for ph in phases if ph["name"] == "retained_A"),
             retained_release={k: float(q[retention, mask].mean()) for k, mask in masks.items()},
             artifacts={f: sha256(p/f) for f in ("manifest.json", "summary.json", "identities.npz", "retention.paula", "release.npy", "weights.npy", "soma.npy", "body.npy")})
+    result["window_continuation"] = {}
+    for name in ("intact", "cut", "unpaired"):
+        p = base/f"memory-window-second-{name}-20260910"
+        r = read(p/"summary.json")
+        assert r["branch_rng_preserved"] and r["nutrient_j"] == 0 and r["phases"][-1]["end"] == 3720
+        for f, digest in r["artifacts"].items():
+            assert sha256(p/f) == digest
+        q = np.load(p/"release.npy", mmap_mode="r")
+        r["record"] = p.name; r["summary_sha256"] = sha256(p/"summary.json")
+        r["release"] = {k: dict(before=float(q[0, mask].mean()), retained=float(q[-1, mask].mean())) for k, mask in masks.items()}
+        r["course_spikes"] = {role: sum(ph["spikes"][role] for ph in r["phases"]) for role in m["roles"]}
+        result["window_continuation"][name] = r
     result["conclusion"] = (
         "Anatomy-based cue reassignment removes B's autonomous feedback in this panel while preserving retained A feeding. "
         "The four student dopamine spikes during acquisition now occur only during learned A, and disappear in the unpaired and projection-cut controls. "
         "B still does not acquire action. Even imposed zero gamma4 B release leaves SMP108 silent in the balanced dry probe, so the student-expression input/output boundaries also need reassessment. "
-        "Recorded teacher arrival times motivate a separate longer-eligibility comparison, with direct acquisition rechecked because normalized EMA buildup also changes.")
+        "The longer-eligibility comparison retains weaker A feeding but loses student dopamine recruitment, so it does not establish a benefit for B credit. "
+        "Because normalized EMA buildup changes direct acquisition too, it is not an isolated test of B credit duration. The next unresolved stage is the student-expression input/output boundary.")
     output.mkdir(parents=True, exist_ok=True)
     (output/"balanced-codes.json").write_text(json.dumps(result, indent=2)+"\n")
     return result

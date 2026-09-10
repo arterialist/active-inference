@@ -162,12 +162,68 @@ cannot be attributed to erasure of that original memory.
 The [signed continuation audit](evidence/signed-ingestion/ingestion-comparison.json)
 and [figure](evidence/signed-ingestion/ingestion-comparison.png) retain the
 comparison, physical outcomes, memory-availability intervention, and separate
-compatibility provenance. Stop this fixed contrast without retuning. The next
-organizational question is how to distinguish lost ongoing contact from the
-action needed to obtain contact again. A contact-rate mismatch alone does not
-decide whether movement should stop. This does not establish timed future
+compatibility provenance. The [matched 3D replay](evidence/signed-ingestion/omission-return-replay.mp4)
+shows loss of contact, attempted return, and the continued-food-control failure.
+Its [provenance](evidence/signed-ingestion/omission-return-replay.json) records
+the original pose arrays, unchanged MuJoCo body, common camera and quarter-speed
+playback. No model steps, interpolation or angle amplification are used;
+chapter jumps explicitly omit retention. This fixed contrast stopped without
+retuning. It motivated the body-context comparison below: a contact-rate
+mismatch alone does not decide whether movement should stop. This does not establish timed future
 reward expectation, A-only revision of B, or a biological reconstruction of
 the added circuit. The accepted A-to-B reference and failed records are intact.
+
+## Conditioning food expectation on joint position
+
+The prior failed return occurred below 0.01864 rad, short of the 0.04 rad needed
+for collection, while the cue-only predictor produced a sustained mismatch.
+Genuine food removal occurred with the hinge above 0.22268 rad. These recorded
+situations can be distinguished using the body's existing proprioception.
+
+`body_context_comparison.py` uses the existing positive joint-position afferent,
+`max(0, angle/.05)`. An existing PAULA coincidence neuron for each original KC
+context port releases the minimum of its actual cue and position dendritic
+drives. The original predictor weights learn from these nonlinear joint
+features. All 192 context inputs, the predictor learning rate, zero rate boost
+and unit inhibitory action projection are retained. This adds 193 engineered
+cells; it does not add a linear body bias, host approach/contact flag, grace
+timer or well-angle threshold to the neural controller. The feature basis is
+fixed, not a learned sharp contact boundary or reconstructed anatomy.
+
+After the same fixed acquisition from the accepted reference, one matched
+comparison tests food loss and continued food. The control substitutes the
+cue dendrite for the body dendrite only at the coincidence readout, yielding
+`min(cue, cue)`. It preserves cue drive, all physical afferents, connections,
+weights and native adaptation, while removing body dependence. Both arms keep
+the same omission-to-action inhibition. Independent A/B food probes follow
+their retained states within this physical comparison.
+
+| Return measurement | Actual body context | Body readout bypassed |
+| --- | ---: | ---: |
+| A food after omission, J | 1.000 | 0.608 |
+| A retained-energy gain after omission, J | 0.491075 | 0.284424 |
+| A contact tick after omission | 75 | 124 |
+| A food after continued-food control, J | 0.992 | 0.000 |
+| A retained-energy gain after that control, J | 0.474508 | -0.162264 |
+| A contact tick after that control | 76 | No contact |
+| B food after either history, J | 0.840 | 0.840 |
+
+The entire recorded comparison trajectory during established food loss is
+exact between the body and bypass arms. Its late negative-channel means are
+0.067408 and 0.066358; continued food produces zero negative output. Both arms
+retain the same physical loss response. The improvement therefore comes from
+body dependence during reapproach, rather than a weaker loss signal or brake.
+A's precontact negative output after omission falls from 0.058006 to 0.005517.
+Body energy figures use the existing hinge/gut budget, without a metabolic
+charge for the added neural population.
+
+The [audited result](evidence/body-context/body-context.json) and
+[figure](evidence/body-context/body-context.png) support a bounded body-context
+benefit: preserved loss response, useful A reacquisition and retained B feeding
+in this single fixed well geometry. No extra exposure, architecture iteration
+or gain search followed this contrast. General spatial relationships, a learned
+contact boundary and future-outcome timing remain untested. The accepted and
+failed preparations remain identifiable and unchanged.
 
 ## Reusing acquired B as a teacher for C
 

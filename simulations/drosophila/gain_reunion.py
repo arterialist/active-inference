@@ -146,7 +146,7 @@ def window_lateral_command(command, window):
 
 def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1.,
         direct=50.,lateral=80.,seed=11,lesion="intact",chunk=250,
-        pathway="none",block_start=600,feedback_scale=1.,lateral_window=None,regulator_afferent_scale=1.):
+        pathway="none",block_start=600,feedback_scale=1.,lateral_window=None,regulator_afferent_scale=1.,curated_gaba_control=False):
     if output.exists():raise FileExistsError(output)
     if type(chunk) is not int or chunk<1:raise ValueError("Invalid chunk size")
     if shutil.disk_usage(output.parent).free < 512*1024**2:
@@ -161,6 +161,12 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     prep,pn=prepare_inhibited(graph,intrinsic,tail,LN,gain,100.,spatial=spatial if has_apl else None)
     feedback_bindings,feedback_before,feedback_initial=initialize_feedback_gain(prep,graph,feedback_scale)
     afferent_bindings,afferent_before,afferent_initial=initialize_regulator_afferent_gain(prep,graph,regulator_afferent_scale)
+    polarity=None
+    if curated_gaba_control:
+        from .orn_onset import negative_gaba_control
+        polarity=negative_gaba_control(prep,graph)
+        feedback_initial=np.array([prep.network.network.neurons[int(target)].postsynaptic_points[int(port)].u_i.info
+                                   for _,_,_,target,port in feedback_bindings])
     roots=list(prep.root_to_id)
     cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in roots]
     orns=[r for r in roots if graph.nodes[r]["annotation"]["hemibrain_type"]=="ORN_DL5"]
@@ -184,6 +190,8 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
         Path(__file__).with_name("paula.py"),Path(__file__).with_name("pn_current_steps.py"),
         Path(__file__).with_name("spatial_paula.py"),Path(inspect.getfile(Neuron)),
         Path(inspect.getfile(PresynapticInhibitionNeuron)),graph_path/"manifest.json",intrinsic_path,tail_path,spatial/"analysis.json"]
+    if curated_gaba_control:
+        files.extend(Path(__file__).with_name(name) for name in ("orn_onset.py","antennal_identity.py"))
     hashes={str(p.resolve()):digest(p) for p in files}
     output.mkdir(parents=True)
     with (output/"structure.npz").open("xb") as f:
@@ -278,6 +286,7 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     result={"schema":1,"scope":scope,"ticks":ticks,"chunks":chunks,"source_hashes":hashes,
         "structure_sha256":digest(output/"structure.npz"),"anatomy":graph.summary(),"assumptions":prep.assumptions,
         "gain":gain,"direct":direct,"lateral":lateral,"seed":seed,"lesion":lesion,"epochs":epochs,"apl_present":has_apl,
+        "polarity_control":polarity,
         "lateral_window":list(lateral_window) if lateral_window is not None else None,
         "lateral_command_pulses":int(np.count_nonzero(command[:,-1])),
         "lateral_injected_current_sum":float(command[:,-1].sum()),
@@ -328,10 +337,12 @@ def main():
     p.add_argument("--feedback-scale",type=float,default=1.)
     p.add_argument("--lateral-window",nargs=2,type=int,metavar=("START","STOP"))
     p.add_argument("--regulator-afferent-scale",type=float,default=1.)
+    p.add_argument("--curated-gaba-control",action="store_true",help="Experimental negative receiving signs for curated GABA / positive-model ALLNs; preserve wiring and magnitudes")
     a=p.parse_args()
     run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,scope=a.scope,gain=a.gain,direct=a.direct,
         lateral=a.lateral,seed=a.seed,lesion=a.lesion,pathway=a.pathway,block_start=a.block_start,
-        feedback_scale=a.feedback_scale,lateral_window=a.lateral_window,regulator_afferent_scale=a.regulator_afferent_scale)
+        feedback_scale=a.feedback_scale,lateral_window=a.lateral_window,regulator_afferent_scale=a.regulator_afferent_scale,
+        curated_gaba_control=a.curated_gaba_control)
 
 
 if __name__=="__main__":main()

@@ -15,6 +15,48 @@ from .ln_gain_analysis import read_record
 from .ln_input_replay import cut_cells
 from .pn_current_steps import prepare
 from .prisco import digest,dump_new
+from .antennal_identity import identity_audit
+
+
+def polarity_roots(graph,meta):
+    return set(identity_audit(graph)["gaba_positive_candidates"]) if meta.get("polarity_control") is not None else set()
+
+
+def audit_polarity(graph,meta,structure):
+    """Reconstruct the declared intervention from anatomy, not saved weights."""
+    from types import SimpleNamespace
+    spec=meta.get("polarity_control")
+    if spec is None:return {"enabled":False,"pairs":0}
+    candidates=polarity_roots(graph,meta)
+    if set(spec["source_roots"])!=candidates or len(spec["source_roots"])!=len(candidates):
+        raise ValueError("Different polarity candidate identities")
+    ids={graph.nodes[r]["global_index"] for r in candidates}
+    bindings=structure["edge_bindings"]
+    feedback={int(e[0]) for e in pathway_bindings(SimpleNamespace(edge_bindings=bindings),graph,"positive_LN_or_PN_to_LN")}
+    edges={int(e[8]):e for e in graph.edges}
+    expected=[]
+    for row,pre,terminal,post,port in bindings:
+        if int(pre) not in ids:continue
+        edge=edges[int(row)]
+        if int(pre)!=graph.nodes[str(edge[0])]["global_index"] or int(post)!=graph.nodes[str(edge[1])]["global_index"]:
+            raise ValueError("Binding disagrees with anatomical identity")
+        weight=edge[6]*meta["assumptions"]["parameters"]["weight_per_count"]
+        if int(row) in feedback:weight*=meta["feedback_initialization"]["scale"]
+        expected.append([int(row),int(pre),int(terminal),int(post),int(port),weight,-weight])
+    np.testing.assert_array_equal(np.array(spec["changed_receiving_coefficients"]).reshape(-1,7),np.array(expected).reshape(-1,7))
+    return {"enabled":True,"source_roots":sorted(candidates),"pairs":len(expected),
+            "claim":"Fast-current polarity sensitivity only; no target-specific receptor physiology established."}
+
+
+def apply_pn_polarity(pn,graph,meta):
+    """Restore receptor signs in a PN-only replay whose sources are absent."""
+    candidates=polarity_roots(graph,meta)
+    rows=sorted(graph.edges[graph.edges[:,1]==int(PN)],key=lambda e:int(e[8]))
+    for port,e in enumerate(rows):
+        if str(e[0]) in candidates:
+            point=pn.postsynaptic_points[port]
+            if point.u_i.info<=0:raise ValueError("Replay polarity control applied twice or to a negative receptor")
+            point.u_i.info=-point.u_i.info
 
 
 def first_difference(a,b):
@@ -23,7 +65,7 @@ def first_difference(a,b):
     return int(rows[0]) if len(rows) else None
 
 
-def port_groups(graph):
+def port_groups(graph,negative_roots=()):
     rows=sorted(graph.edges[graph.edges[:,1]==int(PN)],key=lambda e:int(e[8]))
     names=[]
     for e in rows:
@@ -31,7 +73,7 @@ def port_groups(graph):
         cls=a["cell_class"]
         if a["hemibrain_type"]=="ORN_DL5":name="ORN_DL5"
         elif a["hemibrain_type"]=="APL":name="APL"
-        elif cls in ("ALLN","ALPN"):name=cls+("_positive" if e[5]>0 else "_negative")
+        elif cls in ("ALLN","ALPN"):name=cls+("_positive" if e[5]>0 and str(e[0]) not in negative_roots else "_negative")
         elif cls=="Kenyon_Cell":name="KC"
         else:name="other"
         names.append(name)
@@ -39,8 +81,9 @@ def port_groups(graph):
     return {name:np.array([n==name for n in names]) for name in sorted(set(names))}
 
 
-def conditional_replay(graph,intrinsic,tail,inputs,keep):
+def conditional_replay(graph,intrinsic,tail,inputs,keep,meta=None):
     _,pn=prepare(cut_cells(graph,(PN,)),intrinsic,tail)
+    apply_pn_polarity(pn,graph,meta or {})
     trace=np.zeros((len(inputs),7))
     for tick,values in enumerate(inputs):
         pn.input_buffer[:]=values
@@ -131,6 +174,8 @@ def schedule_followup(graph_path,early,late,sustained,unassisted):
     result={"command_shift":audit_command_shift(base_data["command"],records["late"][1]["command"]),
             "conditions":{},"comparisons":{},"manifest_sha256":{name:digest(path/"analysis.json") for name,path in paths.items()}}
     for name,(meta,data,structure) in records.items():
+        if meta.get("polarity_control")!=base_meta.get("polarity_control"):
+            raise ValueError("Concurrent polarity change")
         for key in ("scope","gain","direct","seed","lesion","epochs","assumptions","anatomy","pathway_intervention"):
             if meta[key]!=base_meta[key]:raise ValueError(f"Concurrent {key} change in {name}")
         if meta["feedback_initialization"]["scale"]!=base_meta["feedback_initialization"]["scale"]:
@@ -186,6 +231,8 @@ def compare_pathway(reference,directory,graph,meta,data,structure):
     """An intact shared past plus a closed-loop, time-specific intervention."""
     from types import SimpleNamespace
     old_meta,old,old_structure=prefix(reference,2200,current_source=False)
+    if old_meta.get("polarity_control")!=meta.get("polarity_control"):
+        raise ValueError("Concurrent polarity change")
     if old_meta.get("feedback_initialization",{}).get("scale",1.)!=meta.get("feedback_initialization",{}).get("scale",1.):
         raise ValueError("Concurrent feedback-strength change")
     if old_meta.get("regulator_afferent_initialization",{}).get("scale",1.)!=meta.get("regulator_afferent_initialization",{}).get("scale",1.):
@@ -259,13 +306,72 @@ def audit_feedback_gain(directory,graph,meta,structure,*,afferent=False):
     np.testing.assert_array_equal(before,[rows[int(e[0])][6]*meta["assumptions"]["parameters"]["weight_per_count"] for e in bindings])
     if not np.isfinite(spec["scale"]) or spec["scale"]<=0 or (not afferent and spec["scale"]>1) or len(bindings)!=spec["pairs"]:
         raise ValueError("Invalid receiving gain declaration")
-    np.testing.assert_array_equal(initial,before*spec["scale"])
+    candidates=polarity_roots(graph,meta)
+    signs=np.array([-1 if str(rows[int(e[0])][0]) in candidates else 1 for e in bindings])
+    np.testing.assert_array_equal(initial,before*spec["scale"]*signs)
     if final.shape!=initial.shape or not np.isfinite(final).all():raise ValueError("Invalid final feedback weights")
     changed=int(np.count_nonzero(final!=initial))
     if changed!=spec["changed_by_learning"]:raise ValueError("Incorrect learning count")
     return {"scale":spec["scale"],"pairs":len(bindings),"nonzero_initial_weights":int(np.count_nonzero(initial)),
         "changed_by_learning":changed,"maximum_absolute_learning_change":float(np.max(np.abs(final-initial),initial=0.)),
         "limit":"Initial and final selected receiving weights only; this does not replay every intervening learning update or verify untouched weights."}
+
+
+def compare_polarity(graph_path,reference,directory):
+    """Matched closed-loop sign sensitivity, including the earliest divergence."""
+    a,x,s=prefix(reference,2200,current_source=False)
+    b,y,t=prefix(directory,2200,current_source=False)
+    if a.get("polarity_control") is not None or b.get("polarity_control") is None:
+        raise ValueError("Need an original-sign reference and a polarity intervention")
+    for key in ("scope","gain","direct","lateral","seed","lesion","epochs","lateral_window","assumptions","anatomy"):
+        if a.get(key)!=b.get(key):raise ValueError(f"Concurrent polarity-test change: {key}")
+    for key in ("pathway","start","pairs","sources","bindings_sha256"):
+        if a["pathway_intervention"][key]!=b["pathway_intervention"][key]:
+            raise ValueError("Concurrent pathway intervention change")
+    for key in ("feedback_initialization","regulator_afferent_initialization"):
+        if a[key]["scale"]!=b[key]["scale"]:raise ValueError("Concurrent receiving gain change")
+    for path,h in a["source_hashes"].items():
+        if Path(path).name!="gain_reunion.py" and b["source_hashes"].get(path)!=h:
+            raise ValueError(f"Concurrent model/calibration change: {path}")
+    graph=reunion_cut(Subgraph.load(graph_path),a["scope"])
+    audit=audit_polarity(graph,b,t)
+    if not audit["pairs"]:raise ValueError("Empty polarity intervention")
+    for key in s:
+        if key!="pn_initial_weights":np.testing.assert_array_equal(s[key],t[key])
+    expected=s["pn_initial_weights"].copy()
+    pn_id=graph.nodes[PN]["global_index"]
+    for _,_,_,post,port,_,_ in b["polarity_control"]["changed_receiving_coefficients"]:
+        if post==pn_id:expected[port]*=-1
+    np.testing.assert_array_equal(expected,t["pn_initial_weights"])
+    for path,meta,structure in ((reference,a,s),(directory,b,t)):
+        audit_feedback_gain(path,graph,meta,structure)
+        audit_feedback_gain(path,graph,meta,structure,afferent=True)
+    np.testing.assert_array_equal(x["command"],y["command"])
+    state=first_difference(x["soma"],y["soma"])
+    spike=first_difference(x["soma"][:,:,1],y["soma"][:,:,1])
+    roots=s["roots"].tolist()
+    def changed_cells(tick,spikes_only):
+        if tick is None:return []
+        left,right=x["soma"][tick],y["soma"][tick]
+        changed=(left[:,1]!=right[:,1]) if spikes_only else np.any(left!=right,axis=1)
+        return [{"root":roots[i],"type":graph.nodes[roots[i]]["annotation"]["hemibrain_type"],
+                 "original":left[i].tolist(),"control":right[i].tolist()} for i in np.flatnonzero(changed)]
+    courses={}
+    for name,data in (("original",x),("control",y)):
+        last={}
+        for cls in ("olfactory","ALLN","ALPN"):
+            cols=[i for i,r in enumerate(roots) if graph.nodes[r]["annotation"]["cell_class"]==cls]
+            ticks=np.flatnonzero(np.any(data["soma"][:,cols,1],axis=1))
+            last[cls]=int(ticks[-1]) if len(ticks) else None
+        courses[name]={"epochs":epochs(data,graph,roots,((200,1200),(1200,2200),(2000,2200))),"last_spike":last}
+    return {"polarity_audit":audit,"courses":courses,"first_state_difference":state,"first_spike_difference":spike,
+        "first_state_cells":changed_cells(state,False),"first_spike_cells":changed_cells(spike,True),
+        "first_target_PN_spike_difference":first_difference(x["soma"][:,roots.index(PN),1],y["soma"][:,roots.index(PN),1]),
+        "first_regulator_spike_difference":first_difference(x["soma"][:,roots.index(LN),1],y["soma"][:,roots.index(LN),1]),
+        "first_gate_difference":first_difference(x["inhibition"],y["inhibition"]),
+        "source_hashes":{str(p.resolve()):digest(p) for p in (Path(__file__),reference/"analysis.json",directory/"analysis.json")},
+        "limits":["All candidate signs change together; no individual candidate is established necessary or sufficient.",
+                  "A finite recovery window cannot prove permanent stability or a dynamical attractor."]}
 
 
 def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,reference=None):
@@ -276,9 +382,16 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
     meta,data,structure=prefix(directory,2200,current_source=False)
     graph=reunion_cut(Subgraph.load(graph_path),meta["scope"])
     if set(structure["roots"])!=set(graph.selected):raise ValueError("Different selected neurons")
+    polarity_audit=audit_polarity(graph,meta,structure)
     roots=structure["roots"].tolist();pn_col=roots.index(PN)
     intrinsic=json.loads(intrinsic_path.read_text());tail=json.loads(tail_path.read_text())["fits"]["2"]["all_cells"]
     iso_meta=json.loads((isolated/"analysis.json").read_text())
+    if iso_meta.get("polarity_control")!=meta.get("polarity_control"):
+        # An isolated course may be reused only when neither sign hypothesis
+        # changes any source in that cut. Never transfer this exception to reunion.
+        isolated_graph=reunion_cut(Subgraph.load(graph_path),"isolated")
+        if polarity_roots(isolated_graph,meta) or polarity_roots(isolated_graph,iso_meta):
+            raise ValueError("Unmatched isolated polarity")
     if iso_meta.get("regulator_afferent_initialization",{}).get("scale",1.)!=meta.get("regulator_afferent_initialization",{}).get("scale",1.):
         raise ValueError("Unmatched isolated regulator afferent strength")
     if iso_meta.get("scope")=="isolated":
@@ -299,8 +412,9 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
     np.testing.assert_array_equal(data["command"],iso["command"][:2200])
     np.testing.assert_array_equal(structure["source_roots"],iso["roots"][:-2].tolist()+[LN])
     # The current receptor and terminal IDs remain stable across cuts.
-    groups=port_groups(graph)
+    groups=port_groups(graph,polarity_roots(graph,meta))
     _,pn=prepare(cut_cells(graph,(PN,)),intrinsic,tail)
+    apply_pn_polarity(pn,graph,meta)
     np.testing.assert_array_equal([p.u_i.info for p in pn.postsynaptic_points.values()],structure["pn_initial_weights"])
     for t in range(2200):
         pn.input_buffer[:]=data["pn_inputs"][t];pn.tick({},t)
@@ -322,7 +436,7 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
         "without_positive_ALLN":~groups.get("ALLN_positive",np.zeros(data["pn_inputs"].shape[1],dtype=bool))}
     replay={};replay_summary={}
     for name,mask in masks.items():
-        trace=conditional_replay(graph,intrinsic,tail,data["pn_inputs"],mask)
+        trace=conditional_replay(graph,intrinsic,tail,data["pn_inputs"],mask,meta)
         if name=="all":np.testing.assert_array_equal(trace,np.c_[data["soma"][:,pn_col],data["pn_intrinsic"]])
         replay[name]=trace
         replay_summary[name]={"stimulus_spikes":int(trace[200:1200,1].sum()),
@@ -342,6 +456,8 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
     output.mkdir(parents=True)
     with (output/"conditional-PN.npz").open("xb") as f:np.savez_compressed(f,**replay)
     result={"schema":1,"scope":meta["scope"],"direct":meta["direct"],"gain":meta["gain"],
+        "polarity_audit":polarity_audit,
+        "source_group_polarity":"Initial effective receiving sign, including declared curated-GABA control; not transmitter ground truth.",
         "lateral_window":meta.get("lateral_window"),"lateral_command_pulses":int(np.count_nonzero(data["command"][:,-1])),
         "lateral_injected_current_sum":float(data["command"][:,-1].sum()),
         "epochs":epochs(data,graph,roots),"vs_isolated":comparisons,"PN_current_by_source":charge,

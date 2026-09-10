@@ -237,3 +237,48 @@ def test_regulator_branches_form_disjoint_internal_ln_and_pn_factors():
     assert both[:,0].tolist()==[0,1,2]
     assert not set(ln[:,0])&set(pn[:,0])
     assert set(both[:,0])==set(ln[:,0])|set(pn[:,0])
+
+
+def test_curated_polarity_preserves_scaled_magnitudes_and_replays_absent_sources(tmp_path):
+    from copy import deepcopy
+    from simulations.drosophila.paula import Dynamics
+    from simulations.drosophila.orn_onset import negative_gaba_control
+    from simulations.drosophila.gain_reunion_analysis import audit_polarity,apply_pn_polarity
+    from simulations.drosophila.ln_input_replay import cut_cells
+    from simulations.drosophila.prisco import digest
+    roots=("101",PN,LN,"102")
+    kinds=(("ALLN","candidate","gaba"),("ALPN","PN",""),("ALLN","regulator",""),("ALLN","boundary","gaba"))
+    nodes={r:{"global_index":i+1,"annotation":{"root_id":r,"cell_class":c,"hemibrain_type":t,"known_nt":nt}}
+           for i,(r,(c,t,nt)) in enumerate(zip(roots,kinds))}
+    edges=np.array([[101,int(PN),1,2,10,1,10,0,0],[101,int(LN),1,3,20,1,20,0,1],
+                    [102,int(PN),4,2,5,1,5,0,2],[int(LN),int(PN),3,2,10,-1,-10,0,3]])
+    graph=Subgraph(roots[:-1],nodes,edges,{})
+    prep=build_paula(graph,Dynamics(weight_per_count=.075))
+    bindings,before,_=initialize_feedback_gain(prep,graph,.5)
+    spec=negative_gaba_control(prep,graph)
+    meta={"polarity_control":spec,"feedback_initialization":{"scale":.5},
+          "assumptions":{"parameters":{"weight_per_count":.075}}}
+    structure={"edge_bindings":prep.edge_bindings}
+    assert audit_polarity(graph,meta,structure)["pairs"]==2
+    assert spec["source_roots"]==["101"]
+    assert spec["changed_receiving_coefficients"][1][-2:]==[.75,-.75]
+    _,_,_,target,port=bindings[0]
+    initial=np.array([prep.network.network.neurons[int(target)].postsynaptic_points[int(port)].u_i.info])
+    np.savez(tmp_path/'feedback-initial.npz',bindings=bindings,reference_weights=before,initial_weights=initial)
+    np.savez(tmp_path/'feedback-final.npz',weights=initial)
+    meta['feedback_initialization'].update(pairs=1,changed_by_learning=0,
+        initial_sha256=digest(tmp_path/'feedback-initial.npz'),final_sha256=digest(tmp_path/'feedback-final.npz'))
+    assert audit_feedback_gain(tmp_path,graph,meta,structure)['pairs']==1
+    pn_prep=build_paula(cut_cells(graph,(PN,)),Dynamics(weight_per_count=.075))
+    pn=pn_prep.network.network.neurons[pn_prep.root_to_id[PN]]
+    apply_pn_polarity(pn,graph,meta)
+    full_pn=prep.network.network.neurons[prep.root_to_id[PN]]
+    np.testing.assert_array_equal([p.u_i.info for p in pn.postsynaptic_points.values()],
+                                  [p.u_i.info for p in full_pn.postsynaptic_points.values()])
+    groups=port_groups(graph,{"101"})
+    assert groups['ALLN_negative'].tolist()==[True,False,True,False]
+    with pytest.raises(ValueError):apply_pn_polarity(pn,graph,meta)
+    bad=deepcopy(meta);bad['polarity_control']['changed_receiving_coefficients'][0][4]+=1
+    with pytest.raises(AssertionError):audit_polarity(graph,bad,structure)
+    bad=deepcopy(meta);bad['polarity_control']['source_roots'].append('102')
+    with pytest.raises(ValueError):audit_polarity(graph,bad,structure)

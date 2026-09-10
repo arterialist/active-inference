@@ -4,8 +4,9 @@ The fitted current tail can now be combined with an experimentally constrained
 firing response in the same PAULA neuron. A single effective calibration fits
 the control-average ramp curve, but does not explain the variation across
 individual cells. It is a candidate model, not physiological acceptance or a
-measured membrane parameter set. No connected preparation or default agent
-has been changed to use it.
+measured membrane parameter set. This initial study is isolated; the subsequent
+[current-step reunion](PN_CURRENT_STEPS_2026-09-10.md) tests the candidate in
+the connected preparation. Default agents remain unchanged.
 
 ## Recover the actual observation protocol
 
@@ -132,10 +133,10 @@ a spike tick where reset would hide its effect in the recorded voltage alone.
 It establishes execution of the model, not agreement with biological spike
 times, which are unavailable in this source.
 
-The next comparisons are voltage/current constraints and short-term synaptic
-depression, followed by calibrated current steps in the connected preparation
-with closed-loop APL-release controls. Cell-to-cell variation must remain
-visible. A fit to one averaged curve cannot authorize assigning the same
+The subsequent current-step study adds a connected preparation with closed-loop
+APL-release controls. Voltage/current constraints, short-term synaptic
+depression and synaptically driven reunion remain incomplete. Cell-to-cell
+variation must remain visible. A fit to one averaged curve cannot authorize assigning the same
 parameters to all PNs, KCs or APL. The construction helper explicitly refuses
 to apply this isolated calibration to a multi-cell graph.
 

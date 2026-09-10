@@ -251,9 +251,20 @@ The [joint intrinsic-current calibration](PN_INTRINSIC_CALIBRATION_2026-09-10.md
 now tests the published DL5 current ramp through actual PAULA ticks. Electrical
 injection bypasses plastic receptor inputs. A close control-average fit still
 has substantial cell-held-out errors, and changing current gain and integration
-together changes the same diagnostic train from 69 to 13 spikes. This candidate
-has not been applied to the connected preparation or interpreted as measured
-membrane biophysics. Full source-bin and tick records remain available.
+together changes the same diagnostic train from 69 to 13 spikes. This is an
+effective candidate, not measured membrane biophysics. Full source-bin and
+tick records remain available.
+
+The [closed-loop current-step study](PN_CURRENT_STEPS_2026-09-10.md) now applies
+that candidate to the identified PN only, inside the unchanged 2,755-cell graph.
+Isolated, intact and APL-blocked courses share an identical target spike raster
+across four selected one-second steps. APL changes target voltage and one input
+coefficient; its blockade recovers the isolated voltage exactly. Native terminal
+adaptation continues in both connected conditions. Feedback supplies only about
+0.2% of injected charge, and no other PN or KC spikes, so this is not a
+strong-recruitment, odor or learning acceptance. All 27,000 target ticks pass
+exact current/state/postsynaptic-weight replay. Synaptically driven reunion
+with depression and reconstructed ORN/LN input remains the next test.
 
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.

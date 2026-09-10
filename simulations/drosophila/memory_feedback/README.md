@@ -41,9 +41,77 @@ re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
 
+## Reusing acquired B as a teacher for C
+
+The accepted A-to-B result is a completed building block. One additional,
+fixed comparison asks whether its acquired B memory supplies a reusable
+teaching function. Both branches start at the successful A/B retention
+checkpoint. The control replaces only B-to-MBON04 releases with the matched
+feedback-blocked values; all other neural and random-generator state and the
+physical state remain identical. Existing C state is preserved, including
+its earlier exposure effects. No birth parameter, equation, anatomical pair
+or physical interface changes.
+
+A read-only screen of the saved B probes found that B memory changes events
+in six dopamine cells with measured connections to ten C-coded KCs. That
+nonzero route warranted the comparison but did not predict its outcome.
+Each branch receives eight C-before-B pairings, with no A presentations and
+no nutrients during acquisition, followed by 1,000 blank retention ticks.
+Independent A, B and C probes then check the retained preparation.
+
+| Probe intake, J | Before hop, B memory intact | After hop, intact | After hop, B memory initially removed |
+| --- | ---: | ---: | ---: |
+| A | 1.008 | 1.008 | 1.008 |
+| B | 0.840 | 0.856 | 0.832 |
+| C | 0.800 | 0.832 | 0.832 |
+
+C's mean gamma4 terminal release falls from 0.974439 to 0.907633 with acquired
+B memory and to 0.913183 without it. Thus B memory adds a 0.005549 depression
+increment. Both retained C probes nevertheless emit eleven dry SMP108 spikes
+and ingest 0.832 J with food available. Replacing or transferring C terminal
+values between the two retained states leaves each receiver's complete body
+trajectory exactly unchanged, in both dry and feeding probes. Some neural
+activity differs during feeding, so the result is a failure to express the
+added plasticity as a functional advantage, not an absence of neural change.
+
+A's selected terminal memories remain exactly unchanged during this hop, and
+A feeding is retained. B remains a stronger cue in the intact branch. Higher
+intake should not be equated with improved energetic return: B's energy-plus-
+gut gain falls from 0.502581 to 0.491998 J in the intact probes, and C's falls
+from 0.481609 to 0.476171 J. These before/after probe comparisons do not isolate
+which intervening changes caused the energetic decline.
+
+The acquired B signal reaches C plasticity but does not add retained C action
+or feeding under this fixed comparison. The shared C response can arise
+without B's acquired increment; this comparison does not separate C-only
+plasticity from baseline B-cue feedback. The experiment stops at this one
+additional hop. There was no further chain, gain increase or exposure sweep,
+and the accepted A-to-B result is unchanged.
+
+The [reuse audit](evidence/memory-reuse.json) records both full courses,
+starting-state checks, trajectories and coefficient substitutions. Its raw
+prefixes are `memory-reuse-intact-20260910`, `memory-reuse-removed-20260910`, and
+`memory-reuse-C-` under the existing ignored research directory.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.reuse_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
+
 ## Retained A-to-B teaching under declared boundaries
 
 ![Coverage, expression bounds and actual acquisition](evidence/coverage-acquisition.png)
+
+[Watch the labelled saved-state replay](evidence/causal-B-replay.mp4).
+It uses the existing MuJoCo hinge and renderer, with identical cameras and
+unamplified angles. Dry and feeding probes are separate segments from the
+same retained state. Playback is four times slower; every saved tick is
+rendered without running new neural or physical steps. The
+[replay receipt](evidence/causal-B-replay.json) identifies the intervention
+records, trace hashes, renderer and output hash. The small movement difference
+is shown at its actual geometric scale.
+
 
 Eight B-before-A pairings supply no nutrients and end with 1,000 blank
 retention ticks. Native receiving and returning learning rates stay positive;

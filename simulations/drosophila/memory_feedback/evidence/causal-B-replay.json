@@ -1,0 +1,53 @@
+{
+  "source_sha256": "662bf47abac969610e1437e79411f187d840ce364f29696406ffdc3da1d5eee8",
+  "renderer": "mujoco.Renderer with existing LoadedHinge XML",
+  "mujoco_version": "3.5.0",
+  "physical_dt": 0.004,
+  "playback_speed": 0.25,
+  "angular_amplification": 1,
+  "physics_steps_executed": 0,
+  "neural_steps_executed": 0,
+  "cases": [
+    {
+      "label": "Dry B expression",
+      "records": [
+        {
+          "record": "memory-coverage-eight-diagnostics-20260910/sham",
+          "trace_sha256": "a2e3c10bb8956ba11c428dee1f77ce61bf9d02add402aba02817e1c6c829edbf",
+          "summary_sha256": "07f108675d14214b99410275f068fea6da7ac04636c7d2c917e8e941b518e0f6",
+          "receiver_checkpoint_sha256": "eff2cee8549441b4e8f3effa0a4c62cc59105bce8b8191da04e77a6227518f6a"
+        },
+        {
+          "record": "memory-coverage-eight-diagnostics-20260910/removed",
+          "trace_sha256": "ea60586718ecf54b2097cc6026d675718b4bf20617fd5b3053a56bcf35eb9d27",
+          "summary_sha256": "43ec03294f44fb6bddf919917a5516ad2cad7015879a4af22a2a3ac139673258",
+          "receiver_checkpoint_sha256": "eff2cee8549441b4e8f3effa0a4c62cc59105bce8b8191da04e77a6227518f6a"
+        }
+      ],
+      "rendered_ticks": 200,
+      "final_hold_seconds": 0.992
+    },
+    {
+      "label": "B with the fixed food well available",
+      "records": [
+        {
+          "record": "memory-coverage-eight-feeding-sham-20260910",
+          "trace_sha256": "9a9c3678352cef244f1b7de39300161e24db72d9b862cd97e1da68bb6b6ed156",
+          "summary_sha256": "12bb2aabe54d463c2a4c3ef8b7708d0f4060baf8677f07a00dffdff505616199",
+          "receiver_checkpoint_sha256": "eff2cee8549441b4e8f3effa0a4c62cc59105bce8b8191da04e77a6227518f6a"
+        },
+        {
+          "record": "memory-coverage-eight-feeding-removed-20260910",
+          "trace_sha256": "402e15d262cde7be027f05d2e84fe96ac156876f13ac041b667d0ad213dc0579",
+          "summary_sha256": "cf01d23d5e2fcb8dc32e26669883f080de498a11948ff388feeb697aec299a6d",
+          "receiver_checkpoint_sha256": "eff2cee8549441b4e8f3effa0a4c62cc59105bce8b8191da04e77a6227518f6a"
+        }
+      ],
+      "rendered_ticks": 200,
+      "final_hold_seconds": 0.992
+    }
+  ],
+  "body_xml_sha256": "50a6454059f0280d4059238f415879167ae2029914d62409a7658659348a4cea",
+  "movie_sha256": "68e16259228d82f4d737a9b5852ef9a16ceed43fd794afbb7fe9c83992fea0d9",
+  "limit": "Kinematic replay of recorded hinge poses. The well is an angle-gated transducer, not a rendered physical object. No reconstructed fly, new dynamics, spatial amplification or fabricated intermediate poses."
+}

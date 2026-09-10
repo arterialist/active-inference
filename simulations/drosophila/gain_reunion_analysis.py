@@ -65,6 +65,16 @@ def first_difference(a,b):
     return int(rows[0]) if len(rows) else None
 
 
+def course_bounds(meta):
+    """Reject partial or ambiguous courses instead of silently slicing 2200 ticks."""
+    if len(meta["epochs"])!=1:raise ValueError("Need one complete stimulus/recovery course")
+    e=meta["epochs"][0]
+    start,stop,end=e["start"],e["stop"],e["recovery_stop"]
+    if any(type(t) is not int for t in (start,stop,end,meta["ticks"])) or not 0<start<stop<end or end!=meta["ticks"]:
+        raise ValueError("Invalid complete-course bounds")
+    return start,stop,end
+
+
 def port_groups(graph,negative_roots=()):
     rows=sorted(graph.edges[graph.edges[:,1]==int(PN)],key=lambda e:int(e[8]))
     names=[]
@@ -96,6 +106,8 @@ def conditional_replay(graph,intrinsic,tail,inputs,keep,meta=None):
 def epochs(data,graph,roots,intervals=((0,200),(200,400),(400,1200),(1200,2200))):
     results=[];pn_col=roots.index(PN);ln_col=roots.index(LN)
     for lo,hi in intervals:
+        if hi<=lo:continue
+        if lo<0 or hi>len(data["soma"]):raise ValueError("Requested interval outside recording")
         groups={}
         for cls in ("olfactory","ALLN","ALPN","Kenyon_Cell"):
             cols=[i for i,r in enumerate(roots) if graph.nodes[r]["annotation"]["cell_class"]==cls]
@@ -174,6 +186,8 @@ def schedule_followup(graph_path,early,late,sustained,unassisted):
     result={"command_shift":audit_command_shift(base_data["command"],records["late"][1]["command"]),
             "conditions":{},"comparisons":{},"manifest_sha256":{name:digest(path/"analysis.json") for name,path in paths.items()}}
     for name,(meta,data,structure) in records.items():
+        if meta["ticks"]!=2200 or meta.get("sensory_precondition") is not None:
+            raise ValueError("This legacy timing comparison requires an unpreconditioned 2200-tick course")
         if meta.get("polarity_control")!=base_meta.get("polarity_control"):
             raise ValueError("Concurrent polarity change")
         for key in ("scope","gain","direct","seed","lesion","epochs","assumptions","anatomy","pathway_intervention"):
@@ -231,6 +245,10 @@ def compare_pathway(reference,directory,graph,meta,data,structure):
     """An intact shared past plus a closed-loop, time-specific intervention."""
     from types import SimpleNamespace
     old_meta,old,old_structure=prefix(reference,2200,current_source=False)
+    if old_meta["ticks"]!=2200 or meta["ticks"]!=2200:
+        raise ValueError("This pathway comparison requires complete 2200-tick courses")
+    if old_meta.get("sensory_precondition")!=meta.get("sensory_precondition"):
+        raise ValueError("Concurrent sensory precondition change")
     if old_meta.get("polarity_control")!=meta.get("polarity_control"):
         raise ValueError("Concurrent polarity change")
     if old_meta.get("feedback_initialization",{}).get("scale",1.)!=meta.get("feedback_initialization",{}).get("scale",1.):
@@ -321,6 +339,10 @@ def compare_polarity(graph_path,reference,directory):
     """Matched closed-loop sign sensitivity, including the earliest divergence."""
     a,x,s=prefix(reference,2200,current_source=False)
     b,y,t=prefix(directory,2200,current_source=False)
+    if a["ticks"]!=2200 or b["ticks"]!=2200:
+        raise ValueError("This polarity comparison requires complete 2200-tick courses")
+    if a.get("sensory_precondition")!=b.get("sensory_precondition"):
+        raise ValueError("Concurrent sensory precondition change")
     if a.get("polarity_control") is not None or b.get("polarity_control") is None:
         raise ValueError("Need an original-sign reference and a polarity intervention")
     for key in ("scope","gain","direct","lateral","seed","lesion","epochs","lateral_window","assumptions","anatomy"):
@@ -374,12 +396,95 @@ def compare_polarity(graph_path,reference,directory):
                   "A finite recovery window cannot prove permanent stability or a dynamical attractor."]}
 
 
+def compare_sensory_history(graph_path,low,preconditioned,low_reference,high_reference):
+    """Different sensory pasts, identical future commands and fixed circuitry."""
+    from .gain_reunion import reunion_commands,window_lateral_command
+    paths={"constant_low":low,"high_then_low":preconditioned}
+    records={}
+    for name,path in paths.items():
+        bounds=course_bounds(json.loads((path/"analysis.json").read_text()))
+        records[name]=prefix(path,bounds[-1],current_source=False)
+    a,x,s=records["constant_low"];b,y,t=records["high_then_low"]
+    start,stop,end=course_bounds(a)
+    pre=b.get("sensory_precondition")
+    if a.get("sensory_precondition") is not None or pre is None or pre["rate"]<=a["direct"]:
+        raise ValueError("Need constant low and higher-input preconditioned courses")
+    switch=pre["stop"]
+    if not start<switch<stop or pre["start"]!=start:raise ValueError("Invalid history boundary")
+    fixed=("scope","gain","lateral","seed","lesion","lateral_window","assumptions","anatomy","polarity_control")
+    def same_circuit(left,right,left_structure,right_structure,*,old_driver=False):
+        for key in fixed:
+            if left.get(key)!=right.get(key):raise ValueError(f"Concurrent circuit/boundary change: {key}")
+        for key in ("feedback_initialization","regulator_afferent_initialization"):
+            if left[key]["scale"]!=right[key]["scale"]:raise ValueError("Concurrent receiving gain change")
+        if left["pathway_intervention"]["pathway"]!="none" or right["pathway_intervention"]["pathway"]!="none":
+            raise ValueError("History comparison does not permit a concurrent pathway block")
+        for path,h in left["source_hashes"].items():
+            if old_driver and Path(path).name=="gain_reunion.py":continue
+            if right["source_hashes"].get(path)!=h:raise ValueError(f"Concurrent source change: {path}")
+        for key,values in left_structure.items():np.testing.assert_array_equal(values,right_structure[key])
+    same_circuit(a,b,s,t)
+    if a["direct"]!=b["direct"] or course_bounds(b)!=(start,stop,end):raise ValueError("Different future protocol")
+    graph=reunion_cut(Subgraph.load(graph_path),a["scope"]);roots=s["roots"].tolist()
+    if set(roots)!=set(graph.selected):raise ValueError("Different anatomical selection")
+    for name,(meta,data,structure) in records.items():
+        spec=meta.get("sensory_precondition")
+        expected,_=reunion_commands(len(structure["source_roots"])-1,meta["direct"],meta["lateral"],meta["seed"],
+            stimulus_duration=stop-start,sensory_precondition=None if spec is None else (spec["rate"],spec["stop"]))
+        expected=window_lateral_command(expected,meta.get("lateral_window"))
+        np.testing.assert_array_equal(data["command"],expected)
+        audit_polarity(graph,meta,structure)
+        audit_feedback_gain(paths[name],graph,meta,structure)
+        audit_feedback_gain(paths[name],graph,meta,structure,afferent=True)
+    np.testing.assert_array_equal(x["command"][switch:],y["command"][switch:])
+    first_command=first_difference(x["command"],y["command"])
+    if first_command is None or first_command>=switch:raise ValueError("No distinct input history")
+    for key in x:np.testing.assert_array_equal(x[key][:first_command],y[key][:first_command])
+    prefix_checks={}
+    for name,path,expected_rate,until in (("constant_low",low_reference,a["direct"],None),
+                                          ("high_then_low",high_reference,pre["rate"],switch)):
+        rm=json.loads((path/"analysis.json").read_text())
+        rs,re,rt=course_bounds(rm)
+        until=re if until is None else until
+        if not rs<until<=re or rm.get("sensory_precondition") is not None or rm["direct"]!=expected_rate:
+            raise ValueError("Invalid stationary reference prefix")
+        rm,rd,rstruct=prefix(path,until,current_source=False)
+        meta,data,structure=records[name]
+        same_circuit(rm,meta,rstruct,structure,old_driver=True)
+        values=0
+        for key in rd:
+            np.testing.assert_array_equal(rd[key],data[key][:until]);values+=rd[key].size
+        prefix_checks[name]={"exclusive_stop":until,"exact_recorded_values":values,"manifest_sha256":digest(path/"analysis.json")}
+    results={}
+    for name,(meta,data,structure) in records.items():
+        last={}
+        for cls in ("olfactory","ALLN","ALPN"):
+            cols=[i for i,r in enumerate(roots) if graph.nodes[r]["annotation"]["cell_class"]==cls]
+            ts=np.flatnonzero(np.any(data["soma"][:,cols,1],axis=1))
+            last[cls]=int(ts[-1]) if len(ts) else None
+        results[name]={"intervals":epochs(data,graph,roots,((start,switch),(switch,stop),(stop,end),(end-200,end))),
+            "hundred_tick_intervals":epochs(data,graph,roots,tuple((lo,min(lo+100,end)) for lo in range(start,end,100))),
+            "regulator_spike_ticks":np.flatnonzero(data["soma"][:,roots.index(LN),1]).tolist(),
+            "last_spike":last,"source_equation_audit":audit_recorded_sources(meta,data,structure)}
+    orn_cols=[roots.index(r) for r in s["source_roots"] if r!=LN]
+    sensory_spike_difference=first_difference(x["soma"][switch:,orn_cols,1],y["soma"][switch:,orn_cols,1])
+    return {"switch_tick":switch,"stimulus_stop":stop,"recording_stop":end,
+        "first_future_sensory_spike_difference":None if sensory_spike_difference is None else switch+sensory_spike_difference,
+        "identical_future_command_values":int(x["command"][switch:].size),"stationary_prefix_checks":prefix_checks,
+        "conditions":results,"manifest_sha256":{name:digest(path/"analysis.json") for name,path in paths.items()},
+        "analysis_sha256":digest(Path(__file__)),
+        "limits":["Sensory history changes the complete adaptive state; this does not separate fast state from learned weights.",
+                  "One timing seed and finite input/recovery windows do not establish an attractor or robustness distribution."]}
+
+
 def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,reference=None):
     if output.exists():raise FileExistsError(output)
     # Driver/observation code may evolve after a completed run. Historical
     # records retain their hashes; exact current PN replay below checks the
     # receiving dynamics instead of pretending an old driver is current.
-    meta,data,structure=prefix(directory,2200,current_source=False)
+    start,stop,ticks=course_bounds(json.loads((directory/"analysis.json").read_text()))
+    meta,data,structure=prefix(directory,ticks,current_source=False)
+    intervals=((0,start),(start,min(start+200,stop)),(min(start+200,stop),stop),(stop,ticks))
     graph=reunion_cut(Subgraph.load(graph_path),meta["scope"])
     if set(structure["roots"])!=set(graph.selected):raise ValueError("Different selected neurons")
     polarity_audit=audit_polarity(graph,meta,structure)
@@ -395,13 +500,15 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
     if iso_meta.get("regulator_afferent_initialization",{}).get("scale",1.)!=meta.get("regulator_afferent_initialization",{}).get("scale",1.):
         raise ValueError("Unmatched isolated regulator afferent strength")
     if iso_meta.get("scope")=="isolated":
-        iso_meta,iso,iso_structure=prefix(isolated,2200,current_source=False)
-        for key in ("seed","direct","lateral","lesion","gain","epochs","lateral_window"):
+        iso_meta,iso,iso_structure=prefix(isolated,ticks,current_source=False)
+        for key in ("seed","direct","lateral","lesion","gain","epochs","lateral_window","sensory_precondition","ticks"):
             if iso_meta.get(key)!=meta.get(key):raise ValueError(f"Unmatched isolated boundary: {key}")
         if iso_meta["feedback_initialization"]["scale"]!=meta["feedback_initialization"]["scale"]:
             raise ValueError("Unmatched isolated feedback strength")
         iso["roots"]=iso_structure["roots"]
     else:
+        if ticks!=2200 or meta.get("sensory_precondition") is not None:
+            raise ValueError("Changed stimulation requires a matching isolated course")
         if meta.get("lateral_window") is not None:raise ValueError("Windowed stimulation requires a matching isolated course")
         matches=[r for r in iso_meta["records"] if r["seed"]==meta["seed"] and r["direct_command_hz"]==meta["direct"]
             and r["lateral_command_hz"]==meta["lateral"] and r["lesion"]==meta["lesion"]
@@ -409,14 +516,14 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
         if len(matches)!=1:raise ValueError("Need one matched isolated course")
         iso=read_record(isolated,matches[0])
     iso_roots=iso["roots"].tolist()
-    np.testing.assert_array_equal(data["command"],iso["command"][:2200])
+    np.testing.assert_array_equal(data["command"],iso["command"][:ticks])
     np.testing.assert_array_equal(structure["source_roots"],iso["roots"][:-2].tolist()+[LN])
     # The current receptor and terminal IDs remain stable across cuts.
     groups=port_groups(graph,polarity_roots(graph,meta))
     _,pn=prepare(cut_cells(graph,(PN,)),intrinsic,tail)
     apply_pn_polarity(pn,graph,meta)
     np.testing.assert_array_equal([p.u_i.info for p in pn.postsynaptic_points.values()],structure["pn_initial_weights"])
-    for t in range(2200):
+    for t in range(ticks):
         pn.input_buffer[:]=data["pn_inputs"][t];pn.tick({},t)
         np.testing.assert_array_equal([pn.S,pn.O,pn.F_avg],data["soma"][t,pn_col])
         np.testing.assert_array_equal([pn.t_ref,pn.r,pn.b,pn.total_current],data["pn_intrinsic"][t])
@@ -439,31 +546,33 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
         trace=conditional_replay(graph,intrinsic,tail,data["pn_inputs"],mask,meta)
         if name=="all":np.testing.assert_array_equal(trace,np.c_[data["soma"][:,pn_col],data["pn_intrinsic"]])
         replay[name]=trace
-        replay_summary[name]={"stimulus_spikes":int(trace[200:1200,1].sum()),
-                              "recovery_spikes":int(trace[1200:2200,1].sum())}
+        replay_summary[name]={"stimulus_spikes":int(trace[start:stop,1].sum()),
+                              "recovery_spikes":int(trace[stop:ticks,1].sum())}
     charge=[]
-    for lo,hi in ((200,400),(400,1200),(1200,2200)):
+    for lo,hi in intervals[1:]:
+        if hi<=lo:continue
         charge.append({"start":lo,"stop":hi,"signed_current_sum":{name:float(data["pn_current"][lo:hi,mask].sum()) for name,mask in groups.items()}})
     i=iso_roots.index(PN)
-    comparisons={"first_PN_state_difference":first_difference(data["soma"][:,pn_col],iso["soma"][:2200,i,:3]),
-        "first_PN_spike_difference":first_difference(data["soma"][:,pn_col,1],iso["soma"][:2200,i,1]),
-        "isolated_PN_stimulus_spikes":int(iso["soma"][200:1200,i,1].sum()),
-        "isolated_PN_recovery_spikes":int(iso["soma"][1200:2200,i,1].sum()),
-        "reunited_PN_stimulus_spikes":int(data["soma"][200:1200,pn_col,1].sum()),
-        "reunited_PN_recovery_spikes":int(data["soma"][1200:2200,pn_col,1].sum())}
+    comparisons={"first_PN_state_difference":first_difference(data["soma"][:,pn_col],iso["soma"][:ticks,i,:3]),
+        "first_PN_spike_difference":first_difference(data["soma"][:,pn_col,1],iso["soma"][:ticks,i,1]),
+        "isolated_PN_stimulus_spikes":int(iso["soma"][start:stop,i,1].sum()),
+        "isolated_PN_recovery_spikes":int(iso["soma"][stop:ticks,i,1].sum()),
+        "reunited_PN_stimulus_spikes":int(data["soma"][start:stop,pn_col,1].sum()),
+        "reunited_PN_recovery_spikes":int(data["soma"][stop:ticks,pn_col,1].sum())}
     for root,label in ((LN,"regulating_LN"),):
-        comparisons[label+"_first_spike_difference"]=first_difference(data["soma"][:,roots.index(root),1],iso["soma"][:2200,iso_roots.index(root),1])
+        comparisons[label+"_first_spike_difference"]=first_difference(data["soma"][:,roots.index(root),1],iso["soma"][:ticks,iso_roots.index(root),1])
     output.mkdir(parents=True)
     with (output/"conditional-PN.npz").open("xb") as f:np.savez_compressed(f,**replay)
     result={"schema":1,"scope":meta["scope"],"direct":meta["direct"],"gain":meta["gain"],
+        "ticks":ticks,"stimulus_start":start,"stimulus_stop":stop,"sensory_precondition":meta.get("sensory_precondition"),
         "polarity_audit":polarity_audit,
         "source_group_polarity":"Initial effective receiving sign, including declared curated-GABA control; not transmitter ground truth.",
         "lateral_window":meta.get("lateral_window"),"lateral_command_pulses":int(np.count_nonzero(data["command"][:,-1])),
         "lateral_injected_current_sum":float(data["command"][:,-1].sum()),
-        "epochs":epochs(data,graph,roots),"vs_isolated":comparisons,"PN_current_by_source":charge,
-        "conditional_receiving_tests":replay_summary,"exact_PN_replay_ticks":2200,
+        "epochs":epochs(data,graph,roots,intervals),"vs_isolated":comparisons,"PN_current_by_source":charge,
+        "conditional_receiving_tests":replay_summary,"exact_PN_replay_ticks":ticks,
         "source_equation_audit":audit_recorded_sources(meta,data,structure),
-        "gate_and_target_routing_ticks":2200,"source_hashes":{str(p.resolve()):digest(p) for p in
+        "gate_and_target_routing_ticks":ticks,"source_hashes":{str(p.resolve()):digest(p) for p in
             (Path(__file__),directory/"analysis.json",isolated/"analysis.json",graph_path/"manifest.json",intrinsic_path,tail_path)},
         "limits":["Conditional receiving tests retain intact source histories and are not closed-loop lesion predictions.",
             "Only a single sensory channel is tested; KC differences do not establish odor-identity discrimination.",

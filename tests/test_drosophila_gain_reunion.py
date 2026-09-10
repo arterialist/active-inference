@@ -282,3 +282,33 @@ def test_curated_polarity_preserves_scaled_magnitudes_and_replays_absent_sources
     with pytest.raises(AssertionError):audit_polarity(graph,bad,structure)
     bad=deepcopy(meta);bad['polarity_control']['source_roots'].append('102')
     with pytest.raises(ValueError):audit_polarity(graph,bad,structure)
+
+
+def test_sensory_history_keeps_identical_future_and_does_not_reset_phases():
+    from simulations.drosophila.gain_reunion import reunion_commands
+    from simulations.drosophila.ln_gain import commands
+    low,e=reunion_commands(42,50,0,11,stimulus_duration=1400)
+    high,_=reunion_commands(42,100,0,11,stimulus_duration=1400)
+    switched,se=reunion_commands(42,50,0,11,stimulus_duration=1400,sensory_precondition=(100,600))
+    assert e==se==[{'trial':0,'start':200,'stop':1600,'recovery_stop':2600}]
+    np.testing.assert_array_equal(switched[:600],high[:600])
+    np.testing.assert_array_equal(switched[600:],low[600:])
+    np.testing.assert_array_equal(switched[:,-1],low[:,-1])
+    assert np.count_nonzero(switched[600:1600,:-1])==42*50
+    assert not switched[1600:].any()
+    baseline,be=commands(42,50,0,11,trials=1)
+    unchanged,ue=reunion_commands(42,50,0,11)
+    assert be==ue
+    np.testing.assert_array_equal(baseline,unchanged)
+    np.testing.assert_array_equal(low[:1200],baseline[:1200])
+    for bad in ((100,200),(100,1600),(100,600.5),(float('nan'),600),(101,600),(100,)):
+        with pytest.raises(ValueError):reunion_commands(42,50,0,11,stimulus_duration=1400,sensory_precondition=bad)
+
+
+def test_analysis_bounds_follow_complete_record_not_a_fixed_prefix():
+    from simulations.drosophila.gain_reunion_analysis import course_bounds
+    meta={'ticks':2600,'epochs':[{'start':200,'stop':1600,'recovery_stop':2600}]}
+    assert course_bounds(meta)==(200,1600,2600)
+    for bad in ({**meta,'ticks':2200},{**meta,'epochs':meta['epochs']*2},
+                {'ticks':2600,'epochs':[{'start':200,'stop':2600,'recovery_stop':2600}]}):
+        with pytest.raises(ValueError):course_bounds(bad)

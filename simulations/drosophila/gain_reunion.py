@@ -144,9 +144,23 @@ def window_lateral_command(command, window):
     return result
 
 
+def reunion_commands(n,direct,lateral,seed,*,stimulus_duration=1000,sensory_precondition=None):
+    """Prescribed sensory history; no state-dependent stimulus or phase reset."""
+    command,epochs=commands(n,direct,lateral,seed,duration=stimulus_duration,trials=1)
+    if sensory_precondition is None:return command,epochs
+    if len(sensory_precondition)!=2:raise ValueError("Precondition requires a rate and stop tick")
+    rate,stop=sensory_precondition
+    if not np.isfinite([rate,stop]).all() or stop!=int(stop) or not 200<stop<epochs[0]["stop"]:
+        raise ValueError("Invalid sensory precondition boundary")
+    high,_=commands(n,rate,lateral,seed,duration=stimulus_duration,trials=1)
+    command[200:int(stop),:-1]=high[200:int(stop),:-1]
+    return command,epochs
+
+
 def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1.,
         direct=50.,lateral=80.,seed=11,lesion="intact",chunk=250,
-        pathway="none",block_start=600,feedback_scale=1.,lateral_window=None,regulator_afferent_scale=1.,curated_gaba_control=False):
+        pathway="none",block_start=600,feedback_scale=1.,lateral_window=None,regulator_afferent_scale=1.,curated_gaba_control=False,
+        stimulus_duration=1000,sensory_precondition=None):
     if output.exists():raise FileExistsError(output)
     if type(chunk) is not int or chunk<1:raise ValueError("Invalid chunk size")
     if shutil.disk_usage(output.parent).free < 512*1024**2:
@@ -176,7 +190,8 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
     apl=next((c for r,c in zip(roots,cells) if graph.nodes[r]["annotation"]["hemibrain_type"]=="APL"),None)
     ln_id=prep.root_to_id[LN]; blocked=blocked_terminals(prep,graph,lesion)
     pn_terminals,pn_ports=target_bindings(prep,orns,pn.id)
-    command,epochs=commands(len(orns),direct,lateral,seed,trials=1)
+    command,epochs=reunion_commands(len(orns),direct,lateral,seed,stimulus_duration=stimulus_duration,
+                                   sensory_precondition=sensory_precondition)
     command=window_lateral_command(command,lateral_window)
     ticks=len(command)
     if type(block_start) is not int or not 0 <= block_start < ticks:
@@ -287,6 +302,8 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
         "structure_sha256":digest(output/"structure.npz"),"anatomy":graph.summary(),"assumptions":prep.assumptions,
         "gain":gain,"direct":direct,"lateral":lateral,"seed":seed,"lesion":lesion,"epochs":epochs,"apl_present":has_apl,
         "polarity_control":polarity,
+        "sensory_precondition":None if sensory_precondition is None else {"rate":float(sensory_precondition[0]),
+            "start":200,"stop":int(sensory_precondition[1]),"after":"unchanged baseline-rate train on original source phases"},
         "lateral_window":list(lateral_window) if lateral_window is not None else None,
         "lateral_command_pulses":int(np.count_nonzero(command[:,-1])),
         "lateral_injected_current_sum":float(command[:,-1].sum()),
@@ -338,11 +355,14 @@ def main():
     p.add_argument("--lateral-window",nargs=2,type=int,metavar=("START","STOP"))
     p.add_argument("--regulator-afferent-scale",type=float,default=1.)
     p.add_argument("--curated-gaba-control",action="store_true",help="Experimental negative receiving signs for curated GABA / positive-model ALLNs; preserve wiring and magnitudes")
+    p.add_argument("--stimulus-duration",type=int,default=1000)
+    p.add_argument("--sensory-precondition",nargs=2,type=float,metavar=("RATE","STOP"))
     a=p.parse_args()
     run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,scope=a.scope,gain=a.gain,direct=a.direct,
         lateral=a.lateral,seed=a.seed,lesion=a.lesion,pathway=a.pathway,block_start=a.block_start,
         feedback_scale=a.feedback_scale,lateral_window=a.lateral_window,regulator_afferent_scale=a.regulator_afferent_scale,
-        curated_gaba_control=a.curated_gaba_control)
+        curated_gaba_control=a.curated_gaba_control,stimulus_duration=a.stimulus_duration,
+        sensory_precondition=a.sensory_precondition)
 
 
 if __name__=="__main__":main()

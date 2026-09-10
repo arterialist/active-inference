@@ -16,7 +16,8 @@ Research has resumed from the bounded negative transfer result. The latest
 stores a release-dependent direct memory and preserves useful A-guided feeding
 through continuing unrewarded B-before-A exposure. A source-specific efficacy
 hypothesis now permits a small teacher-dependent change at B terminals, but
-student output remains silent and acquired B action remains unestablished.
+acquired B action remains unestablished. Recruiting student output exposes a
+second conflict: its untrained response to A inhibits the teacher pathway.
 The overall research objective remains active; completion of the earlier
 bounded experiment was not completion of that objective.
 
@@ -145,7 +146,7 @@ coupled-network response or a biological efficacy measurement. It defines one
 prospective source-specific efficacy comparison at gain 64 in
 `feedback_efficacy.py`; no synapse count or sign is altered by that hypothesis.
 
-The 41 focused tests, including the subsequent efficacy and continuation
+The 42 focused tests, including the subsequent efficacy and continuation
 controls, pass. Its exact
 checkpoint replay and executed causal branches supply the behavioral evidence.
 First-order association itself remains an established project capability; the
@@ -260,6 +261,63 @@ uv run --no-sync --with cloudpickle==3.1.2 python \
 uv run --no-sync --with cloudpickle==3.1.2 python \
   -m simulations.drosophila.memory_feedback.efficacy_analysis \
   .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
+
+## Active student output suppresses the teacher
+
+The threshold comparison in `student_output.py` is complete. Halving both
+MBON04 thresholds makes the student outputs spike while preserving paired
+A feeding at 0.608 J before and after continuing acquisition. Unpaired A still
+ingests nothing. However, every A presentation during B-before-A now produces
+11 MBON04 spikes and only one SMP108 spike, with no student dopamine spikes.
+The gamma4 A terminals remain near their initial release, 1.000096 after direct
+training, while alpha1 A release falls to 0.384857. The primary nutrient boundary
+has trained A in alpha1 but left its gamma4 inhibitory output untrained.
+
+This is a causal conflict, not just simultaneous activity. In independent dry A
+probes, `output_inhibition_probe.py` blocks only the two measured MBON04-to-SMP108
+projections. Removing 11 forward arrivals restores SMP108 from one spike to
+eight and student dopamine from zero spikes to two. MBON04 still produces 11
+spikes and SMP353 still produces eight. The same intervention in the unpaired
+parent leaves SMP108 and student dopamine silent. It therefore releases the
+existing learned teacher response rather than creating one without A memory.
+
+During acquisition, B itself still recruits student dopamine. Its complete
+gamma4 terminal-release trajectory is exactly equal between paired and
+first-order-unpaired courses, ending at a mean of 0.993781. Projection-blocked
+acquisition ends at 1.000068. Independent retained B probes produce two motor,
+16 SMP108 and three MBON04 spikes in every condition. Intact and projection-cut
+body trajectories are exactly equal. Making student output active removed the
+small A-dependent local-credit effect of the previous preparation without
+producing acquired B action. All these continuations use the corrected branch
+RNG checkpoint wrapper. [The stored audit](evidence/student-output.json)
+contains the causal probe hashes, coefficient comparisons and course records.
+
+The next comparison in `primary_boundary.py` broadens primary teaching to the
+represented PAM11, PAM07 and PAM08 cells. It uses the same actual ingested-energy
+signal and current per dose, regardless of cue or phase. The boundary is zero
+whenever no nutrients enter the body, including all B-before-A acquisition.
+[Yamada et al., Figure 5](https://pmc.ncbi.nlm.nih.gov/articles/PMC9937650/)
+used PAM-cluster stimulation during first-order pairing before measuring
+potentiated SMP108 responses. That experiment motivates comparing broader
+recruitment here. The chosen cell-type coverage and equal currents are explicit
+engineering assumptions, not a reconstruction of the genetic driver or natural
+sugar sensory wiring. This comparison tests whether first-order learning can
+remove A's opposing student output while leaving B eligible for later neural
+teaching. Its paired and unpaired direct courses are in progress; no outcome
+is claimed yet.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.student_output_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.primary_boundary \
+  .live/research/flywire783/memory-terminal-cut-20260910 \
+  .live/research/flywire783/memory-primary-paired-20260910
+# Repeat with --unpaired and its distinct output.
+# Continue a completed parent with the same primary-boundary module and
+# --continue-course, adding --cut or --displaced for the causal controls.
 ```
 
 ## Student viability and the next mechanism decision

@@ -247,6 +247,14 @@ constrained; physiological gain, conductance, depression and odor coding are
 not yet reproduced. `PNCurrentKernel` must be explicitly selected for one
 identified PN and presynaptic type; all default preparations remain unchanged.
 
+The [joint intrinsic-current calibration](PN_INTRINSIC_CALIBRATION_2026-09-10.md)
+now tests the published DL5 current ramp through actual PAULA ticks. Electrical
+injection bypasses plastic receptor inputs. A close control-average fit still
+has substantial cell-held-out errors, and changing current gain and integration
+together changes the same diagnostic train from 69 to 13 spikes. This candidate
+has not been applied to the connected preparation or interpreted as measured
+membrane biophysics. Full source-bin and tick records remain available.
+
 Learned discrimination remains a later benchmark requiring actual learning and
 neural consumers, not a decoder trained to call the response successful.
 

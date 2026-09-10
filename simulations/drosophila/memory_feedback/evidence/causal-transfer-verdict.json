@@ -1,0 +1,110 @@
+{
+  "source_sha256": "5fa161fb498ff060306701bc93bd2e7388af4963705f356d32fbf4a803ffaf41",
+  "full_audit_sha256": "c4fb3f0a61b6acc71f47d74863b5e24ab92bc3f4f63c4c219c79f9931ef74caf",
+  "conclusion": "In this declared engineered preparation, acquired A terminal memory causes a retained, useful B response through measured neural feedback while adaptation continues.",
+  "first_order": {
+    "paired_A_food_J": 1.0080000000000002,
+    "A_memory_removed_food_J": 0.7040000000000002,
+    "A_memory_transferred_food_J": 1.0080000000000002,
+    "A_food_after_second_order_J": 1.0080000000000002
+  },
+  "second_order": {
+    "pairings": 8,
+    "nutrient_J": 0,
+    "retention_ticks": 1000,
+    "physical_seconds_per_tick": 0.004,
+    "B_dry_spikes": {
+      "eight_intact": 10,
+      "eight_cut": 9,
+      "eight_teacher_removed": 9,
+      "eight_unpaired": 9,
+      "eight_displaced": 9,
+      "eight_alpha_removed": 10
+    },
+    "B_food_J": {
+      "sham": 0.8400000000000003,
+      "removed": 0.8320000000000003,
+      "transferred": 0.8400000000000003,
+      "blocked-sham": 0.8320000000000003
+    },
+    "same_state_food_benefit_J": 0.008000000000000007,
+    "same_state_stored_energy_benefit_J": 0.0083090874356202,
+    "first_contact_ticks": {
+      "sham": 94,
+      "removed": 95,
+      "transferred": 94,
+      "blocked-sham": 95
+    },
+    "teacher_memory_and_B_memory_chain_verified": true,
+    "held_out_C_unchanged": true
+  },
+  "alpha1_interpretation": "Removing alpha1 A-terminal release memory alone leaves the extra B response. This does not establish exclusively alpha1-to-gamma4 teaching; primary training also trained gamma4 A terminals.",
+  "anatomy": {
+    "unchanged_source_files": {
+      "edges.npz": "cb7431fae8efe3eb00f676c1386fdf712990dc7fc4d75118e02ae8aa67f7afce",
+      "nodes.json": "516eede1f885931d787575f694d7f416d9b836fbfce4cb47e58a35c2764298ba"
+    },
+    "executed_internal_pairs": 4218,
+    "selected_cells": 276,
+    "incoming_ports_including_boundary_and_experimental": 50940,
+    "outgoing_terminals_including_boundary": 41028
+  },
+  "boundaries": {
+    "manifest_sha256": "f4f4de1c3a957eb328d95fa779b2345dbea8134dca5447f50eb054a5fc8b0bd8",
+    "native_parameters": {
+      "weight_per_count": 0.02,
+      "dendritic_delay_ticks": 2,
+      "lambda_ticks": 20.0,
+      "cooldown_ticks": 3,
+      "threshold": 1.0,
+      "cooldown_threshold": 1.2,
+      "signal_decay": 0.95,
+      "eta_post": 1e-08,
+      "eta_retro": 1e-06,
+      "apl_representation": "global_graded",
+      "apl_graded_gain": 0.01,
+      "apl_release_max": 1.0,
+      "apl_cable_rm_over_ra_um": 25000.0
+    },
+    "boundary_condition": "outside neurons absent; incoming boundary ports undriven, outgoing boundary terminals disconnected; all incident ports and native input-count-dependent bounds retained",
+    "experimental_input": "one additional unit-weight zero-delay input per selected neuron, not claimed as anatomy",
+    "student_interface": {
+      "cue_presence_targets": [
+        "SMP353",
+        "SMP108"
+      ],
+      "cue_presence_current": "1.4 / existing output sensitivity factor",
+      "motor_role": "SMP108",
+      "source_sha256": "d6d5191e1c5c6f274cc5c70b8ec1b43b0ddf96db023ab20b01ee21236cdbf3f7",
+      "reference": "https://elifesciences.org/articles/79042/figures",
+      "limit": "Equal presence input is an isolation boundary, not measured LH spikes. SMP108-to-hinge coupling is a physical assay, not reconstructed motor anatomy. All internal and incident boundary pairs remain unchanged."
+    },
+    "terminal_credit": {
+      "enabled": true,
+      "tau_kc": 64.0,
+      "tau_dopamine": 4.0,
+      "eta_credit": 0.1,
+      "native": "Unchanged weak positive receiving and returning adaptation. No selected reward_hebb rule. Emissions use pre-update release.",
+      "dopamine": "Actual PAM11-to-KC or PAM07/PAM08-to-KC arrivals, contact-weighted and normalized per local receptor group. No DAN-to-MBON modulation surrogate.",
+      "limit": "Phenomenological terminal-group eligibility and receptor kinetics. Pair graph does not locate contacts within KC axonal compartments; no efficacy or timing calibration to flies."
+    },
+    "primary_roles": [
+      "PAM11",
+      "PAM07",
+      "PAM08"
+    ],
+    "primary_current_per_dose": 40.0,
+    "feedback_efficacy": 256,
+    "output_sensitivity_factor": 32.0,
+    "student_output_threshold_factor": 2.0,
+    "well_angle": 0.04,
+    "motor_gain": 4.0,
+    "dose_J": 0.008
+  },
+  "scope_limits": [
+    "One deterministic seed and one balanced controlled cue code assignment; no claim of generalization across odors, animals or parameter choices.",
+    "One extra dry output spike and one food quantum, with one-tick earlier contact. This is a small model effect, not a large behavioral improvement.",
+    "Equal cue currents, nutrient-to-PAM current, output sensitivity, source efficacy 256, terminal-credit kinetics and the SMP108-to-hinge transducer are engineering choices, not measured fly physiology.",
+    "Second-order conditioning already exists in biology and other models; this establishes a composition in this PAULA preparation, not a new biological discovery."
+  ]
+}

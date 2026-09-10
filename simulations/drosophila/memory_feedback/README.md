@@ -11,20 +11,16 @@ flies or evidence of consciousness.
 The files live in the existing active-inference repository. They do not change
 the sensory preparation, its regulator experiments, or neuron-model defaults.
 
-Research has resumed from the bounded negative transfer result. The latest
-[terminal-credit preparation](#local-terminal-credit-and-continuing-memory)
-stores a release-dependent direct memory and preserves useful A-guided feeding
-through continuing unrewarded B-before-A exposure. A source-specific efficacy
-hypothesis now permits a small teacher-dependent change at B terminals, but
-acquired B action remains unestablished. Broader primary teaching resolves the
-student-output inhibition of A's teacher pathway. Balanced cue codes and explicit
-student sensory and motor interfaces now give imposed B-terminal depression a
-physical response range. Two pairings produce a small teacher-memory-dependent
-B-terminal change without a B movement benefit. Eight pairings increase
-depression but preserve identical B movement against feedback block. The next
-comparison tests broader recruitment through the same measured feedback pairs.
-The overall research objective remains active; completion of the earlier
-bounded experiment was not completion of that objective.
+The latest preparation demonstrates a small, retained A-to-B learning effect
+under explicit engineering boundaries. Acquired A memory increases B-terminal
+depression through measured neural feedback, and those stored B changes cause
+an extra dry output spike and one additional food quantum. A's original
+feeding benefit survives the second-order course. The
+[causal verdict](evidence/causal-transfer-verdict.json) and
+[full audited records](evidence/coverage-acquisition.json) separate this result
+from the failed compositions below. It is a result for one controlled cue
+assignment and parameter set, not a generalization to natural fly behavior or
+an exclusively alpha1-to-gamma4 mechanism.
 
 The earlier bounded transfer experiment completed with a specific negative result.
 The small preparation can express a retained A memory as feeding. In the
@@ -44,6 +40,73 @@ this attribution relies on the accepted record and implementation, not a fresh
 re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
+
+## Retained A-to-B teaching under declared boundaries
+
+![Coverage, expression bounds and actual acquisition](evidence/coverage-acquisition.png)
+
+Eight B-before-A pairings supply no nutrients and end with 1,000 blank
+retention ticks. Native receiving and returning learning rates stay positive;
+recorded receiving coefficients change during acquisition and subsequent
+probes. The final retained B response distinguishes the following controls.
+
+| Eight-pairing acquisition | Dry B SMP108 spikes |
+| --- | ---: |
+| Intact B-before-A | 10 |
+| Measured feedback blocked during acquisition | 9 |
+| Stored A alpha1 and gamma4 releases removed before acquisition | 9 |
+| Primary nutrients unpaired with A | 9 |
+| B and A separated by 1,000 ticks | 9 |
+| Only stored alpha1 A releases removed | 10 |
+
+Replacing only B-to-MBON04 release coefficients with the blocked branch's
+values changes the intact dry response from ten spikes to nine. Transferring
+the learned values into the blocked state changes nine to ten. Both sham
+branches exactly replay the original neural and body trajectories. With the
+fixed food well available, the same substitutions change contact from tick
+94 to tick 95 and intake from 0.840 to 0.832 J. The learned coefficients add
+0.008309 J to stored energy plus gut contents in a comparison from the same
+physical state. One tick is 0.004 seconds in the physical transducer; this
+mapping is not calibrated to fly time.
+
+The A-to-B causal chain survives a stricter substitution. B coefficients
+acquired after initial A-memory removal eliminate the extra dry response and
+food quantum when transferred into the intact retained state. The converse
+transfer restores them in the branch that acquired B without the initial A
+memory. B coefficients from the unpaired and temporally displaced courses
+also remove the extra dry response from the intact receiver. Replacing B
+memory leaves both the neural and physical response to held-out C exactly
+unchanged; C feeding remains 0.800 J. A feeding remains 1.008 J after the intact
+second-order course, compared with 0.704 J after first-order A-memory removal.
+
+This establishes retained, useful A memory and feedback-mediated teaching of
+a small useful B response in this preparation. The effect is one extra dry
+output spike and one 0.008 J food quantum. It is not a broad behavioral
+improvement or an estimate across animals, odors, seeds or parameter choices.
+The anatomy files remain byte-identical to the expanded measured cut, and a
+runtime audit verifies all 4,218 internal directed pairs among 276 cells,
+including source registration and the retained incident boundary ports.
+
+The compartment interpretation is limited. Removing alpha1 A-terminal release
+memory alone leaves B's extra response intact. Primary acquisition also
+trained gamma4 A terminals, so this positive result does not establish an
+exclusively alpha1-to-gamma4 transfer. Equal cue input, the broad primary PAM
+current, output sensitivity, feedback efficacy 256, terminal-credit kinetics
+and SMP108-to-hinge coupling remain declared engineering assumptions. The
+original failed compositions and their records remain available below.
+
+`verdict.py` checks the completed acquisition controls, exact-state memory
+substitutions, feeding and stored-energy differences, held-out C, continuing
+adaptation, checkpoint and trajectory hashes, and the anatomical mapping. It
+refuses to write a positive verdict if a required comparison is missing or
+fails. The runtime probes provide the causal evidence; the 48 focused tests
+check the supporting contracts.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.verdict \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
 
 ## Student interfaces and a causal A benefit
 
@@ -159,9 +222,9 @@ with paired and displaced primary nutrients. It changes only the existing 24
 SMP108-to-PAM07/PAM08 receiving coefficients. The graph, counts, signs, credit
 kinetics, native adaptation and sensory/physical interfaces stay fixed. This
 is an outcome-informed engineering hypothesis about a failed preparation,
-not a measured fly gain or a positive second-order result. The overall goal
-still requires retained B behavior causally dependent on stored A memory,
-measured feedback and the acquired B coefficients.
+not a measured fly gain. The efficacy hypothesis alone did not establish
+second-order learning; the causal acquisition and expression comparisons below
+were required.
 
 The broader-efficacy courses have now completed. Their [birth audit and direct
 acquisition evidence](evidence/coverage-acquisition.json) verify that reversing
@@ -171,8 +234,33 @@ A feeding is 1.008 J with paired acquisition and 0.704 J with displaced
 nutrients. Removing A's alpha1 and gamma4 releases lowers feeding to 0.704 J;
 transferring them restores 1.008 J. The A sham replays exactly.
 
-The initial two-pairing intact continuation still yields nine B SMP108 spikes
-and retains 1.008 J of A feeding. Its feedback-blocked comparison is pending.
+The two-pairing intact continuation yields nine B SMP108 spikes and retains
+1.008 J of A feeding. The corrected blocked comparison also yields nine B
+spikes. Its mean B release remains 1.00003362, compared with 0.97428694 intact.
+The stronger efficacy recruits 16 dopamine providers in the first A period
+and reaches 23 of 32 B terminals, matching the predicted provider count.
+Removing stored A terminal changes before acquisition lowers recruitment to
+six providers and leaves mean B release at 0.98264715. Thus A memory adds
+B-terminal depression beyond the feedback recruited by untrained cues.
+
+Identical-state expression controls resolve the tiny difference between intact
+and blocked body traces. Substituting blocked B releases into the intact state
+leaves its body trajectory exactly unchanged; transferring learned releases
+into the blocked state also leaves that state's body trajectory unchanged.
+Both shams exactly replay their respective original neural and body traces.
+There is no expressed B memory after two pairings. A fixed fourfold projection
+of the measured log-depression yields ten SMP108 spikes and a maximum angle
+of 0.12960 radians, versus nine spikes and 0.11699 without the projection.
+This imposed diagnostic motivated eight actual pairings with the same stronger
+feedback efficacy and matched intact and blocked branches. Their completed
+result is described above.
+
+`coverage_diagnostics.py` records the substitutions and projection under
+`memory-coverage-second-diagnostics-20260910`. Each probe preserves the receiver's
+physical state, changes only B-to-MBON04 releases and continues native
+adaptation. The A-memory-removal receipt verifies all other serialized neural
+and random-generator state exactly. These controls establish A-dependent
+student plasticity at two pairings, before the positive eight-pairing result.
 A launch omitted `--cut` in the directory named
 `memory-coverage-second-cut-20260910`; its summary correctly records
 `cut=False`, and it is excluded from control inference. The actual control

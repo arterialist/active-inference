@@ -48,7 +48,7 @@ def pulse_course(n):
 
 
 def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, chunk=500, stop_tick=None,
-        junction=None):
+        junction=None, release_block=None):
     if condition not in CONDITIONS or type(chunk) is not int or chunk < 1:
         raise ValueError("Invalid condition/chunk")
     if output.exists():
@@ -83,11 +83,20 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
     source_cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in orns]
     source_cols={c.id:i for i,c in enumerate(source_cells)}
     ln_cols={prep.root_to_id[r]:i for i,r in enumerate(lns)}
+    block_id=None
+    if release_block is not None:
+        if (len(release_block)!=2 or release_block[0] not in lns
+                or type(release_block[1]) is not int or release_block[1]<0
+                or condition=="depressing_ln_block"):
+            raise ValueError("Need one selected LN and nonnegative block onset, without an overlapping population block")
+        block_id=prep.root_to_id[release_block[0]]
     release_offsets=np.r_[0,np.cumsum([len(c.release_terminals) for c in source_cells])]
     command,epochs=pulse_course(len(orns))
     ticks=len(command) if stop_tick is None else stop_tick
     if type(ticks) is not int or not 1<=ticks<=len(command):
         raise ValueError("Invalid stop tick")
+    if release_block is not None and release_block[1]>=ticks:
+        raise ValueError("Block onset lies outside the recording")
     file_sources=[Path(__file__),graph_path/"manifest.json",intrinsic_path,tail_path,
         spatial/"analysis.json",Path(__file__).with_name("paula.py"),
         Path(__file__).with_name("pn_current_steps.py"),Path(__file__).with_name("spatial_paula.py"),
@@ -135,7 +144,7 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
         if any(not isinstance(e,RetrogradeSignalEvent) and not (isinstance(e,tuple) and len(e)==3) for e in events):
             raise TypeError("Unknown event type")
         forward=sum(isinstance(e,tuple) for e in events)
-        block=condition=="depressing_ln_block"
+        block=condition=="depressing_ln_block" or (cell.id==block_id and tick>=release_block[1])
         arrays["ln_events"][tick-start,col]=[forward,0 if block else forward,len(events)-forward]
         return [e for e in events if isinstance(e,RetrogradeSignalEvent)] if block else events
 
@@ -214,6 +223,9 @@ def run(graph_path, intrinsic_path, tail_path, spatial, output, condition, *, ch
             "fields":["S_before","S_after","chemical_current","electrical_current","O","F_avg","t_ref","r","b"],
             "pn_intrinsic_total_current":"retains chemical-only current; electrical current is separate"}
         result["limits"].append("The added passive electrical contact is hypothetical; no electrical anatomy, conductance, or LN intrinsic calibration was established.")
+    if release_block is not None:
+        result["protocol"]["single_ln_release_block"]={"root":release_block[0],"start_tick":release_block[1],
+            "scope":"forward chemical events only from the declared tick; native state and return events remain active"}
     dump_new(output/"analysis.json",result)
     return result
 
@@ -225,9 +237,12 @@ def main():
     p.add_argument("condition",choices=CONDITIONS)
     p.add_argument("--stop-tick",type=int)
     p.add_argument("--junction",nargs=3,metavar=("ROOT_A","ROOT_B","G"))
+    p.add_argument("--release-block",nargs=2,metavar=("ROOT","START_TICK"))
     a=p.parse_args()
     junction=None if a.junction is None else (a.junction[0],a.junction[1],float(a.junction[2]))
-    run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,a.condition,stop_tick=a.stop_tick,junction=junction)
+    release_block=None if a.release_block is None else (a.release_block[0],int(a.release_block[1]))
+    run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,a.condition,stop_tick=a.stop_tick,junction=junction,
+        release_block=release_block)
 
 
 if __name__=="__main__":main()

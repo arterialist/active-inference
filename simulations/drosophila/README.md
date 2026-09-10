@@ -1,10 +1,16 @@
 # Connectome-grounded fly circuits
 
-The active research objective is to reconstruct identified fruit-fly circuits
-with PAULA, reproduce specified experimental findings, then reunite circuits
-through their measured projections and test learning and adaptive coordination.
-Anatomical preservation, assumed dynamics and demonstrated function are separate
-claims. Earlier custom organisms and C. elegans remain intact.
+The active research objective is to reverse-engineer the functional organization
+of a biological brain and use that understanding to build a functional PAULA
+brain. Public fruit-fly wiring and experiments constrain this work. Establish
+selected circuits' causal functions under explicit inputs and boundaries, then
+compose them and test whether those functions coexist, adapt and guide a body.
+Anatomical reconstruction and cell calibration resolve functional bottlenecks;
+they are not endpoints. Preserve measured wiring in reference reconstructions
+and label engineered departures separately. The eventual aim is an embodied
+conscious agent with neural cognitive control and ongoing adaptation. Neither
+functional success nor anatomical similarity alone establishes consciousness.
+Earlier custom organisms and C. elegans remain intact.
 
 ## First preparation
 
@@ -36,6 +42,14 @@ The internal counts include 203,202 KC→KC, 179,488 ALPN→KC, 60,561 KC→APL,
 PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
+
+The [early-versus-late LN lesion](LN_RECRUITMENT_TIMING_2026-09-10.md) separates
+recruitment from maintenance. Blocking the same cell before stimulation prevents
+broad recruitment, while blocking it at tick 600 leaves 169 LNs firing during
+recovery. Matched receiving replays identify inputs that initiate and maintain
+activity, but only the closed-loop lesion tests the connected consequence.
+The next functional target is private/public input gain control, not another
+unconstrained effort to make the expanded graph settle.
 
 The [PN/LN paired transmission assay](PN_LN_ELECTRICAL_2026-09-10.md) separates
 chemical release from an explicitly hypothetical electrical contact. Forty-eight

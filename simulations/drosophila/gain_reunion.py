@@ -84,9 +84,24 @@ def filter_forward(events, blocked):
     return [e for e in events if not isinstance(e,tuple) or e[1] not in blocked]
 
 
+def initialize_feedback_gain(prep,graph,scale):
+    """An initial receptor-weight hypothesis, not an online rate controller."""
+    if not np.isfinite(scale) or not 0<scale<=1:
+        raise ValueError("Feedback gain must be finite and in (0, 1]")
+    bindings=pathway_bindings(prep,graph,"positive_LN_or_PN_to_LN")
+    before=[];after=[]
+    for _,_,_,target,port in bindings:
+        point=prep.network.network.neurons[int(target)].postsynaptic_points[int(port)]
+        if point.u_i.info<=0:raise ValueError("Selected feedback receptor is not positive")
+        before.append(point.u_i.info)
+        if scale!=1.:point.u_i.info*=scale
+        after.append(point.u_i.info)
+    return bindings,np.array(before),np.array(after)
+
+
 def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1.,
         direct=50.,lateral=80.,seed=11,lesion="intact",chunk=250,
-        pathway="none",block_start=600):
+        pathway="none",block_start=600,feedback_scale=1.):
     if output.exists():raise FileExistsError(output)
     if type(chunk) is not int or chunk<1:raise ValueError("Invalid chunk size")
     if shutil.disk_usage(output.parent).free < 512*1024**2:
@@ -99,6 +114,7 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
         if digest(Path(p))!=h:raise ValueError(f"Changed calibration source: {p}")
     has_apl=any(graph.nodes[r]["annotation"]["hemibrain_type"]=="APL" for r in graph.selected)
     prep,pn=prepare_inhibited(graph,intrinsic,tail,LN,gain,100.,spatial=spatial if has_apl else None)
+    feedback_bindings,feedback_before,feedback_initial=initialize_feedback_gain(prep,graph,feedback_scale)
     roots=list(prep.root_to_id)
     cells=[prep.network.network.neurons[prep.root_to_id[r]] for r in roots]
     orns=[r for r in roots if graph.nodes[r]["annotation"]["hemibrain_type"]=="ORN_DL5"]
@@ -131,6 +147,8 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
             pn_initial_weights=np.array([p.u_i.info for p in pn.postsynaptic_points.values()]))
     with (output/"intervention.npz").open("xb") as f:
         np.savez_compressed(f,bindings=path_bindings)
+    with (output/"feedback-initial.npz").open("xb") as f:
+        np.savez_compressed(f,bindings=feedback_bindings,reference_weights=feedback_before,initial_weights=feedback_initial)
     arrays={};start=0
     native_hillock,native_tick=Neuron._hillock_current,Neuron.tick
     target_hillock=type(pn)._hillock_current
@@ -202,9 +220,17 @@ def run(graph_path,intrinsic_path,tail_path,spatial,output,*,scope="full",gain=1
             print(f"{scope} gain={gain:g} direct={direct:g}: {stop}/{ticks}, {time.perf_counter()-started:.1f}s",flush=True)
     if any(c.params.eta_post<=0 or c.params.eta_retro<=0 or c._ablation for c in cells):raise ValueError("Adaptation disabled")
     if any(digest(Path(p))!=h for p,h in hashes.items()):raise ValueError("Source changed during recording")
+    feedback_final=np.array([prep.network.network.neurons[int(target)].postsynaptic_points[int(port)].u_i.info
+                             for _,_,_,target,port in feedback_bindings])
+    with (output/"feedback-final.npz").open("xb") as f:np.savez_compressed(f,weights=feedback_final)
     result={"schema":1,"scope":scope,"ticks":ticks,"chunks":chunks,"source_hashes":hashes,
         "structure_sha256":digest(output/"structure.npz"),"anatomy":graph.summary(),"assumptions":prep.assumptions,
         "gain":gain,"direct":direct,"lateral":lateral,"seed":seed,"lesion":lesion,"epochs":epochs,"apl_present":has_apl,
+        "feedback_initialization":{"scale":feedback_scale,"pairs":len(feedback_bindings),
+            "initial_sha256":digest(output/"feedback-initial.npz"),"final_sha256":digest(output/"feedback-final.npz"),
+            "changed_by_learning":int(np.count_nonzero(feedback_final!=feedback_initial)),
+            "action":"scale initial internal positive-model LN/PN-to-LN receiving info weights once before tick 0; boundary weights, all events, connections and native adaptation retained",
+            "status":"uncalibrated pathway-strength sensitivity hypothesis, not measured physiology"},
         "pathway_intervention":{"pathway":pathway,"start":block_start,
             "pairs":len(path_bindings),"sources":len(path_terminals),
             "bindings_sha256":digest(output/"intervention.npz"),
@@ -238,9 +264,11 @@ def main():
     p.add_argument("--lesion",choices=("intact","LN_to_ORN_block","LN_to_PN_block","LN_release_block"),default="intact")
     p.add_argument("--pathway",choices=PATHWAYS,default="none")
     p.add_argument("--block-start",type=int,default=600)
+    p.add_argument("--feedback-scale",type=float,default=1.)
     a=p.parse_args()
     run(a.graph,a.intrinsic,a.tail,a.spatial,a.output,scope=a.scope,gain=a.gain,direct=a.direct,
-        lateral=a.lateral,seed=a.seed,lesion=a.lesion,pathway=a.pathway,block_start=a.block_start)
+        lateral=a.lateral,seed=a.seed,lesion=a.lesion,pathway=a.pathway,block_start=a.block_start,
+        feedback_scale=a.feedback_scale)
 
 
 if __name__=="__main__":main()

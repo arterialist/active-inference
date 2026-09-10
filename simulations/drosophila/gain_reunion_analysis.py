@@ -83,6 +83,8 @@ def compare_pathway(reference,directory,graph,meta,data,structure):
     """An intact shared past plus a closed-loop, time-specific intervention."""
     from types import SimpleNamespace
     old_meta,old,old_structure=prefix(reference,2200,current_source=False)
+    if old_meta.get("feedback_initialization",{}).get("scale",1.)!=meta.get("feedback_initialization",{}).get("scale",1.):
+        raise ValueError("Concurrent feedback-strength change")
     if old_meta.get("pathway_intervention",{}).get("pathway","none")!="none":
         raise ValueError("Reference is already intervened")
     for key in ("scope","gain","direct","lateral","seed","lesion","epochs"):
@@ -129,6 +131,28 @@ def compare_pathway(reference,directory,graph,meta,data,structure):
                 "mean_gate_fraction":float(record["inhibition"][lo:hi,:,1].mean())})
         result["epochs"][name]=rows
     return result
+
+
+def audit_feedback_gain(directory,graph,meta,structure):
+    from types import SimpleNamespace
+    spec=meta["feedback_initialization"]
+    for filename,key in (("feedback-initial.npz","initial_sha256"),("feedback-final.npz","final_sha256")):
+        if digest(directory/filename)!=spec[key]:raise ValueError("Changed feedback weight record")
+    with np.load(directory/"feedback-initial.npz") as saved:
+        bindings=saved["bindings"];before=saved["reference_weights"];initial=saved["initial_weights"]
+    with np.load(directory/"feedback-final.npz") as saved:final=saved["weights"]
+    expected=pathway_bindings(SimpleNamespace(edge_bindings=structure["edge_bindings"]),graph,"positive_LN_or_PN_to_LN")
+    np.testing.assert_array_equal(bindings,expected)
+    rows={int(e[8]):e for e in graph.edges}
+    np.testing.assert_array_equal(before,[rows[int(e[0])][6]*meta["assumptions"]["parameters"]["weight_per_count"] for e in bindings])
+    if not 0<spec["scale"]<=1 or len(bindings)!=spec["pairs"]:raise ValueError("Invalid feedback gain declaration")
+    np.testing.assert_array_equal(initial,before*spec["scale"])
+    if final.shape!=initial.shape or not np.isfinite(final).all():raise ValueError("Invalid final feedback weights")
+    changed=int(np.count_nonzero(final!=initial))
+    if changed!=spec["changed_by_learning"]:raise ValueError("Incorrect learning count")
+    return {"scale":spec["scale"],"pairs":len(bindings),"nonzero_initial_weights":int(np.count_nonzero(initial)),
+        "changed_by_learning":changed,"maximum_absolute_learning_change":float(np.max(np.abs(final-initial),initial=0.)),
+        "limit":"Initial and final selected receiving weights only; this does not replay every intervening learning update or verify untouched weights."}
 
 
 def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,reference=None):
@@ -203,6 +227,8 @@ def analyze(graph_path,intrinsic_path,tail_path,isolated,directory,output,*,refe
             "Gate/routing and PN replay checks do not verify all unrecorded intracellular states or fit physiology."]}
     if reference is not None:
         result["closed_loop_pathway_test"]=compare_pathway(reference,directory,graph,meta,data,structure)
+    if "feedback_initialization" in meta:
+        result["feedback_gain_audit"]=audit_feedback_gain(directory,graph,meta,structure)
     dump_new(output/"analysis.json",result)
     print(json.dumps(result,indent=2))
     return result

@@ -43,6 +43,16 @@ PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
 
+The [feedback-strength follow-up](FEEDBACK_STRENGTH_2026-09-10.md) retains all
+connections and native learning. Halving the assumed initial positive LN/PN-to-LN
+receptor weights preserves sensory ordering and recovery in the 3,005-cell
+preparation under controlled inhibitory-cell stimulation. Low participation of
+other populations and the imposed regulator command remain explicit limits;
+this is not autonomous gain control or a functional mushroom-body memory.
+Removing that command restores persistent activity despite stronger subsequent
+inhibitory-cell firing. The next question is timely neural recruitment versus
+continued external assistance, not whether the regulator can fire at all.
+
 The [fixed-gain reunion test](GAIN_REUNION_2026-09-10.md) shows that the local
 sensory gate still executes correctly in 3,005 connected cells, but recurrent
 LN input sustains PN firing after experimental stimulation stops. The same

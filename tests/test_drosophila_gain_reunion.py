@@ -2,11 +2,11 @@ import numpy as np
 import pytest
 
 from simulations.drosophila.connectome import Subgraph
-from simulations.drosophila.gain_reunion import reunion_cut,target_bindings,pathway_bindings,filter_forward
+from simulations.drosophila.gain_reunion import reunion_cut,target_bindings,pathway_bindings,filter_forward,initialize_feedback_gain
 from neuron.neuron import RetrogradeSignalEvent
 from simulations.drosophila.ln_gain import PN, LN
 from simulations.drosophila.paula import build_paula
-from simulations.drosophila.gain_reunion_analysis import first_difference,port_groups,audit_pathway_events
+from simulations.drosophila.gain_reunion_analysis import first_difference,port_groups,audit_pathway_events,audit_feedback_gain
 
 
 def test_scope_preserves_incident_ports_and_makes_other_ln_exclusion_explicit():
@@ -101,3 +101,42 @@ def test_pathway_audit_rejects_inert_early_and_leaky_interventions():
         with pytest.raises(AssertionError):audit_pathway_events(bad,2)
     with pytest.raises(ValueError):audit_pathway_events(np.zeros((4,3)),2)
     with pytest.raises(ValueError):audit_pathway_events(events,-1)
+
+
+def test_feedback_initialization_changes_only_selected_receiving_weights():
+    from types import SimpleNamespace as NS
+    nodes={PN:{"annotation":{"cell_class":"ALPN","hemibrain_type":"PN"}},
+           LN:{"annotation":{"cell_class":"ALLN","hemibrain_type":"LN"}},
+           "101":{"annotation":{"cell_class":"olfactory","hemibrain_type":"ORN_DL5"}}}
+    edges=np.array([[int(PN),int(LN),1,2,10,1,10,0,0],[101,int(LN),3,2,20,1,20,0,1]])
+    points={0:NS(u_i=NS(info=2.)),1:NS(u_i=NS(info=3.))}
+    prep=NS(edge_bindings=np.array([[0,1,0,2,0],[1,3,0,2,1]]),
+            network=NS(network=NS(neurons={2:NS(postsynaptic_points=points)})))
+    graph=Subgraph((PN,LN,"101"),nodes,edges,{})
+    _,before,after=initialize_feedback_gain(prep,graph,1.)
+    np.testing.assert_array_equal(before,after)
+    _,before,after=initialize_feedback_gain(prep,graph,.25)
+    np.testing.assert_array_equal(after,before*.25)
+    assert points[0].u_i.info==.5 and points[1].u_i.info==3.
+    for bad in (0,-1,2,float("nan")):
+        with pytest.raises(ValueError):initialize_feedback_gain(prep,graph,bad)
+
+
+def test_feedback_audit_checks_actual_weights_against_measured_pairs(tmp_path):
+    from simulations.drosophila.prisco import digest
+    nodes={PN:{"annotation":{"cell_class":"ALPN","hemibrain_type":"PN"}},
+           LN:{"annotation":{"cell_class":"ALLN","hemibrain_type":"LN"}}}
+    graph=Subgraph((PN,LN),nodes,np.array([[int(PN),int(LN),1,2,10,1,10,0,0]]),{})
+    bindings=np.array([[0,1,0,2,0]])
+    np.savez(tmp_path/"feedback-initial.npz",bindings=bindings,reference_weights=[.75],initial_weights=[.375])
+    np.savez(tmp_path/"feedback-final.npz",weights=[.37500001])
+    spec={"scale":.5,"pairs":1,"changed_by_learning":1,
+          "initial_sha256":digest(tmp_path/"feedback-initial.npz"),
+          "final_sha256":digest(tmp_path/"feedback-final.npz")}
+    meta={"feedback_initialization":spec,"assumptions":{"parameters":{"weight_per_count":.075}}}
+    result=audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings})
+    assert result["nonzero_initial_weights"]==result["changed_by_learning"]==1
+    spec["scale"]=.25
+    with pytest.raises(AssertionError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings})
+    spec["scale"]=.5;spec["changed_by_learning"]=0
+    with pytest.raises(ValueError):audit_feedback_gain(tmp_path,graph,meta,{"edge_bindings":bindings})

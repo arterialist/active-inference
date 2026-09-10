@@ -163,6 +163,25 @@ not a measured fly gain or a positive second-order result. The overall goal
 still requires retained B behavior causally dependent on stored A memory,
 measured feedback and the acquired B coefficients.
 
+The broader-efficacy courses have now completed. Their [birth audit and direct
+acquisition evidence](evidence/coverage-acquisition.json) verify that reversing
+exactly the 24 declared receiving changes restores the reference neural and
+random-generator state byte for byte; the initial body also matches. Retained
+A feeding is 1.008 J with paired acquisition and 0.704 J with displaced
+nutrients. Removing A's alpha1 and gamma4 releases lowers feeding to 0.704 J;
+transferring them restores 1.008 J. The A sham replays exactly.
+
+The initial two-pairing intact continuation still yields nine B SMP108 spikes
+and retains 1.008 J of A feeding. Its feedback-blocked comparison is pending.
+A launch omitted `--cut` in the directory named
+`memory-coverage-second-cut-20260910`; its summary correctly records
+`cut=False`, and it is excluded from control inference. The actual control
+uses `memory-coverage-second-blocked-20260910` with `--cut`. The analysis now
+checks intervention metadata and parent checkpoint hashes instead of trusting
+directory labels. Shared-volume reserve initially prevented the corrected
+launch; compressing 20 further completed arrays recovered another 502,431,744
+allocated bytes while preserving their logical hashes.
+
 ## Local terminal credit and continuing memory
 
 ![Terminal memory and continued action](evidence/terminal-credit.png)

@@ -29,6 +29,7 @@ def run(base, output):
     release = {}
     for name, p in paths.items():
         r = read(p/"summary.json")
+        assert r["cut"] == (name == "cut") and not r["displaced"]
         assert r["pairings"] == 8 and r["phases"][-1]["end"] == 11880
         assert r["nutrient_j"] == 0 and r["branch_rng_preserved"]
         assert r["minimum_eta_post"] > 0 and r["minimum_eta_retro"] > 0

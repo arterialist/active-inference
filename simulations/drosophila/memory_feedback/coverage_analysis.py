@@ -4,6 +4,8 @@ import io
 import json
 from pathlib import Path
 
+import numpy as np
+
 from ..connectome import sha256
 from ...active_inference.core.runtime_checkpoint import load_checkpoint, _serializer
 from neuron.neuron import setup_neuron_logger
@@ -41,7 +43,7 @@ def audit_birth(reference, candidate):
 def run(base,output):
     setup_neuron_logger("CRITICAL")
     base,output=Path(base),Path(output)
-    result=dict(source_sha256=sha256(Path(__file__)),birth={},courses={})
+    result=dict(source_sha256=sha256(Path(__file__)),birth={},courses={},expression={},continuation={})
     for name in ("paired","unpaired"):
         p=base/f"memory-coverage-{name}-20260910"
         result["birth"][name]=audit_birth(base/f"memory-interface-{name}-20260910",p)
@@ -51,7 +53,38 @@ def run(base,output):
         if completed:
             result["courses"][name].update(retained_A=next(ph for ph in phases if ph["name"]=="retained_A"),
                 artifacts={f:sha256(p/f) for f in ("manifest.json","summary.json","retention.paula","retention-body.npz","soma.npy","release.npy","weights.npy","body.npy")})
-    result["limit"]="Birth-state specificity and direct acquisition only. Second-order behavior and teacher-memory dependence require subsequent nutrient-free continuations and causal expression controls. Incomplete courses carry no outcome claim."
+    for name in ("sham","erased","transferred"):
+        p=base/f"memory-coverage-expression-A-{name}-20260910"
+        if not (p/"summary.json").exists(): continue
+        r=read(p/"summary.json");assert sha256(p/"trace.npz")==r["trace_sha256"]
+        with np.load(base/r["state"]/"retention-body.npz") as z: initial=float(z["energy"][:2].sum())
+        with np.load(p/"trace.npz") as z: r["stored_energy_gain_J"]=float(z["body"][-1,7:9].sum()-initial)
+        r["record"]=p.name;result["expression"][name]=r
+    parent=base/"memory-coverage-paired-20260910";m=read(parent/"manifest.json")
+    with np.load(parent/"identities.npz") as z:
+        selected=z["selected"];mapping=dict(zip(z["roots"].tolist(),z["cells"].tolist()))
+    mask=np.isin(selected[:,1],[mapping[r] for r in m["codes"]["B"]])&np.isin(selected[:,3],[mapping[r] for r in m["roles"]["MBON04"]])
+    for name in ("intact","cut","unpaired","displaced"):
+        # The initial directory labelled 'cut' was launched without --cut.
+        # Its metadata correctly says cut=False; preserve it as a replay only.
+        label="blocked" if name=="cut" else name
+        p=base/f"memory-coverage-second-{label}-20260910"
+        if not (p/"summary.json").exists(): continue
+        r=read(p/"summary.json")
+        if "artifacts" not in r: continue
+        assert r["cut"] == (name=="cut") and r["displaced"] == (name=="displaced")
+        expected_parent=base/f"memory-coverage-{'unpaired' if name=='unpaired' else 'paired'}-20260910"
+        assert r["input_checkpoint_sha256"]==sha256(expected_parent/"retention.paula")
+        assert r["nutrient_j"]==0 and r["phases"][-1]["end"]==3720 and r["branch_rng_preserved"]
+        for f,digest in r["artifacts"].items(): assert sha256(p/f)==digest
+        q=np.load(p/"release.npy",mmap_mode="r")
+        r["B_release"]=dict(before=float(q[0,mask].mean()),retained=float(q[-1,mask].mean()))
+        r["record"]=p.name;result["continuation"][name]=r
+    if all(n in result["continuation"] for n in ("intact","cut")):
+        with np.load(base/"memory-coverage-second-intact-20260910/probe-B.npz") as a,np.load(base/"memory-coverage-second-blocked-20260910/probe-B.npz") as b:
+            result["B_body_exact_against_feedback_block"]=bool(np.array_equal(a["body"],b["body"]))
+    result["launch_correction"]="memory-coverage-second-cut-20260910 was accidentally launched without --cut and is excluded from control inference. Its summary preserves cut=False. The actual blocked comparison is memory-coverage-second-blocked-20260910."
+    result["limit"]="Only completed records are audited. Any B action difference against feedback block still requires teacher-memory and within-state B-terminal controls before a second-order learning claim. Incomplete courses carry no outcome claim."
     output.mkdir(parents=True,exist_ok=True)
     (output/"coverage-acquisition.json").write_text(json.dumps(result,indent=2)+"\n")
     return result

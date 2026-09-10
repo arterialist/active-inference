@@ -8,7 +8,7 @@ from .pn_current_steps import prepare
 from neuron.extensions.experimental.presynaptic_inhibition import PresynapticInhibitionNeuron
 
 
-def prepare_inhibited(graph, intrinsic, tail, inhibitory_root, gain, decay_ticks):
+def prepare_inhibited(graph, intrinsic, tail, inhibitory_root, gain, decay_ticks, *, spatial=None):
     ordinary = paula.Neuron
     orn_roots = [r for r in graph.selected if graph.nodes[r]["annotation"]["hemibrain_type"] == "ORN_DL5"]
     orn_ids = {graph.nodes[r]["global_index"] for r in orn_roots}
@@ -19,7 +19,7 @@ def prepare_inhibited(graph, intrinsic, tail, inhibitory_root, gain, decay_ticks
     # Scope the constructor choice to assembly. Running neural dynamics have no
     # experiment-specific dispatch, root comparisons or global feedback rule.
     with patch.object(paula, "Neuron", factory):
-        prep, pn = prepare(graph, intrinsic, tail)
+        prep, pn = prepare(graph, intrinsic, tail, spatial=spatial)
     bindings = []
     for root in orn_roots:
         cell = prep.network.network.neurons[prep.root_to_id[root]]

@@ -43,6 +43,18 @@ PAULA contacts. The left APL identity is `720575940624547622`.
 
 ## Evidence and limits
 
+The [fixed-gain reunion test](GAIN_REUNION_2026-09-10.md) shows that the local
+sensory gate still executes correctly in 3,005 connected cells, but recurrent
+LN input sustains PN firing after experimental stimulation stops. The same
+persistence occurs in the 424-cell antennal-only cut, without KCs or APL.
+Regulation of one input route is therefore insufficient to regulate the
+consumer's total drive. This locates a composition failure inside the antennal
+network; it is not evidence that the mushroom body supplies useful memory.
+Late LN-to-LN transmission blockade roughly halves LN recovery firing but leaves
+PN persistence. Blocking those LN inputs only onto the target PN stops its
+recovery firing while also removing its continuing sensory response. Neither
+reduced population counts nor a quiet output certifies functional restoration.
+
 The [conditional sensory-gain assay](LN_GAIN_CONTROL_2026-09-10.md) now tests
 42 ORNs, their PN and an identified inhibitory LN under independent sensory
 and lateral-cell commands. Local terminal regulation produces a PN gain shift
@@ -50,8 +62,9 @@ that requires LN→ORN transmission and preserves ongoing native adaptation.
 The strong setting separates high inputs but suppresses the weakest input;
 the weak setting retains weak responses but still saturates. This is an
 isolated functional mechanism with declared parameters, not autonomous public-
-odor normalization or reunited-brain acceptance. Its next tests are appropriate
-upstream drive and survival of the function with PN/KC/APL partners active.
+odor normalization or reunited-brain acceptance. Appropriate public sensory
+drive remains missing; the reunion test above now exposes the recurrent
+pathways that bypass its sensory regulation.
 
 The [early-versus-late LN lesion](LN_RECRUITMENT_TIMING_2026-09-10.md) separates
 recruitment from maintenance. Blocking the same cell before stimulation prevents

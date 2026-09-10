@@ -12,9 +12,11 @@ The files live in the existing active-inference repository. They do not change
 the sensory preparation, its regulator experiments, or neuron-model defaults.
 
 Research has resumed from the bounded negative transfer result. The latest
-[student-viability comparison](#student-viability-and-the-next-mechanism-decision)
-preserves student inputs and permits sparse student output using existing
-parameters. It does not yet produce a selective memory-mediated teacher.
+[terminal-credit preparation](#local-terminal-credit-and-continuing-memory)
+stores a release-dependent direct memory and preserves useful A-guided feeding
+through continuing unrewarded B-before-A exposure. A source-specific efficacy
+hypothesis now permits a small teacher-dependent change at B terminals, but
+student output remains silent and acquired B action remains unestablished.
 The overall research objective remains active; completion of the earlier
 bounded experiment was not completion of that objective.
 
@@ -36,6 +38,229 @@ this attribution relies on the accepted record and implementation, not a fresh
 re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
+
+## Local terminal credit and continuing memory
+
+![Terminal memory and continued action](evidence/terminal-credit.png)
+
+This line addresses the diagnosed learning-site and timing limitations with a
+separate opt-in composition in `terminal_credit.py`. It does not change PAULA
+defaults. The original selected receiving rule cannot update an inactive B
+input when dopamine arrives later. Its rapid dopamine-independent update also
+destroyed weak student inputs. Slower adaptation fixed that destruction but
+did not supply delayed credit. The existing pre/post spike-trace extension
+requires a postsynaptic spike, while the existing graded predictor requires
+different receptor and release architecture. These limits motivate testing
+local credit at KC output terminals.
+
+[Hige et al., 2015](https://www.janelia.org/publication/heterosynaptic-plasticity-underlies-aversive-olfactory-learning-drosophila)
+provides biological motivation for dopamine-paired KC-output depression. Its
+gamma1pedc measurements also support induction without MBON spiking. This does
+not establish the receptor kinetics, compartment localization or efficacy
+parameters used here in alpha1 and gamma4.
+
+The new class reuses the existing `eligibility_step` bounded-flow calculation,
+with dopamine and KC history supplying its depressive factor. A local KC trace
+tracks actual KC spikes, and a separate dopamine trace tracks actual arriving
+signals at measured, compartment-matched DAN-to-KC inputs. Receptor weights
+are proportional to birth contact counts and normalized to sum one within
+each local group. The previous completed traces modify only the corresponding
+KC-to-MBON terminal release coefficients. With release coefficient q, KC trace
+x and dopamine trace d, the added update is q multiplied by exp(-0.1 d x).
+The KC and dopamine traces have decay times of 64 and four model ticks. These
+are declared engineering parameters, not inferred fly receptor measurements.
+
+This is a new phenomenological composition of existing mathematical pieces.
+It retains native receiving updates and native returning adaptation; emitted
+events use the pre-update release coefficient. Other terminals do not receive
+the new update. There is no stimulus identity, outcome value, training-phase
+switch or behavioral target in the neuron rule. The traces are checkpointed
+dynamical state. Focused tests verify delayed credit after the KC input ends,
+little reverse-order effect in the tested timing, no added learning without
+dopamine, unchanged unrelated terminals, native update/release order, and
+continued state across a copy.
+
+`terminal_anatomy.py` adds the measured dopamine providers to the selected KCs,
+including the routes excluded by the previous direct-MBON selection. The cut
+now has 276 neurons and 4,218 internal directed pairs representing 16,873
+contacts. All 41 added cells are identified DAN providers; the 192 KCs and
+controlled codes are unchanged. Another 9,383 cells retain boundary identities
+and incident connections. There are 81 configured alpha1 KC receptor groups
+and 93 gamma4 groups, affecting 255 output terminals. Fifteen alpha1 and three
+gamma4 KCs have outputs without matching receptor paths in this cut. Those
+outputs receive no invented dopamine input. Cell-pair anatomy does not locate
+the individual contacts within axonal compartments, so terminal-group coupling
+remains an explicit assumption.
+
+`terminal_course.py` runs paired, unpaired and mechanism-disabled courses on
+that same graph. All use native weak receiving and returning rates, 1e-8 and
+1e-6, rather than the earlier selected receiving rule and its 0.01 rate. The
+DAN-to-MBON modulation surrogate and global student-DAN sensitization are not
+used. Primary nutrients still drive the identified PAM11 cells through the
+experimental sensory boundary; dopamine reaches KC learning groups through
+the actual neural connections. The earlier output sensitivity, muscle filter,
+hinge, food-contact transducer and complete direct-training protocol remain.
+
+After retention, paired A ingests 0.624 J, while the unpaired and disabled
+controls ingest none. Its mean alpha1 A-terminal release is 0.384857, compared
+with approximately one in the controls. `terminal_expression.py` substitutes
+only selected KC terminal release coefficients, preserving receiving weights,
+all other neural state, queues, body and organs. Replacing the paired release
+coefficients with unpaired coefficients eliminates feeding. Transferring paired
+coefficients into the unpaired state restores 0.624 J. The paired sham exactly
+replays the original somatic and physical trajectories. C from that retained
+state does not feed. Both receiving coefficients and release coefficients on
+96 active connections continue changing during each A probe.
+
+An independent dry A probe recruits eight SMP353 and eight SMP108 spikes
+without food or PAM11 spikes. The existing B-before-A course then tests whether
+that memory survives further exposure and teaches another cue. The paired,
+projection-cut and first-order-unpaired branches run 3,720 additional ticks
+without any nutrients, keeping all adaptation active. A-guided feeding remains
+0.624 J afterward in both paired branches and remains absent in the unpaired
+control. Mean A-terminal release changes only from 0.384857 to 0.384880 during
+the continuing course. This preparation therefore removes the earlier loss of
+useful A expression during that challenge. The comparison changes learning
+locus, native receiving rule/rate and provider inclusion; it does not isolate
+trace duration as the sole cause of that improvement.
+
+B is still not acquired at the reference projection efficacy. Its dry response
+has two motor spikes before and after the course, and its excursion stays below
+the food-contact angle. Paired acquisition produces 960 forward projection
+events, versus 576 after unpaired first-order nutrients. Nevertheless, student
+dopamine cells and MBON04 remain silent. Removing all 960 events produces
+exactly the same selected receiving coefficients, terminal coefficients and
+body trajectories as the intact course. The small B-terminal change from
+1.0 to 0.999915 is native adaptation, not evidence of dopamine-mediated transfer.
+
+The [numerical evidence](evidence/terminal-credit.json) includes receptor/source
+bindings, course and checkpoint hashes, terminal substitutions, continuing
+traces and projection comparisons. The next unresolved step is now recruitment
+by a retained teacher signal, rather than recovering A after extinction. Dry A
+intact-minus-cut somatic records permit a diagnostic first-crossing estimate
+with all other inputs held fixed. The smallest predicted projection gain is
+60.1357, at PAM08 root `720575940605280201`. This is a linearization of the
+recorded native dynamics before any dopamine cell spikes, not a validated
+coupled-network response or a biological efficacy measurement. It defines one
+prospective source-specific efficacy comparison at gain 64 in
+`feedback_efficacy.py`; no synapse count or sign is altered by that hypothesis.
+
+The 41 focused tests, including the subsequent efficacy and continuation
+controls, pass. Its exact
+checkpoint replay and executed causal branches supply the behavioral evidence.
+First-order association itself remains an established project capability; the
+new result here is the tested learning-site composition and retained action
+through the previously destructive continuing exposure. Higher-order learning
+and the overall research goal remain open.
+
+```sh
+uv run --no-sync python -m simulations.drosophila.memory_feedback.terminal_anatomy \
+  .live/research/flywire783 \
+  .live/research/flywire783/memory-alpha1-gamma4-cut-20260910 \
+  .live/research/flywire783/memory-terminal-cut-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.terminal_course \
+  .live/research/flywire783/memory-terminal-cut-20260910 \
+  .live/research/flywire783/memory-terminal-paired-20260910
+# Repeat with --unpaired or --disabled and the matching distinct output.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.second_order \
+  .live/research/flywire783/memory-terminal-paired-20260910 \
+  .live/research/flywire783/memory-terminal-second-intact-20260910
+# Repeat with --cut; use the unpaired receiver for its continuing control.
+uv run --no-sync python -m simulations.drosophila.memory_feedback.terminal_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
+
+## Feedback recruitment and teacher-dependent local credit
+
+![Feedback efficacy and remaining expression failure](evidence/feedback-efficacy.png)
+
+`feedback_efficacy.py` tests the prospective gain of 64 on the 24 measured
+SMP108-to-PAM07/PAM08 receiving inputs from birth. All other efficacies and
+thresholds retain their reference settings. This is an engineering hypothesis
+about efficacy, not a correction to contact counts. The paired direct course
+still ingests 0.624 J during retained A, versus zero after unpaired nutrients.
+One student dopamine spike now occurs during the food-available A probe.
+Continuing acquisition starts from the earlier pre-food retention checkpoint,
+so that diagnostic food and dopamine cannot teach B beforehand.
+
+The nutrient-free B-before-A course recruits 22 student dopamine spikes, all
+PAM08. Eighteen occur during B and the following short gaps, while four occur
+during learned A. The first-order unpaired control still recruits the same 18
+B/gap spikes. Thus most student recruitment is already possible without an A
+memory. Blocking the measured projection during acquisition removes all 960
+forward events and all 22 dopamine spikes. Adaptation continues in every case.
+
+The mean retained gamma4 B-terminal release coefficient is 0.993298 with
+learned A, 0.993587 after unpaired first-order nutrients, and 0.999915 with the
+projection blocked. `teacher_substitution.py` supplies a tighter memory control.
+It replaces only alpha1 A-terminal release with matched unpaired values before
+continuing acquisition. The rest of the paired neural runtime, including its
+queues, traces, receiving weights and RNG, and the physical state stay intact.
+Reversing those declared terminal edits in loaded diagnostic objects restores
+byte-identical serialized runtime. That control removes the four A-period
+dopamine spikes and yields exactly the unpaired mean B release, 0.993587.
+The A-memory-dependent extra depression is therefore 0.000289 on the mean
+release coefficient in this preparation.
+
+A temporal control places 1,000 blank ticks between B and A instead of 20,
+while preserving total exposure and elapsed time. It retains the four A-period
+dopamine spikes but leaves B release at 0.993633. This supports dependence on
+temporal proximity, rather than interpreting any dopamine spike as successful
+credit. The traces establish a small retained terminal effect caused by A
+memory through neural feedback. Most B-terminal depression remains present
+without that memory.
+
+There is still no acquired B action. All five controls produce two motor spikes
+and 17 SMP108 spikes during independent retained B probes. Both MBON04 cells
+remain silent. Intact and projection-cut B body trajectories are exactly equal,
+although their student membrane potentials differ by up to 0.004431. A-guided
+feeding remains 0.624 J after intact, cut and temporally displaced acquisition;
+removing A memory eliminates its feeding as expected. The stored local effect
+must not be reported as completed second-order behavioral learning.
+
+The retained graph contains inhibitory MBON04-to-SMP108 pairs of 41 and 19
+contacts. Neither MBON04 directly contacts the hinge-driving SMP353 cell in
+this cut. The current readout problem therefore includes both silent student
+outputs and their indirect route to the physical action. The next bounded
+test in `student_output.py` halves both MBON04 thresholds from birth, retaining
+their ratio and all measured connections. An independent novel-B trace reaches
+0.522561 against a native threshold of one, giving a first-crossing ratio of
+1.913650. Two is the next power of two. This tests an explicitly assumed
+operating point and its recurrent consequences, not known fly excitability.
+
+[The numerical audit](evidence/feedback-efficacy.json) hashes course and
+continuation artifacts, verifies the terminal-only teacher intervention,
+compares timing and projection controls, and reports the silent output stage.
+The old `second_order.py` runner saved ambient RNG at its final checkpoint
+instead of the active branch RNG. Its fixed one-tick travel delays make that
+distinction behaviorally inert here, but those final checkpoints do not retain
+the advancing random stream. The new `continuing_course.py` wrapper fixes that
+for subsequent courses without changing source files pinned by older records.
+The teacher control uses the corrected wrapper. Its earlier run without
+`-rng` in the directory name is superseded and excluded from the audit.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.feedback_efficacy \
+  .live/research/flywire783/memory-terminal-cut-20260910 \
+  .live/research/flywire783/memory-efficacy-paired-20260910
+# Repeat with --unpaired and a distinct output.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.continuing_course \
+  .live/research/flywire783/memory-efficacy-paired-20260910 \
+  .live/research/flywire783/memory-efficacy-second-intact-new
+# Repeat with --cut, --displaced, and the unpaired receiver in distinct outputs.
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.teacher_substitution \
+  .live/research/flywire783/memory-efficacy-paired-20260910 \
+  .live/research/flywire783/memory-efficacy-unpaired-20260910 \
+  .live/research/flywire783/memory-efficacy-teacher-removed-rng-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.efficacy_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+```
 
 ## Student viability and the next mechanism decision
 

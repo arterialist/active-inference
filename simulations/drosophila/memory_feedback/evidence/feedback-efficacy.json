@@ -1,0 +1,3173 @@
+{
+  "source_sha256": "ee888bf1d961c9e41c7d4fc9009a2d7609ba0b5b39fa97e1763ac41c94489f25",
+  "courses": {
+    "paired": {
+      "record": "memory-efficacy-paired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 16,
+          "PAM11": 338,
+          "SMP353": 5,
+          "SMP108": 5,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 1
+        },
+        "max_angle": 0.07933592766590608,
+        "pump_j": 0.0,
+        "well_j": 0.6240000000000001,
+        "energy_j": 84.26353380436615,
+        "seconds": 241.106583374989
+      },
+      "artifacts": {
+        "manifest.json": "fe08d0fd4fd1d9c7588324a6855f88c09233b76418d70e79dc796cfed436a77d",
+        "summary.json": "150fec34bd542386ef4948602da87e7ac2bbd2bfff08f5066cb27a83c0a75457",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "06cb7cc73e6e881460b64f4cf90305f00932a498c5b13bb97969f59af48a4bee",
+        "release.npy": "950d5391d640c2312f8989cd0b693bf7155a6b3214283424ba85fac2e632f680",
+        "weights.npy": "7cf7f2d5bf4d6c4ee9d2f8d639030c36184f0c37541d3e1a9ce7e8419747ccab",
+        "soma.npy": "5b99cc9aab8fed1407f6ea46031e7e931b720695f5de58e22b51c21030725e1d",
+        "body.npy": "d7579346db44a419edb746777835388b633d3f1d6dd721b766036cac5fe8780e"
+      }
+    },
+    "unpaired": {
+      "record": "memory-efficacy-unpaired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 26,
+          "PAM11": 0,
+          "SMP353": 0,
+          "SMP108": 0,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.0,
+        "pump_j": 0.0,
+        "well_j": 0.0,
+        "energy_j": 83.66400000001647,
+        "seconds": 243.43226808399777
+      },
+      "artifacts": {
+        "manifest.json": "5eedc544e18bf9895ee5f7db20baca9abcdb9dd2135501c18ac8a0eb6d528f24",
+        "summary.json": "3d633cb52fe2934c5af30d6d7f8a8513a7d03f273a0570b9b9e6984a99c91603",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "ca261ffcf9aa691484f6da2bd41099c459a63744e85e6657f57d719839be8a82",
+        "release.npy": "94e68c520271143b7175091bb4034d5e98ee67281615e4aa69c5cab390cf454a",
+        "weights.npy": "0143ba786370e674befff23a530fd4ab98e9a8b2788e74ec5bc76bbdc041eff6",
+        "soma.npy": "800fc7729cf6cb0e1b9adc9ab9342ea944d7f7b86c9a6981e7fe1b74c3196ac9",
+        "body.npy": "1b5cd1c50cbed5ce198966c5f40662edc3d9698068a344aa3bfeb65c77977ec8"
+      }
+    }
+  },
+  "continuations": {
+    "intact": {
+      "receiver": "memory-efficacy-paired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "06cb7cc73e6e881460b64f4cf90305f00932a498c5b13bb97969f59af48a4bee",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014407775789574839,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.10963366154880716,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13593719275037563,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.012122445235654434,
+          "feedback_events": 744,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014330762521875,
+          "feedback_events": 768,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.10984841969331305,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13611399257959775,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002182593941037324,
+          "feedback_events": 960,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027276347377480928,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 13
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933247685345862,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 5,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 960,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "42f4da7df672b5ea0d637017ca53ce995f71ac90dd4ccaf9781caf37aabd1816",
+        "soma.npy": "c0b08db1fda2d20610f1c34bc4298a0f5690bd0cc147faf3076a48f19c86fb87",
+        "weights.npy": "9f8cba7f4ac885a087b7b80eee5c04b299b87820ecb21ffb4be42c8f739427f2",
+        "retention.paula": "cd7ff21a91f9c81eea9e5db74d988aafdb872686b0551a9d774d04741330b3a7",
+        "retention-body.npz": "9e4a1d93ee49eba3309241b3a10de4c3e44e4d69892c468a142eaed6072b2654",
+        "body.npy": "c2f0d6355dcbc565f95bfd4da5e4ba6c38db99963b7bfca4b6b9e69ec15b5339",
+        "probe-B.npz": "e2d1dcc6306cbdd88bc8426054fc5dc39b5ad013405ab1e9f3dc58e3b4f6cebe",
+        "probe-A.npz": "f6b828d0dbb42ef58b9e0653e9746763f75137005151d8abb2ca45d35a06993b"
+      },
+      "record": "memory-efficacy-second-intact-20260910",
+      "summary_sha256": "6efbb3af8a883100a8527f341bd74e46cdefed08c4cabbb4fdece4b6c3a12542",
+      "release": {
+        "MBON07_A": {
+          "pairs": 64,
+          "before": 0.38485716464438335,
+          "retained": 0.38488027919083834
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "before": 1.0,
+          "retained": 1.0000784993171692
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "before": 0.9985409891232848,
+          "retained": 0.9985409891232848
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "before": 0.9998210296034813,
+          "retained": 0.9986526979631211
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "before": 1.0,
+          "retained": 0.9932978097945473
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "before": 0.9998179897665977,
+          "retained": 0.9998179897665977
+        }
+      },
+      "phase_B_release": [
+        {
+          "name": "pair0_B",
+          "mean_release": 0.9972890891438819
+        },
+        {
+          "name": "pair0_gap",
+          "mean_release": 0.996753092612453
+        },
+        {
+          "name": "pair0_A",
+          "mean_release": 0.9965911336007034
+        },
+        {
+          "name": "pair0_recovery",
+          "mean_release": 0.9965911335380283
+        },
+        {
+          "name": "pair1_B",
+          "mean_release": 0.9939704841972973
+        },
+        {
+          "name": "pair1_gap",
+          "mean_release": 0.9934536552586408
+        },
+        {
+          "name": "pair1_A",
+          "mean_release": 0.9932978098548547
+        },
+        {
+          "name": "pair1_recovery",
+          "mean_release": 0.9932978097945473
+        },
+        {
+          "name": "retention",
+          "mean_release": 0.9932978097945473
+        }
+      ],
+      "course_spikes": {
+        "MBON07": 32,
+        "PAM11": 0,
+        "SMP353": 18,
+        "SMP108": 40,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 22
+      },
+      "MBON04_max_S": 0.8881932497024536,
+      "retained_B_student": {
+        "720575940620464321": {
+          "max_S": 0.4647347629070282,
+          "min_r": 1.0,
+          "spikes": 0
+        },
+        "720575940628734376": {
+          "max_S": 0.5201399326324463,
+          "min_r": 1.0,
+          "spikes": 0
+        }
+      }
+    },
+    "cut": {
+      "receiver": "memory-efficacy-paired-20260910",
+      "cut": true,
+      "displaced": false,
+      "input_checkpoint_sha256": "06cb7cc73e6e881460b64f4cf90305f00932a498c5b13bb97969f59af48a4bee",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 264
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014407775789574839,
+          "feedback_events": 288,
+          "removed_events": 288
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10963366154880716,
+          "feedback_events": 480,
+          "removed_events": 480
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13593719275037563,
+          "feedback_events": 480,
+          "removed_events": 480
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012122445235654434,
+          "feedback_events": 744,
+          "removed_events": 744
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014330762521875,
+          "feedback_events": 768,
+          "removed_events": 768
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10984841969331305,
+          "feedback_events": 960,
+          "removed_events": 960
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13611399257959775,
+          "feedback_events": 960,
+          "removed_events": 960
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002182593941037324,
+          "feedback_events": 960,
+          "removed_events": 960
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027276347377480928,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 13
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933247685345862,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 5,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 960,
+      "removed_events": 960,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "cf49a452d37699a6aa66869fd1da7a71dde879f72f661232f03bbe668d619552",
+        "soma.npy": "1e8e79cde46414152d98b28ec3499ff72432f6080863e3af4c67ff14e63a8c53",
+        "weights.npy": "d40d12c12a9f180b3d49bc44b3706e5b02fa47ea628315d7c59ce40405742afa",
+        "retention.paula": "a9e427c68c7643c34d1e209950126207c1760635bff7044ccae5fe6aef61f4ea",
+        "retention-body.npz": "9e4a1d93ee49eba3309241b3a10de4c3e44e4d69892c468a142eaed6072b2654",
+        "body.npy": "c2f0d6355dcbc565f95bfd4da5e4ba6c38db99963b7bfca4b6b9e69ec15b5339",
+        "probe-B.npz": "307a4207595c558303e1f0f2b1d90a47e7a16cb41650e0c237bd07f21e241e3f",
+        "probe-A.npz": "d2e4fb6b1bbda128306ad291187fbfad009676a17700001a63eee0757a5b4c6c"
+      },
+      "record": "memory-efficacy-second-cut-20260910",
+      "summary_sha256": "fe7a8e1405f2be49869e893f9e3520b2a48db70a99129979bbe9163244ef2439",
+      "release": {
+        "MBON07_A": {
+          "pairs": 64,
+          "before": 0.38485716464438335,
+          "retained": 0.38488027919083834
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "before": 1.0,
+          "retained": 1.0000784993171692
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "before": 0.9985409891232848,
+          "retained": 0.9985409891232848
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "before": 0.9998210296034813,
+          "retained": 0.9997017160058022
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "before": 1.0,
+          "retained": 0.9999147057533264
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "before": 0.9998179897665977,
+          "retained": 0.9998179897665977
+        }
+      },
+      "phase_B_release": [
+        {
+          "name": "pair0_B",
+          "mean_release": 0.9999591298401356
+        },
+        {
+          "name": "pair0_gap",
+          "mean_release": 0.9999573528766632
+        },
+        {
+          "name": "pair0_A",
+          "mean_release": 0.9999573528766632
+        },
+        {
+          "name": "pair0_recovery",
+          "mean_release": 0.9999573528766632
+        },
+        {
+          "name": "pair1_B",
+          "mean_release": 0.9999164827167988
+        },
+        {
+          "name": "pair1_gap",
+          "mean_release": 0.9999147057533264
+        },
+        {
+          "name": "pair1_A",
+          "mean_release": 0.9999147057533264
+        },
+        {
+          "name": "pair1_recovery",
+          "mean_release": 0.9999147057533264
+        },
+        {
+          "name": "retention",
+          "mean_release": 0.9999147057533264
+        }
+      ],
+      "course_spikes": {
+        "MBON07": 32,
+        "PAM11": 0,
+        "SMP353": 18,
+        "SMP108": 40,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "MBON04_max_S": 0.8881920576095581,
+      "retained_B_student": {
+        "720575940620464321": {
+          "max_S": 0.4691224992275238,
+          "min_r": 1.0,
+          "spikes": 0
+        },
+        "720575940628734376": {
+          "max_S": 0.5219143629074097,
+          "min_r": 1.0,
+          "spikes": 0
+        }
+      }
+    },
+    "unpaired": {
+      "receiver": "memory-efficacy-unpaired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "ca261ffcf9aa691484f6da2bd41099c459a63744e85e6657f57d719839be8a82",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.012291387497642511,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014407775797775513,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.01723942995871125,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012557101045563696,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.012318936398038232,
+          "feedback_events": 552,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014434778078753265,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.017261873835166988,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012568319170692349,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 2.7679550703332346e-05,
+          "feedback_events": 576,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027279773414539892,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 13
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.0,
+          "max_angle": -2.4783577430916117e-08,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 576,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "a28f0a76af458aa71f0081d34324b675a922ff84796b30e60b538cbfeeaf8fd4",
+        "soma.npy": "d993252df8069ff14aa9c74eef92ab94b78d4472c8053568d67ac03740a76d28",
+        "weights.npy": "4c7d18a371ac262b946a32a813fc9a0ed3dbbeaa05d0910d47a669fec4b9eb68",
+        "retention.paula": "a8cf2029b492eae3a3a7a7cbd521bc415b33bc9a59fa6bc4dab99fb7c5dcc991",
+        "retention-body.npz": "b69f21ad6bff5fe5105556d6ccfbebf4732d04896b84eb69fd16cf73203b8d5f",
+        "body.npy": "acc4a5d8cdf7949e50d5a11a2f45034a9deff1c4343d0f44b8a1a5743fd74729",
+        "probe-B.npz": "9bd92e72b07824cacb08d670f6464f87d257333c7b5b256bce12a4f97928a1c9",
+        "probe-A.npz": "eec4ef82294e4c7d64df9c698958810911b8f45bccc5c438e488051b5d70ba5c"
+      },
+      "record": "memory-efficacy-second-unpaired-20260910",
+      "summary_sha256": "eed38843e0261cdb4a21a01cbc815c05a94afa850b1def3b594fa26318ec4275",
+      "release": {
+        "MBON07_A": {
+          "pairs": 64,
+          "before": 1.0001542023814443,
+          "retained": 1.0002618208527565
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "before": 1.0,
+          "retained": 1.0000784993171692
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "before": 1.0001614913344383,
+          "retained": 1.0001614913344383
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "before": 0.9998210296034813,
+          "retained": 0.9997003264725208
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "before": 1.0,
+          "retained": 0.9935868656892871
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "before": 0.9998179897665977,
+          "retained": 0.9998179897665977
+        }
+      },
+      "phase_B_release": [
+        {
+          "name": "pair0_B",
+          "mean_release": 0.9972890891438819
+        },
+        {
+          "name": "pair0_gap",
+          "mean_release": 0.996753092612453
+        },
+        {
+          "name": "pair0_A",
+          "mean_release": 0.9967411713074531
+        },
+        {
+          "name": "pair0_recovery",
+          "mean_release": 0.9967411713074531
+        },
+        {
+          "name": "pair1_B",
+          "mean_release": 0.9941161688234922
+        },
+        {
+          "name": "pair1_gap",
+          "mean_release": 0.9935983649292587
+        },
+        {
+          "name": "pair1_A",
+          "mean_release": 0.993586865689287
+        },
+        {
+          "name": "pair1_recovery",
+          "mean_release": 0.993586865689287
+        },
+        {
+          "name": "retention",
+          "mean_release": 0.993586865689287
+        }
+      ],
+      "course_spikes": {
+        "MBON07": 84,
+        "PAM11": 0,
+        "SMP353": 2,
+        "SMP108": 24,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 18
+      },
+      "MBON04_max_S": 0.8858972787857056,
+      "retained_B_student": {
+        "720575940620464321": {
+          "max_S": 0.4649488627910614,
+          "min_r": 1.0,
+          "spikes": 0
+        },
+        "720575940628734376": {
+          "max_S": 0.5201976895332336,
+          "min_r": 1.0,
+          "spikes": 0
+        }
+      }
+    },
+    "displaced": {
+      "receiver": "memory-efficacy-paired-20260910",
+      "cut": false,
+      "displaced": true,
+      "input_checkpoint_sha256": "06cb7cc73e6e881460b64f4cf90305f00932a498c5b13bb97969f59af48a4bee",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 1140,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.01723942995091679,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 1140,
+          "end": 1340,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.09555221852821048,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 1340,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10922857400947197,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 10,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.13057626644051532,
+          "feedback_events": 744,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 2500,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.12664543379649226,
+          "feedback_events": 768,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 2500,
+          "end": 2700,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.09575603613388652,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 2700,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.1094277661728892,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.128002257722571,
+          "feedback_events": 960,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027363259487660267,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 13
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07941938896363797,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 5,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 960,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "73ce650e20c569ce295f453b18d32fba60f89c21aa097331c44576fadc57b0eb",
+        "soma.npy": "99a4eaee9f52faf7803426bfa03d7115b52da07d90586cf738483305fef5fdd0",
+        "weights.npy": "c285b7180a1af2a09ece6ee35df5489b95ffa21b13d778286ed2d01df15ccbc4",
+        "retention.paula": "67fd03be82e6c6bead1cf6a0dccbe9e8d03b1e7ff039c3b6fe46d7e7e88755c8",
+        "retention-body.npz": "5b62e56163e23db293c1562380fe6ae5c12b02b8dc17be863be98550fc47506b",
+        "body.npy": "8e72ef332615d005ef78d0885886b35558989e1c606b9dcc254e49c9a72c5dcd",
+        "probe-B.npz": "928717cf294a5579edb2229b6fb44c75525e43b4c7b4b8ba39c7ed34caf9d8ae",
+        "probe-A.npz": "6d4f9d1c8f476e7a79800a4d8464fcbf36a417a4958c830a67b6b8c3fe394d26"
+      },
+      "record": "memory-efficacy-second-displaced-20260910",
+      "summary_sha256": "6bca970bc6b3c7706087c3408ebb6c2b6d1f80bd6986ffdec0fe91e637473027",
+      "release": {
+        "MBON07_A": {
+          "pairs": 64,
+          "before": 0.38485716464438335,
+          "retained": 0.38488027919083834
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "before": 1.0,
+          "retained": 1.0000784993171692
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "before": 0.9985409891232848,
+          "retained": 0.9985409891232848
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "before": 0.9998210296034813,
+          "retained": 0.9977964880927002
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "before": 1.0,
+          "retained": 0.9936328917885545
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "before": 0.9998179897665977,
+          "retained": 0.9998179897665977
+        }
+      },
+      "phase_B_release": [
+        {
+          "name": "pair0_B",
+          "mean_release": 0.9972890891438819
+        },
+        {
+          "name": "pair0_gap",
+          "mean_release": 0.9967411713074531
+        },
+        {
+          "name": "pair0_A",
+          "mean_release": 0.9967411712748737
+        },
+        {
+          "name": "pair0_recovery",
+          "mean_release": 0.9967411712748737
+        },
+        {
+          "name": "pair1_B",
+          "mean_release": 0.9941050715466054
+        },
+        {
+          "name": "pair1_gap",
+          "mean_release": 0.993632891819973
+        },
+        {
+          "name": "pair1_A",
+          "mean_release": 0.9936328917885545
+        },
+        {
+          "name": "pair1_recovery",
+          "mean_release": 0.9936328917885545
+        },
+        {
+          "name": "retention",
+          "mean_release": 0.9936328917885545
+        }
+      ],
+      "course_spikes": {
+        "MBON07": 32,
+        "PAM11": 0,
+        "SMP353": 18,
+        "SMP108": 40,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 22
+      },
+      "MBON04_max_S": 0.8884223699569702,
+      "retained_B_student": {
+        "720575940620464321": {
+          "max_S": 0.4649651348590851,
+          "min_r": 1.0,
+          "spikes": 0
+        },
+        "720575940628734376": {
+          "max_S": 0.5202223658561707,
+          "min_r": 1.0,
+          "spikes": 0
+        }
+      }
+    },
+    "teacher_removed": {
+      "receiver": "receiver",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "b449adf3dc41decf3a2d344cbc0133187b32b1be1be35804f7846ff3289085c0",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014407775789574839,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.01723942995091679,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012557101040935588,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 8
+          },
+          "max_angle": 0.012318936398026083,
+          "feedback_events": 552,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 1
+          },
+          "max_angle": 0.014434778078741795,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.017261873835158408,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012568319170688807,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 2.7679550703318566e-05,
+          "feedback_events": 576,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027279773414539892,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 13
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.0,
+          "max_angle": -2.4783577430949674e-08,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 576,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "9e4bf027db8d4bce7ed94485b44de3d4a2d6e46fa55faeefed07ec54066ca0f3",
+        "soma.npy": "1d4bc49fb3c9aacaa7696025afa7593f625f8f9eff4f438fc6b833aad687b67b",
+        "weights.npy": "883bc7f546833786e686d4281cdc68cefbff0c89206f2eea4bbf37581d057525",
+        "retention.paula": "6d3472163e9d7364926f52aef71c53daad07d3be7b09683a7b00e5499b901ed2",
+        "retention-body.npz": "f51778ea545fe2f3ef15d42f57f9b1476e36acda04429d6b2c1b4888e8a7ccba",
+        "body.npy": "929d399dd95d9fcb1120a589f7774ce0b63ad62e47cce72b8aa53c70fc768619",
+        "probe-B.npz": "158a5dad832b38ff638b9f02c9ae473413165db904058ed68499038459b1e40f",
+        "probe-A.npz": "f2ef936aba3cd524520795afd0fd5923ec775c763cbf4175b537b4a8720b1b95"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "record": "memory-efficacy-teacher-removed-rng-20260910/continuation",
+      "summary_sha256": "9cdc626e9391e6f731d52f22707b61ca0ac0bc1a3ccd9c843037014225516f68",
+      "release": {
+        "MBON07_A": {
+          "pairs": 64,
+          "before": 1.0001542023814443,
+          "retained": 1.0002618208527565
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "before": 1.0,
+          "retained": 1.0000784993171692
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "before": 0.9985409891232848,
+          "retained": 0.9985409891232848
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "before": 0.9998210296034813,
+          "retained": 0.9997003264725208
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "before": 1.0,
+          "retained": 0.9935868656892871
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "before": 0.9998179897665977,
+          "retained": 0.9998179897665977
+        }
+      },
+      "phase_B_release": [
+        {
+          "name": "pair0_B",
+          "mean_release": 0.9972890891438819
+        },
+        {
+          "name": "pair0_gap",
+          "mean_release": 0.996753092612453
+        },
+        {
+          "name": "pair0_A",
+          "mean_release": 0.9967411713074531
+        },
+        {
+          "name": "pair0_recovery",
+          "mean_release": 0.9967411713074531
+        },
+        {
+          "name": "pair1_B",
+          "mean_release": 0.9941161688234922
+        },
+        {
+          "name": "pair1_gap",
+          "mean_release": 0.9935983649292587
+        },
+        {
+          "name": "pair1_A",
+          "mean_release": 0.993586865689287
+        },
+        {
+          "name": "pair1_recovery",
+          "mean_release": 0.993586865689287
+        },
+        {
+          "name": "retention",
+          "mean_release": 0.993586865689287
+        }
+      ],
+      "course_spikes": {
+        "MBON07": 84,
+        "PAM11": 0,
+        "SMP353": 2,
+        "SMP108": 24,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 18
+      },
+      "MBON04_max_S": 0.8858969807624817,
+      "retained_B_student": {
+        "720575940620464321": {
+          "max_S": 0.4649486839771271,
+          "min_r": 1.0,
+          "spikes": 0
+        },
+        "720575940628734376": {
+          "max_S": 0.5201970338821411,
+          "min_r": 1.0,
+          "spikes": 0
+        }
+      }
+    }
+  },
+  "efficacy": {
+    "gain": 64.0,
+    "changed_pairs": [
+      {
+        "source_row": 11127985,
+        "source_id": 102264,
+        "target_id": 90499,
+        "synapse_id": 180,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128029,
+        "source_id": 102264,
+        "target_id": 50288,
+        "synapse_id": 315,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128035,
+        "source_id": 102264,
+        "target_id": 66905,
+        "synapse_id": 182,
+        "original_weight": 0.06,
+        "effective_weight": 3.84
+      },
+      {
+        "source_row": 11128049,
+        "source_id": 102264,
+        "target_id": 15128,
+        "synapse_id": 85,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128054,
+        "source_id": 102264,
+        "target_id": 83576,
+        "synapse_id": 390,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128147,
+        "source_id": 102264,
+        "target_id": 93237,
+        "synapse_id": 151,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128194,
+        "source_id": 102264,
+        "target_id": 40581,
+        "synapse_id": 177,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128336,
+        "source_id": 102264,
+        "target_id": 12595,
+        "synapse_id": 130,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128349,
+        "source_id": 102264,
+        "target_id": 54818,
+        "synapse_id": 173,
+        "original_weight": 0.12,
+        "effective_weight": 7.68
+      },
+      {
+        "source_row": 11128442,
+        "source_id": 102264,
+        "target_id": 98946,
+        "synapse_id": 354,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128485,
+        "source_id": 102264,
+        "target_id": 80376,
+        "synapse_id": 139,
+        "original_weight": 0.06,
+        "effective_weight": 3.84
+      },
+      {
+        "source_row": 11128492,
+        "source_id": 102264,
+        "target_id": 1325,
+        "synapse_id": 172,
+        "original_weight": 0.08,
+        "effective_weight": 5.12
+      },
+      {
+        "source_row": 11128502,
+        "source_id": 102264,
+        "target_id": 135273,
+        "synapse_id": 158,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128503,
+        "source_id": 102264,
+        "target_id": 102688,
+        "synapse_id": 182,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128529,
+        "source_id": 102264,
+        "target_id": 54801,
+        "synapse_id": 110,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128557,
+        "source_id": 102264,
+        "target_id": 73796,
+        "synapse_id": 121,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128572,
+        "source_id": 102264,
+        "target_id": 131866,
+        "synapse_id": 213,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128630,
+        "source_id": 102264,
+        "target_id": 99953,
+        "synapse_id": 180,
+        "original_weight": 0.18,
+        "effective_weight": 11.52
+      },
+      {
+        "source_row": 11128682,
+        "source_id": 102264,
+        "target_id": 22245,
+        "synapse_id": 227,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      },
+      {
+        "source_row": 11128874,
+        "source_id": 102264,
+        "target_id": 38415,
+        "synapse_id": 167,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128900,
+        "source_id": 102264,
+        "target_id": 5476,
+        "synapse_id": 358,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128982,
+        "source_id": 102264,
+        "target_id": 131873,
+        "synapse_id": 109,
+        "original_weight": 0.04,
+        "effective_weight": 2.56
+      },
+      {
+        "source_row": 11128986,
+        "source_id": 102264,
+        "target_id": 1511,
+        "synapse_id": 153,
+        "original_weight": 0.26,
+        "effective_weight": 16.64
+      },
+      {
+        "source_row": 11128992,
+        "source_id": 102264,
+        "target_id": 92364,
+        "synapse_id": 167,
+        "original_weight": 0.02,
+        "effective_weight": 1.28
+      }
+    ],
+    "derivation": "Next power of two above held-input first-crossing estimate 60.13565645842552, from native dry learned-A projection records before this simulation",
+    "calibration_records": "memory-terminal-projection-paired-20260910/A-intact.npz and A-cut.npz",
+    "calibrated_target_root": "720575940605280201",
+    "calibration_probe_tick": 198,
+    "interpretation": "Unfitted source-specific current efficacy, not synapse count, receptor identification or known fly physiological gain",
+    "source_sha256": "f195acdf0c8d82f9534205bdff7619369021647fb1f812bdeda8b6b18d3b0372"
+  },
+  "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+  "teacher_intervention": {
+    "receiver": "memory-efficacy-paired-20260910",
+    "donor": "memory-efficacy-unpaired-20260910",
+    "compartment": "alpha1",
+    "cue": "A",
+    "changes": [
+      {
+        "source_row": 428712,
+        "pre": 4046,
+        "terminal": 48,
+        "before": 0.2709146079106744,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 428727,
+        "pre": 4046,
+        "terminal": 63,
+        "before": 0.27091500689295,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 588408,
+        "pre": 5625,
+        "terminal": 48,
+        "before": 0.270908366687934,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 588422,
+        "pre": 5625,
+        "terminal": 62,
+        "before": 0.2709170018043282,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 1163677,
+        "pre": 10801,
+        "terminal": 51,
+        "before": 0.2709164888271165,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 1163694,
+        "pre": 10801,
+        "terminal": 68,
+        "before": 0.2709146649081423,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 1849218,
+        "pre": 16981,
+        "terminal": 63,
+        "before": 1.00016188621521,
+        "after": 1.00016188621521
+      },
+      {
+        "source_row": 1849245,
+        "pre": 16981,
+        "terminal": 90,
+        "before": 1.0001401901245117,
+        "after": 1.0001401901245117
+      },
+      {
+        "source_row": 2012310,
+        "pre": 18393,
+        "terminal": 43,
+        "before": 0.2709142659258665,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 2012331,
+        "pre": 18393,
+        "terminal": 64,
+        "before": 0.27091500689295,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 2204746,
+        "pre": 20112,
+        "terminal": 60,
+        "before": 0.2709170018043282,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 2204759,
+        "pre": 20112,
+        "terminal": 73,
+        "before": 0.27091070358411984,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 2223091,
+        "pre": 20249,
+        "terminal": 47,
+        "before": 0.2709055453132709,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 2223114,
+        "pre": 20249,
+        "terminal": 70,
+        "before": 0.27091500689295,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 2766989,
+        "pre": 25300,
+        "terminal": 52,
+        "before": 0.2709173722878698,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 2767007,
+        "pre": 25300,
+        "terminal": 70,
+        "before": 0.2709083381891999,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 3349429,
+        "pre": 30766,
+        "terminal": 46,
+        "before": 0.27090799620439204,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 3349458,
+        "pre": 30766,
+        "terminal": 75,
+        "before": 0.2709170018043282,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 3859475,
+        "pre": 35494,
+        "terminal": 61,
+        "before": 0.2709142659258665,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 3859497,
+        "pre": 35494,
+        "terminal": 83,
+        "before": 0.27091500689295,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 4284945,
+        "pre": 39619,
+        "terminal": 50,
+        "before": 0.2709142659258665,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 4284974,
+        "pre": 39619,
+        "terminal": 79,
+        "before": 0.2709146649081423,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 4317791,
+        "pre": 39889,
+        "terminal": 57,
+        "before": 0.2709173722878698,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 4317819,
+        "pre": 39889,
+        "terminal": 85,
+        "before": 0.2709088226676776,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 4899388,
+        "pre": 45213,
+        "terminal": 61,
+        "before": 1.00016188621521,
+        "after": 1.00016188621521
+      },
+      {
+        "source_row": 4899411,
+        "pre": 45213,
+        "terminal": 84,
+        "before": 1.0001635551452637,
+        "after": 1.0001635551452637
+      },
+      {
+        "source_row": 4908695,
+        "pre": 45294,
+        "terminal": 54,
+        "before": 0.2709142659258665,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 4908720,
+        "pre": 45294,
+        "terminal": 79,
+        "before": 0.2709170018043282,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 5579908,
+        "pre": 51536,
+        "terminal": 54,
+        "before": 0.2709103615993122,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 5579943,
+        "pre": 51536,
+        "terminal": 89,
+        "before": 0.270917486282806,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 6025951,
+        "pre": 55657,
+        "terminal": 61,
+        "before": 0.270908366687934,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 6025976,
+        "pre": 55657,
+        "terminal": 86,
+        "before": 0.270917486282806,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 6413700,
+        "pre": 59222,
+        "terminal": 53,
+        "before": 1.00016188621521,
+        "after": 1.00016188621521
+      },
+      {
+        "source_row": 6413727,
+        "pre": 59222,
+        "terminal": 80,
+        "before": 1.0001401901245117,
+        "after": 1.0001401901245117
+      },
+      {
+        "source_row": 6582882,
+        "pre": 60794,
+        "terminal": 61,
+        "before": 0.2709055453132709,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 6582903,
+        "pre": 60794,
+        "terminal": 82,
+        "before": 0.2709170018043282,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 6869322,
+        "pre": 63455,
+        "terminal": 69,
+        "before": 1.00016188621521,
+        "after": 1.00016188621521
+      },
+      {
+        "source_row": 6869344,
+        "pre": 63455,
+        "terminal": 91,
+        "before": 1.0001401901245117,
+        "after": 1.0001401901245117
+      },
+      {
+        "source_row": 6928236,
+        "pre": 64047,
+        "terminal": 62,
+        "before": 0.2709074832271809,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 6928256,
+        "pre": 64047,
+        "terminal": 82,
+        "before": 0.2709236705080781,
+        "after": 1.0001867320187607
+      },
+      {
+        "source_row": 8785471,
+        "pre": 80983,
+        "terminal": 48,
+        "before": 0.2709173722878698,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 8785491,
+        "pre": 80983,
+        "terminal": 68,
+        "before": 0.2709088226676776,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 8809004,
+        "pre": 81215,
+        "terminal": 52,
+        "before": 0.2709103615993122,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 8809026,
+        "pre": 81215,
+        "terminal": 74,
+        "before": 0.27091070358411984,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 9380467,
+        "pre": 86173,
+        "terminal": 60,
+        "before": 1.00016188621521,
+        "after": 1.00016188621521
+      },
+      {
+        "source_row": 9380496,
+        "pre": 86173,
+        "terminal": 89,
+        "before": 1.0001401901245117,
+        "after": 1.0001401901245117
+      },
+      {
+        "source_row": 9475206,
+        "pre": 87057,
+        "terminal": 48,
+        "before": 0.270923214528335,
+        "after": 1.0001848246702598
+      },
+      {
+        "source_row": 9475227,
+        "pre": 87057,
+        "terminal": 69,
+        "before": 0.2709079677056585,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 10123111,
+        "pre": 93049,
+        "terminal": 44,
+        "before": 0.2709103615993122,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 10123133,
+        "pre": 93049,
+        "terminal": 66,
+        "before": 0.270917486282806,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 10433088,
+        "pre": 95751,
+        "terminal": 53,
+        "before": 0.2709142659258665,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 10433108,
+        "pre": 95751,
+        "terminal": 73,
+        "before": 0.27091500689295,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 10989394,
+        "pre": 100895,
+        "terminal": 51,
+        "before": 0.270908366687934,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 10989423,
+        "pre": 100895,
+        "terminal": 80,
+        "before": 0.2709146649081423,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 11292104,
+        "pre": 103605,
+        "terminal": 54,
+        "before": 0.2709170018043282,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 11292128,
+        "pre": 103605,
+        "terminal": 78,
+        "before": 0.2709083381891999,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 12163941,
+        "pre": 111703,
+        "terminal": 55,
+        "before": 0.2709170018043282,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 12163960,
+        "pre": 111703,
+        "terminal": 74,
+        "before": 0.27091070358411984,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 13777279,
+        "pre": 126406,
+        "terminal": 59,
+        "before": 0.2709173722878698,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 13777298,
+        "pre": 126406,
+        "terminal": 78,
+        "before": 0.2709079677056585,
+        "after": 1.0001400019804791
+      },
+      {
+        "source_row": 14052383,
+        "pre": 128918,
+        "terminal": 54,
+        "before": 0.2709103615993122,
+        "after": 1.000138571469102
+      },
+      {
+        "source_row": 14052405,
+        "pre": 128918,
+        "terminal": 76,
+        "before": 0.2709146649081423,
+        "after": 1.0001633669996202
+      },
+      {
+        "source_row": 14517723,
+        "pre": 133244,
+        "terminal": 52,
+        "before": 0.2709170018043282,
+        "after": 1.0001616980696806
+      },
+      {
+        "source_row": 14517748,
+        "pre": 133244,
+        "terminal": 77,
+        "before": 0.2709083381891999,
+        "after": 1.0001400019804791
+      }
+    ],
+    "changed_receiving": 0,
+    "receiver_checkpoint_sha256": "06cb7cc73e6e881460b64f4cf90305f00932a498c5b13bb97969f59af48a4bee",
+    "donor_checkpoint_sha256": "ca261ffcf9aa691484f6da2bd41099c459a63744e85e6657f57d719839be8a82",
+    "source_sha256": "5517b4bb8c50bfb1459a56b9a097a48ad652beccf9cb7ef6a383522d4ffac314",
+    "substituted_checkpoint_sha256": "b449adf3dc41decf3a2d344cbc0133187b32b1be1be35804f7846ff3289085c0",
+    "continuation_summary_sha256": "9cdc626e9391e6f731d52f22707b61ca0ac0bc1a3ccd9c843037014225516f68",
+    "all_other_runtime_state_exact": true,
+    "body_file_identical": true
+  },
+  "comparisons": {
+    "cut": {
+      "extra_B_release_depression": 0.006616895958779123,
+      "exact_arrays": {
+        "body.npy": true,
+        "release.npy": false,
+        "weights.npy": false
+      },
+      "B_probe_body_exact": true,
+      "B_probe_student_max_abs_S_difference": 0.004431039094924927
+    },
+    "unpaired": {
+      "extra_B_release_depression": 0.0002890558947397093,
+      "exact_arrays": {
+        "body.npy": false,
+        "release.npy": false,
+        "weights.npy": false
+      },
+      "B_probe_body_exact": false,
+      "B_probe_student_max_abs_S_difference": 0.00021630525588989258
+    },
+    "displaced": {
+      "extra_B_release_depression": 0.0003350819940072247,
+      "exact_arrays": {
+        "body.npy": false,
+        "release.npy": false,
+        "weights.npy": false
+      },
+      "B_probe_body_exact": false,
+      "B_probe_student_max_abs_S_difference": 0.0002327263355255127
+    },
+    "teacher_removed": {
+      "extra_B_release_depression": 0.0002890558947397093,
+      "exact_arrays": {
+        "body.npy": false,
+        "release.npy": false,
+        "weights.npy": false
+      },
+      "B_probe_body_exact": false,
+      "B_probe_student_max_abs_S_difference": 0.0002160966396331787
+    }
+  },
+  "student_output_routes": [
+    {
+      "pre": "720575940620464321",
+      "post": "720575940631103744",
+      "count": 41,
+      "sign": -1,
+      "source_row": 4731228
+    },
+    {
+      "pre": "720575940628734376",
+      "post": "720575940631103744",
+      "count": 19,
+      "sign": -1,
+      "source_row": 9774267
+    }
+  ],
+  "checkpoint_limit": "The original second_order runner saves ambient RNG at its final checkpoint. Fixed one-tick travel makes the RNG mismatch inert here, but these four original continuation checkpoints do not preserve advancing branch RNG. The corrected continuing_course wrapper and teacher control do. The earlier teacher-removed record without '-rng' is superseded and excluded from this audit.",
+  "conclusion": "The gain-64 efficacy hypothesis recruits student dopamine through measured feedback. Most B-terminal depression is present without learned A. A small additional retained B-terminal depression depends on A terminal memory and temporal proximity. Neither that change nor removing the entire feedback projection changes B motor spike count; MBON04 remains silent. A feeding persists. This supports teacher-dependent local credit in this engineered preparation, not acquired useful B behavior or completed second-order learning."
+}

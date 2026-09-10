@@ -1,0 +1,7783 @@
+{
+  "graph": {
+    "selected_neurons": 276,
+    "boundary_neurons": 9383,
+    "internal": {
+      "directed_pairs": 4218,
+      "synapses": 16873
+    },
+    "incoming_boundary": {
+      "directed_pairs": 46446,
+      "synapses": 225248
+    },
+    "outgoing_boundary": {
+      "directed_pairs": 36810,
+      "synapses": 171648
+    },
+    "classes": {
+      "Kenyon_Cell": 192,
+      "DAN": 76,
+      "": 2,
+      "MBIN": 2,
+      "MBON": 4
+    },
+    "internal_motif_synapses": {
+      " -> ": 49,
+      " -> APL": 4,
+      " -> DAN": 67,
+      " -> Kenyon_Cell": 3,
+      " -> MBON": 4,
+      "APL -> ": 1,
+      "APL -> DAN": 227,
+      "APL -> Kenyon_Cell": 3839,
+      "APL -> MBON": 183,
+      "DAN -> ": 23,
+      "DAN -> APL": 158,
+      "DAN -> DAN": 149,
+      "DAN -> Kenyon_Cell": 734,
+      "DAN -> MBON": 893,
+      "Kenyon_Cell -> ": 13,
+      "Kenyon_Cell -> APL": 4145,
+      "Kenyon_Cell -> DAN": 1334,
+      "Kenyon_Cell -> Kenyon_Cell": 2073,
+      "Kenyon_Cell -> MBON": 2474,
+      "MBON -> ": 79,
+      "MBON -> APL": 74,
+      "MBON -> DAN": 147,
+      "MBON -> Kenyon_Cell": 95,
+      "MBON -> MBON": 105
+    }
+  },
+  "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+  "source_sha256": "36ee7cd7d2a409b9485167895d5836ed2da979a87cb16421f2ea3b595a4fbae3",
+  "courses": {
+    "paired": {
+      "record": "memory-terminal-paired-20260910",
+      "complete_ticks": 10120,
+      "retention_tick": 8920,
+      "coefficients": {
+        "MBON07_A": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 0.38485716464438335,
+          "initial_receiving": 0.21500000000000002,
+          "retained_receiving": 0.2150002369147166
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.19124999999999998,
+          "retained_receiving": 0.19124999999999998
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 0.9985409891232848,
+          "initial_receiving": 0.21437499999999998,
+          "retained_receiving": 0.2143753226425788
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998210296034813,
+          "initial_receiving": 0.11,
+          "retained_receiving": 0.10999980897283274
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.09875,
+          "retained_receiving": 0.09875
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998179897665977,
+          "initial_receiving": 0.09625,
+          "retained_receiving": 0.09624982116070248
+        }
+      },
+      "assumptions": {
+        "enabled": true,
+        "tau_kc": 64.0,
+        "tau_dopamine": 4.0,
+        "eta_credit": 0.1,
+        "uncovered_outputs": [
+          {
+            "root": "720575940606725131",
+            "compartment": "alpha1",
+            "terminals": [
+              55,
+              78
+            ]
+          },
+          {
+            "root": "720575940610214769",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              85
+            ]
+          },
+          {
+            "root": "720575940612910486",
+            "compartment": "alpha1",
+            "terminals": [
+              45,
+              78
+            ]
+          },
+          {
+            "root": "720575940613315309",
+            "compartment": "alpha1",
+            "terminals": [
+              63,
+              90
+            ]
+          },
+          {
+            "root": "720575940614252967",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              87
+            ]
+          },
+          {
+            "root": "720575940615764422",
+            "compartment": "gamma4",
+            "terminals": [
+              35
+            ]
+          },
+          {
+            "root": "720575940620734305",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              84
+            ]
+          },
+          {
+            "root": "720575940623171268",
+            "compartment": "alpha1",
+            "terminals": [
+              53,
+              80
+            ]
+          },
+          {
+            "root": "720575940623943316",
+            "compartment": "alpha1",
+            "terminals": [
+              69,
+              91
+            ]
+          },
+          {
+            "root": "720575940624264718",
+            "compartment": "alpha1",
+            "terminals": [
+              54,
+              70
+            ]
+          },
+          {
+            "root": "720575940626086244",
+            "compartment": "gamma4",
+            "terminals": [
+              33
+            ]
+          },
+          {
+            "root": "720575940626143570",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940626793502",
+            "compartment": "alpha1",
+            "terminals": [
+              56,
+              81
+            ]
+          },
+          {
+            "root": "720575940627905223",
+            "compartment": "alpha1",
+            "terminals": [
+              51,
+              78
+            ]
+          },
+          {
+            "root": "720575940628085489",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940634903397",
+            "compartment": "alpha1",
+            "terminals": [
+              48,
+              70
+            ]
+          },
+          {
+            "root": "720575940639441653",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              87
+            ]
+          },
+          {
+            "root": "720575940644583534",
+            "compartment": "gamma4",
+            "terminals": [
+              29
+            ]
+          }
+        ],
+        "native": "Unchanged weak positive receiving and returning adaptation. No selected reward_hebb rule. Emissions use pre-update release.",
+        "dopamine": "Actual PAM11-to-KC or PAM07/PAM08-to-KC arrivals, contact-weighted and normalized per local receptor group. No DAN-to-MBON modulation surrogate.",
+        "limit": "Phenomenological terminal-group eligibility and receptor kinetics. Pair graph does not locate contacts within KC axonal compartments; no efficacy or timing calibration to flies.",
+        "implementation_sha256": "4d8fef3248f6346866b97854fda34b04d4a7c6666efa1481c9338889813e8966",
+        "configuration_sha256": "8ab158c86d8f443ec6f47f518e7f7508fc87179d867d211e35b9163eb03372ed"
+      },
+      "pre_food_spikes": {
+        "MBON07": 167,
+        "PAM11": 546,
+        "SMP353": 3,
+        "SMP108": 3,
+        "APL": 101,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 16,
+          "PAM11": 338,
+          "SMP353": 5,
+          "SMP108": 5,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.07933592766590608,
+        "pump_j": 0.0,
+        "well_j": 0.6240000000000001,
+        "energy_j": 84.26353380436615,
+        "seconds": 266.9459473749739
+      },
+      "artifacts": {
+        "manifest.json": "91f95fe205e3a3d7f0d80935876fae30d69bce448bcd87b94051e65892939440",
+        "summary.json": "9a4241d96da097e7d13892477308ea6e78712e056d1ad6e2532b26f1cb860c67",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+        "soma.npy": "48d2778dbcde20d34b1b632bdb751d40a4bf056f8d957dae6779d84bb6ac25c6",
+        "release.npy": "9c668e081918d2e1d99d59b886a38206ff39f08cb9ec80e0d13c9fd2575edd1a",
+        "weights.npy": "550cb1fbce54672ffd49639af216721a4f67776cb773719803cc9c90136e09cc",
+        "body.npy": "d7579346db44a419edb746777835388b633d3f1d6dd721b766036cac5fe8780e"
+      }
+    },
+    "unpaired": {
+      "record": "memory-terminal-unpaired-20260910",
+      "complete_ticks": 10120,
+      "retention_tick": 8920,
+      "coefficients": {
+        "MBON07_A": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0001542023814443,
+          "initial_receiving": 0.21500000000000002,
+          "retained_receiving": 0.21500030757368968
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.19124999999999998,
+          "retained_receiving": 0.19124999999999998
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0001614913344383,
+          "initial_receiving": 0.21437499999999998,
+          "retained_receiving": 0.21437532310519442
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998210296034813,
+          "initial_receiving": 0.11,
+          "retained_receiving": 0.10999980897283274
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.09875,
+          "retained_receiving": 0.09875
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998179897665977,
+          "initial_receiving": 0.09625,
+          "retained_receiving": 0.09624982116070248
+        }
+      },
+      "assumptions": {
+        "enabled": true,
+        "tau_kc": 64.0,
+        "tau_dopamine": 4.0,
+        "eta_credit": 0.1,
+        "uncovered_outputs": [
+          {
+            "root": "720575940606725131",
+            "compartment": "alpha1",
+            "terminals": [
+              55,
+              78
+            ]
+          },
+          {
+            "root": "720575940610214769",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              85
+            ]
+          },
+          {
+            "root": "720575940612910486",
+            "compartment": "alpha1",
+            "terminals": [
+              45,
+              78
+            ]
+          },
+          {
+            "root": "720575940613315309",
+            "compartment": "alpha1",
+            "terminals": [
+              63,
+              90
+            ]
+          },
+          {
+            "root": "720575940614252967",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              87
+            ]
+          },
+          {
+            "root": "720575940615764422",
+            "compartment": "gamma4",
+            "terminals": [
+              35
+            ]
+          },
+          {
+            "root": "720575940620734305",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              84
+            ]
+          },
+          {
+            "root": "720575940623171268",
+            "compartment": "alpha1",
+            "terminals": [
+              53,
+              80
+            ]
+          },
+          {
+            "root": "720575940623943316",
+            "compartment": "alpha1",
+            "terminals": [
+              69,
+              91
+            ]
+          },
+          {
+            "root": "720575940624264718",
+            "compartment": "alpha1",
+            "terminals": [
+              54,
+              70
+            ]
+          },
+          {
+            "root": "720575940626086244",
+            "compartment": "gamma4",
+            "terminals": [
+              33
+            ]
+          },
+          {
+            "root": "720575940626143570",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940626793502",
+            "compartment": "alpha1",
+            "terminals": [
+              56,
+              81
+            ]
+          },
+          {
+            "root": "720575940627905223",
+            "compartment": "alpha1",
+            "terminals": [
+              51,
+              78
+            ]
+          },
+          {
+            "root": "720575940628085489",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940634903397",
+            "compartment": "alpha1",
+            "terminals": [
+              48,
+              70
+            ]
+          },
+          {
+            "root": "720575940639441653",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              87
+            ]
+          },
+          {
+            "root": "720575940644583534",
+            "compartment": "gamma4",
+            "terminals": [
+              29
+            ]
+          }
+        ],
+        "native": "Unchanged weak positive receiving and returning adaptation. No selected reward_hebb rule. Emissions use pre-update release.",
+        "dopamine": "Actual PAM11-to-KC or PAM07/PAM08-to-KC arrivals, contact-weighted and normalized per local receptor group. No DAN-to-MBON modulation surrogate.",
+        "limit": "Phenomenological terminal-group eligibility and receptor kinetics. Pair graph does not locate contacts within KC axonal compartments; no efficacy or timing calibration to flies.",
+        "implementation_sha256": "4d8fef3248f6346866b97854fda34b04d4a7c6666efa1481c9338889813e8966",
+        "configuration_sha256": "8ab158c86d8f443ec6f47f518e7f7508fc87179d867d211e35b9163eb03372ed"
+      },
+      "pre_food_spikes": {
+        "MBON07": 180,
+        "PAM11": 546,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 101,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 26,
+          "PAM11": 0,
+          "SMP353": 0,
+          "SMP108": 0,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.0,
+        "pump_j": 0.0,
+        "well_j": 0.0,
+        "energy_j": 83.66400000001647,
+        "seconds": 266.8030185420066
+      },
+      "artifacts": {
+        "manifest.json": "4e4cce75ffffe59bc724a349baeab1b3148eb6b81936fe36ed3671762fb3709c",
+        "summary.json": "c29ad253c7dd5117ea67e6a15da05f246315a89b708c11af858b87e75b720667",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "11cf6b0d351278121eb77e1739b2ed99763e95bb70614b03d6078e345e74ef6e",
+        "soma.npy": "800fc7729cf6cb0e1b9adc9ab9342ea944d7f7b86c9a6981e7fe1b74c3196ac9",
+        "release.npy": "94e68c520271143b7175091bb4034d5e98ee67281615e4aa69c5cab390cf454a",
+        "weights.npy": "0143ba786370e674befff23a530fd4ab98e9a8b2788e74ec5bc76bbdc041eff6",
+        "body.npy": "1b5cd1c50cbed5ce198966c5f40662edc3d9698068a344aa3bfeb65c77977ec8"
+      }
+    },
+    "disabled": {
+      "record": "memory-terminal-disabled-20260910",
+      "complete_ticks": 10120,
+      "retention_tick": 8920,
+      "coefficients": {
+        "MBON07_A": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.000154361128807,
+          "initial_receiving": 0.21500000000000002,
+          "retained_receiving": 0.21500030757370403
+        },
+        "MBON07_B": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.19124999999999998,
+          "retained_receiving": 0.19124999999999998
+        },
+        "MBON07_C": {
+          "pairs": 64,
+          "initial_release": 1.0,
+          "retained_release": 1.0001614913344383,
+          "initial_receiving": 0.21437499999999998,
+          "retained_receiving": 0.21437532310519442
+        },
+        "MBON04_A": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998210296034813,
+          "initial_receiving": 0.11,
+          "retained_receiving": 0.10999980897283274
+        },
+        "MBON04_B": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 1.0,
+          "initial_receiving": 0.09875,
+          "retained_receiving": 0.09875
+        },
+        "MBON04_C": {
+          "pairs": 32,
+          "initial_release": 1.0,
+          "retained_release": 0.9998179897665977,
+          "initial_receiving": 0.09625,
+          "retained_receiving": 0.09624982116070248
+        }
+      },
+      "assumptions": {
+        "enabled": false,
+        "tau_kc": 64.0,
+        "tau_dopamine": 4.0,
+        "eta_credit": 0.1,
+        "uncovered_outputs": [
+          {
+            "root": "720575940606725131",
+            "compartment": "alpha1",
+            "terminals": [
+              55,
+              78
+            ]
+          },
+          {
+            "root": "720575940610214769",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              85
+            ]
+          },
+          {
+            "root": "720575940612910486",
+            "compartment": "alpha1",
+            "terminals": [
+              45,
+              78
+            ]
+          },
+          {
+            "root": "720575940613315309",
+            "compartment": "alpha1",
+            "terminals": [
+              63,
+              90
+            ]
+          },
+          {
+            "root": "720575940614252967",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              87
+            ]
+          },
+          {
+            "root": "720575940615764422",
+            "compartment": "gamma4",
+            "terminals": [
+              35
+            ]
+          },
+          {
+            "root": "720575940620734305",
+            "compartment": "alpha1",
+            "terminals": [
+              61,
+              84
+            ]
+          },
+          {
+            "root": "720575940623171268",
+            "compartment": "alpha1",
+            "terminals": [
+              53,
+              80
+            ]
+          },
+          {
+            "root": "720575940623943316",
+            "compartment": "alpha1",
+            "terminals": [
+              69,
+              91
+            ]
+          },
+          {
+            "root": "720575940624264718",
+            "compartment": "alpha1",
+            "terminals": [
+              54,
+              70
+            ]
+          },
+          {
+            "root": "720575940626086244",
+            "compartment": "gamma4",
+            "terminals": [
+              33
+            ]
+          },
+          {
+            "root": "720575940626143570",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940626793502",
+            "compartment": "alpha1",
+            "terminals": [
+              56,
+              81
+            ]
+          },
+          {
+            "root": "720575940627905223",
+            "compartment": "alpha1",
+            "terminals": [
+              51,
+              78
+            ]
+          },
+          {
+            "root": "720575940628085489",
+            "compartment": "alpha1",
+            "terminals": [
+              60,
+              89
+            ]
+          },
+          {
+            "root": "720575940634903397",
+            "compartment": "alpha1",
+            "terminals": [
+              48,
+              70
+            ]
+          },
+          {
+            "root": "720575940639441653",
+            "compartment": "alpha1",
+            "terminals": [
+              62,
+              87
+            ]
+          },
+          {
+            "root": "720575940644583534",
+            "compartment": "gamma4",
+            "terminals": [
+              29
+            ]
+          }
+        ],
+        "native": "Unchanged weak positive receiving and returning adaptation. No selected reward_hebb rule. Emissions use pre-update release.",
+        "dopamine": "Actual PAM11-to-KC or PAM07/PAM08-to-KC arrivals, contact-weighted and normalized per local receptor group. No DAN-to-MBON modulation surrogate.",
+        "limit": "Phenomenological terminal-group eligibility and receptor kinetics. Pair graph does not locate contacts within KC axonal compartments; no efficacy or timing calibration to flies.",
+        "implementation_sha256": "4d8fef3248f6346866b97854fda34b04d4a7c6666efa1481c9338889813e8966",
+        "configuration_sha256": "8ab158c86d8f443ec6f47f518e7f7508fc87179d867d211e35b9163eb03372ed"
+      },
+      "pre_food_spikes": {
+        "MBON07": 190,
+        "PAM11": 546,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 101,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 26,
+          "PAM11": 0,
+          "SMP353": 0,
+          "SMP108": 0,
+          "APL": 14,
+          "MBON04": 0,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.0,
+        "pump_j": 0.0,
+        "well_j": 0.0,
+        "energy_j": 83.66400000001647,
+        "seconds": 212.43678012499004
+      },
+      "artifacts": {
+        "manifest.json": "9f9ba3144f38f6aa90f22734d60b4c4563a6b861fc3e915d48ddf2fb54eda6df",
+        "summary.json": "65bcf5b843a1831942b2ef6668daf2e40047f8cc8862d80c4936372e2bfe2310",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "9b73c835b52164751c81375d273b1b45177e7b62df64c20819a39c54c6717cbe",
+        "soma.npy": "450d8dfd171dfe5f74ac7045ae96ffb8c1b7fcb894a82eaec066c4a04aa7bc95",
+        "release.npy": "df10e20cf5416d3b7b3b6a8755e7a0b6962480d7c0b0c0d08831967c7c60b004",
+        "weights.npy": "a761fbf68973e34a77f5e5dc4796cad68d448060d9cc3c497eb4530322a005df",
+        "body.npy": "8e022cd41f478990b307b81e7b91faf35470e0f94b4a0a0fd625f5295734de31"
+      }
+    }
+  },
+  "expression": {
+    "sham-A": {
+      "receiver": "memory-terminal-paired-20260910",
+      "donor": "memory-terminal-paired-20260910",
+      "cue": "A",
+      "well_available": true,
+      "changed_release": 0,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.6240000000000001,
+      "max_angle": 0.07933592766590608,
+      "spikes": {
+        "MBON07": 16,
+        "PAM11": 338,
+        "SMP353": 5,
+        "SMP108": 5,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": true,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "donor_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "212aba567aa8c457ee73bfbfb9d3ba6f5d206a7ca4f07b24f05841719fed7c29"
+    },
+    "unpairedrelease-A": {
+      "receiver": "memory-terminal-paired-20260910",
+      "donor": "memory-terminal-unpaired-20260910",
+      "cue": "A",
+      "well_available": true,
+      "changed_release": 104,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.0,
+      "max_angle": 3.360277230434548e-12,
+      "spikes": {
+        "MBON07": 26,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": null,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "donor_checkpoint_sha256": "11cf6b0d351278121eb77e1739b2ed99763e95bb70614b03d6078e345e74ef6e",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "714bf81f9fe6aabc3042b2a0f1a893e660a786a8f522ba0268bb8790252cee3b"
+    },
+    "pairedrelease-A": {
+      "receiver": "memory-terminal-unpaired-20260910",
+      "donor": "memory-terminal-paired-20260910",
+      "cue": "A",
+      "well_available": true,
+      "changed_release": 104,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.6240000000000001,
+      "max_angle": 0.07933592767409504,
+      "spikes": {
+        "MBON07": 16,
+        "PAM11": 338,
+        "SMP353": 5,
+        "SMP108": 5,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": null,
+      "input_checkpoint_sha256": "11cf6b0d351278121eb77e1739b2ed99763e95bb70614b03d6078e345e74ef6e",
+      "donor_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "991c65917a415125a1da1c7656a0001ff23e148bc63891e0606657381dd1b437"
+    },
+    "sham-C": {
+      "receiver": "memory-terminal-paired-20260910",
+      "donor": "memory-terminal-paired-20260910",
+      "cue": "C",
+      "well_available": true,
+      "changed_release": 0,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.0,
+      "max_angle": 3.360277230434548e-12,
+      "spikes": {
+        "MBON07": 26,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 15,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": null,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "donor_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "e4dd5839b62ff6834ac135d60bf1e1064194e089c28d2b16052a589cf3f5b883"
+    },
+    "dry-A": {
+      "receiver": "memory-terminal-paired-20260910",
+      "donor": "memory-terminal-paired-20260910",
+      "cue": "A",
+      "well_available": false,
+      "changed_release": 0,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.0,
+      "max_angle": 0.0955494600511306,
+      "spikes": {
+        "MBON07": 0,
+        "PAM11": 0,
+        "SMP353": 8,
+        "SMP108": 8,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": null,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "donor_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "2d9aad6652517998bbd3e19c432360af2b8886416c3961a196ddd36908b3d659"
+    },
+    "dry-B": {
+      "receiver": "memory-terminal-paired-20260910",
+      "donor": "memory-terminal-paired-20260910",
+      "cue": "B",
+      "well_available": false,
+      "changed_release": 0,
+      "changed_receiving_by_intervention": 0,
+      "well_j": 0.0,
+      "max_angle": 0.02727979818992832,
+      "spikes": {
+        "MBON07": 22,
+        "PAM11": 0,
+        "SMP353": 2,
+        "SMP108": 17,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "changed_release_during_probe": 96,
+      "changed_receiving_during_probe": 96,
+      "exact_sham": null,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "donor_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "4f2ec883f8716c439d2022f6b3ed7444155de265a04899cc9ca192732c6cf06d",
+      "trace_sha256": "1e9ef4823d8bdcd7640e9a1806fd156f03e5baee8fa72ee8b762e1cde9b83d6b"
+    }
+  },
+  "continuation": {
+    "intact": {
+      "receiver": "memory-terminal-paired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014407775789574839,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10963366154880716,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13593719275037563,
+          "feedback_events": 480,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012122445235654434,
+          "feedback_events": 744,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014330762521875,
+          "feedback_events": 768,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10984841969331305,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13611399257959775,
+          "feedback_events": 960,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002182593941037324,
+          "feedback_events": 960,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027276347377480928,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933247685345862,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 5,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 960,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "cf49a452d37699a6aa66869fd1da7a71dde879f72f661232f03bbe668d619552",
+        "soma.npy": "db9d876ba352ab6d21d5228348d35406d9a09096a1b03e0a2f77aa96c6c958b2",
+        "weights.npy": "d40d12c12a9f180b3d49bc44b3706e5b02fa47ea628315d7c59ce40405742afa",
+        "retention.paula": "f0488ff4308a4a055e1221dc13da8e513dd982afc5221fe0b7afb5ccf12dd02e",
+        "retention-body.npz": "9e4a1d93ee49eba3309241b3a10de4c3e44e4d69892c468a142eaed6072b2654",
+        "body.npy": "c2f0d6355dcbc565f95bfd4da5e4ba6c38db99963b7bfca4b6b9e69ec15b5339",
+        "probe-B.npz": "62d0f163d238f63aeb73b7d68205a946e1bcd6eff2e0aa5280bb61fe0cad18c6",
+        "probe-A.npz": "b718d59af9fc698cf4ffc65f3beca9105692d3241fe4fe7fa42e5bd25a9fddc0"
+      },
+      "course_spikes": {
+        "MBON07": 32,
+        "PAM11": 0,
+        "SMP353": 18,
+        "SMP108": 40,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "release_change": {
+        "MBON07_A": {
+          "start": 0.38485716464438335,
+          "end": 0.38488027919083834,
+          "changed_pairs": 64
+        },
+        "MBON04_B": {
+          "start": 1.0,
+          "end": 0.9999147057533264,
+          "changed_pairs": 32
+        }
+      }
+    },
+    "cut": {
+      "receiver": "memory-terminal-paired-20260910",
+      "cut": true,
+      "displaced": false,
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0122913874897235,
+          "feedback_events": 264,
+          "removed_events": 264
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014407775789574839,
+          "feedback_events": 288,
+          "removed_events": 288
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10963366154880716,
+          "feedback_events": 480,
+          "removed_events": 480
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13593719275037563,
+          "feedback_events": 480,
+          "removed_events": 480
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012122445235654434,
+          "feedback_events": 744,
+          "removed_events": 744
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014330762521875,
+          "feedback_events": 768,
+          "removed_events": 768
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10984841969331305,
+          "feedback_events": 960,
+          "removed_events": 960
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.13611399257959775,
+          "feedback_events": 960,
+          "removed_events": 960
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002182593941037324,
+          "feedback_events": 960,
+          "removed_events": 960
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027276347377480928,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933247685345862,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 5,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 960,
+      "removed_events": 960,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "cf49a452d37699a6aa66869fd1da7a71dde879f72f661232f03bbe668d619552",
+        "soma.npy": "1e8e79cde46414152d98b28ec3499ff72432f6080863e3af4c67ff14e63a8c53",
+        "weights.npy": "d40d12c12a9f180b3d49bc44b3706e5b02fa47ea628315d7c59ce40405742afa",
+        "retention.paula": "db7589b2c028412e5ecd817bcad5d3abbc09d3926eff61d336bcca5de397c9fb",
+        "retention-body.npz": "9e4a1d93ee49eba3309241b3a10de4c3e44e4d69892c468a142eaed6072b2654",
+        "body.npy": "c2f0d6355dcbc565f95bfd4da5e4ba6c38db99963b7bfca4b6b9e69ec15b5339",
+        "probe-B.npz": "d61a3e55d86e4cdd74976d86813ec0fb4d1ba01ecf9fa3be5df9de2a8e4f1ac1",
+        "probe-A.npz": "ee1d3d43aee3bd6468219e622707167c7c4afa0345b91aa2eedf793754ece6bf"
+      },
+      "course_spikes": {
+        "MBON07": 32,
+        "PAM11": 0,
+        "SMP353": 18,
+        "SMP108": 40,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "release_change": {
+        "MBON07_A": {
+          "start": 0.38485716464438335,
+          "end": 0.38488027919083834,
+          "changed_pairs": 64
+        },
+        "MBON04_B": {
+          "start": 1.0,
+          "end": 0.9999147057533264,
+          "changed_pairs": 32
+        }
+      }
+    },
+    "unpaired": {
+      "receiver": "memory-terminal-unpaired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "11cf6b0d351278121eb77e1739b2ed99763e95bb70614b03d6078e345e74ef6e",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "980ec9a898e14773b0e187b83ec4baff31df7cf296d0112bf7d5c50a845698e8",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012291387497642511,
+          "feedback_events": 264,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014407775797775513,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.01723942995871125,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012557101045563696,
+          "feedback_events": 288,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 15,
+            "PAM11": 0,
+            "SMP353": 1,
+            "SMP108": 11,
+            "APL": 9,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012318936398038232,
+          "feedback_events": 552,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 1,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.014434778078753265,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.017261873835166988,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.012568319170692349,
+          "feedback_events": 576,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 2.7679550703332346e-05,
+          "feedback_events": 576,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.027279773414539892,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 22,
+            "PAM11": 0,
+            "SMP353": 2,
+            "SMP108": 17,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.0,
+          "max_angle": -2.4783577430916117e-08,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 576,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "22320c530faf256f37f6268a7b0f22f745df45376ada42bbf4419abdeec267ab",
+        "soma.npy": "dd0d66bb46df7cab727951bf9a8b4b55f890277b1fae72b4d638be655aa0cf24",
+        "weights.npy": "dffd1c39dc22aaadeb9d8349ee911e8fd5754a3d175de22ca93a2a323d212989",
+        "retention.paula": "9074f0316010a32821e2347767050bbd1943f4f166708550894a25d1e3a19957",
+        "retention-body.npz": "b69f21ad6bff5fe5105556d6ccfbebf4732d04896b84eb69fd16cf73203b8d5f",
+        "body.npy": "acc4a5d8cdf7949e50d5a11a2f45034a9deff1c4343d0f44b8a1a5743fd74729",
+        "probe-B.npz": "9abb777f6fee85a014dfdef0886852f9f260e6a73e8c8d4808b72b3e7fecf243",
+        "probe-A.npz": "32666dd6abe480d0468e9d1619e21725a0f687a1473cf2c98726fb7d7026131c"
+      },
+      "course_spikes": {
+        "MBON07": 84,
+        "PAM11": 0,
+        "SMP353": 2,
+        "SMP108": 24,
+        "APL": 56,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "release_change": {
+        "MBON07_A": {
+          "start": 1.0001542023814443,
+          "end": 1.0002618208527565,
+          "changed_pairs": 64
+        },
+        "MBON04_B": {
+          "start": 1.0,
+          "end": 0.9999147057533264,
+          "changed_pairs": 32
+        }
+      }
+    }
+  },
+  "receptor_groups": [
+    {
+      "root": "720575940604050110",
+      "name": "alpha1",
+      "terminals": [
+        59,
+        86
+      ],
+      "receptor_ports": [
+        2,
+        10,
+        53
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263761,
+        1702986,
+        8342755
+      ],
+      "output_source_rows": [
+        49132,
+        49159
+      ]
+    },
+    {
+      "root": "720575940604466912",
+      "name": "alpha1",
+      "terminals": [
+        56,
+        78
+      ],
+      "receptor_ports": [
+        69
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        12686718
+      ],
+      "output_source_rows": [
+        76156,
+        76178
+      ]
+    },
+    {
+      "root": "720575940604505278",
+      "name": "alpha1",
+      "terminals": [
+        58,
+        81
+      ],
+      "receptor_ports": [
+        4,
+        36
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263762,
+        4100065
+      ],
+      "output_source_rows": [
+        80884,
+        80907
+      ]
+    },
+    {
+      "root": "720575940604576689",
+      "name": "alpha1",
+      "terminals": [
+        64,
+        81
+      ],
+      "receptor_ports": [
+        12
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        1703087
+      ],
+      "output_source_rows": [
+        86210,
+        86227
+      ]
+    },
+    {
+      "root": "720575940604860332",
+      "name": "gamma4",
+      "terminals": [
+        36
+      ],
+      "receptor_ports": [
+        13
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3181541
+      ],
+      "output_source_rows": [
+        115447
+      ]
+    },
+    {
+      "root": "720575940604924606",
+      "name": "alpha1",
+      "terminals": [
+        58,
+        83
+      ],
+      "receptor_ports": [
+        33,
+        108,
+        113
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4100064,
+        13844737,
+        14961951
+      ],
+      "output_source_rows": [
+        123560,
+        123585
+      ]
+    },
+    {
+      "root": "720575940605312945",
+      "name": "gamma4",
+      "terminals": [
+        76
+      ],
+      "receptor_ports": [
+        22,
+        59,
+        75,
+        79
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4180122,
+        10781965,
+        14456806,
+        14868682
+      ],
+      "output_source_rows": [
+        174386
+      ]
+    },
+    {
+      "root": "720575940605421670",
+      "name": "alpha1",
+      "terminals": [
+        49,
+        67
+      ],
+      "receptor_ports": [
+        2,
+        12,
+        13,
+        107
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263716,
+        1702952,
+        1881653,
+        13844693
+      ],
+      "output_source_rows": [
+        188965,
+        188983
+      ]
+    },
+    {
+      "root": "720575940605491302",
+      "name": "alpha1",
+      "terminals": [
+        60,
+        86
+      ],
+      "receptor_ports": [
+        2
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263718
+      ],
+      "output_source_rows": [
+        198725,
+        198751
+      ]
+    },
+    {
+      "root": "720575940606399068",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        15,
+        16,
+        29,
+        36,
+        42,
+        61,
+        63
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4671352,
+        5108283,
+        7805084,
+        8716186,
+        10142955,
+        14362497,
+        14456697
+      ],
+      "output_source_rows": [
+        330313
+      ]
+    },
+    {
+      "root": "720575940606851714",
+      "name": "alpha1",
+      "terminals": [
+        43,
+        60
+      ],
+      "receptor_ports": [
+        0,
+        11,
+        26,
+        86
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263730,
+        1881660,
+        3138470,
+        13844709
+      ],
+      "output_source_rows": [
+        416681,
+        416698
+      ]
+    },
+    {
+      "root": "720575940606853250",
+      "name": "gamma4",
+      "terminals": [
+        77
+      ],
+      "receptor_ports": [
+        28,
+        32
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        5190727,
+        5745287
+      ],
+      "output_source_rows": [
+        417219
+      ]
+    },
+    {
+      "root": "720575940606892674",
+      "name": "gamma4",
+      "terminals": [
+        78
+      ],
+      "receptor_ports": [
+        15,
+        44,
+        49,
+        53,
+        112,
+        125,
+        127,
+        128,
+        164,
+        169
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        1376477,
+        3282260,
+        3559945,
+        4212318,
+        9084690,
+        10551360,
+        10763373,
+        10781843,
+        14351614,
+        15033554
+      ],
+      "output_source_rows": [
+        421688
+      ]
+    },
+    {
+      "root": "720575940606893186",
+      "name": "gamma4",
+      "terminals": [
+        35
+      ],
+      "receptor_ports": [
+        2,
+        7,
+        11,
+        26,
+        30,
+        75
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571701,
+        1011274,
+        1601551,
+        4671368,
+        5902335,
+        14771203
+      ],
+      "output_source_rows": [
+        421838
+      ]
+    },
+    {
+      "root": "720575940606910850",
+      "name": "alpha1",
+      "terminals": [
+        71,
+        97
+      ],
+      "receptor_ports": [
+        63
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        8342830
+      ],
+      "output_source_rows": [
+        424103,
+        424129
+      ]
+    },
+    {
+      "root": "720575940606940425",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        63
+      ],
+      "receptor_ports": [
+        29,
+        62
+      ],
+      "receptor_weights": [
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        6112522,
+        12686733
+      ],
+      "output_source_rows": [
+        428712,
+        428727
+      ]
+    },
+    {
+      "root": "720575940606967730",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        11,
+        20,
+        34
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3282309,
+        4398228,
+        9107041
+      ],
+      "output_source_rows": [
+        431717
+      ]
+    },
+    {
+      "root": "720575940607038386",
+      "name": "gamma4",
+      "terminals": [
+        94
+      ],
+      "receptor_ports": [
+        25,
+        29,
+        38,
+        48,
+        53,
+        62,
+        66,
+        83,
+        91,
+        98,
+        102
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        3,
+        1,
+        1,
+        1,
+        5,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        3181543,
+        3282310,
+        4161392,
+        5190821,
+        5933895,
+        7285585,
+        7981706,
+        10781966,
+        12291923,
+        13628610,
+        14363461
+      ],
+      "output_source_rows": [
+        440724
+      ]
+    },
+    {
+      "root": "720575940607984651",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        17,
+        22,
+        27,
+        29,
+        52,
+        54
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3410712,
+        4671333,
+        5190685,
+        5745259,
+        10892588,
+        11399245
+      ],
+      "output_source_rows": [
+        560095
+      ]
+    },
+    {
+      "root": "720575940608177988",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        62
+      ],
+      "receptor_ports": [
+        22,
+        30,
+        73
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        3138564,
+        4100135,
+        12686762
+      ],
+      "output_source_rows": [
+        588408,
+        588422
+      ]
+    },
+    {
+      "root": "720575940608662485",
+      "name": "gamma4",
+      "terminals": [
+        33
+      ],
+      "receptor_ports": [
+        1,
+        6,
+        7,
+        68,
+        71
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        149568,
+        1601626,
+        1647047,
+        14549675,
+        14727874
+      ],
+      "output_source_rows": [
+        673632
+      ]
+    },
+    {
+      "root": "720575940608708875",
+      "name": "gamma4",
+      "terminals": [
+        91
+      ],
+      "receptor_ports": [
+        62,
+        81,
+        87,
+        90,
+        129,
+        133
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        7239876,
+        9106969,
+        10050366,
+        10781891,
+        14549615,
+        14725761
+      ],
+      "output_source_rows": [
+        678790
+      ]
+    },
+    {
+      "root": "720575940609836898",
+      "name": "alpha1",
+      "terminals": [
+        64,
+        88
+      ],
+      "receptor_ports": [
+        12,
+        29
+      ],
+      "receptor_weights": [
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        1703048,
+        3138579
+      ],
+      "output_source_rows": [
+        867900,
+        867924
+      ]
+    },
+    {
+      "root": "720575940609950869",
+      "name": "gamma4",
+      "terminals": [
+        25
+      ],
+      "receptor_ports": [
+        0,
+        27,
+        46,
+        48,
+        54,
+        63,
+        74
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78297,
+        4391057,
+        9084694,
+        10050318,
+        10551367,
+        12291844,
+        14727796
+      ],
+      "output_source_rows": [
+        889172
+      ]
+    },
+    {
+      "root": "720575940610159480",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        85
+      ],
+      "receptor_ports": [
+        22,
+        36,
+        42,
+        91
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3138589,
+        5148208,
+        6112567,
+        14961993
+      ],
+      "output_source_rows": [
+        925258,
+        925292
+      ]
+    },
+    {
+      "root": "720575940610323674",
+      "name": "gamma4",
+      "terminals": [
+        80
+      ],
+      "receptor_ports": [
+        8,
+        46,
+        50,
+        53,
+        77
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        1011312,
+        9106953,
+        10143004,
+        10763400,
+        14423717
+      ],
+      "output_source_rows": [
+        955686
+      ]
+    },
+    {
+      "root": "720575940610709106",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        31,
+        32,
+        37,
+        38,
+        40
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        12291833,
+        12553538,
+        14351607,
+        14549555,
+        15033551
+      ],
+      "output_source_rows": [
+        1047309
+      ]
+    },
+    {
+      "root": "720575940610856874",
+      "name": "alpha1",
+      "terminals": [
+        59,
+        82
+      ],
+      "receptor_ports": [
+        1
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263860
+      ],
+      "output_source_rows": [
+        1073171,
+        1073194
+      ]
+    },
+    {
+      "root": "720575940611102578",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        76
+      ],
+      "receptor_ports": [
+        24
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3138587
+      ],
+      "output_source_rows": [
+        1135878,
+        1135903
+      ]
+    },
+    {
+      "root": "720575940611213774",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        68
+      ],
+      "receptor_ports": [
+        6,
+        26,
+        35,
+        77
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        263874,
+        3138636,
+        4100199,
+        12686827
+      ],
+      "output_source_rows": [
+        1163677,
+        1163694
+      ]
+    },
+    {
+      "root": "720575940611454833",
+      "name": "gamma4",
+      "terminals": [
+        88
+      ],
+      "receptor_ports": [
+        32,
+        50,
+        70,
+        74,
+        75,
+        89,
+        93
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4212405,
+        7239908,
+        10050412,
+        10781938,
+        10892678,
+        14362616,
+        14868661
+      ],
+      "output_source_rows": [
+        1226281
+      ]
+    },
+    {
+      "root": "720575940611489010",
+      "name": "gamma4",
+      "terminals": [
+        86
+      ],
+      "receptor_ports": [
+        10,
+        12,
+        34,
+        45,
+        80
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1011323,
+        1376499,
+        5190761,
+        6549311,
+        13628554
+      ],
+      "output_source_rows": [
+        1233067
+      ]
+    },
+    {
+      "root": "720575940611943976",
+      "name": "gamma4",
+      "terminals": [
+        32
+      ],
+      "receptor_ports": [
+        7,
+        51,
+        57,
+        76,
+        77
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        977518,
+        9084655,
+        10142932,
+        14725704,
+        14771167
+      ],
+      "output_source_rows": [
+        1387169
+      ]
+    },
+    {
+      "root": "720575940611946482",
+      "name": "gamma4",
+      "terminals": [
+        40
+      ],
+      "receptor_ports": [
+        0,
+        9
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78427,
+        1679380
+      ],
+      "output_source_rows": [
+        1388008
+      ]
+    },
+    {
+      "root": "720575940612590754",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        1,
+        21,
+        55,
+        57
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571705,
+        5902348,
+        14549569,
+        15033560
+      ],
+      "output_source_rows": [
+        1591854
+      ]
+    },
+    {
+      "root": "720575940613383633",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        1,
+        20,
+        42,
+        47
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        571811,
+        4671468,
+        9839669,
+        10763506
+      ],
+      "output_source_rows": [
+        1867340
+      ]
+    },
+    {
+      "root": "720575940613757224",
+      "name": "alpha1",
+      "terminals": [
+        43,
+        64
+      ],
+      "receptor_ports": [
+        4,
+        8,
+        14,
+        30,
+        66
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        263810,
+        592546,
+        1881691,
+        3138546,
+        8342795
+      ],
+      "output_source_rows": [
+        2012310,
+        2012331
+      ]
+    },
+    {
+      "root": "720575940613797295",
+      "name": "gamma4",
+      "terminals": [
+        62
+      ],
+      "receptor_ports": [
+        0,
+        10,
+        17,
+        33,
+        77,
+        79,
+        101,
+        102,
+        105
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        5,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78412,
+        1647028,
+        3282308,
+        5902451,
+        10551450,
+        10781964,
+        14351681,
+        14363458,
+        15033618
+      ],
+      "output_source_rows": [
+        2026780
+      ]
+    },
+    {
+      "root": "720575940614143942",
+      "name": "alpha1",
+      "terminals": [
+        46,
+        66
+      ],
+      "receptor_ports": [
+        38,
+        50,
+        81
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        6112601,
+        8342855,
+        12686821
+      ],
+      "output_source_rows": [
+        2132852,
+        2132872
+      ]
+    },
+    {
+      "root": "720575940614348394",
+      "name": "gamma4",
+      "terminals": [
+        39
+      ],
+      "receptor_ports": [
+        1
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        571697
+      ],
+      "output_source_rows": [
+        2202375
+      ]
+    },
+    {
+      "root": "720575940614354619",
+      "name": "alpha1",
+      "terminals": [
+        60,
+        73
+      ],
+      "receptor_ports": [
+        15,
+        26
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1702985,
+        3138499
+      ],
+      "output_source_rows": [
+        2204746,
+        2204759
+      ]
+    },
+    {
+      "root": "720575940614393250",
+      "name": "alpha1",
+      "terminals": [
+        47,
+        70
+      ],
+      "receptor_ports": [
+        61
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        8342840
+      ],
+      "output_source_rows": [
+        2223091,
+        2223114
+      ]
+    },
+    {
+      "root": "720575940614667926",
+      "name": "alpha1",
+      "terminals": [
+        56,
+        80
+      ],
+      "receptor_ports": [
+        4
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263744
+      ],
+      "output_source_rows": [
+        2318179,
+        2318203
+      ]
+    },
+    {
+      "root": "720575940615320076",
+      "name": "gamma4",
+      "terminals": [
+        29
+      ],
+      "receptor_ports": [
+        35,
+        49,
+        56,
+        59,
+        77
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        7285414,
+        10142918,
+        10892584,
+        11181163,
+        14771159
+      ],
+      "output_source_rows": [
+        2571721
+      ]
+    },
+    {
+      "root": "720575940615395414",
+      "name": "alpha1",
+      "terminals": [
+        49,
+        68
+      ],
+      "receptor_ports": [
+        49,
+        97
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        5148085,
+        12686654
+      ],
+      "output_source_rows": [
+        2598607,
+        2598626
+      ]
+    },
+    {
+      "root": "720575940615528251",
+      "name": "alpha1",
+      "terminals": [
+        57,
+        82
+      ],
+      "receptor_ports": [
+        4,
+        81
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        592551,
+        12686758
+      ],
+      "output_source_rows": [
+        2645034,
+        2645059
+      ]
+    },
+    {
+      "root": "720575940615885661",
+      "name": "alpha1",
+      "terminals": [
+        52,
+        70
+      ],
+      "receptor_ports": [
+        9,
+        27
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1703043,
+        4100151
+      ],
+      "output_source_rows": [
+        2766989,
+        2767007
+      ]
+    },
+    {
+      "root": "720575940615978802",
+      "name": "gamma4",
+      "terminals": [
+        78
+      ],
+      "receptor_ports": [
+        7,
+        37,
+        41,
+        53,
+        81,
+        83
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        977605,
+        7239891,
+        7805125,
+        10143044,
+        14423759,
+        14725776
+      ],
+      "output_source_rows": [
+        2805712
+      ]
+    },
+    {
+      "root": "720575940616009729",
+      "name": "alpha1",
+      "terminals": [
+        72,
+        98
+      ],
+      "receptor_ports": [
+        16
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3138415
+      ],
+      "output_source_rows": [
+        2816391,
+        2816417
+      ]
+    },
+    {
+      "root": "720575940616087323",
+      "name": "gamma4",
+      "terminals": [
+        28
+      ],
+      "receptor_ports": [
+        6,
+        34,
+        42,
+        50
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1601581,
+        6549327,
+        7805120,
+        10143029
+      ],
+      "output_source_rows": [
+        2848254
+      ]
+    },
+    {
+      "root": "720575940617043713",
+      "name": "alpha1",
+      "terminals": [
+        62,
+        78
+      ],
+      "receptor_ports": [
+        90
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        12686727
+      ],
+      "output_source_rows": [
+        3208198,
+        3208214
+      ]
+    },
+    {
+      "root": "720575940617176413",
+      "name": "gamma4",
+      "terminals": [
+        54
+      ],
+      "receptor_ports": [
+        0,
+        9,
+        15,
+        68
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78377,
+        1679331,
+        3181516,
+        15033597
+      ],
+      "output_source_rows": [
+        3252503
+      ]
+    },
+    {
+      "root": "720575940617411451",
+      "name": "alpha1",
+      "terminals": [
+        46,
+        75
+      ],
+      "receptor_ports": [
+        3,
+        52,
+        76
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263842,
+        8342826,
+        12686787
+      ],
+      "output_source_rows": [
+        3349429,
+        3349458
+      ]
+    },
+    {
+      "root": "720575940618529044",
+      "name": "alpha1",
+      "terminals": [
+        61,
+        83
+      ],
+      "receptor_ports": [
+        12
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        1703022
+      ],
+      "output_source_rows": [
+        3859475,
+        3859497
+      ]
+    },
+    {
+      "root": "720575940618683328",
+      "name": "alpha1",
+      "terminals": [
+        71,
+        101
+      ],
+      "receptor_ports": [
+        2,
+        41
+      ],
+      "receptor_weights": [
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        263867,
+        6112598
+      ],
+      "output_source_rows": [
+        3927004,
+        3927034
+      ]
+    },
+    {
+      "root": "720575940618707183",
+      "name": "alpha1",
+      "terminals": [
+        63,
+        89
+      ],
+      "receptor_ports": [
+        16,
+        81
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3138514,
+        13844760
+      ],
+      "output_source_rows": [
+        3936074,
+        3936100
+      ]
+    },
+    {
+      "root": "720575940618924965",
+      "name": "gamma4",
+      "terminals": [
+        72
+      ],
+      "receptor_ports": [
+        26,
+        35,
+        79,
+        80
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        4161387,
+        5434184,
+        14423791,
+        14549665
+      ],
+      "output_source_rows": [
+        4017663
+      ]
+    },
+    {
+      "root": "720575940619155541",
+      "name": "alpha1",
+      "terminals": [
+        69,
+        93
+      ],
+      "receptor_ports": [
+        39,
+        92
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        6112472,
+        13844681
+      ],
+      "output_source_rows": [
+        4125638,
+        4125662
+      ]
+    },
+    {
+      "root": "720575940619197899",
+      "name": "alpha1",
+      "terminals": [
+        61,
+        82
+      ],
+      "receptor_ports": [
+        22
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3138634
+      ],
+      "output_source_rows": [
+        4142057,
+        4142078
+      ]
+    },
+    {
+      "root": "720575940619205103",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        75
+      ],
+      "receptor_ports": [
+        16,
+        32,
+        61
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1881739,
+        4100213,
+        8342867
+      ],
+      "output_source_rows": [
+        4144359,
+        4144383
+      ]
+    },
+    {
+      "root": "720575940619604134",
+      "name": "alpha1",
+      "terminals": [
+        50,
+        79
+      ],
+      "receptor_ports": [
+        13,
+        15,
+        18
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        1702979,
+        1881669,
+        3138491
+      ],
+      "output_source_rows": [
+        4284945,
+        4284974
+      ]
+    },
+    {
+      "root": "720575940619668577",
+      "name": "alpha1",
+      "terminals": [
+        57,
+        85
+      ],
+      "receptor_ports": [
+        40,
+        46
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        5148091,
+        6112477
+      ],
+      "output_source_rows": [
+        4317791,
+        4317819
+      ]
+    },
+    {
+      "root": "720575940619723088",
+      "name": "gamma4",
+      "terminals": [
+        27
+      ],
+      "receptor_ports": [
+        4,
+        8,
+        24,
+        34,
+        45
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571771,
+        1646999,
+        6549342,
+        9384056,
+        10781926
+      ],
+      "output_source_rows": [
+        4347821
+      ]
+    },
+    {
+      "root": "720575940620156692",
+      "name": "alpha1",
+      "terminals": [
+        50,
+        71
+      ],
+      "receptor_ports": [
+        20,
+        91
+      ],
+      "receptor_weights": [
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        3138532,
+        13844786
+      ],
+      "output_source_rows": [
+        4581023,
+        4581044
+      ]
+    },
+    {
+      "root": "720575940620600700",
+      "name": "gamma4",
+      "terminals": [
+        29
+      ],
+      "receptor_ports": [
+        2,
+        13
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571783,
+        4212412
+      ],
+      "output_source_rows": [
+        4813168
+      ]
+    },
+    {
+      "root": "720575940620684014",
+      "name": "gamma4",
+      "terminals": [
+        238
+      ],
+      "receptor_ports": [
+        16,
+        23,
+        24,
+        48,
+        51,
+        65,
+        66,
+        86,
+        119,
+        153,
+        160,
+        200,
+        207,
+        216
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        2,
+        2,
+        1,
+        1,
+        3,
+        2,
+        1,
+        1,
+        1,
+        4,
+        1
+      ],
+      "receptor_source_rows": [
+        1011320,
+        1646961,
+        1679297,
+        3181482,
+        3410779,
+        4180039,
+        4212362,
+        5933826,
+        7981625,
+        10551395,
+        11010119,
+        13628552,
+        14363396,
+        14549599
+      ],
+      "output_source_rows": [
+        4863582
+      ]
+    },
+    {
+      "root": "720575940620746662",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        79
+      ],
+      "receptor_ports": [
+        2
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263859
+      ],
+      "output_source_rows": [
+        4908695,
+        4908720
+      ]
+    },
+    {
+      "root": "720575940620810316",
+      "name": "alpha1",
+      "terminals": [
+        45,
+        65
+      ],
+      "receptor_ports": [
+        12,
+        36
+      ],
+      "receptor_weights": [
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        1881645,
+        4100005
+      ],
+      "output_source_rows": [
+        4943139,
+        4943159
+      ]
+    },
+    {
+      "root": "720575940620959256",
+      "name": "gamma4",
+      "terminals": [
+        27
+      ],
+      "receptor_ports": [
+        11,
+        40,
+        51
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3282246,
+        9106882,
+        10781811
+      ],
+      "output_source_rows": [
+        5033511
+      ]
+    },
+    {
+      "root": "720575940621017840",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        16,
+        61
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3410780,
+        14771244
+      ],
+      "output_source_rows": [
+        5068582
+      ]
+    },
+    {
+      "root": "720575940621097855",
+      "name": "gamma4",
+      "terminals": [
+        73
+      ],
+      "receptor_ports": [
+        0,
+        21,
+        23,
+        51,
+        52,
+        72,
+        75
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78389,
+        4161378,
+        4180098,
+        9839651,
+        10143075,
+        14362622,
+        14423778
+      ],
+      "output_source_rows": [
+        5116534
+      ]
+    },
+    {
+      "root": "720575940621163021",
+      "name": "alpha1",
+      "terminals": [
+        41,
+        75
+      ],
+      "receptor_ports": [
+        2,
+        11,
+        20,
+        26,
+        46,
+        78
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263679,
+        1702922,
+        3138421,
+        4099970,
+        8342685,
+        13844646
+      ],
+      "output_source_rows": [
+        5162945,
+        5162979
+      ]
+    },
+    {
+      "root": "720575940621290017",
+      "name": "gamma4",
+      "terminals": [
+        32
+      ],
+      "receptor_ports": [
+        27,
+        34
+      ],
+      "receptor_weights": [
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        5745267,
+        7805072
+      ],
+      "output_source_rows": [
+        5228734
+      ]
+    },
+    {
+      "root": "720575940621553535",
+      "name": "gamma4",
+      "terminals": [
+        42
+      ],
+      "receptor_ports": [
+        22,
+        26,
+        28,
+        34,
+        39,
+        43,
+        84
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4671441,
+        5108351,
+        5190808,
+        6549354,
+        7285570,
+        7805142,
+        14727856
+      ],
+      "output_source_rows": [
+        5393948
+      ]
+    },
+    {
+      "root": "720575940621576063",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        71
+      ],
+      "receptor_ports": [
+        8,
+        37,
+        43,
+        83
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        1881715,
+        5148212,
+        6112568,
+        12686789
+      ],
+      "output_source_rows": [
+        5408458,
+        5408481
+      ]
+    },
+    {
+      "root": "720575940621688926",
+      "name": "gamma4",
+      "terminals": [
+        36
+      ],
+      "receptor_ports": [
+        4,
+        25,
+        42,
+        51
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        977530,
+        5190711,
+        8782189,
+        10763361
+      ],
+      "output_source_rows": [
+        5485643
+      ]
+    },
+    {
+      "root": "720575940621817322",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        89
+      ],
+      "receptor_ports": [
+        4,
+        9
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263889,
+        1703110
+      ],
+      "output_source_rows": [
+        5579908,
+        5579943
+      ]
+    },
+    {
+      "root": "720575940621892829",
+      "name": "gamma4",
+      "terminals": [
+        37
+      ],
+      "receptor_ports": [
+        3,
+        9,
+        12,
+        13,
+        20,
+        24,
+        35
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        168988,
+        977576,
+        1601569,
+        1646954,
+        3181477,
+        4391074,
+        6549299
+      ],
+      "output_source_rows": [
+        5621475
+      ]
+    },
+    {
+      "root": "720575940621966827",
+      "name": "alpha1",
+      "terminals": [
+        56,
+        79
+      ],
+      "receptor_ports": [
+        106
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        13844888
+      ],
+      "output_source_rows": [
+        5663288,
+        5663311
+      ]
+    },
+    {
+      "root": "720575940622229836",
+      "name": "alpha1",
+      "terminals": [
+        65,
+        92
+      ],
+      "receptor_ports": [
+        9,
+        49,
+        100
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        592557,
+        6112554,
+        14961983
+      ],
+      "output_source_rows": [
+        5830699,
+        5830726
+      ]
+    },
+    {
+      "root": "720575940622232458",
+      "name": "gamma4",
+      "terminals": [
+        70
+      ],
+      "receptor_ports": [
+        17,
+        49,
+        64,
+        67
+      ],
+      "receptor_weights": [
+        1,
+        3,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3181531,
+        10143083,
+        13628600,
+        14363447
+      ],
+      "output_source_rows": [
+        5831355
+      ]
+    },
+    {
+      "root": "720575940622548487",
+      "name": "alpha1",
+      "terminals": [
+        61,
+        86
+      ],
+      "receptor_ports": [
+        6,
+        82
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1702920,
+        13844644
+      ],
+      "output_source_rows": [
+        6025951,
+        6025976
+      ]
+    },
+    {
+      "root": "720575940622558941",
+      "name": "gamma4",
+      "terminals": [
+        33
+      ],
+      "receptor_ports": [
+        3,
+        70
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        149511,
+        14868599
+      ],
+      "output_source_rows": [
+        6030599
+      ]
+    },
+    {
+      "root": "720575940622559669",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        81
+      ],
+      "receptor_ports": [
+        26,
+        37
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4100187,
+        6112592
+      ],
+      "output_source_rows": [
+        6031172,
+        6031199
+      ]
+    },
+    {
+      "root": "720575940622629193",
+      "name": "alpha1",
+      "terminals": [
+        69,
+        97
+      ],
+      "receptor_ports": [
+        3,
+        7,
+        13,
+        52
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263826,
+        592556,
+        1703034,
+        8342812
+      ],
+      "output_source_rows": [
+        6064707,
+        6064735
+      ]
+    },
+    {
+      "root": "720575940622748868",
+      "name": "gamma4",
+      "terminals": [
+        38
+      ],
+      "receptor_ports": [
+        1,
+        14,
+        60,
+        62,
+        64
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        168975,
+        3282273,
+        14362537,
+        14423707,
+        14771224
+      ],
+      "output_source_rows": [
+        6148079
+      ]
+    },
+    {
+      "root": "720575940622813418",
+      "name": "gamma4",
+      "terminals": [
+        83
+      ],
+      "receptor_ports": [
+        0,
+        14,
+        15,
+        27,
+        51,
+        54
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78336,
+        3181479,
+        3410775,
+        7239871,
+        10763409,
+        10781878
+      ],
+      "output_source_rows": [
+        6186067
+      ]
+    },
+    {
+      "root": "720575940623003917",
+      "name": "gamma4",
+      "terminals": [
+        32
+      ],
+      "receptor_ports": [
+        3,
+        13,
+        18,
+        35
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1601578,
+        4180049,
+        5190769,
+        10143023
+      ],
+      "output_source_rows": [
+        6292451
+      ]
+    },
+    {
+      "root": "720575940623009549",
+      "name": "gamma4",
+      "terminals": [
+        52
+      ],
+      "receptor_ports": [
+        2,
+        24,
+        62
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571744,
+        5108322,
+        14727828
+      ],
+      "output_source_rows": [
+        6297593
+      ]
+    },
+    {
+      "root": "720575940623067114",
+      "name": "gamma4",
+      "terminals": [
+        92
+      ],
+      "receptor_ports": [
+        49,
+        52,
+        85
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        7805161,
+        8782319,
+        13628630
+      ],
+      "output_source_rows": [
+        6331840
+      ]
+    },
+    {
+      "root": "720575940623191334",
+      "name": "gamma4",
+      "terminals": [
+        35
+      ],
+      "receptor_ports": [
+        8,
+        29,
+        46,
+        56,
+        69
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        977601,
+        5190781,
+        10050387,
+        12553491,
+        14771268
+      ],
+      "output_source_rows": [
+        6425997
+      ]
+    },
+    {
+      "root": "720575940623331475",
+      "name": "alpha1",
+      "terminals": [
+        63,
+        93
+      ],
+      "receptor_ports": [
+        51
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        8342738
+      ],
+      "output_source_rows": [
+        6510162,
+        6510192
+      ]
+    },
+    {
+      "root": "720575940623368940",
+      "name": "gamma4",
+      "terminals": [
+        92
+      ],
+      "receptor_ports": [
+        40
+      ],
+      "receptor_weights": [
+        2
+      ],
+      "receptor_source_rows": [
+        7981623
+      ],
+      "output_source_rows": [
+        6530879
+      ]
+    },
+    {
+      "root": "720575940623438571",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        23,
+        27,
+        40
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        4671403,
+        5190755,
+        7239869
+      ],
+      "output_source_rows": [
+        6574543
+      ]
+    },
+    {
+      "root": "720575940623444203",
+      "name": "alpha1",
+      "terminals": [
+        61,
+        82
+      ],
+      "receptor_ports": [
+        8,
+        71
+      ],
+      "receptor_weights": [
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        592539,
+        8342771
+      ],
+      "output_source_rows": [
+        6582882,
+        6582903
+      ]
+    },
+    {
+      "root": "720575940623472201",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        78
+      ],
+      "receptor_ports": [
+        77,
+        90
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        12686646,
+        13844674
+      ],
+      "output_source_rows": [
+        6605811,
+        6605835
+      ]
+    },
+    {
+      "root": "720575940623488270",
+      "name": "gamma4",
+      "terminals": [
+        44
+      ],
+      "receptor_ports": [
+        7,
+        14,
+        25,
+        26,
+        29,
+        34
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1679309,
+        2443557,
+        4391085,
+        4398196,
+        4671416,
+        5190771
+      ],
+      "output_source_rows": [
+        6615887
+      ]
+    },
+    {
+      "root": "720575940623738807",
+      "name": "alpha1",
+      "terminals": [
+        52,
+        78
+      ],
+      "receptor_ports": [
+        13
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3138619
+      ],
+      "output_source_rows": [
+        6752575,
+        6752601
+      ]
+    },
+    {
+      "root": "720575940624041545",
+      "name": "alpha1",
+      "terminals": [
+        62,
+        82
+      ],
+      "receptor_ports": [
+        99
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        13844675
+      ],
+      "output_source_rows": [
+        6928236,
+        6928256
+      ]
+    },
+    {
+      "root": "720575940624265572",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        7,
+        12,
+        18,
+        20,
+        61
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        2443583,
+        4391101,
+        5108347,
+        5190799,
+        14771285
+      ],
+      "output_source_rows": [
+        7063793
+      ]
+    },
+    {
+      "root": "720575940624277040",
+      "name": "alpha1",
+      "terminals": [
+        62,
+        84
+      ],
+      "receptor_ports": [
+        15
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        3138434
+      ],
+      "output_source_rows": [
+        7071673,
+        7071695
+      ]
+    },
+    {
+      "root": "720575940624941838",
+      "name": "gamma4",
+      "terminals": [
+        81
+      ],
+      "receptor_ports": [
+        23,
+        41,
+        55,
+        78,
+        80
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4180050,
+        7285520,
+        10143024,
+        14362566,
+        14423735
+      ],
+      "output_source_rows": [
+        7449923
+      ]
+    },
+    {
+      "root": "720575940625059917",
+      "name": "alpha1",
+      "terminals": [
+        55,
+        80
+      ],
+      "receptor_ports": [
+        4,
+        90
+      ],
+      "receptor_weights": [
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        263695,
+        13844676
+      ],
+      "output_source_rows": [
+        7532801,
+        7532826
+      ]
+    },
+    {
+      "root": "720575940625325630",
+      "name": "gamma4",
+      "terminals": [
+        23
+      ],
+      "receptor_ports": [
+        6,
+        16,
+        22,
+        26,
+        44,
+        51,
+        58,
+        59,
+        91
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1011243,
+        3410724,
+        4179982,
+        4398149,
+        7981570,
+        9084664,
+        10050286,
+        10142941,
+        14868555
+      ],
+      "output_source_rows": [
+        7659261
+      ]
+    },
+    {
+      "root": "720575940625513616",
+      "name": "alpha1",
+      "terminals": [
+        69,
+        94
+      ],
+      "receptor_ports": [
+        87,
+        96
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        13844716,
+        14961935
+      ],
+      "output_source_rows": [
+        7769176,
+        7769201
+      ]
+    },
+    {
+      "root": "720575940625646876",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        1,
+        15,
+        28,
+        40,
+        55
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        2,
+        3
+      ],
+      "receptor_source_rows": [
+        78356,
+        3282286,
+        6549328,
+        11181245,
+        14423743
+      ],
+      "output_source_rows": [
+        7840114
+      ]
+    },
+    {
+      "root": "720575940625663674",
+      "name": "gamma4",
+      "terminals": [
+        36
+      ],
+      "receptor_ports": [
+        0,
+        4,
+        18,
+        21,
+        57
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        571718,
+        1376491,
+        4212344,
+        5108305,
+        14771217
+      ],
+      "output_source_rows": [
+        7851830
+      ]
+    },
+    {
+      "root": "720575940625942590",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        24,
+        38,
+        43,
+        65,
+        67
+      ],
+      "receptor_weights": [
+        3,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        6549254,
+        8782177,
+        9839567,
+        14456686,
+        14549539
+      ],
+      "output_source_rows": [
+        8008842
+      ]
+    },
+    {
+      "root": "720575940626083940",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        7,
+        25,
+        43,
+        48,
+        69,
+        71,
+        73
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1011260,
+        4179994,
+        6549261,
+        7239829,
+        10763363,
+        10781834,
+        11181193
+      ],
+      "output_source_rows": [
+        8114964
+      ]
+    },
+    {
+      "root": "720575940626199580",
+      "name": "gamma4",
+      "terminals": [
+        25
+      ],
+      "receptor_ports": [
+        12,
+        45,
+        54,
+        55,
+        79
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1679224,
+        7981553,
+        10050271,
+        10142925,
+        14423648
+      ],
+      "output_source_rows": [
+        8176691
+      ]
+    },
+    {
+      "root": "720575940626536714",
+      "name": "gamma4",
+      "terminals": [
+        29
+      ],
+      "receptor_ports": [
+        0,
+        30,
+        31,
+        36,
+        49,
+        73
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        149523,
+        5933837,
+        5935669,
+        6549318,
+        9839619,
+        14362563
+      ],
+      "output_source_rows": [
+        8356380
+      ]
+    },
+    {
+      "root": "720575940626948485",
+      "name": "gamma4",
+      "terminals": [
+        26
+      ],
+      "receptor_ports": [
+        0,
+        3,
+        8,
+        36,
+        48,
+        75
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78394,
+        571785,
+        977631,
+        7285573,
+        10892687,
+        14868670
+      ],
+      "output_source_rows": [
+        8593001
+      ]
+    },
+    {
+      "root": "720575940626991771",
+      "name": "gamma4",
+      "terminals": [
+        41
+      ],
+      "receptor_ports": [
+        0,
+        3,
+        5,
+        8,
+        18,
+        34
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        149491,
+        977549,
+        1376484,
+        1679267,
+        4212327,
+        9084697
+      ],
+      "output_source_rows": [
+        8633373
+      ]
+    },
+    {
+      "root": "720575940627045636",
+      "name": "gamma4",
+      "terminals": [
+        33
+      ],
+      "receptor_ports": [
+        6,
+        24,
+        58
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1679303,
+        5108318,
+        14362561
+      ],
+      "output_source_rows": [
+        8668741
+      ]
+    },
+    {
+      "root": "720575940627198799",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        68
+      ],
+      "receptor_ports": [
+        4,
+        10,
+        24,
+        30
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263828,
+        1881705,
+        3138568,
+        4100146
+      ],
+      "output_source_rows": [
+        8785471,
+        8785491
+      ]
+    },
+    {
+      "root": "720575940627235594",
+      "name": "alpha1",
+      "terminals": [
+        52,
+        74
+      ],
+      "receptor_ports": [
+        2,
+        13,
+        23,
+        33,
+        40
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        263795,
+        1703017,
+        3138526,
+        4100097,
+        5148169
+      ],
+      "output_source_rows": [
+        8809004,
+        8809026
+      ]
+    },
+    {
+      "root": "720575940627351751",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        0,
+        12,
+        47,
+        48
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        149506,
+        3559961,
+        14362540,
+        14423709
+      ],
+      "output_source_rows": [
+        8903700
+      ]
+    },
+    {
+      "root": "720575940627491861",
+      "name": "gamma4",
+      "terminals": [
+        19
+      ],
+      "receptor_ports": [
+        17,
+        29,
+        38,
+        41,
+        57,
+        70
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3181396,
+        5902297,
+        7981549,
+        9106879,
+        11181164,
+        14771163
+      ],
+      "output_source_rows": [
+        8988222
+      ]
+    },
+    {
+      "root": "720575940627493141",
+      "name": "gamma4",
+      "terminals": [
+        35
+      ],
+      "receptor_ports": [
+        13,
+        26,
+        65,
+        88
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "receptor_source_rows": [
+        1679312,
+        3559970,
+        10050374,
+        14549619
+      ],
+      "output_source_rows": [
+        8989134
+      ]
+    },
+    {
+      "root": "720575940627626695",
+      "name": "alpha1",
+      "terminals": [
+        59,
+        81
+      ],
+      "receptor_ports": [
+        8,
+        65,
+        110
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        592531,
+        8342762,
+        13844744
+      ],
+      "output_source_rows": [
+        9074629,
+        9074651
+      ]
+    },
+    {
+      "root": "720575940627667355",
+      "name": "alpha1",
+      "terminals": [
+        56,
+        79
+      ],
+      "receptor_ports": [
+        21,
+        33,
+        50
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3138605,
+        4100176,
+        6112581
+      ],
+      "output_source_rows": [
+        9098307,
+        9098330
+      ]
+    },
+    {
+      "root": "720575940628128079",
+      "name": "gamma4",
+      "terminals": [
+        37
+      ],
+      "receptor_ports": [
+        10,
+        71
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1601602,
+        12553520
+      ],
+      "output_source_rows": [
+        9404387
+      ]
+    },
+    {
+      "root": "720575940628137969",
+      "name": "alpha1",
+      "terminals": [
+        57,
+        76
+      ],
+      "receptor_ports": [
+        11
+      ],
+      "receptor_weights": [
+        2
+      ],
+      "receptor_source_rows": [
+        1703111
+      ],
+      "output_source_rows": [
+        9412841,
+        9412860
+      ]
+    },
+    {
+      "root": "720575940628226604",
+      "name": "alpha1",
+      "terminals": [
+        64,
+        81
+      ],
+      "receptor_ports": [
+        30,
+        48,
+        106
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4099987,
+        6112453,
+        12686638
+      ],
+      "output_source_rows": [
+        9466377,
+        9466394
+      ]
+    },
+    {
+      "root": "720575940628240122",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        69
+      ],
+      "receptor_ports": [
+        4,
+        51
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        263788,
+        8342778
+      ],
+      "output_source_rows": [
+        9475206,
+        9475227
+      ]
+    },
+    {
+      "root": "720575940628408055",
+      "name": "gamma4",
+      "terminals": [
+        27
+      ],
+      "receptor_ports": [
+        4,
+        10,
+        21,
+        23,
+        24,
+        38,
+        67
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571736,
+        977586,
+        2443551,
+        3181485,
+        3282277,
+        5190765,
+        14362554
+      ],
+      "output_source_rows": [
+        9591931
+      ]
+    },
+    {
+      "root": "720575940628685059",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        32,
+        51
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        8782242,
+        14771250
+      ],
+      "output_source_rows": [
+        9745208
+      ]
+    },
+    {
+      "root": "720575940628725455",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        22,
+        43,
+        45,
+        63,
+        65
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4212353,
+        10050338,
+        10143000,
+        14549584,
+        14727816
+      ],
+      "output_source_rows": [
+        9767604
+      ]
+    },
+    {
+      "root": "720575940628829148",
+      "name": "alpha1",
+      "terminals": [
+        58,
+        82
+      ],
+      "receptor_ports": [
+        21,
+        31,
+        49
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4100201,
+        6112609,
+        8342861
+      ],
+      "output_source_rows": [
+        9835914,
+        9835938
+      ]
+    },
+    {
+      "root": "720575940628863036",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        72
+      ],
+      "receptor_ports": [
+        7,
+        88
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1702936,
+        13844667
+      ],
+      "output_source_rows": [
+        9854217,
+        9854238
+      ]
+    },
+    {
+      "root": "720575940629072999",
+      "name": "gamma4",
+      "terminals": [
+        76
+      ],
+      "receptor_ports": [
+        7,
+        14,
+        24,
+        28,
+        37,
+        51
+      ],
+      "receptor_weights": [
+        3,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1011262,
+        2443508,
+        4212310,
+        4398154,
+        7239831,
+        10142959
+      ],
+      "output_source_rows": [
+        9983541
+      ]
+    },
+    {
+      "root": "720575940629338821",
+      "name": "alpha1",
+      "terminals": [
+        44,
+        66
+      ],
+      "receptor_ports": [
+        5,
+        111
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        592529,
+        14961954
+      ],
+      "output_source_rows": [
+        10123111,
+        10123133
+      ]
+    },
+    {
+      "root": "720575940629621975",
+      "name": "alpha1",
+      "terminals": [
+        48,
+        66
+      ],
+      "receptor_ports": [
+        80
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        13844751
+      ],
+      "output_source_rows": [
+        10303444,
+        10303462
+      ]
+    },
+    {
+      "root": "720575940629717034",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        85
+      ],
+      "receptor_ports": [
+        2
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263686
+      ],
+      "output_source_rows": [
+        10349533,
+        10349564
+      ]
+    },
+    {
+      "root": "720575940629849196",
+      "name": "gamma4",
+      "terminals": [
+        31
+      ],
+      "receptor_ports": [
+        15,
+        24,
+        36,
+        66
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        4212312,
+        5190719,
+        8782193,
+        14456701
+      ],
+      "output_source_rows": [
+        10416881
+      ]
+    },
+    {
+      "root": "720575940629854764",
+      "name": "gamma4",
+      "terminals": [
+        28
+      ],
+      "receptor_ports": [
+        38,
+        59
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        10050276,
+        14727774
+      ],
+      "output_source_rows": [
+        10419716
+      ]
+    },
+    {
+      "root": "720575940629855596",
+      "name": "gamma4",
+      "terminals": [
+        33
+      ],
+      "receptor_ports": [
+        5,
+        7,
+        8,
+        13,
+        17,
+        37,
+        51,
+        69
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571778,
+        977620,
+        1376514,
+        3181523,
+        4212403,
+        7805138,
+        11181275,
+        14868657
+      ],
+      "output_source_rows": [
+        10419969
+      ]
+    },
+    {
+      "root": "720575940629878519",
+      "name": "alpha1",
+      "terminals": [
+        53,
+        73
+      ],
+      "receptor_ports": [
+        32
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        4100088
+      ],
+      "output_source_rows": [
+        10433088,
+        10433108
+      ]
+    },
+    {
+      "root": "720575940630512471",
+      "name": "gamma4",
+      "terminals": [
+        28
+      ],
+      "receptor_ports": [
+        1,
+        50,
+        57,
+        64
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78375,
+        7805135,
+        9384063,
+        10781929
+      ],
+      "output_source_rows": [
+        10788988
+      ]
+    },
+    {
+      "root": "720575940630620747",
+      "name": "gamma4",
+      "terminals": [
+        40
+      ],
+      "receptor_ports": [
+        0,
+        39,
+        43,
+        46,
+        60,
+        61
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        168946,
+        10142945,
+        10763352,
+        10892607,
+        14456692,
+        14727782
+      ],
+      "output_source_rows": [
+        10853543
+      ]
+    },
+    {
+      "root": "720575940630849311",
+      "name": "alpha1",
+      "terminals": [
+        51,
+        80
+      ],
+      "receptor_ports": [
+        104
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        12686744
+      ],
+      "output_source_rows": [
+        10989394,
+        10989423
+      ]
+    },
+    {
+      "root": "720575940631100175",
+      "name": "gamma4",
+      "terminals": [
+        91
+      ],
+      "receptor_ports": [
+        27,
+        36,
+        39,
+        44,
+        54,
+        64,
+        65,
+        71,
+        77
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4180051,
+        5434116,
+        5935673,
+        6549320,
+        7981639,
+        9084738,
+        9106973,
+        10143025,
+        10781894
+      ],
+      "output_source_rows": [
+        11125771
+      ]
+    },
+    {
+      "root": "720575940631360429",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        78
+      ],
+      "receptor_ports": [
+        32,
+        52
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        6112591,
+        8342845
+      ],
+      "output_source_rows": [
+        11292104,
+        11292128
+      ]
+    },
+    {
+      "root": "720575940632536780",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        0,
+        47
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78324,
+        14549582
+      ],
+      "output_source_rows": [
+        11869337
+      ]
+    },
+    {
+      "root": "720575940632805037",
+      "name": "gamma4",
+      "terminals": [
+        40
+      ],
+      "receptor_ports": [
+        0,
+        86,
+        87
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78307,
+        14771211,
+        14868586
+      ],
+      "output_source_rows": [
+        11994738
+      ]
+    },
+    {
+      "root": "720575940633219775",
+      "name": "alpha1",
+      "terminals": [
+        55,
+        74
+      ],
+      "receptor_ports": [
+        13
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        1702990
+      ],
+      "output_source_rows": [
+        12163941,
+        12163960
+      ]
+    },
+    {
+      "root": "720575940633402082",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        56
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        14549594
+      ],
+      "output_source_rows": [
+        12238190
+      ]
+    },
+    {
+      "root": "720575940633785369",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        15,
+        35,
+        37
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4212286,
+        9084653,
+        10551326
+      ],
+      "output_source_rows": [
+        12368345
+      ]
+    },
+    {
+      "root": "720575940634231999",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        20,
+        22,
+        27,
+        35,
+        36,
+        45,
+        46
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        4212345,
+        4671390,
+        5933810,
+        9084716,
+        9106939,
+        10781862,
+        11399292
+      ],
+      "output_source_rows": [
+        12494457
+      ]
+    },
+    {
+      "root": "720575940634235744",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        1,
+        6,
+        12,
+        35,
+        62,
+        66,
+        74,
+        98
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        169013,
+        977617,
+        1647004,
+        5108345,
+        9084770,
+        10143060,
+        11181268,
+        14727847
+      ],
+      "output_source_rows": [
+        12496173
+      ]
+    },
+    {
+      "root": "720575940634939546",
+      "name": "alpha1",
+      "terminals": [
+        53,
+        70
+      ],
+      "receptor_ports": [
+        19
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        1881667
+      ],
+      "output_source_rows": [
+        12682668,
+        12682685
+      ]
+    },
+    {
+      "root": "720575940635920814",
+      "name": "gamma4",
+      "terminals": [
+        73
+      ],
+      "receptor_ports": [
+        19,
+        26,
+        42,
+        51
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3181542,
+        4180120,
+        7285581,
+        9384096
+      ],
+      "output_source_rows": [
+        12993065
+      ]
+    },
+    {
+      "root": "720575940636272862",
+      "name": "alpha1",
+      "terminals": [
+        55,
+        86
+      ],
+      "receptor_ports": [
+        5
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        263775
+      ],
+      "output_source_rows": [
+        13076122,
+        13076153
+      ]
+    },
+    {
+      "root": "720575940637171684",
+      "name": "alpha1",
+      "terminals": [
+        60,
+        85
+      ],
+      "receptor_ports": [
+        39
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        5148256
+      ],
+      "output_source_rows": [
+        13294306,
+        13294331
+      ]
+    },
+    {
+      "root": "720575940637190990",
+      "name": "gamma4",
+      "terminals": [
+        30
+      ],
+      "receptor_ports": [
+        0,
+        3,
+        43
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        169010,
+        977612,
+        11399331
+      ],
+      "output_source_rows": [
+        13298191
+      ]
+    },
+    {
+      "root": "720575940637733702",
+      "name": "gamma4",
+      "terminals": [
+        32
+      ],
+      "receptor_ports": [
+        9,
+        38,
+        46
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1601598,
+        7981659,
+        9084761
+      ],
+      "output_source_rows": [
+        13444649
+      ]
+    },
+    {
+      "root": "720575940637949161",
+      "name": "gamma4",
+      "terminals": [
+        49
+      ],
+      "receptor_ports": [
+        3,
+        15,
+        67
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        571731,
+        1646957,
+        10892644
+      ],
+      "output_source_rows": [
+        13491574
+      ]
+    },
+    {
+      "root": "720575940638185048",
+      "name": "alpha1",
+      "terminals": [
+        71,
+        93
+      ],
+      "receptor_ports": [
+        83
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        13844684
+      ],
+      "output_source_rows": [
+        13553388,
+        13553410
+      ]
+    },
+    {
+      "root": "720575940638270080",
+      "name": "alpha1",
+      "terminals": [
+        50,
+        72
+      ],
+      "receptor_ports": [
+        102
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        13844708
+      ],
+      "output_source_rows": [
+        13574643,
+        13574665
+      ]
+    },
+    {
+      "root": "720575940638962851",
+      "name": "alpha1",
+      "terminals": [
+        58,
+        80
+      ],
+      "receptor_ports": [
+        20,
+        63
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3138490,
+        8342748
+      ],
+      "output_source_rows": [
+        13732621,
+        13732643
+      ]
+    },
+    {
+      "root": "720575940639126325",
+      "name": "alpha1",
+      "terminals": [
+        59,
+        78
+      ],
+      "receptor_ports": [
+        39
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        6112539
+      ],
+      "output_source_rows": [
+        13777279,
+        13777298
+      ]
+    },
+    {
+      "root": "720575940639588723",
+      "name": "gamma4",
+      "terminals": [
+        45
+      ],
+      "receptor_ports": [
+        34,
+        60
+      ],
+      "receptor_weights": [
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        9084778,
+        14362618
+      ],
+      "output_source_rows": [
+        13895400
+      ]
+    },
+    {
+      "root": "720575940639684515",
+      "name": "gamma4",
+      "terminals": [
+        114
+      ],
+      "receptor_ports": [
+        23,
+        29,
+        57,
+        68,
+        72,
+        97,
+        133,
+        157,
+        158,
+        168,
+        174,
+        180,
+        221,
+        233,
+        235,
+        236,
+        242
+      ],
+      "receptor_weights": [
+        1,
+        7,
+        2,
+        1,
+        2,
+        4,
+        1,
+        1,
+        1,
+        2,
+        5,
+        1,
+        1,
+        3,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        977644,
+        1647024,
+        3559990,
+        4212425,
+        4671456,
+        5933889,
+        7981701,
+        9084798,
+        9384091,
+        10273135,
+        10551443,
+        11010162,
+        13628604,
+        14351678,
+        14423790,
+        14456801,
+        15033612
+      ],
+      "output_source_rows": [
+        13918518
+      ]
+    },
+    {
+      "root": "720575940639860096",
+      "name": "alpha1",
+      "terminals": [
+        64,
+        94
+      ],
+      "receptor_ports": [
+        15,
+        21
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1881717,
+        3138593
+      ],
+      "output_source_rows": [
+        13961477,
+        13961507
+      ]
+    },
+    {
+      "root": "720575940639989120",
+      "name": "gamma4",
+      "terminals": [
+        28
+      ],
+      "receptor_ports": [
+        19,
+        35,
+        49,
+        56,
+        57,
+        78
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3410813,
+        5434174,
+        7805143,
+        10050417,
+        10143080,
+        14423779
+      ],
+      "output_source_rows": [
+        13989918
+      ]
+    },
+    {
+      "root": "720575940640242896",
+      "name": "alpha1",
+      "terminals": [
+        54,
+        76
+      ],
+      "receptor_ports": [
+        3,
+        11,
+        47,
+        105
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "receptor_source_rows": [
+        263769,
+        1702993,
+        6112508,
+        14961957
+      ],
+      "output_source_rows": [
+        14052383,
+        14052405
+      ]
+    },
+    {
+      "root": "720575940643824072",
+      "name": "alpha1",
+      "terminals": [
+        53,
+        77
+      ],
+      "receptor_ports": [
+        41
+      ],
+      "receptor_weights": [
+        1
+      ],
+      "receptor_source_rows": [
+        6112602
+      ],
+      "output_source_rows": [
+        14445032,
+        14445056
+      ]
+    },
+    {
+      "root": "720575940644541640",
+      "name": "alpha1",
+      "terminals": [
+        52,
+        77
+      ],
+      "receptor_ports": [
+        22,
+        52,
+        83,
+        96
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        3138505,
+        8342763,
+        12686712,
+        14961955
+      ],
+      "output_source_rows": [
+        14517723,
+        14517748
+      ]
+    },
+    {
+      "root": "720575940646598788",
+      "name": "gamma4",
+      "terminals": [
+        24
+      ],
+      "receptor_ports": [
+        16,
+        78
+      ],
+      "receptor_weights": [
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        2443519,
+        14725720
+      ],
+      "output_source_rows": [
+        14729054
+      ]
+    },
+    {
+      "root": "720575940649012857",
+      "name": "gamma4",
+      "terminals": [
+        36
+      ],
+      "receptor_ports": [
+        8,
+        60,
+        61
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1601549,
+        14362508,
+        14456710
+      ],
+      "output_source_rows": [
+        14856192
+      ]
+    },
+    {
+      "root": "720575940649228665",
+      "name": "gamma4",
+      "terminals": [
+        34
+      ],
+      "receptor_ports": [
+        19
+      ],
+      "receptor_weights": [
+        2
+      ],
+      "receptor_source_rows": [
+        5434162
+      ],
+      "output_source_rows": [
+        14861156
+      ]
+    },
+    {
+      "root": "720575940650706166",
+      "name": "gamma4",
+      "terminals": [
+        22
+      ],
+      "receptor_ports": [
+        32,
+        49,
+        56
+      ],
+      "receptor_weights": [
+        1,
+        2,
+        2
+      ],
+      "receptor_source_rows": [
+        7981630,
+        12291878,
+        14363400
+      ],
+      "output_source_rows": [
+        14895705
+      ]
+    },
+    {
+      "root": "720575940659780993",
+      "name": "gamma4",
+      "terminals": [
+        80
+      ],
+      "receptor_ports": [
+        1,
+        2,
+        27,
+        37,
+        56,
+        63,
+        69,
+        70,
+        78
+      ],
+      "receptor_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        78391,
+        169022,
+        3282300,
+        5935709,
+        7981685,
+        9107019,
+        10050418,
+        10143081,
+        12291915
+      ],
+      "output_source_rows": [
+        15048376
+      ]
+    },
+    {
+      "root": "720575940659850113",
+      "name": "gamma4",
+      "terminals": [
+        29
+      ],
+      "receptor_ports": [
+        9,
+        16,
+        35,
+        56
+      ],
+      "receptor_weights": [
+        2,
+        1,
+        1,
+        1
+      ],
+      "receptor_source_rows": [
+        1647016,
+        4180099,
+        9084786,
+        14362624
+      ],
+      "output_source_rows": [
+        15049635
+      ]
+    }
+  ],
+  "intact_cut_equality": {
+    "weights.npy": true,
+    "release.npy": true,
+    "body.npy": true
+  },
+  "projection_probes": {
+    "paired": {
+      "receiver": "memory-terminal-paired-20260910",
+      "input_checkpoint_sha256": "225247b26ae9b2accad1c37221f0e1c95acf83b97993503fa95ba1a1fb13a9cb",
+      "source_sha256": "88639ff922104aac5a59cc887961f8b08e981dd224e53a00231ca5885401c1ee",
+      "probes": {
+        "A-intact": {
+          "cue": "A",
+          "cut": false,
+          "observed_events": 192,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0955494600511306,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.8343309760093689,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10231571644544601,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030975209549069405,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 8,
+              "max_S": 0.0,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.242279529571533,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8884331583976746,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.043381787836551666,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.13338366150856018,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "b5f12216706da192c13e3c4bcf60a8a6593973d6d8b7aa0253c7166c444640b1"
+        },
+        "A-cut": {
+          "cue": "A",
+          "cut": true,
+          "observed_events": 192,
+          "removed_events": 192,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0955494600511306,
+          "roles": {
+            "MBON07": {
+              "spikes": 0,
+              "max_S": 0.8343309760093689,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.10231571644544601,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 8,
+              "max_S": 0.030975209549069405,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 8,
+              "max_S": 0.0,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.242279529571533,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8884331583976746,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.043381787836551666,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.1308344006538391,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "882b1334ad42163008487c51052359f8e4a6a9d669c636b606c1b8f096e49041"
+        },
+        "B-intact": {
+          "cue": "B",
+          "cut": false,
+          "observed_events": 408,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.02727979818992832,
+          "roles": {
+            "MBON07": {
+              "spikes": 22,
+              "max_S": 0.9925946593284607,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.12614792585372925,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 2,
+              "max_S": 0.03093627281486988,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 17,
+              "max_S": 0.04320964217185974,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 6.780431270599365,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5225614905357361,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.056311581283807755,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.08364712446928024,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "c387a6d759a9e6f6d3b461061dd903a4a3d7783af82f311920e5262c06b31d76"
+        },
+        "B-cut": {
+          "cue": "B",
+          "cut": true,
+          "observed_events": 408,
+          "removed_events": 408,
+          "nutrient_j": 0.0,
+          "max_angle": 0.02727979818992832,
+          "roles": {
+            "MBON07": {
+              "spikes": 22,
+              "max_S": 0.9925946593284607,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.12614792585372925,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 2,
+              "max_S": 0.03093627281486988,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 17,
+              "max_S": 0.04320964217185974,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 6.780431270599365,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5225614905357361,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.056311581283807755,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.0810910165309906,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "7be22169d02e4be98e9cdbc3c03f54504fefdfb9584bad44828099a85724279e"
+        },
+        "C-intact": {
+          "cue": "C",
+          "cut": false,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 3.360277230434548e-12,
+          "roles": {
+            "MBON07": {
+              "spikes": 26,
+              "max_S": 0.9987543821334839,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13701407611370087,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.02491854690015316,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.029006004333496,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8467193841934204,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.06326114386320114,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.1306552290916443,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "5baa2e44e940fb2ee311ee8360dbd82e08e2ad298bf44ff0d3fc63683e00ad49"
+        },
+        "C-cut": {
+          "cue": "C",
+          "cut": true,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 3.360277230434548e-12,
+          "roles": {
+            "MBON07": {
+              "spikes": 26,
+              "max_S": 0.9987543821334839,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13701407611370087,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.02491854690015316,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.029006004333496,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8467193841934204,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.06326114386320114,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.1306552290916443,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "5baa2e44e940fb2ee311ee8360dbd82e08e2ad298bf44ff0d3fc63683e00ad49"
+        }
+      },
+      "limit": "Independent diagnostic branches with continuing adaptation. B is novel; recruitment by B alone cannot establish memory-mediated teaching."
+    },
+    "unpaired": {
+      "receiver": "memory-terminal-unpaired-20260910",
+      "input_checkpoint_sha256": "11cf6b0d351278121eb77e1739b2ed99763e95bb70614b03d6078e345e74ef6e",
+      "source_sha256": "88639ff922104aac5a59cc887961f8b08e981dd224e53a00231ca5885401c1ee",
+      "probes": {
+        "A-intact": {
+          "cue": "A",
+          "cut": false,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0,
+          "roles": {
+            "MBON07": {
+              "spikes": 26,
+              "max_S": 0.987562358379364,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.08683983236551285,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.02707880549132824,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.195547580718994,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8858855962753296,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.04339129477739334,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.13084419071674347,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "dac420ab0d16a33ad5becc5754d608a7fd9a69b5caa6eeeacd3e86c200446069"
+        },
+        "A-cut": {
+          "cue": "A",
+          "cut": true,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0,
+          "roles": {
+            "MBON07": {
+              "spikes": 26,
+              "max_S": 0.987562358379364,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.08683983236551285,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.02707880549132824,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 5.195547580718994,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8858855962753296,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.04339129477739334,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.13084419071674347,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "dac420ab0d16a33ad5becc5754d608a7fd9a69b5caa6eeeacd3e86c200446069"
+        },
+        "B-intact": {
+          "cue": "B",
+          "cut": false,
+          "observed_events": 408,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.02727979819811733,
+          "roles": {
+            "MBON07": {
+              "spikes": 22,
+              "max_S": 0.9925827980041504,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.12614805996418,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 2,
+              "max_S": 0.030936576426029205,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 17,
+              "max_S": 0.04320964962244034,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 6.780431747436523,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5225620865821838,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.05631173029541969,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.08364712446928024,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "a6441d8168994885392b797d8fc843bfb71be7b6ad3a096342b27a6755d6eab3"
+        },
+        "B-cut": {
+          "cue": "B",
+          "cut": true,
+          "observed_events": 408,
+          "removed_events": 408,
+          "nutrient_j": 0.0,
+          "max_angle": 0.02727979819811733,
+          "roles": {
+            "MBON07": {
+              "spikes": 22,
+              "max_S": 0.9925827980041504,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.12614805996418,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 2,
+              "max_S": 0.030936576426029205,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 17,
+              "max_S": 0.04320964962244034,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 14,
+              "max_S": 6.780431747436523,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.5225620865821838,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.05631173029541969,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.0810910165309906,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "da3c3cd4cde655afea04a929d705e0762d57dd77766feb86c389050da053b3e5"
+        },
+        "C-intact": {
+          "cue": "C",
+          "cut": false,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0,
+          "roles": {
+            "MBON07": {
+              "spikes": 27,
+              "max_S": 0.9965410828590393,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13704892992973328,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.0249039139598608,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.029026508331299,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8467197418212891,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.06326114386320114,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.1306554079055786,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "f1e294f6f673129a91157c24f0f9f00060f20aad6abcf6e194caa60689f795d0"
+        },
+        "C-cut": {
+          "cue": "C",
+          "cut": true,
+          "observed_events": 0,
+          "removed_events": 0,
+          "nutrient_j": 0.0,
+          "max_angle": 0.0,
+          "roles": {
+            "MBON07": {
+              "spikes": 27,
+              "max_S": 0.9965410828590393,
+              "max_M1": 0.0
+            },
+            "PAM11": {
+              "spikes": 0,
+              "max_S": 0.13704892992973328,
+              "max_M1": 0.0
+            },
+            "SMP353": {
+              "spikes": 0,
+              "max_S": 0.0249039139598608,
+              "max_M1": 0.0
+            },
+            "SMP108": {
+              "spikes": 0,
+              "max_S": -1.2611686178923354e-44,
+              "max_M1": 0.0
+            },
+            "APL": {
+              "spikes": 15,
+              "max_S": 5.029026508331299,
+              "max_M1": 0.0
+            },
+            "MBON04": {
+              "spikes": 0,
+              "max_S": 0.8467197418212891,
+              "max_M1": 0.0
+            },
+            "PAM07": {
+              "spikes": 0,
+              "max_S": 0.06326114386320114,
+              "max_M1": 0.0
+            },
+            "PAM08": {
+              "spikes": 0,
+              "max_S": 0.1306554079055786,
+              "max_M1": 0.0
+            }
+          },
+          "trace_sha256": "f1e294f6f673129a91157c24f0f9f00060f20aad6abcf6e194caa60689f795d0"
+        }
+      },
+      "limit": "Independent diagnostic branches with continuing adaptation. B is novel; recruitment by B alone cannot establish memory-mediated teaching."
+    }
+  },
+  "projection_linearization": {
+    "targets": [
+      {
+        "root": "720575940605113376",
+        "probe_tick": 198,
+        "critical_gain": 191.35033899283434,
+        "background_S": 0.02440398372709751,
+        "projection_delta_S": 0.005098480731248856
+      },
+      {
+        "root": "720575940605280201",
+        "probe_tick": 198,
+        "critical_gain": 60.13565645842552,
+        "background_S": 0.0035472873132675886,
+        "projection_delta_S": 0.016570081235840917
+      },
+      {
+        "root": "720575940608071435",
+        "probe_tick": 198,
+        "critical_gain": 340.9480821613533,
+        "background_S": 0.1308344006538391,
+        "projection_delta_S": 0.0025492608547210693
+      },
+      {
+        "root": "720575940611918578",
+        "probe_tick": 198,
+        "critical_gain": 385.2654512268991,
+        "background_S": 0.017865760251879692,
+        "projection_delta_S": 0.002549240365624428
+      },
+      {
+        "root": "720575940612755618",
+        "probe_tick": 198,
+        "critical_gain": 392.8453386283597,
+        "background_S": -0.001456005615182221,
+        "projection_delta_S": 0.0025492373388260603
+      },
+      {
+        "root": "720575940614991221",
+        "probe_tick": 198,
+        "critical_gain": 756.8866355110141,
+        "background_S": 0.035257723182439804,
+        "projection_delta_S": 0.0012746192514896393
+      },
+      {
+        "root": "720575940619251416",
+        "probe_tick": 198,
+        "critical_gain": 378.0905881287027,
+        "background_S": 0.03615691512823105,
+        "projection_delta_S": 0.0025492385029792786
+      },
+      {
+        "root": "720575940619823536",
+        "probe_tick": 198,
+        "critical_gain": 382.9197214692279,
+        "background_S": 0.023847728967666626,
+        "projection_delta_S": 0.00254923477768898
+      },
+      {
+        "root": "720575940621617286",
+        "probe_tick": 198,
+        "critical_gain": 770.3649127729408,
+        "background_S": 0.018078051507472992,
+        "projection_delta_S": 0.0012746192514896393
+      },
+      {
+        "root": "720575940622384227",
+        "probe_tick": 198,
+        "critical_gain": 776.0331708329314,
+        "background_S": 0.010853180661797523,
+        "projection_delta_S": 0.0012746192514896393
+      },
+      {
+        "root": "720575940622387981",
+        "probe_tick": 198,
+        "critical_gain": 128.394120857696,
+        "background_S": 0.018078051507472992,
+        "projection_delta_S": 0.007647717371582985
+      },
+      {
+        "root": "720575940624545940",
+        "probe_tick": 198,
+        "critical_gain": 257.8738186327949,
+        "background_S": 0.013927198946475983,
+        "projection_delta_S": 0.003823857754468918
+      },
+      {
+        "root": "720575940625898633",
+        "probe_tick": 198,
+        "critical_gain": 392.9797273550602,
+        "background_S": -0.001798685872927308,
+        "projection_delta_S": 0.002549237571656704
+      },
+      {
+        "root": "720575940627110931",
+        "probe_tick": 198,
+        "critical_gain": 254.89867252369555,
+        "background_S": 0.025303734466433525,
+        "projection_delta_S": 0.003823857754468918
+      },
+      {
+        "root": "720575940627644584",
+        "probe_tick": 198,
+        "critical_gain": 365.84881076941963,
+        "background_S": 0.06736139953136444,
+        "projection_delta_S": 0.0025492459535598755
+      },
+      {
+        "root": "720575940628836412",
+        "probe_tick": 198,
+        "critical_gain": 781.330317380176,
+        "background_S": 0.004102063365280628,
+        "projection_delta_S": 0.0012746183201670647
+      },
+      {
+        "root": "720575940629190615",
+        "probe_tick": 198,
+        "critical_gain": 771.7745017952469,
+        "background_S": 0.016279924660921097,
+        "projection_delta_S": 0.0012746211141347885
+      },
+      {
+        "root": "720575940629379415",
+        "probe_tick": 198,
+        "critical_gain": 775.0595582379202,
+        "background_S": 0.012095609679818153,
+        "projection_delta_S": 0.00127461738884449
+      },
+      {
+        "root": "720575940630500293",
+        "probe_tick": 198,
+        "critical_gain": 360.23167345698135,
+        "background_S": 0.08168086409568787,
+        "projection_delta_S": 0.0025492459535598755
+      },
+      {
+        "root": "720575940630684943",
+        "probe_tick": 198,
+        "critical_gain": 85.51761312914064,
+        "background_S": 0.018977798521518707,
+        "projection_delta_S": 0.01147158071398735
+      },
+      {
+        "root": "720575940631184439",
+        "probe_tick": 198,
+        "critical_gain": 392.8453386283597,
+        "background_S": -0.001456005615182221,
+        "projection_delta_S": 0.0025492373388260603
+      },
+      {
+        "root": "720575940642733216",
+        "probe_tick": 198,
+        "critical_gain": 750.9559082273856,
+        "background_S": 0.04282553493976593,
+        "projection_delta_S": 0.001274608075618744
+      },
+      {
+        "root": "720575940642744264",
+        "probe_tick": 198,
+        "critical_gain": 388.5879441228896,
+        "background_S": 0.009397736750543118,
+        "projection_delta_S": 0.0025492357090115547
+      },
+      {
+        "root": "720575940646564916",
+        "probe_tick": 198,
+        "critical_gain": 777.4452546744507,
+        "background_S": 0.00905475951731205,
+        "projection_delta_S": 0.00127461738884449
+      }
+    ],
+    "smallest_critical_gain": 60.13565645842552,
+    "limit": "Held-input first-crossing estimate only. Any changed efficacy must be declared and causally tested; contact counts remain anatomical evidence, not efficacy measurements."
+  },
+  "conclusion": "A new opt-in terminal-credit preparation stores a release-dependent direct memory and retains its useful action through the continuing B-before-A challenge. The comparison changes the learning locus, restores native receiving rules/rates, and includes measured DAN-to-KC providers; it is not an isolated attribution to trace duration. B is not acquired: student DANs remain silent, and removing 960 forward feedback events leaves memory coefficients and movement unchanged. The next unresolved stage is converting the memory-dependent feedback into student dopamine recruitment and an expressible student memory, not recovering A after extinction."
+}

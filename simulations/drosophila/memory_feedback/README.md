@@ -16,8 +16,10 @@ Research has resumed from the bounded negative transfer result. The latest
 stores a release-dependent direct memory and preserves useful A-guided feeding
 through continuing unrewarded B-before-A exposure. A source-specific efficacy
 hypothesis now permits a small teacher-dependent change at B terminals, but
-acquired B action remains unestablished. Recruiting student output exposes a
-second conflict: its untrained response to A inhibits the teacher pathway.
+acquired B action remains unestablished. Broader primary teaching resolves the
+student-output inhibition of A's teacher pathway. The remaining checks address
+unequal controlled cues and the physical readout's insensitivity to student
+memory in the tested state.
 The overall research objective remains active; completion of the earlier
 bounded experiment was not completion of that objective.
 
@@ -146,7 +148,7 @@ coupled-network response or a biological efficacy measurement. It defines one
 prospective source-specific efficacy comparison at gain 64 in
 `feedback_efficacy.py`; no synapse count or sign is altered by that hypothesis.
 
-The 42 focused tests, including the subsequent efficacy and continuation
+The 43 focused tests, including the subsequent efficacy and continuation
 controls, pass. Its exact
 checkpoint replay and executed causal branches supply the behavioral evidence.
 First-order association itself remains an established project capability; the
@@ -304,8 +306,7 @@ recruitment here. The chosen cell-type coverage and equal currents are explicit
 engineering assumptions, not a reconstruction of the genetic driver or natural
 sugar sensory wiring. This comparison tests whether first-order learning can
 remove A's opposing student output while leaving B eligible for later neural
-teaching. Its paired and unpaired direct courses are in progress; no outcome
-is claimed yet.
+teaching. The completed result and subsequent cue comparison are below.
 
 ```sh
 uv run --no-sync --with cloudpickle==3.1.2 python \
@@ -318,6 +319,151 @@ uv run --no-sync --with cloudpickle==3.1.2 python \
 # Repeat with --unpaired and its distinct output.
 # Continue a completed parent with the same primary-boundary module and
 # --continue-course, adding --cut or --displaced for the causal controls.
+```
+
+## Broader primary teaching and remaining assay limits
+
+![Primary teaching and remaining assay limits](evidence/primary-boundary.png)
+
+Broader primary recruitment depresses A's gamma4 terminal release to a mean of
+0.293697 while alpha1 A release reaches 0.384857. During nutrient-free
+B-before-A, learned A again recruits eight SMP108 spikes and two student
+dopamine spikes per presentation. The opposing untrained student output no
+longer blocks the teacher. A-guided feeding remains 0.624 J after intact,
+projection-cut and temporally displaced acquisition, versus zero in the
+first-order-unpaired control. The primary teaching boundary stays zero
+throughout all 3,720 acquisition ticks.
+
+The retained gamma4 B release is 0.993492 in the paired course, 1.000068 with
+feedback blocked, and 0.993781 after unpaired first-order nutrients. The extra
+mean depression associated with paired A is 0.000289. Extending the B-to-A gap
+to 1,000 ticks leaves a smaller effect despite retaining the A-period dopamine
+spikes. These changes do not establish acquired B action. B produces two
+SMP353, 16 SMP108 and three MBON04 spikes in every independent retained probe.
+Intact and projection-cut B body trajectories are exactly equal.
+
+`student_expression.py` provides a terminal-only expression control. It
+replaces only the intact course's gamma4 B coefficients with values from the
+projection-cut checkpoint. Its sham exactly reproduces the recorded neural
+and body trajectories. Receiving weights and all other terminal coefficients
+remain unchanged by the intervention. The substitution shifts one MBON04 spike
+in time, yielding two differing spike bins, but leaves SMP108 spikes and the
+body trajectory identical. Thus the stored coefficients affect student neural
+expression while failing to change the current action.
+
+A separate diagnostic on the earlier active-student parent sets all 32 gamma4
+B terminal coefficients to zero. This is the maximum allowed terminal
+depression, imposed for diagnosis rather than acquired by learning. It removes
+all three MBON04 spikes and increases SMP108 from 16 to 17 spikes, yet the hinge
+trajectory remains exactly unchanged. This result applies to that retained
+state and the 200-tick dry probe, not every possible future state. It identifies
+a physical-readout limitation that simply increasing learning strength may not
+resolve. The current hinge is driven by SMP353; the student output directly
+inhibits SMP108 and has no direct retained connection to SMP353.
+
+The anatomical audit also identifies a controlled-cue confound. B alone
+activates eight gamma KCs with 13 direct contacts to SMP108; A and C activate
+none. B's alpha/beta KCs were selected after the stronger A/C pool. These
+asymmetries can create unequal innate feedback before memory transfer.
+`balanced_codes.py` reassigns the same 192 KCs into disjoint A/B/C codes with 32
+alpha/beta and 32 gamma cells each. It greedily balances normalized measured
+contact loads to each retained MBON07, MBON04, SMP108 and APL, with equal
+cardinality per KC type. It uses no simulated response or behavioral outcome.
+This remains an engineered cue panel and still requires reciprocal cue-label
+controls before generalization.
+
+The new codes have 4, 5 and 4 direct contacts to SMP108. Their total contacts
+to MBON07 are 661, 664 and 661, and to MBON04 are 166, 165 and 157. Balance is
+approximate and limited to the declared targets. The complete `nodes.json`
+and `edges.npz` files are byte-identical to the previous cut, so neither
+internal nor boundary anatomy changed. Paired and unpaired direct courses on
+this panel preserve the A feeding contrast, 0.624 J versus zero. The completed
+nutrient-free transfer controls are reported below.
+
+[The numerical audit](evidence/primary-boundary.json) includes complete source
+and artifact hashes, the terminal substitutions, the imposed-depression probe,
+the original cue-specific routes and the prospective reassignment specification.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.primary_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.balanced_codes \
+  .live/research/flywire783/memory-terminal-cut-20260910 \
+  .live/research/flywire783/memory-balanced-codes-20260910
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.primary_boundary \
+  .live/research/flywire783/memory-balanced-codes-20260910 \
+  .live/research/flywire783/memory-balanced-paired-20260910
+# Repeat with --unpaired and its distinct output, then use --continue-course.
+```
+
+## Cue balance separates teacher feedback from B's own activity
+
+The reassigned cue panel removes B's autonomous feedback in this preparation.
+The intact B-before-A course recruits four student dopamine spikes, all during
+learned A. Neither the first-order-unpaired nor projection-cut course recruits
+any student dopamine. Feedback blocking removes 384 forward events. A feeding
+remains 0.624 J afterward in both paired branches. These comparisons use the
+same retained circuit, active adaptation and nutrient-free acquisition as before.
+
+| Acquisition condition | Student dopamine spikes | Retained mean gamma4 B release | Retained B motor spikes |
+| --- | ---: | ---: | ---: |
+| Learned A, intact feedback | 4 | 0.999856760082 | 0 |
+| Feedback blocked | 0 | 1.000033617020 | 0 |
+| First-order unpaired | 0 | 1.000033617020 | 0 |
+| Long B-to-A gap | 4 | 1.000033617000 | 0 |
+
+The long-gap control retains teacher dopamine activity but almost eliminates
+its effect on B terminals. The paired course's extra B depression is now
+separable from the autonomous B feedback that dominated the earlier cue panel.
+It still has not produced useful B action. Retained B recruits eight MBON04
+spikes and no SMP108 or SMP353 spikes in all four conditions. Intact and
+projection-cut B body trajectories are exactly equal.
+
+Repeating the imposed-depression diagnostic on this panel removes all eight
+MBON04 spikes, but SMP108 remains silent and the body trajectory remains
+unchanged. This exposes an additional expression constraint: the current
+preparation supplies equal cue-presence excitation to SMP353 alone. The student
+output inhibits SMP108, which receives no corresponding experimental input.
+That boundary needs a separate causal check; larger memory coefficients alone
+cannot be assumed to produce action in the tested state. Biological evidence
+for SMP108 odor responses and its lateral-horn inputs is described in
+[Yamada et al., Figure 5](https://elifesciences.org/articles/79042/figures), but
+any input approximation here must remain an explicit engineering boundary.
+
+The intact course also measures the timing mismatch directly. In the first A
+presentation, SMP353 spikes first at A tick 22, SMP108 at tick 25, and student
+dopamine at ticks 76 and 148. With the preceding 20-tick gap and the travel/trace
+updates, the later dopamine event can affect a B terminal roughly 171 ticks
+after the last driven B tick. A completed trace with decay time 64 retains
+about 6.9% of its value over that interval.
+
+`eligibility_window.py` tests a decay time of 256 from birth, the next power of
+two above 171/log(2). That retains just over half of a completed trace across
+the interval. The normalized EMA also builds more slowly, so this is a full
+timing comparison rather than a guarantee of stronger direct learning. The
+174 configured cells change only that parameter at birth. Restoring their
+original decay time in diagnostic copies produces byte-identical serialized
+neural and RNG state. The paired direct course retains A feeding at 0.440 J,
+versus zero for unpaired nutrients. Nutrient-free transfer controls with this
+longer trace are now running.
+
+[The balanced-code audit](evidence/balanced-codes.json) records the four
+continuations, the repeated expression diagnostic, teacher event times, the
+isolated birth-parameter check and both completed longer-trace direct courses.
+
+```sh
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.balanced_analysis \
+  .live/research/flywire783 simulations/drosophila/memory_feedback/evidence
+uv run --no-sync --with cloudpickle==3.1.2 python \
+  -m simulations.drosophila.memory_feedback.eligibility_window \
+  .live/research/flywire783/memory-balanced-codes-20260910 \
+  .live/research/flywire783/memory-window-paired-20260910
+# Repeat with --unpaired, then continue each parent through primary_boundary
+# with --continue-course and the matched projection/timing controls.
 ```
 
 ## Student viability and the next mechanism decision

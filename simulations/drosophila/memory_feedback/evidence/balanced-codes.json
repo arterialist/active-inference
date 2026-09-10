@@ -1,0 +1,2286 @@
+{
+  "source_sha256": "684ef233e8cbf0ac7ec3a2921fca105fdc87d75eab4d7687b6b444d0389e5ae0",
+  "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+  "courses": {
+    "paired": {
+      "record": "memory-balanced-paired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 16,
+          "PAM11": 338,
+          "SMP353": 5,
+          "SMP108": 15,
+          "APL": 15,
+          "MBON04": 5,
+          "PAM07": 468,
+          "PAM08": 1171
+        },
+        "max_angle": 0.07933592766316824,
+        "pump_j": 0.0,
+        "well_j": 0.6240000000000001,
+        "energy_j": 84.25989212592322,
+        "seconds": 269.96808749999036
+      },
+      "retained_release": {
+        "MBON07_A": 0.40764657476273713,
+        "MBON07_B": 1.0,
+        "MBON07_C": 0.9984123054891825,
+        "MBON04_A": 0.3164851455796611,
+        "MBON04_B": 1.0,
+        "MBON04_C": 0.9980341177433729
+      },
+      "artifacts": {
+        "manifest.json": "93b36efa7040ecb78fe45f1ca02eeb261745f1dfa860e9db0acbdd00f01816e6",
+        "summary.json": "314464652a6eb6aad5b609cfe951e71752cc5b169cf0d0b8df97f96c0ae815ca",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+        "release.npy": "8641b476137404eb8cf836067246da89514aa9f9571bbaa66f90d003c0c1c50e",
+        "weights.npy": "78de6e79ba66fba895e701667e228a72bc5a90d7856c046b6e00b99f6ac19923",
+        "soma.npy": "23fed52940cb9e15d470f4a6f2dbb5ada2512d4469b7b486b7e640f57d4af805",
+        "body.npy": "260306fb0c278354b41ba6cdf3b37053995ac2806dacbb4b326e91d0b92ede47"
+      }
+    },
+    "unpaired": {
+      "record": "memory-balanced-unpaired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 26,
+          "PAM11": 0,
+          "SMP353": 0,
+          "SMP108": 0,
+          "APL": 15,
+          "MBON04": 9,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.0,
+        "pump_j": 0.0,
+        "well_j": 0.0,
+        "energy_j": 83.66400000001647,
+        "seconds": 273.5662316670059
+      },
+      "retained_release": {
+        "MBON07_A": 1.000155590343589,
+        "MBON07_B": 1.0,
+        "MBON07_C": 1.00016301125288,
+        "MBON04_A": 1.0000856170544172,
+        "MBON04_B": 1.0,
+        "MBON04_C": 1.0000721961259842
+      },
+      "artifacts": {
+        "manifest.json": "ac59d63096a69f9c1d1cd2e2a5d6d1260961ad45fcc92bbf83b3869e249fc3da",
+        "summary.json": "16cebc4c5c449221c1dd7fd1ada1a5251591b428ff00e78b95c617633f9ed312",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "47e32d069552a50faa8f68cfdfe2198a742faf5bc7a0eea9210d2d5f5d8d3127",
+        "release.npy": "36c3cb0a615f8ca22f3fcb0ea4bcf09998f4eb8b784ca9cbcd4e91a70455d8cc",
+        "weights.npy": "0da72015d60ffb74887ec3346d68a452585f8bbeda8f3c1ed8948eb5f40ebfd6",
+        "soma.npy": "8b96c37cdaf3160ce6e4ff786decbe245a0879f4ffb6fb5ba39d5499a4f3a20c",
+        "body.npy": "1b5cd1c50cbed5ce198966c5f40662edc3d9698068a344aa3bfeb65c77977ec8"
+      }
+    }
+  },
+  "continuation": {
+    "intact": {
+      "receiver": "memory-balanced-paired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 6.911382927533644e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -1.0181740489000332e-11,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.09702170675510273,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.12781163471024384,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.0001964911623881475,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.00010401555688247655,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.0972251677131424,
+          "feedback_events": 384,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.12797770418537813,
+          "feedback_events": 384,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002052130246292562,
+          "feedback_events": 384,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": -3.426037058956836e-06,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933250163703612,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 15,
+            "APL": 15,
+            "MBON04": 5,
+            "PAM07": 468,
+            "PAM08": 1171
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 384,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "ad6594946f337bb85624f88aeb6eed093f090a8d5d5f7f2531dd74971ed0e098",
+        "soma.npy": "fc5d436de2a125d1ba0dbc537f5532185325e273ed6ac6311bfd079778a9b0ca",
+        "weights.npy": "cfa656d80ab646ac1bb5ca66d23c1605e2fec6bfe378abd94b04d8064d884ea0",
+        "retention.paula": "3a80e955a50f8a8491602b2acced9a6478c1c579db4101847077120fa4e94944",
+        "retention-body.npz": "2b53d72ce0841da911917a8dab0e375f224fbd71beb53efc64d0460a8875e948",
+        "body.npy": "9c837cd1effee6ff6a58d73b95e499409946f5564a2403ea9ba7f5c51f99e844",
+        "probe-B.npz": "adbeb3baa7fbf9e5d8387d6c202285c3dfb20cbc1dd2cca9a5a7c687392be833",
+        "probe-A.npz": "7b8d9616046fe97382725d26df21402bd4ee352044ae5f77d9b2d101a6306070"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-balanced-second-intact-20260910",
+      "summary_sha256": "53559a3c608f094b639f857a88efaefe062894dab62c748d65f1c0952748c55b",
+      "release": {
+        "MBON07_A": {
+          "before": 0.40764657476273713,
+          "retained": 0.40767412120476365
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9984123054891825,
+          "retained": 0.9984123054891825
+        },
+        "MBON04_A": {
+          "before": 0.3164851455796611,
+          "retained": 0.3165031298995018
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 0.999856760081724
+        },
+        "MBON04_C": {
+          "before": 0.9980341177433729,
+          "retained": 0.9980341177433729
+        }
+      },
+      "course_spikes": {
+        "MBON07": 34,
+        "PAM11": 0,
+        "SMP353": 16,
+        "SMP108": 16,
+        "APL": 54,
+        "MBON04": 12,
+        "PAM07": 0,
+        "PAM08": 4
+      },
+      "first_A_event_ticks": {
+        "SMP353": [
+          22,
+          46,
+          70,
+          94,
+          118,
+          142,
+          166,
+          190
+        ],
+        "SMP108": [
+          25,
+          49,
+          73,
+          97,
+          121,
+          145,
+          169,
+          193
+        ],
+        "PAM07": [],
+        "PAM08": [
+          76,
+          148
+        ]
+      }
+    },
+    "cut": {
+      "receiver": "memory-balanced-paired-20260910",
+      "cut": true,
+      "displaced": false,
+      "input_checkpoint_sha256": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 6.911382927533644e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -1.0181740489000332e-11,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.09702170675510273,
+          "feedback_events": 192,
+          "removed_events": 192
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.12781163471024384,
+          "feedback_events": 192,
+          "removed_events": 192
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.0001964911623881475,
+          "feedback_events": 192,
+          "removed_events": 192
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": -0.00010401555688247655,
+          "feedback_events": 192,
+          "removed_events": 192
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0972251677131424,
+          "feedback_events": 384,
+          "removed_events": 384
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.12797770418537813,
+          "feedback_events": 384,
+          "removed_events": 384
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0002052130246292562,
+          "feedback_events": 384,
+          "removed_events": 384
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": -3.426037058956836e-06,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07933250163703612,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 15,
+            "APL": 15,
+            "MBON04": 5,
+            "PAM07": 468,
+            "PAM08": 1171
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 384,
+      "removed_events": 384,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "3c1922944c76c9f0ed21654d9f73bc456dfeabdef75401af9504f54631e73618",
+        "soma.npy": "94d035a1af0e78679cbe4189af21c61ffcceee8d243e78e6f3f0b2a4d3ff360a",
+        "weights.npy": "3c22374cd5bbf3fce7e0eb61d86931372ada3ce47bb472f4db11f2eef2c9aaaa",
+        "retention.paula": "c972d225f2d805881d99ec16fe9ac534cf6ce6d3cf96826966d390c9a2347023",
+        "retention-body.npz": "2b53d72ce0841da911917a8dab0e375f224fbd71beb53efc64d0460a8875e948",
+        "body.npy": "9c837cd1effee6ff6a58d73b95e499409946f5564a2403ea9ba7f5c51f99e844",
+        "probe-B.npz": "fa0f62dcfd1e281c7648bf33838008f4a451de4cec5f41b9f9275797627233e0",
+        "probe-A.npz": "10d2ffe225502340d745e398a50e098c7d3db8ad6b85c2231b811e2084a137b5"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-balanced-second-cut-20260910",
+      "summary_sha256": "31eceefbe4c2e725b499bf66c6ae07521f2856ad776ac1f8fe8195b388171a30",
+      "release": {
+        "MBON07_A": {
+          "before": 0.40764657476273713,
+          "retained": 0.40767412120476365
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9984123054891825,
+          "retained": 0.9984123054891825
+        },
+        "MBON04_A": {
+          "before": 0.3164851455796611,
+          "retained": 0.3165031298995018
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.0000336170196533
+        },
+        "MBON04_C": {
+          "before": 0.9980341177433729,
+          "retained": 0.9980341177433729
+        }
+      },
+      "course_spikes": {
+        "MBON07": 34,
+        "PAM11": 0,
+        "SMP353": 16,
+        "SMP108": 16,
+        "APL": 54,
+        "MBON04": 12,
+        "PAM07": 0,
+        "PAM08": 0
+      }
+    },
+    "unpaired": {
+      "receiver": "memory-balanced-unpaired-20260910",
+      "cut": false,
+      "displaced": false,
+      "input_checkpoint_sha256": "47e32d069552a50faa8f68cfdfe2198a742faf5bc7a0eea9210d2d5f5d8d3127",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 160,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 160,
+          "end": 360,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 9,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 360,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 1520,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 1520,
+          "end": 1720,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 9,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 1720,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.0,
+          "feedback_events": 0,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 0.0,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.0,
+          "max_angle": 0.0,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 26,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 15,
+            "MBON04": 9,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 0,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "195ab58fafef7243bb35edf4d9784e36c882ac1fb878b66ce9c3e583d6a828a6",
+        "soma.npy": "9b6938322e1c4c444e9e4bb9c45ea9156a631dd44c396caa014d831e34eb421d",
+        "weights.npy": "7086a34829763c74411f071666e9bf6a6866e5c98cf98bb58b646403a14f5553",
+        "retention.paula": "ffc4c02560aa7d5b22e12dce09958a8933e406be1adb6766045c55a435887f51",
+        "retention-body.npz": "04ff2023d9114f43d0f52fba70ccc14c8a6d6336031da9eeb1d8404b2e98acc2",
+        "body.npy": "b237bbec6a16917976e2450bff3b42d0d880c0f3f947b49519ddfffc0bfbd4d4",
+        "probe-B.npz": "28b15dd40d5f8cf0b4832c37b580bd9be6f647b1e2b4533700b3b07f858b7e38",
+        "probe-A.npz": "4a23b46b929c6c59a28ad94ed53dadd3c9e5556f44e31491f8fe134a5da86f10"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-balanced-second-unpaired-20260910",
+      "summary_sha256": "a1a237f763d3d9a21b51db788c64c72c4d72045b156edf75e4809eb1137fe73d",
+      "release": {
+        "MBON07_A": {
+          "before": 1.000155590343589,
+          "retained": 1.0002647303044796
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 1.00016301125288,
+          "retained": 1.00016301125288
+        },
+        "MBON04_A": {
+          "before": 1.0000856170544172,
+          "retained": 1.000149168074131
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.0000336170196533
+        },
+        "MBON04_C": {
+          "before": 1.0000721961259842,
+          "retained": 1.0000721961259842
+        }
+      },
+      "course_spikes": {
+        "MBON07": 88,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 54,
+        "MBON04": 30,
+        "PAM07": 0,
+        "PAM08": 0
+      }
+    },
+    "displaced": {
+      "receiver": "memory-balanced-paired-20260910",
+      "cut": false,
+      "displaced": true,
+      "input_checkpoint_sha256": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+      "source_sha256": "094ec57056a75dc3eb239b64e2b276d13004688e3809af771cf4b4c272e496e4",
+      "graph_sha256": "105b523c4ebdd6563ffea29e906f404f131ac0426459ecd520edc737b8cd8c17",
+      "phases": [
+        {
+          "name": "pair0_B",
+          "begin": 0,
+          "end": 140,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 9,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 6.911382927533644e-12,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_gap",
+          "begin": 140,
+          "end": 1140,
+          "cue": "",
+          "spikes": {
+            "MBON07": 1,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 4.3875228151500534e-13,
+          "feedback_events": 0,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_A",
+          "begin": 1140,
+          "end": 1340,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.09554946005930932,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair0_recovery",
+          "begin": 1340,
+          "end": 1360,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10921848720646822,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_B",
+          "begin": 1360,
+          "end": 1500,
+          "cue": "B",
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 10,
+            "MBON04": 5,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.127811634713958,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_gap",
+          "begin": 1500,
+          "end": 2500,
+          "cue": "",
+          "spikes": {
+            "MBON07": 2,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 2,
+            "MBON04": 1,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.11420358162451562,
+          "feedback_events": 192,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_A",
+          "begin": 2500,
+          "end": 2700,
+          "cue": "A",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 8,
+            "SMP108": 8,
+            "APL": 15,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 2
+          },
+          "max_angle": 0.09575323603393864,
+          "feedback_events": 384,
+          "removed_events": 0
+        },
+        {
+          "name": "pair1_recovery",
+          "begin": 2700,
+          "end": 2720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 1,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.10941763582705197,
+          "feedback_events": 384,
+          "removed_events": 0
+        },
+        {
+          "name": "retention",
+          "begin": 2720,
+          "end": 3720,
+          "cue": "",
+          "spikes": {
+            "MBON07": 0,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 0,
+            "MBON04": 0,
+            "PAM07": 0,
+            "PAM08": 0
+          },
+          "max_angle": 0.12797770418538018,
+          "feedback_events": 384,
+          "removed_events": 0
+        }
+      ],
+      "probes": {
+        "B": {
+          "well_available": false,
+          "well_j": 0.0,
+          "max_angle": 8.348607312038309e-05,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 24,
+            "PAM11": 0,
+            "SMP353": 0,
+            "SMP108": 0,
+            "APL": 14,
+            "MBON04": 8,
+            "PAM07": 0,
+            "PAM08": 0
+          }
+        },
+        "A": {
+          "well_available": true,
+          "well_j": 0.6240000000000001,
+          "max_angle": 0.07941941374721541,
+          "changed_weights": 96,
+          "spikes": {
+            "MBON07": 16,
+            "PAM11": 338,
+            "SMP353": 5,
+            "SMP108": 15,
+            "APL": 15,
+            "MBON04": 5,
+            "PAM07": 468,
+            "PAM08": 1171
+          }
+        }
+      },
+      "projection": [
+        {
+          "source": "720575940631103744",
+          "target": "720575940628836412",
+          "source_row": 11127985,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940621617286",
+          "source_row": 11128029,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940624545940",
+          "source_row": 11128035,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940612755618",
+          "source_row": 11128049,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627644584",
+          "source_row": 11128054,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629379415",
+          "source_row": 11128147,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619823536",
+          "source_row": 11128194,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940611918578",
+          "source_row": 11128336,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622387981",
+          "source_row": 11128349,
+          "count": 6
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630500293",
+          "source_row": 11128442,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940627110931",
+          "source_row": 11128485,
+          "count": 3
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605113376",
+          "source_row": 11128492,
+          "count": 4
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940646564916",
+          "source_row": 11128502,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940631184439",
+          "source_row": 11128503,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940622384227",
+          "source_row": 11128529,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940625898633",
+          "source_row": 11128557,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642733216",
+          "source_row": 11128572,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940630684943",
+          "source_row": 11128630,
+          "count": 9
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940614991221",
+          "source_row": 11128682,
+          "count": 1
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940619251416",
+          "source_row": 11128874,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940608071435",
+          "source_row": 11128900,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940642744264",
+          "source_row": 11128982,
+          "count": 2
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940605280201",
+          "source_row": 11128986,
+          "count": 13
+        },
+        {
+          "source": "720575940631103744",
+          "target": "720575940629190615",
+          "source_row": 11128992,
+          "count": 1
+        }
+      ],
+      "feedback_events": 384,
+      "removed_events": 0,
+      "nutrient_j": 0.0,
+      "minimum_eta_post": 1e-08,
+      "minimum_eta_retro": 1e-06,
+      "limit": "Two engineered cue pairings in a student compartment already found silent. No positive second-order claim from exposure-driven weight changes.",
+      "artifacts": {
+        "modulation.npy": "c40394375b2320723fb6104d4405041a88bc3659fcd129611826abb66f47c814",
+        "identities.npz": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+        "release.npy": "1a378a705d2af8e1bbe5594766c766314a15d0a57a0386c9c4fc53cc029f45e9",
+        "soma.npy": "e4436d9def1b3f961eb275d167aeca000689ed06ceaca7229327259631c6c29e",
+        "weights.npy": "da3b6a2340487fffc11e4d9825505e3feb4106a5d624c4b3055691a5c7d0a47f",
+        "retention.paula": "e8d19289e16109ef04e201bb98e5f5c8d05676432b49343ba2ab3d0ab0750bad",
+        "retention-body.npz": "67f8909725d9b4b74affc9f20bb65d320842f54e3dab6d85f9a6892c6d7d60f2",
+        "body.npy": "acee697102f0b7128db29fcfa2412283eed122e2c0c67ad46b6a0ed13e316675",
+        "probe-B.npz": "c7ce0288817d6397b7d3ffdb9fe6f4163b6e1592c8b4d861d5fe01c09f9c9bae",
+        "probe-A.npz": "d3e203482102226e48d22d59b10f8aec193c205270aca1e771f101b289989e29"
+      },
+      "branch_rng_preserved": true,
+      "continuing_driver_sha256": "cd271254419ed61042de2f8799602290db17183467f0706213eb495578d2fc11",
+      "primary_boundary_sha256": "72832beccc4e174a337bff011476a895ef376aee87f4e4c636ef60aaf4acba1b",
+      "record": "memory-balanced-second-displaced-20260910",
+      "summary_sha256": "0314d6e12ce1dfc93b6a45db8dfa82d6e0e495c38715aa896fd0d4d90bb4b0a2",
+      "release": {
+        "MBON07_A": {
+          "before": 0.40764657476273713,
+          "retained": 0.40767412120476365
+        },
+        "MBON07_B": {
+          "before": 1.0,
+          "retained": 1.000076711177826
+        },
+        "MBON07_C": {
+          "before": 0.9984123054891825,
+          "retained": 0.9984123054891825
+        },
+        "MBON04_A": {
+          "before": 0.3164851455796611,
+          "retained": 0.3165031298995018
+        },
+        "MBON04_B": {
+          "before": 1.0,
+          "retained": 1.000033617000473
+        },
+        "MBON04_C": {
+          "before": 0.9980341177433729,
+          "retained": 0.9980341177433729
+        }
+      },
+      "course_spikes": {
+        "MBON07": 35,
+        "PAM11": 0,
+        "SMP353": 16,
+        "SMP108": 16,
+        "APL": 55,
+        "MBON04": 12,
+        "PAM07": 0,
+        "PAM08": 4
+      }
+    }
+  },
+  "intact_cut_B_body_exact": true,
+  "expression_bound": {
+    "sham": {
+      "parent": "memory-balanced-paired-20260910",
+      "state": "memory-balanced-paired-20260910",
+      "donor": null,
+      "zero": false,
+      "changed_coefficients": [
+        {
+          "source_row": 330313,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 421688,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 431717,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 560095,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 955686,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 1047309,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 1591854,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 2571721,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 2805712,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 4017663,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 5228734,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 5621475,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 6030599,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 6425997,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 7063793,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 7449923,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 7659261,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 8116882,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 8356380,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 8633373,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 8903700,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 8988222,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 9404387,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 9591931,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 9767604,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 10416881,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 12496173,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 13895400,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 13989918,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 14729054,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 14895705,
+          "before": 1.0,
+          "after": 1.0
+        },
+        {
+          "source_row": 15048376,
+          "before": 1.0,
+          "after": 1.0
+        }
+      ],
+      "changed_receiving_by_intervention": 0,
+      "source_sha256": "c1aef455fb20eae8451ee36d800a0f76dfc8e90104d6cdd62c905eacbb1ca391",
+      "parent_manifest_sha256": "93b36efa7040ecb78fe45f1ca02eeb261745f1dfa860e9db0acbdd00f01816e6",
+      "state_checkpoint_sha256": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+      "donor_checkpoint_sha256": null,
+      "trace_sha256": "45cd618d888af535869bae18fffb10c2f109588495c6f41d983697a2a29a0d9e",
+      "nutrient_j": 0.0,
+      "max_angle": 6.911382927533644e-12,
+      "spikes": {
+        "MBON07": 24,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 14,
+        "MBON04": 8,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "limit": "Dry diagnostic with continuing adaptation. Zero-release results are an imposed expression bound, not acquired memory.",
+      "SMP108_max_S": 0.02212357707321644
+    },
+    "zero": {
+      "parent": "memory-balanced-paired-20260910",
+      "state": "memory-balanced-paired-20260910",
+      "donor": null,
+      "zero": true,
+      "changed_coefficients": [
+        {
+          "source_row": 330313,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 421688,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 431717,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 560095,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 955686,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 1047309,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 1591854,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 2571721,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 2805712,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 4017663,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 5228734,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 5621475,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 6030599,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 6425997,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 7063793,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 7449923,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 7659261,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 8116882,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 8356380,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 8633373,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 8903700,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 8988222,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 9404387,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 9591931,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 9767604,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 10416881,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 12496173,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 13895400,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 13989918,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 14729054,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 14895705,
+          "before": 1.0,
+          "after": 0.0
+        },
+        {
+          "source_row": 15048376,
+          "before": 1.0,
+          "after": 0.0
+        }
+      ],
+      "changed_receiving_by_intervention": 0,
+      "source_sha256": "c1aef455fb20eae8451ee36d800a0f76dfc8e90104d6cdd62c905eacbb1ca391",
+      "parent_manifest_sha256": "93b36efa7040ecb78fe45f1ca02eeb261745f1dfa860e9db0acbdd00f01816e6",
+      "state_checkpoint_sha256": "bd5a226ed18f88cec1c38cdf8a854bee5accdff6c8fb3d58ba85f3f001a095b1",
+      "donor_checkpoint_sha256": null,
+      "trace_sha256": "ff2edc261dcfd429ac2dd1f297341e300b6913931eb1d2c0cb90937a9292df58",
+      "nutrient_j": 0.0,
+      "max_angle": 6.911382927533644e-12,
+      "spikes": {
+        "MBON07": 24,
+        "PAM11": 0,
+        "SMP353": 0,
+        "SMP108": 0,
+        "APL": 14,
+        "MBON04": 0,
+        "PAM07": 0,
+        "PAM08": 0
+      },
+      "limit": "Dry diagnostic with continuing adaptation. Zero-release results are an imposed expression bound, not acquired memory.",
+      "SMP108_max_S": 0.030663223937153816
+    },
+    "body_exact": true
+  },
+  "prospective_window": {
+    "specification": {
+      "tau_kc": 256.0,
+      "previous_tau_kc": 64.0,
+      "calibration_record": "memory-balanced-second-intact-20260910/soma.npy",
+      "teacher_DAN_A_ticks": [
+        76,
+        148
+      ],
+      "conservative_last_event_interval": 171,
+      "derivation": "Next power of two above 171/log(2), retaining half of a completed B trace through the second observed teacher event",
+      "limit": "The normalized EMA also builds more slowly. Direct acquisition must be reassessed. No biological tick-duration or learning-time fit.",
+      "source_sha256": "8488b93715de2f2bbdb41cf1f09cd17a83398566092e200e9eba3dc240118e86"
+    },
+    "configured_cells": 174,
+    "all_other_birth_state_exact": true,
+    "reference_birth_sha256": "2e9ad9c086683360500e600dcffefd7e7ea55d7c4458787c822e16bcff224f4d",
+    "changed_birth_sha256": "47a817af7fc21e99ee7b5dbb1bf8ce921301e42d043d2b2ea8375b368d67de1b",
+    "completed_trace_fraction_after_171_ticks": {
+      "tau64": 0.06912249904327114,
+      "tau256": 0.5127490421990961
+    },
+    "status": "Direct courses completed; nutrient-free continuing comparisons started. Their outcomes are not included here."
+  },
+  "window_direct_courses": {
+    "paired": {
+      "record": "memory-window-paired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 18,
+          "PAM11": 247,
+          "SMP353": 4,
+          "SMP108": 11,
+          "APL": 15,
+          "MBON04": 4,
+          "PAM07": 342,
+          "PAM08": 855
+        },
+        "max_angle": 0.06103790957701203,
+        "pump_j": 0.0,
+        "well_j": 0.44000000000000006,
+        "energy_j": 84.08808921985496,
+        "seconds": 275.565373874997
+      },
+      "retained_release": {
+        "MBON07_A": 0.5854206095047683,
+        "MBON07_B": 1.0,
+        "MBON07_C": 0.9245165623724461,
+        "MBON04_A": 0.5216011125683082,
+        "MBON04_B": 1.0,
+        "MBON04_C": 0.9104948416352272
+      },
+      "artifacts": {
+        "manifest.json": "378defe85af6522bdc90afe76b72e96359847efd54609a7b655af68094555ba9",
+        "summary.json": "f2ea5bd28c6a15c117a59f78b610f6d99c48e36a05480d57bbf6c98c73988681",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "fb65be6c6e303682c4a69bac53c245779d289b37746b340bc45eba0ccd2051c4",
+        "release.npy": "555aa45eb0e57e15c8c76f95a1cf58154ab6685f0fb4717e9fde8b5bb590a909",
+        "weights.npy": "6b592615aec5bdd3013571e836020a3ebbe987673eeb36f48dc253a62fb79568",
+        "soma.npy": "88064c59be7fd962d89afe5c39fe7dc16c7cff046fb5ea84e406a1f55bdcde66",
+        "body.npy": "6c8de914c8cb0ec923cb99fa2e995546900e8b7e8e4f22471aa6e0de7dea9a85"
+      }
+    },
+    "unpaired": {
+      "record": "memory-window-unpaired-20260910",
+      "retained_A": {
+        "name": "retained_A",
+        "begin": 8920,
+        "end": 9120,
+        "spikes": {
+          "MBON07": 24,
+          "PAM11": 0,
+          "SMP353": 0,
+          "SMP108": 0,
+          "APL": 15,
+          "MBON04": 8,
+          "PAM07": 0,
+          "PAM08": 0
+        },
+        "max_angle": 0.0,
+        "pump_j": 0.0,
+        "well_j": 0.0,
+        "energy_j": 83.66400000001647,
+        "seconds": 277.538796082983
+      },
+      "retained_release": {
+        "MBON07_A": 0.9888907980113365,
+        "MBON07_B": 1.0,
+        "MBON07_C": 0.9989014398306608,
+        "MBON04_A": 0.9870884404640572,
+        "MBON04_B": 1.0,
+        "MBON04_C": 0.9985758159309626
+      },
+      "artifacts": {
+        "manifest.json": "a94b54a56b4f6b9f0decc53b8d464362543419c4796c5babb291367b7470a533",
+        "summary.json": "37ea69556ed08b1a46b802c7e34b37bf02bc8913649acbc84cd9f5a88c900a33",
+        "identities.npz": "f7c08e8ca1ce8164266cd1dad1b07258aa8f9fca795f65ea2718239e9b8a4b71",
+        "retention.paula": "d4472371c325481ef7205691119533ee73516cc91764624d3ef5eecd5c684985",
+        "release.npy": "4896802ca28b21996a41ae83fb0b73578beccd934770ffc5b9052be49a185586",
+        "weights.npy": "934ab82d03153d76f1170622d80d79edbdff7dcd1a33de4f6eeb4eab1396273b",
+        "soma.npy": "a5ce6cce6094eb29572d4a7f2edf6d7ccbfc39c758b5f5c783592f98e9715957",
+        "body.npy": "1b5cd1c50cbed5ce198966c5f40662edc3d9698068a344aa3bfeb65c77977ec8"
+      }
+    }
+  },
+  "conclusion": "Anatomy-based cue reassignment removes B's autonomous feedback in this panel while preserving retained A feeding. The four student dopamine spikes during acquisition now occur only during learned A, and disappear in the unpaired and projection-cut controls. B still does not acquire action. Even imposed zero gamma4 B release leaves SMP108 silent in the balanced dry probe, so the student-expression input/output boundaries also need reassessment. Recorded teacher arrival times motivate a separate longer-eligibility comparison, with direct acquisition rechecked because normalized EMA buildup also changes."
+}

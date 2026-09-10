@@ -41,6 +41,39 @@ re-audit. Reconstructing first-order learning here is a prerequisite, not a new
 scientific capability. The additional result is the tested failure to compose
 it with the identified candidate teaching route under the declared boundaries.
 
+## Outcome updating: information required before a continuation
+
+The [read-only revaluation screen](evidence/revaluation-screen.json), reproduced
+by `revaluation_screen.py`, does not warrant an A-only omission experiment.
+At the accepted A/B checkpoint, maximum B eligibility is 2.693e-16. Saved
+A probes produce no B-code activity and at most 1.111e-16 B-terminal change.
+Receiving weights still adapt. Preserved B terminals therefore do not imply
+fixed expression, but these records provide no demonstrated A-to-B reactivation.
+
+The selected terminal rule only depresses release under nonnegative dopamine
+and eligibility. The body interface supplies actual ingestion; it supplies
+neither an outcome expectation nor energetic cost. Native synaptic error is
+an arriving-release/coefficient discrepancy, not an established comparison
+between expected and received food. There is no configured outcome predictor.
+This is a missing demonstrated function, not a proof that arbitrary recurrent
+states cannot encode expectations.
+
+The next decision is to verify that function before adding an action route.
+The smallest candidate uses an independent ingestion afferent, one existing
+PAULA `PredictiveReceptorNeuron`, and two graded comparison cells with opposing
+dendritic signs. Actual KC activity supplies context; neural comparison outputs
+supply the existing local error receptors. PAM activity cannot serve as
+independent outcome evidence because learned feedback already drives it.
+Use zero predictor rate boost, audit matched delays, and first test prediction
+of ongoing contact rate. An onset transient is not evidence of a missed future
+reward. This proposed engineered extension has not been built or validated here.
+
+Only verified, cue-dependent prediction would warrant coupling to action and
+measuring retained energy alongside intake. Nutrient prediction alone cannot
+represent energetic cost. A-only revision of B would additionally need a
+demonstrated retrieval route or shared outcome representation. The accepted
+A-to-B result and its runtime sources remain unchanged.
+
 ## Reusing acquired B as a teacher for C
 
 The accepted A-to-B result is a completed building block. One additional,

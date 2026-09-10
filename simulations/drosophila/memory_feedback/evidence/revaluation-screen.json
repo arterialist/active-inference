@@ -1,0 +1,70 @@
+{
+  "source_sha256": "2aeabf0da3a92fc902f5da63cf05c783107b4fae414035bbc6b302dfacc1ce69",
+  "checkpoint_sha256": "eff2cee8549441b4e8f3effa0a4c62cc59105bce8b8191da04e77a6227518f6a",
+  "manifest_sha256": "f4f4de1c3a957eb328d95fa779b2345dbea8134dca5447f50eb054a5fc8b0bd8",
+  "identities_sha256": "ae408bdc525b5342f396cdfc83b655b6d33d19a957b149b0e9d06ad74358b775",
+  "neuron_classes": {
+    "TerminalCreditNeuron": 274,
+    "GradedNeuron": 2
+  },
+  "configured_prediction_cells": 0,
+  "minimum_eta_post": 1e-08,
+  "minimum_eta_retro": 1e-06,
+  "maximum_retained_B_eligibility": 2.6930250080144003e-16,
+  "source_hashes": {
+    "feeding.py": "e5a8bb28a2c4d2784641e0103021311c4c889d7340eaa8d1f2b18aad514cb0e7",
+    "student_interface.py": "d6d5191e1c5c6f274cc5c70b8ec1b43b0ddf96db023ab20b01ee21236cdbf3f7",
+    "terminal_credit.py": "4d8fef3248f6346866b97854fda34b04d4a7c6666efa1481c9338889813e8966"
+  },
+  "probes": {
+    "A_food": {
+      "record": "memory-coverage-eight-intact-20260910/probe-A.npz",
+      "trace_sha256": "50d2e4c29477fa40cc237d8af0c1094c77dc51693aa9540e92d7ab9519445887",
+      "absent_code": "B",
+      "absent_code_output_sum": 0.0,
+      "absent_code_max_terminal_change": 0.0,
+      "maximum_selected_receiving_weight_change": 1.2763892315303949e-07
+    },
+    "B_dry": {
+      "record": "memory-coverage-eight-intact-20260910/probe-B.npz",
+      "trace_sha256": "c0aec7dcc01b94eba9ed8bd49f2b740507129e7c726ab392ce8d10babe00ad11",
+      "absent_code": "A",
+      "absent_code_output_sum": 0.0,
+      "absent_code_max_terminal_change": 0.0,
+      "maximum_selected_receiving_weight_change": 1.4404468012818583e-07
+    },
+    "A_dry_after_hop": {
+      "record": "memory-reuse-intact-20260910/course/A-dry/trace.npz",
+      "trace_sha256": "d957d4d4ee2fa827bff4d75819b1ba2dcb7c6bbaa928002fd304bc2e2619ccad",
+      "absent_code": "B",
+      "absent_code_output_sum": 0.0,
+      "absent_code_max_terminal_change": 1.1102230246251565e-16,
+      "maximum_selected_receiving_weight_change": 1.2763892315303949e-07
+    }
+  },
+  "mechanism_assessment": {
+    "selected_terminal_rule": "q' = q exp(-eta*d*x), with d and x nonnegative. Missing dopamine halts this depression; it does not reverse its sign. Neural feedback can supply dopamine even without nutrients.",
+    "available_body_input": "Actual accepted ingestion drives PAM11/07/08. Cost, energy reserve, outcome expectation and outcome identity are not supplied by student_interface.step. Gut capacity can indirectly affect accepted ingestion.",
+    "native_error": "The base receiving error is incoming release minus receiving coefficient, with a timing-dependent direction. Its name does not establish expected-minus-received bodily consequence.",
+    "expression_routes": "KC/MBON inhibition and SMP108 drive already let terminal memory alter action. Receiving weights, intrinsic state and shared feedback remain adaptive, so unchanged B release does not imply unchanged B expression.",
+    "identifiability": "No dedicated outcome predictor/comparison is configured. These finite traces show no cross-cue reactivation at the tested states. They do not prove that every possible recurrent state lacks expectation coding."
+  },
+  "decision": "Do not run A-only omission as a test of worse-than-expected updating in the present preparation. First establish an independently verified neural outcome prediction and opponent comparison, using existing PAULA components. Preserve the accepted A-to-B result.",
+  "assessed_component_hashes": {
+    "simulations/active_inference/components/body/energy_budget.py": "0ad58710eece33f1355e6416f2d1785daa8977b935a9575aeb0a866710c3df6a",
+    "simulations/active_inference/components/learning/predictive_bridge.py": "efd0f403dd298245993374892cf2b16d5cc41813ddbef44c1f60e81cd969a10a",
+    "simulations/active_inference/components/learning/temporal_verification.py": "458e03a8b6c227c1adf1d5c565fb141d7e259c0d58097daa8d44a559f8268381",
+    "simulations/active_inference/components/arbitration/energy_feedback.py": "1a7aac593174e1e2eb49ab44a013d5d2cc96f6ac498576687944b185eef2c5ea",
+    "../neuron-model/neuron/neuron.py": "94af34a180012b300ecb587fcef8a37d2fab4621c55b348cd7f0bdaaaafd09a6",
+    "../neuron-model/neuron/extensions/graded.py": "a9a776c115c85970e830f93fd68b05678a8cf45d9445115171854d0ed731617f",
+    "../neuron-model/neuron/extensions/experimental/predictive_receptor.py": "5bd7a2cd9590683b961fd54e21bf23d33334c10029c05f9a48305f725b56e232"
+  },
+  "next_composition": {
+    "minimum_information_circuit": "One independent ingestion afferent, one cue-driven PredictiveReceptorNeuron and two ordinary graded comparison cells. Compare observed/predicted release with opposing dendritic signs. Their releases reach the predictor's existing signed error receptors. Context arrives from actual cue KCs without cue labels in the rule.",
+    "independent_evidence": "Drive the added afferent only with actual accepted ingestion. Existing PAM activity is unsuitable as independent observation because learned feedback also drives it.",
+    "constraints": "Keep terminal_credit and the accepted circuit intact. Reuse existing predictor dynamics with prediction_boost=0; do not inherit the bridge factory's 499 boost, supply host-computed errors, or tune gains. Added cells/edges are an explicit engineered extension, not measured FlyWire anatomy.",
+    "timing": "Start with an explicitly defined prediction of the ongoing nutrient-contact rate. Match comparison-path delays and audit onset/offset transients. Do not call a cue-onset transient a failed future reward; delayed-outcome expectation requires separate temporal verification.",
+    "expression_after_verification": "Only after the predictor distinguishes learned expectation plus no contact from unlearned no contact, test its learned cue-conditioned output as a declared neural input to the existing action pathway. This supports cue-local expression updating; A-only transfer to B still requires demonstrated retrieval or a shared outcome representation.",
+    "body_criterion": "Nutrient prediction is an information prerequisite, not net-utility learning. Judge any later motor coupling by energy plus gut change and demand, alongside intake and retained A/B function. Sensitivity to energetic cost would additionally require an independent physical cost afferent; a fixed reserve brake does not supply outcome expectation."
+  }
+}

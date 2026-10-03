@@ -13,11 +13,15 @@ recovered artifacts, live-brain operation, and the next falsifiable experiments,
 [`RESEARCH_RESUMPTION.md`](RESEARCH_RESUMPTION.md).  The longer architecture and research-log files
 remain the primary chronological laboratory records.
 
+Ideas explicitly parked for later, including spatial waves and extracellular
+field coupling, are in [`DEFERRED_RESEARCH.md`](DEFERRED_RESEARCH.md). These are
+not additions to the active experiment plan.
+
 Run any embodied agent with:
 ```
 cd <this dir>
-PYTHONPATH=/Users/arterialist/Projects/agi-research/neuron-model \
-  /Users/arterialist/Projects/agi-research/neuron-model/.venv/bin/python <file>.py
+PYTHONPATH=../../../neuron-model \
+  ../../../neuron-model/.venv/bin/python <file>.py
 ```
 
 ## Stable working agents (the reusable base — keep these working)

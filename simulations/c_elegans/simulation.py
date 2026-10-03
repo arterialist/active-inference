@@ -124,9 +124,10 @@ class CElegansEngine(SimulationEngine):
             ),
             elapsed_ms=elapsed,
         )
-        self._history.append(step)
-        if len(self._history) > self._max_history:
-            self._history = self._history[-self._max_history :]
+        if self._max_history > 0:
+            self._history.append(step)
+            if len(self._history) > self._max_history:
+                self._history = self._history[-self._max_history :]
 
         if self.on_step is not None:
             self.on_step(step)

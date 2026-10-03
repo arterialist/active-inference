@@ -64,6 +64,8 @@ class SimulationEngine:
         max_history: int = 200,
         real_ms_per_neural_tick: float = 0.0,
     ):
+        if max_history < 0:
+            raise ValueError("max_history must be non-negative")
         self.body = body
         self.environment = environment
         self.nervous_system = nervous_system
@@ -112,7 +114,8 @@ class SimulationEngine:
                 else {}
             ),
         )
-        self._history.append(step)
+        if self._max_history > 0:
+            self._history.append(step)
         return step
 
     def step(self) -> SimulationStep:
@@ -155,9 +158,10 @@ class SimulationEngine:
             ),
             elapsed_ms=elapsed,
         )
-        self._history.append(step)
-        if len(self._history) > self._max_history:
-            self._history = self._history[-self._max_history :]
+        if self._max_history > 0:
+            self._history.append(step)
+            if len(self._history) > self._max_history:
+                self._history = self._history[-self._max_history :]
 
         if self.on_step is not None:
             self.on_step(step)
@@ -176,11 +180,14 @@ class SimulationEngine:
         Args:
             n_steps:     Number of physics steps.
             progress:    Log progress every 10 % of steps.
-            max_history: Cap history to avoid unbounded memory use.
+            max_history: Cap stored engine history (0 disables it). The returned
+                         list still contains every step.
 
         Returns:
             List of SimulationStep records.
         """
+        if max_history < 0:
+            raise ValueError("max_history must be non-negative")
         log_interval = max(1, n_steps // 10)
         results: list[SimulationStep] = []
 
@@ -198,7 +205,7 @@ class SimulationEngine:
 
             # Trim history to avoid unbounded memory growth
             if len(self._history) > max_history:
-                self._history = self._history[-max_history:]
+                self._history = self._history[-max_history:] if max_history else []
 
         return results
 

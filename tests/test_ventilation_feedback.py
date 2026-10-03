@@ -92,8 +92,11 @@ def test_install_does_not_reinject_consumed_birth_pulse(tmp_path):
     birth=(g['cpg'][0],0)
     net.set_external_input(*birth,5.);net.run_tick()
     topo=net.network;row=topo._ext_vec['row_of'][birth]
-    assert topo.external_inputs[birth]['info']==5.
+    assert topo.external_inputs[birth]['info']==0.
     assert topo._ext_vec['info'][row]==0.
+    # Recreate legacy checkpoint metadata: a consumed pulse can remain in the
+    # dictionary even though the authoritative vectorized input is empty.
+    topo.external_inputs[birth]['info']=5.
     baseline=deepcopy(net)
     fresh=load(tmp_path,cfg,CascadeEligibilityNeuron)
     install_ventilation_feedback(net,fresh,original,cfg)

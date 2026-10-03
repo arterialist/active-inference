@@ -106,6 +106,11 @@ class CElegansNervousSystem(BaseNervousSystem):
         # delta_c = fast - slow cancels undulation noise.
         self._chem_ema_fast: dict[str, float] = {}
         self._chem_ema_slow: dict[str, float] = {}
+        self._cmd_noise_state: dict[str, float] = {}
+        self._proprio_ema: dict[str, float] = {}
+        self._rev_state = "idle"
+        self._rev_state_until_tick = 0
+        self._rev_current_tick = 0
 
         # Global neuromodulatory state for volume transmission
         self._global_m0: float = 0.0
@@ -133,7 +138,11 @@ class CElegansNervousSystem(BaseNervousSystem):
         self._prev_sensory.clear()
         self._chem_ema_fast.clear()
         self._chem_ema_slow.clear()
+        self._cmd_noise_state.clear()
         self._proprio_ema.clear()
+        self._rev_state = "idle"
+        self._rev_state_until_tick = 0
+        self._rev_current_tick = 0
         self._global_m0 = 0.0
         self._global_m1 = 0.0
 
@@ -555,7 +564,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     _CMD_NOISE_SIGMA: float = 0.20
     _CMD_NOISE_TAU: float = 1500.0  # ticks (~3s correlation time)
     # OU state for command interneuron noise.
-    _cmd_noise_state: dict[str, float] = {}
+    _cmd_noise_state: dict[str, float]
 
     # Reversal latch: AVA plateau-potential dynamics. Trigger when bkw command
     # interneuron mean S crosses threshold sustained (not just noise jitter).
@@ -584,7 +593,7 @@ class CElegansNervousSystem(BaseNervousSystem):
     # alpha=0.005 → time constant ≈ 200 ticks (~0.4s). Static bends fade out;
     # rate-of-change passes through.
     _PROPRIO_HIGHPASS_ALPHA: float = 0.005
-    _proprio_ema: dict[str, float] = {}
+    _proprio_ema: dict[str, float]
 
     # Anterior→posterior taper on the proprioceptive gain. With a
     # uniform gain every segment amplifies its own bend through the

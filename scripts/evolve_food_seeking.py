@@ -9,7 +9,7 @@
 """
 Evolutionary optimization of neuromodulation and neuron params for food-seeking.
 
-Robustness protocol: each genome is tested against 4 distinct food positions
+Robustness protocol: each genome is tested against the configured food positions
 to prevent directional overfitting ("lucky torpedo"). Fitness = average of
 min_distance achieved per environment (or worst-case with --robust).
 Uses min_distance over the run, not final tick, to avoid "final tick trap".
@@ -21,7 +21,12 @@ Usage:
 
 Checkpointing:
   Checkpoints include simulation-ready best config plus full DE state (population,
-  energies, nfev, RNG) when available so runs resume exactly where they stopped.
+  energies, nfev, RNG and sampling order) at completed-generation boundaries.
+  --checkpoint-every is an evaluation-count threshold: save at the first completed
+  generation after that many evaluations, and always save the final generation.
+  Ctrl+C saves the last completed generation; unfinished evaluations are discarded.
+  DE continuation reproduces candidate selection for an unchanged deterministic
+  objective/runtime; worker simulation RNG streams are not checkpointed.
   Use the checkpoint for simulation at any time:
     uv run python scripts/run_c_elegans.py --evol-config evolved_food_seeking_checkpoint.json --viewer
 
@@ -29,7 +34,7 @@ Resume (requires checkpoint de_state from this script):
     uv run python scripts/evolve_food_seeking.py --resume evolved_food_seeking_checkpoint.json
     uv run python scripts/evolve_food_seeking.py --resume ckpt.json --extra-generations 10
   Omit --extra-generations to run until evol_args.generations is reached. With --resume,
-  ticks/population/seed/robust come from evol_args; --generations is not used (use --extra-generations).
+  ticks/population/seed/robust/full-settle come from evol_args; --generations is not used (use --extra-generations).
 """
 
 from __future__ import annotations
@@ -42,6 +47,7 @@ import signal
 import sys
 import time
 import types
+import warnings
 from functools import partial
 from pathlib import Path
 from typing import Any, Callable, cast
@@ -73,7 +79,7 @@ def _rss_mb() -> float:
     return (rss / 1024 / 1024) if sys.platform == "darwin" else (rss / 1024)
 
 
-# 4 distinct targets to prevent directional overfitting ("lucky torpedo")
+# Configured targets to prevent directional overfitting ("lucky torpedo")
 TEST_ENVIRONMENTS = [
     # (0.002, 0.002, 0.0),   # Top-right
     (-0.002, 0.002, 0.0),  # Top-left
@@ -150,8 +156,12 @@ def _rng_to_json(rng: np.random.RandomState | np.random.Generator) -> dict[str, 
                 float(st[4]),
             ],
         }
-    assert isinstance(rng, np.random.Generator)
-    return {"kind": "Generator", "state": rng.bit_generator.state}
+    if isinstance(rng, np.random.Generator):
+        state = json.loads(
+            json.dumps(rng.bit_generator.state, default=lambda value: value.tolist())
+        )
+        return {"kind": "Generator", "state": state}
+    raise TypeError(f"Unsupported DE RNG type: {type(rng).__name__}")
 
 
 def _rng_from_json(data: dict[str, Any]) -> np.random.RandomState | np.random.Generator:
@@ -169,8 +179,15 @@ def _rng_from_json(data: dict[str, Any]) -> np.random.RandomState | np.random.Ge
         )
         return rs
     if data.get("kind") == "Generator":
-        g = np.random.Generator(np.random.PCG64())
-        g.bit_generator.state = cast(dict[str, Any], data["state"])
+        state = cast(dict[str, Any], data["state"])
+        name = state.get("bit_generator")
+        bit_generator_type = getattr(np.random, str(name), None)
+        if not isinstance(bit_generator_type, type) or not issubclass(
+            bit_generator_type, np.random.BitGenerator
+        ):
+            raise ValueError(f"Unsupported bit generator in checkpoint: {name!r}")
+        g = np.random.Generator(bit_generator_type())
+        g.bit_generator.state = state
         return g
     raise ValueError(f"Unknown RNG kind in checkpoint: {data.get('kind')!r}")
 
@@ -184,11 +201,13 @@ def _de_state_from_solver(solver: DifferentialEvolutionSolver) -> dict[str, Any]
         "mutation": list(_DE_MUTATION),
         "recombination": float(_DE_RECOMBINATION),
         "population": pop_phys.tolist(),
+        "population_normalized": solver.population.tolist(),
         "population_energies": np.asarray(
             solver.population_energies, dtype=float
         ).tolist(),
         "nfev": int(solver._nfev),
         "rng": _rng_to_json(solver.random_number_generator),
+        "random_population_index": solver._random_population_index.tolist(),
     }
 
 
@@ -202,6 +221,23 @@ def _validate_de_state(state: dict[str, Any], *, n_dim: int) -> None:
     pop = np.asarray(state["population"], dtype=float)
     if pop.ndim != 2 or pop.shape[1] != n_dim:
         raise ValueError("de_state population has wrong shape")
+    if "population_normalized" in state:
+        normalized = np.asarray(state["population_normalized"], dtype=float)
+        if (
+            normalized.shape != pop.shape
+            or not np.all(np.isfinite(normalized))
+            or np.any(normalized < 0.0)
+            or np.any(normalized > 1.0)
+        ):
+            raise ValueError("de_state normalized population has invalid shape or bounds")
+    if "random_population_index" in state:
+        indices = np.asarray(state["random_population_index"])
+        if (
+            indices.shape != (pop.shape[0],)
+            or not np.issubdtype(indices.dtype, np.integer)
+            or not np.array_equal(np.sort(indices), np.arange(pop.shape[0]))
+        ):
+            raise ValueError("de_state random_population_index must be a population permutation")
 
 
 def _apply_de_state_post_init(
@@ -211,9 +247,12 @@ def _apply_de_state_post_init(
     energies = np.asarray(state["population_energies"], dtype=float)
     if energies.shape != (solver.num_population_members,):
         raise ValueError(
-            f"population_energies length {energies.shape[0]} != "
-            + f"solver population {solver.num_population_members}"
+            f"population_energies shape {energies.shape} != "
+            + f"solver population {(solver.num_population_members,)}"
         )
+    _validate_de_state(state, n_dim=solver.parameter_count)
+    if "population_normalized" in state:
+        solver.population[:] = np.asarray(state["population_normalized"], dtype=float)
     solver.population_energies[:] = energies
     solver._nfev = int(state["nfev"])
     solver.random_number_generator = _rng_from_json(state["rng"])
@@ -225,6 +264,17 @@ def _apply_de_state_post_init(
     mut = tuple(float(x) for x in state.get("mutation", list(_DE_MUTATION)))
     if mut != _DE_MUTATION:
         raise ValueError("Checkpoint DE mutation does not match this script")
+    if "random_population_index" in state:
+        solver._random_population_index[:] = np.asarray(
+            state["random_population_index"], dtype=int
+        )
+    if "random_population_index" not in state or "population_normalized" not in state:
+        warnings.warn(
+            "Checkpoint lacks exact DE population or sampling order; continuation of this older "
+            "checkpoint may differ from the original run.",
+            RuntimeWarning,
+            stacklevel=2,
+        )
 
 
 def _de_solve_continue(
@@ -317,6 +367,9 @@ def _load_resume_plan(
             f"Checkpoint {resume_path} has no usable 'de_state' (full DE snapshot). Only checkpoints written by this version of evolve_food_seeking.py can be resumed."
         )
     de_state: dict[str, Any] = cast(dict[str, Any], raw_de)
+    _validate_de_state(de_state, n_dim=n_dim)
+    if "full_settle" in ea and not isinstance(ea["full_settle"], bool):
+        raise ValueError("evol_args.full_settle must be a boolean")
     if gen_done > planned_total:
         raise ValueError(
             f"Checkpoint generation {gen_done} exceeds evol_args.generations {planned_total}"
@@ -392,7 +445,7 @@ def evaluate(
     body_settle_steps: int | None = EVOLUTION_BODY_SETTLE_STEPS,
 ) -> float:
     """
-    Run simulation against 4 distinct food positions. Return average (or worst)
+    Run simulation against the configured food positions. Return average (or worst)
     of min_distance achieved in each run. DE minimizes this (lower = better).
     """
     from simulations import evol_trace
@@ -528,13 +581,13 @@ def main() -> None:
         "--checkpoint",
         type=str,
         default="evolved_food_seeking_checkpoint.json",
-        help="Path for periodic checkpoints (default: evolved_food_seeking_checkpoint.json)",
+        help="Path for generation-boundary checkpoints (default: evolved_food_seeking_checkpoint.json)",
     )
     _ = parser.add_argument(
         "--checkpoint-every",
         type=int,
         default=1,
-        help="Save checkpoint every N evals (default: 1 = every eval)",
+        help="Save at the first completed generation after N evals (default: 1)",
     )
     _ = parser.add_argument(
         "--low-memory",
@@ -552,6 +605,9 @@ def main() -> None:
         help="Use full MuJoCo gravity settle (2000 steps) like run_c_elegans; default is faster evolution settle",
     )
     args = parser.parse_args()
+
+    if args.checkpoint_every <= 0:
+        parser.error("--checkpoint-every must be positive")
 
     if args.extra_generations is not None and not args.resume:
         print("error: --extra-generations requires --resume", file=sys.stderr)
@@ -590,6 +646,8 @@ def main() -> None:
         args.robust = bool(evol_args.get("robust", False))
         args.seed = int(evol_args["seed"])
         args.generations = int(evol_args["generations"])
+        args.full_settle = evol_args.get("full_settle", args.full_settle)
+        evol_args["full_settle"] = args.full_settle
         eval_counter: list[int] = [int(resume_plan["n_evals"])]
         gen_counter: list[int] = [int(resume_plan["gen_done"])]
         start_time = time.perf_counter() - resume_plan["elapsed_sec"]
@@ -607,6 +665,7 @@ def main() -> None:
             "ticks": args.ticks,
             "robust": args.robust,
             "seed": args.seed,
+            "full_settle": args.full_settle,
         }
         eval_counter = [0]
         gen_counter = [0]
@@ -634,7 +693,10 @@ def main() -> None:
             f"  {len(TEST_ENVIRONMENTS)} targets: avg min_dist"
             + (" (worst)" if args.robust else "")
         )
-        print(f"  checkpoint: {checkpoint_path} (every {args.checkpoint_every} eval)")
+        print(
+            f"  checkpoint: {checkpoint_path} (generation boundary after "
+            f"{args.checkpoint_every} evals, plus final generation)"
+        )
         if args.low_memory:
             print("  low-memory: enabled (flat RAM for Pi/8GB)")
         if args.full_settle:
@@ -664,61 +726,73 @@ def main() -> None:
         body_settle_steps=_body_settle,
     )
 
-    # Mutable state for callback (runs in main process)
-    _abort_requested = [False]  # Mutable for signal handler
+    # Only completed generations are resumable. The live solver's RNG and
+    # sampling permutation can already have advanced during unfinished work.
     solver_holder: list[DifferentialEvolutionSolver | None] = [None]
+    completed_checkpoint: dict[str, Any] | None = None
+    last_checkpoint_evals = eval_counter[0]
+    if resume_plan is not None:
+        completed_checkpoint = {
+            "best_x": best_state["best_x"].copy(),
+            "best_dist": best_state["best_dist"],
+            "generation": gen_counter[0],
+            "n_evals": eval_counter[0],
+            "elapsed": resume_plan["elapsed_sec"],
+            "de_state": resume_plan["de_state"],
+        }
+
+    def _save_completed_checkpoint() -> None:
+        nonlocal last_checkpoint_evals
+        if completed_checkpoint is None:
+            return
+        _save_checkpoint(
+            completed_checkpoint["best_x"],
+            completed_checkpoint["best_dist"],
+            completed_checkpoint["generation"],
+            completed_checkpoint["n_evals"],
+            completed_checkpoint["elapsed"],
+            checkpoint_path,
+            evol_args=evol_args,
+            de_state=completed_checkpoint["de_state"],
+        )
+        last_checkpoint_evals = completed_checkpoint["n_evals"]
 
     def _on_sigint(_signum: int, _frame: types.FrameType | None) -> None:
-        _abort_requested[0] = True
-        if best_state["best_x"] is not None:
-            elapsed = time.perf_counter() - start_time
-            de_snap = None
-            if solver_holder[0] is not None:
-                try:
-                    de_snap = _de_state_from_solver(solver_holder[0])
-                except Exception:
-                    de_snap = None
-            _save_checkpoint(
-                best_state["best_x"],
-                best_state["best_dist"],
-                gen_counter[0],
-                eval_counter[0],
-                elapsed,
-                checkpoint_path,
-                evol_args=evol_args,
-                de_state=de_snap,
+        if completed_checkpoint is not None:
+            _save_completed_checkpoint()
+            tqdm.write(
+                f"\n[Ctrl+C] Completed generation "
+                f"{completed_checkpoint['generation']} saved to {checkpoint_path}"
             )
-            tqdm.write(f"\n[Ctrl+C] Checkpoint saved to {checkpoint_path}")
         sys.exit(130)
 
     _ = signal.signal(signal.SIGINT, _on_sigint)
 
-    def _progress_callback(intermediate_result: OptimizeResult) -> None:
+    def _capture_completed_generation(intermediate_result: OptimizeResult) -> None:
+        nonlocal completed_checkpoint
         gen_counter[0] = int(intermediate_result.nit)
         dist = intermediate_result.fun
-        if dist < best_state["best_dist"]:
+        if best_state["best_x"] is None or dist < best_state["best_dist"]:
             best_state["best_dist"] = dist
             best_state["best_x"] = np.array(intermediate_result.x)
         if getattr(intermediate_result, "nfev", None) is not None:
             eval_counter[0] = int(intermediate_result.nfev)
-        de_snap = None
-        if solver_holder[0] is not None:
-            try:
-                de_snap = _de_state_from_solver(solver_holder[0])
-            except Exception:
-                de_snap = None
-        if best_state["best_x"] is not None:
-            elapsed = time.perf_counter() - start_time
-            _save_checkpoint(
-                best_state["best_x"],
-                best_state["best_dist"],
-                gen_counter[0],
-                eval_counter[0],
-                elapsed,
-                checkpoint_path,
-                evol_args=evol_args,
-                de_state=de_snap,
-            )
+        solver = solver_holder[0]
+        if solver is None:
+            raise RuntimeError("Cannot checkpoint a generation without its DE solver")
+        completed_checkpoint = {
+            "best_x": best_state["best_x"].copy(),
+            "best_dist": best_state["best_dist"],
+            "generation": gen_counter[0],
+            "n_evals": eval_counter[0],
+            "elapsed": time.perf_counter() - start_time,
+            "de_state": _de_state_from_solver(solver),
+        }
+
+    def _progress_callback(intermediate_result: OptimizeResult) -> None:
+        _capture_completed_generation(intermediate_result)
+        if eval_counter[0] - last_checkpoint_evals >= args.checkpoint_every:
+            _save_completed_checkpoint()
         if not args.quiet:
             _ = pbar.update(args.population)
             postfix = {"best_dist": f"{best_state['best_dist']*1000:.2f}mm"}
@@ -777,10 +851,14 @@ def main() -> None:
                 callback=_progress_callback,
                 disp=bool(args.verbose),
             )
+            _capture_completed_generation(result)
+            _save_completed_checkpoint()
     else:
         with _open_solver() as solver:
             solver_holder[0] = solver
             result = solver.solve()
+            _capture_completed_generation(result)
+            _save_completed_checkpoint()
     solver_holder[0] = None
 
     if not args.quiet:

@@ -18,6 +18,7 @@ import json
 from collections import Counter
 from pathlib import Path
 
+import numpy as np
 from loguru import logger
 
 from simulations.connectome_loader import ConnectomeData, NeuronInfo, SynapticEdge
@@ -56,6 +57,7 @@ def load_connectome(use_cache: bool = True) -> ConnectomeData:
 
     _CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
     _save_to_cache(data, _CACHE_PATH)
+    _connectome_memory_cache = data
     logger.info(f"Connectome cached to {_CACHE_PATH}")
 
     return data
@@ -157,6 +159,18 @@ def _parse_from_cect() -> ConnectomeData:
                     )
                 )
 
+            # Store each neuron pair once; the network builder adds both directions.
+            gj_weight = float(row_gj[post_idx])
+            if gj_weight > 0 and pre_name < post_name:
+                gap_junction_edges.append(
+                    SynapticEdge(
+                        pre_name=pre_name,
+                        post_name=post_name,
+                        synapse_type="gap_junction",
+                        weight=gj_weight,
+                    )
+                )
+
         # Extract NMJs (chemical synapses to muscles)
         for m_name in muscle_nodes:
             if m_name not in node_index:
@@ -170,19 +184,6 @@ def _parse_from_cect() -> ConnectomeData:
                         post_name=m_name,
                         synapse_type="chemical",
                         weight=nmj_weight,
-                    )
-                )
-
-            # Gap junctions: include each directed pair once (pre < post
-            # in sorted order to avoid double-counting in this loop).
-            gj_weight = float(row_gj[post_idx])
-            if gj_weight > 0 and pre_name < post_name:
-                gap_junction_edges.append(
-                    SynapticEdge(
-                        pre_name=pre_name,
-                        post_name=post_name,
-                        synapse_type="gap_junction",
-                        weight=gj_weight,
                     )
                 )
 
@@ -280,6 +281,14 @@ def _load_from_cache(path: Path) -> ConnectomeData:
         )
         for e in payload["gap_junction_edges"]
     ]
+    pairs = {(e.pre_name, e.post_name) for e in gap_junction_edges}
+    if len(pairs) != len(gap_junction_edges):
+        logger.warning(
+            "Connectome cache {} contains duplicate gap-junction pairs. "
+            "Preserving it for reproducibility; archive the cache before running "
+            "scripts/download_connectome.py to rebuild corrected wiring.",
+            path,
+        )
     muscle_edges = [
         SynapticEdge(
             pre_name=e["pre_name"],

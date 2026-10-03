@@ -83,6 +83,7 @@ class AgarPlateEnvironment(BaseEnvironment):
             if food_positions is not None
             else [food_position]
         )
+        self._initial_food_positions = [tuple(pos) for pos in positions]
 
         # Food items: (position, [NaCl, butanone] sources) — removed when worm touches
         self._food_items: list[tuple[np.ndarray, list[ChemSource]]] = []
@@ -130,6 +131,7 @@ class AgarPlateEnvironment(BaseEnvironment):
     # ------------------------------------------------------------------
 
     def reset(self) -> EnvironmentObservation:
+        self.replace_food_sources(self._initial_food_positions)
         self._current_head_pos = np.zeros(3)
         return self._build_observation()
 

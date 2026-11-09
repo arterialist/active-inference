@@ -21,7 +21,7 @@ from ..components.body.loaded_hinge import LoadedHinge, MOTOR_GEAR, DT
 def mechanics(z):
     arm = LoadedHinge(*z['physical_parameters'][:3]); arm.restore(z['body_initial'])
     mujoco.mj_forward(arm.model,arm.data)
-    mass=float(arm.data.qM[0]);damping=float(arm.model.dof_damping[0])
+    M=np.zeros((arm.model.nv,arm.model.nv));mujoco.mj_fullM(arm.model,arm.data,M);mass=float(M[0,0]);damping=float(arm.model.dof_damping[0])
     q,v,command,force=z['body'][:,1:].T
     q0=np.r_[arm.data.qpos[0],q[:-1]];v0=np.r_[arm.data.qvel[0],v[:-1]]
     torque=MOTOR_GEAR*command;passive=-damping*v

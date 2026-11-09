@@ -21,7 +21,7 @@ from .temporal_verification import verify_learning
 def mechanics(data):
     base.verify_physics(data)
     arm=base.Arm();arm.restore(data['body_initial']);mujoco.mj_forward(arm.model,arm.data)
-    mass=float(arm.data.qM[0]);damping=float(arm.model.dof_damping[0])
+    M=np.zeros((arm.model.nv,arm.model.nv));mujoco.mj_fullM(arm.model,arm.data,M);mass=float(M[0,0]);damping=float(arm.model.dof_damping[0])
     body=data['body'];q=body[:,1];v=body[:,2]
     q0=np.r_[arm.data.qpos[0],q[:-1]];v0=np.r_[arm.data.qvel[0],v[:-1]]
     motor=base.FORCE*body[:,3];load=body[:,4];passive=-damping*v
